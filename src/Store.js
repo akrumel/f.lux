@@ -1,5 +1,6 @@
 import isObject from "./utils/isObject";
 
+import ArrayProperty from "./MapProperty";
 import KeyedProperty from "./KeyedProperty";
 import MapProperty from "./MapProperty";
 import Property from "./Property";
@@ -18,7 +19,19 @@ var _setTimeout = setTimeout;
 
 */
 export default class Store {
-	constructor(root=new MapProperty(), state=null) {
+	constructor(root, state) {
+		invariant(root instanceof Property || Array.isArray(root) || isObject(root),
+			"Store root must be one of: Property subclass, object, or array");
+
+		// ensure root
+		if (!(root instanceof Property)) {
+			state = root;
+
+			root = Array.isArray() ?new ArrayProperty() :new MapProperty();
+		} else if (state === undefined) {
+			state = root.initialState
+		}
+
 		this._subscribers = [];
 		this._listeners = [];
 
