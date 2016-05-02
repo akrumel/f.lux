@@ -1,0 +1,194 @@
+
+import ArrayProperty from "./ArrayProperty";
+import PropertyFactoryShader from "./PropertyFactoryShader";
+import PrimitiveProperty from "./PrimitiveProperty";
+import MapProperty from "./MapProperty";
+import Shader from "./Shader";
+import CollectionProperty from "./collection/CollectionProperty";
+
+
+/*
+	Todo:
+		- add managed property type support to factory shader
+		- attach shader to constructor so shared. Change will require passing property into each call
+		  so may not be worth effort. Would need to get rid of KeyedProperty.addProperty() methods.
+*/
+
+
+export class StateType {
+	constructor(PropertyClass) {
+		this._PropertyClass = PropertyClass;
+		this._properties = { };
+		this._elementType = null;
+	}
+
+	factory(property) {
+		const shader = new PropertyFactoryShader(
+				this._PropertyClass,
+				property,
+				this._defaults,
+				this._autoShadow,
+				this._readonly,
+				this._automount);
+
+		this._setupShader(shader);
+
+		return shader;
+	}
+
+	shader(property) {
+		const shader = new Shader(property, property.autoShadow);
+
+		this._setupShader(shader);
+
+		return shader;
+	}
+
+	static shaderFromSpec(property, stateSpec) {
+		const shader = new Shader(property, property.autoShadow);
+		var eltType;
+
+debugger
+		for (let name in stateSpec) {
+			eltType = this._properties[name];
+
+			if (eltType.isComplex()) {
+				// complex definition so need to pass entire definition to shader so can handle recusively
+				shader.addStateType(name, eltType);
+			} else {
+				shader.addPropertyClass(name, eltType._PropertyClass, eltType._defaults, eltType._autoShadow, eltType._readonly);
+			}
+		}
+
+		return shader;
+	}
+
+	addProperty(name, type) {
+		this._properties[name] = type;
+	}
+
+	get autoshadow() {
+		this._autoshadow = true;
+
+		return this;
+	}
+
+	get autoshadowOff() {
+		this._autoshadow = false;
+
+		return false
+	}
+
+	defaults(state) {
+		this._defaults = state;
+
+		return this;
+	}
+
+	isComplex() {
+		return Object.keys(this._properties).length || this._managedPropertyType || this._elementType;
+	}
+
+	get readonly() {
+		this._readonly = true;
+
+		return this;
+	}
+
+	get readonlyOff() {
+		this._readonly = false;
+
+		return this;
+	}
+
+	setElementType(elementType) {
+		this._elementType = elementType;
+	}
+
+	_setupShader(shader) {
+		if (this._elementType) {
+			let eltType = this._elementType;
+
+			if (eltType.isComplex()) {
+				shader.setElementStateType(eltType);
+			} else {
+				shader.setElementClass(eltType.PropertyClass, eltType.defaults, eltType.autoShadow, eltType.readonly);
+			}
+		} else if (this._managedPropertyType) {
+			// will call the setElementType() method after property created - will need to add
+			// functionality to the factory shader
+
+// ADD setManagedPropertyType() TO FACTORY - requires changes to Collection first
+
+			shader.setManagedPropertyType(this._managedPropertyType);
+		} else {
+			let eltType;
+
+			for (let name in this._properties) {
+				eltType = this._properties[name];
+
+				if (eltType.isComplex()) {
+					// complex definition so need to pass entire definition to shader so can handle recusively
+					shader.addStateType(name, eltType);
+				} else {
+					shader.addPropertyClass(name, eltType._PropertyClass, eltType._defaults, eltType._autoShadow, eltType._readonly);
+				}
+			}
+		}
+	}
+}
+
+export default {
+	get Primitive() {
+		return new StateType(PrimitiveProperty);
+	},
+
+	get Array() {
+		const type = new StateType(ArrayProperty);
+
+		return type;
+	},
+
+	arrayOf(elementStateType) {
+		const type = new StateType(ArrayProperty);
+
+		type.setElementType(elementStateType);
+
+		return type;
+	},
+
+	collectionOf(elementStateType) {
+		const type = new StateType(CollectionProperty);
+
+		// will call the setElementType() method after property created - will need to add
+		// functionality to the factory shader
+		type.setManagedPropertyType(elementStateType);
+
+		return type;
+	},
+
+	map(defn={}) {
+		const type = new StateType(MapProperty);
+		var propType;
+
+		for (let key in defn) {
+			propType = defn[key];
+
+			type.addProperty(key, defn[key]);
+		}
+
+		return type;
+	},
+
+	mapOf(elementStateType) {
+		const type = new StateType(MapProperty);
+
+		type.setElementType(elementStateType);
+
+		return type;
+	},
+
+	property(PropertyClass) {
+		return new StateType(PropertyClass);
+	},
+}
