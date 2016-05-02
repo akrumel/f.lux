@@ -4,6 +4,10 @@
   "description": "Shadow state for javascript applications",
   "author": "Andy Krumel",
   "license": "MIT",
+   "repository": {
+    "type": "git",
+    "url": "https://github.com/akrumel/f.lux"
+  },
   "main": "lib/index.js",
   "dependencies": {
     "autobind-decorator": "^1.3.3",
