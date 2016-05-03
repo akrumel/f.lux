@@ -40,7 +40,7 @@ import { DEFAULTS_OPTION, MERGE_OPTION, NONE_OPTION, REPLACE_OPTION, REPLACE_ALL
 		- separate method to setup element shader:
 			- setElementShader(shader/factoryShader)
 			- setElementType(type, initState, autoshadow, readonly)
-		- method to get child shader (shader.modelsShader.childShader)
+		- method to get element shader (shader.modelsShader.element)
 
 
 	CollectionProperty.dataSpec = {
@@ -79,7 +79,7 @@ export default class CollectionProperty extends KeyedProperty {
 
 		this.addProperty(_models, models);
 		modelsShader.setElementClass(ModelProperty, {}, true, false);
-		modelsShader.childShader.addPropertyClass("data", MemberPropertyClass, {}, autoShadow, readonly);
+		modelsShader.elementShader.addPropertyClass("data", MemberPropertyClass, {}, autoShadow, readonly);
 	}
 
 
@@ -155,7 +155,7 @@ export default class CollectionProperty extends KeyedProperty {
 		const models = this._[_models];
 		const modelsShader = models.shader();
 
-		modelsShader.childShader.setElementClass(MemberPropertyClass, initialState, autoShadow, readonly);
+		modelsShader.elementShader.setElementClass(MemberPropertyClass, initialState, autoShadow, readonly);
 	}
 
 

@@ -84,7 +84,10 @@ export class StateType {
 	}
 
 	addProperty(name, type) {
-		assert( a => a.is(KeyedProperty.isPrototypeOf(this._PropertyClass), "PropertyClass must be a subclass of KeyedProperty") );
+		assert( a => {
+				a.is(KeyedProperty === this._PropertyClass || KeyedProperty.isPrototypeOf(this._PropertyClass),
+					"PropertyClass must be a subclass of KeyedProperty")
+			});
 
 		this._properties[name] = type;
 	}
@@ -112,7 +115,10 @@ export class StateType {
 	}
 
 	properties(propTypes) {
-		assert( a => a.is(KeyedProperty.isPrototypeOf(this._PropertyClass), "PropertyClass must be a subclass of KeyedProperty") );
+		assert( a => {
+				a.is(KeyedProperty === this._PropertyClass || KeyedProperty.isPrototypeOf(this._PropertyClass),
+					"PropertyClass must be a subclass of KeyedProperty")
+			});
 
 		for (let name in propTypes) {
 			this.addProperty(name, propTypes[name]);
@@ -137,6 +143,8 @@ export class StateType {
 		assert( a => a.is(IndexedProperty.isPrototypeOf(this._PropertyClass), "PropertyClass must be a subclass of IndexedProperty") );
 
 		this._elementType = elementType;
+
+		return this;
 	}
 
 	_setupShader(shader) {
@@ -197,6 +205,19 @@ export default {
 		// will call the setElementType() method after property created - will need to add
 		// functionality to the factory shader
 		type.setManagedPropertyType(elementStateType);
+
+		return type;
+	},
+
+	keyed(defn={}) {
+		const type = new StateType(KeyedProperty);
+		var propType;
+
+		for (let key in defn) {
+			propType = defn[key];
+
+			type.addProperty(key, defn[key]);
+		}
 
 		return type;
 	},

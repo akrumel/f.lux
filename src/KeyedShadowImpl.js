@@ -256,7 +256,6 @@ export default class KeyedShadowImpl extends ShadowImpl {
 
 		const state = this.state;
 		const shader = this.shader(state);
-		var childShader;
 
 		for (let name in state) {
 			if (shader.isAutomount(name)) {
@@ -336,9 +335,9 @@ export default class KeyedShadowImpl extends ShadowImpl {
 		var child;
 
 		const prevChild = prev && prev[_impls][name];
-		const childShader = shader.shaderFor(name, state);
+		const elementShader = shader.shaderFor(name, state);
 
-		if (!childShader) {
+		if (!elementShader) {
 			console.warn(`KeyedShadowImpl.defineChildProperties() - no shader found - name=${name}, path=${this.dotPath()}`);
 			return;
 		}
@@ -346,7 +345,7 @@ export default class KeyedShadowImpl extends ShadowImpl {
 		if (prevChild) {
 			child = reshadow(this.time, state, prevChild, this);
 		} else {
-			child = childShader.shadowProperty(this.time, name, state, this, this.store);
+			child = elementShader.shadowProperty(this.time, name, state, this, this.store);
 		}
 
 		if (child) {

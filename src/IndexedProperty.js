@@ -11,22 +11,22 @@ export default class IndexedProperty extends Property {
 	constructor(initialState=[], autoShadow, readonly) {
 		super(initialState, autoShadow, readonly);
 	}
-	
+
 	clearValueShader() {
-		this.shader().setChildShader(null);
+		this.shader().setElementShader(null);
 	}
 
 	setValueShader(propertyClass, initialState, autoShadow, readonly=false) {
 		const shader = new PropertyFactoryShader(propertyClass, this, initialState, autoShadow, readonly);
 
-		this.shader().setChildShader(shader);
+		this.shader().setElementShader(shader);
 	}
 
 
 	//------------------------------------------------------------------------------------------------------
 	// State lifecycle methods
 	//------------------------------------------------------------------------------------------------------
-	
+
 	getInitialState(state) {
 		if (this.initialState) {
 			const initState = [ ...this.initialState ];
@@ -62,11 +62,11 @@ export default class IndexedProperty extends Property {
 	//------------------------------------------------------------------------------------------------------
 
 	get length() {
-		return this.__.length; 
+		return this.__.length;
 	}
 
 	// Select Array methods (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)
-	clear() { 
+	clear() {
 		if (this.isActive()) {
 			this.__.clear();
 		}
@@ -96,7 +96,7 @@ export default class IndexedProperty extends Property {
 		}
 	}
 
-	shift() { 
+	shift() {
 		if (this.isActive()) {
 			return this.__.shift();
 		}

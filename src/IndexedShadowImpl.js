@@ -321,7 +321,6 @@ export default class IndexedShadowImpl extends ShadowImpl {
 
 		const state = this.state;
 		const shader = this.shader(state);
-		var childShader;
 
 		for (let i=0, len=state.length; i<len; i++) {
 			if (shader.isAutomount(i)) {
@@ -391,7 +390,7 @@ export default class IndexedShadowImpl extends ShadowImpl {
 		// ensure not already defined
 		if (this[_impls][idx]) { return }
 
-		const childShader = shader.shaderFor(idx, state);
+		const elementShader = shader.shaderFor(idx, state);
 		const prevMapping = prev && prev.childMapping();
 		const prevChild = prevMapping && prevMapping[idx];
 		var child;
@@ -399,7 +398,7 @@ export default class IndexedShadowImpl extends ShadowImpl {
 		if (prevChild) {
 			child = reshadow(this.time, state, prevChild, this);
 		} else {
-			child = childShader.shadowProperty(this.time, idx, state, this, this.store);
+			child = elementShader.shadowProperty(this.time, idx, state, this, this.store);
 		}
 
 		if (child) {

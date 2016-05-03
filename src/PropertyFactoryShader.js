@@ -71,15 +71,34 @@ export default class PropertyFactoryShader {
 
 		const property = new this.PropertyClass(this.defaults, this.autoShadow);
 		const shader = new Shader(property, property.autoShadow);
+
+		// setup the shader and set on property
+		this._configureShader(shader, property);
+		property.setShader(shader);
+
+		// setup the readonly flag
+		if (this.readonly) {
+			property.setReadonly(true);
+		}
+
+		// set the proprety's parent property
+		property.setParent(this.parent);
+
+		return shader.shadowProperty(time, name, parentState, parentImpl);
+	}
+
+	shouldAutomount() {
+		return this.PropertyClass.constructor.shouldAutomount && this.PropertyClass.constructor.shouldAutomount();
+	}
+
+	_configureShader(shader, property) {
 		const { StateType } = require("./StateTypes");
 
-		configureShader(property, shader);
-
-		property.setShader(shader);
+//		configureShaderFromStateTypes(property, shader);
 
 		if (this.childShaderDefn) {
 			if (this.childShaderDefn instanceof StateType) {
-				shader.setChildShader(this.childShaderDefn.factory(property));
+				shader.setElementShader(this.childShaderDefn.factory(property));
 			} else {
 				let { PropertyClass, defaults, autoShadow, readonly } = this.childShaderDefn;
 
@@ -101,24 +120,14 @@ export default class PropertyFactoryShader {
 				}
 			}
 		}
-
-		if (this.readonly) {
-			property.setReadonly(true);
-		}
-
-		// set the proprety's parent property
-		property.setParent(this.parent);
-
-		return shader.shadowProperty(time, name, parentState, parentImpl);
-	}
-
-	shouldAutomount() {
-		return this.PropertyClass.constructor.shouldAutomount && this.PropertyClass.constructor.shouldAutomount();
 	}
 }
 
 
-export function configureShader(property, shader) {
+/*
+	Obsolete - leaving for now to ensure no longer needed
+*/
+export function configureShaderFromStateTypes(property, shader) {
 	const { StateType } = require("./StateTypes");
 	var proto = property;
 	var spec;
@@ -132,9 +141,6 @@ export function configureShader(property, shader) {
 
 		if (spec instanceof StateType) {
 			spec.configureShader(shader);
-
-			// child spec
-//			shader.setChildShader(spec.factory(property));
 		} else {
 			// iterate keys and add data types
 			for(let key in spec) {
