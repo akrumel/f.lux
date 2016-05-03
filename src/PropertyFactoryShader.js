@@ -1,5 +1,6 @@
 
 import noParentStateErrorMsg from "./noParentStateErrorMsg";
+import Property from "./Property";
 import Shader from "./Shader";
 
 import assert from "./utils/assert";
@@ -15,6 +16,8 @@ export default class PropertyFactoryShader {
 			parent - the parent Property instance (not ShadowImpl subclass)
 	*/
 	constructor(PropertyClass, parent, defaults, autoShadow, readonly) {
+		assert( a => a.is(Property.isPrototypeOf(PropertyClass), "PropertyClass must be a subclass of Property") );
+
 		this.PropertyClass = PropertyClass;
 		this.parent = parent;
 		this.defaults = defaults;
@@ -72,7 +75,7 @@ export default class PropertyFactoryShader {
 
 		configureShader(property, shader);
 
-		property._setShader(shader);
+		property.setShader(shader);
 
 		if (this.childShaderDefn) {
 			if (this.childShaderDefn instanceof StateType) {
@@ -80,7 +83,7 @@ export default class PropertyFactoryShader {
 			} else {
 				let { PropertyClass, defaults, autoShadow, readonly } = this.childShaderDefn;
 
-				shader.setElementClass(PropertyClass, defaults, autoShadow, readonly);
+				shader.setElementClass(PropertyClass, defaults, autoShadow, readonly || this.readonly);
 			}
 		} else if (this.propertyShaderDefn) {
 			let keys = Object.keys(this.propertyShaderDefn);
@@ -94,9 +97,8 @@ export default class PropertyFactoryShader {
 				} else {
 					let { PropertyClass, defaults, autoShadow, readonly } = defn;
 
-					shader.addPropertyClass(key, PropertyClass, defaults, autoShadow, readonly);
+					shader.addPropertyClass(key, PropertyClass, defaults, autoShadow, readonly || this.readonly);
 				}
-
 			}
 		}
 
@@ -117,6 +119,7 @@ export default class PropertyFactoryShader {
 
 
 export function configureShader(property, shader) {
+	const { StateType } = require("./StateTypes");
 	var proto = property;
 	var spec;
 
@@ -128,8 +131,10 @@ export function configureShader(property, shader) {
 		spec = proto.constructor.stateSpec;
 
 		if (spec instanceof StateType) {
+			spec.configureShader(shader);
+
 			// child spec
-			shader.setChildShader(spec.factory(property));
+//			shader.setChildShader(spec.factory(property));
 		} else {
 			// iterate keys and add data types
 			for(let key in spec) {

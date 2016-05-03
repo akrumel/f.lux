@@ -2,6 +2,7 @@
 export { default as ArrayProperty } from "./ArrayProperty";
 export { default as ArrayShadow } from "./ArrayShadow";
 export { default as createArrayPropertyType } from "./createArrayPropertyType";
+export { default as createIndexedPropertyType } from "./createIndexedPropertyType";
 export { default as IndexedProperty } from "./IndexedProperty";
 export { default as IndexedShadow } from "./IndexedShadow";
 export { default as KeyedProperty } from "./KeyedProperty";

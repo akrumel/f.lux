@@ -1,10 +1,14 @@
 
 import ArrayProperty from "./ArrayProperty";
+import IndexedProperty from "./IndexedProperty";
+import KeyedProperty from "./KeyedProperty";
+import MapProperty from "./MapProperty";
 import PropertyFactoryShader from "./PropertyFactoryShader";
 import PrimitiveProperty from "./PrimitiveProperty";
-import MapProperty from "./MapProperty";
 import Shader from "./Shader";
 import CollectionProperty from "./collection/CollectionProperty";
+
+import assert from "./utils/assert";
 
 
 /*
@@ -20,15 +24,32 @@ export class StateType {
 		this._PropertyClass = PropertyClass;
 		this._properties = { };
 		this._elementType = null;
+
+		// setup default values
+		this._autoshadow = true;
+		this._readonly = false;
+		this._defaults = undefined;
 	}
 
-	factory(property) {
+	/*
+		Configures
+	*/
+	configureShader(shader) {
+		shader.setAutoshadow(this._autoshadow);
+
+		this._setupShader(shader);
+	}
+
+	/*
+		Returns a PropertyFactoryShader that will create property instances as configured by this StateType.
+	*/
+	factory(parentProperty) {
 		const shader = new PropertyFactoryShader(
 				this._PropertyClass,
-				property,
+				parentProperty,
 				this._defaults,
-				this._autoShadow,
-				this._readonly,
+				this._autoshadow,
+				this._readonly || parentProperty.readonly,
 				this._automount);
 
 		this._setupShader(shader);
@@ -48,15 +69,14 @@ export class StateType {
 		const shader = new Shader(property, property.autoShadow);
 		var eltType;
 
-debugger
 		for (let name in stateSpec) {
-			eltType = this._properties[name];
+			eltType = stateSpec[name];
 
 			if (eltType.isComplex()) {
 				// complex definition so need to pass entire definition to shader so can handle recusively
 				shader.addStateType(name, eltType);
 			} else {
-				shader.addPropertyClass(name, eltType._PropertyClass, eltType._defaults, eltType._autoShadow, eltType._readonly);
+				shader.addPropertyClass(name, eltType._PropertyClass, eltType._defaults, eltType._autoshadow, eltType._readonly);
 			}
 		}
 
@@ -64,6 +84,8 @@ debugger
 	}
 
 	addProperty(name, type) {
+		assert( a => a.is(KeyedProperty.isPrototypeOf(this._PropertyClass), "PropertyClass must be a subclass of KeyedProperty") );
+
 		this._properties[name] = type;
 	}
 
@@ -76,7 +98,7 @@ debugger
 	get autoshadowOff() {
 		this._autoshadow = false;
 
-		return false
+		return this
 	}
 
 	defaults(state) {
@@ -87,6 +109,16 @@ debugger
 
 	isComplex() {
 		return Object.keys(this._properties).length || this._managedPropertyType || this._elementType;
+	}
+
+	properties(propTypes) {
+		assert( a => a.is(KeyedProperty.isPrototypeOf(this._PropertyClass), "PropertyClass must be a subclass of KeyedProperty") );
+
+		for (let name in propTypes) {
+			this.addProperty(name, propTypes[name]);
+		}
+
+		return this;
 	}
 
 	get readonly() {
@@ -102,6 +134,8 @@ debugger
 	}
 
 	setElementType(elementType) {
+		assert( a => a.is(IndexedProperty.isPrototypeOf(this._PropertyClass), "PropertyClass must be a subclass of IndexedProperty") );
+
 		this._elementType = elementType;
 	}
 
@@ -131,7 +165,7 @@ debugger
 					// complex definition so need to pass entire definition to shader so can handle recusively
 					shader.addStateType(name, eltType);
 				} else {
-					shader.addPropertyClass(name, eltType._PropertyClass, eltType._defaults, eltType._autoShadow, eltType._readonly);
+					shader.addPropertyClass(name, eltType._PropertyClass, eltType._defaults, eltType._autoshadow, eltType._readonly);
 				}
 			}
 		}
@@ -189,6 +223,10 @@ export default {
 	},
 
 	property(PropertyClass) {
+		if (PropertyClass.stateSpec) {
+			return PropertyClass.stateSpec;
+		}
+
 		return new StateType(PropertyClass);
 	},
 }

@@ -4,7 +4,7 @@ import isEqual from "lodash.isequal";
 import isObject from "./isObject";
 
 /*
-	Efficiently implements assertions by performing a noop when not in development mode, eg 
+	Efficiently implements assertions by performing a noop when not in development mode, eg
 	config.development == false. This means code like the following will not evaluate the
 	@isRoot() call when not in development mode.
 
@@ -14,7 +14,7 @@ var assert = {
 	equal(a, b) {
 		if (isObject(a)) {
 			if (!isEqual(a, b)) {
-				assertFailed("Objects not equal");  
+				assertFailed("Objects not equal");
 			}
 		} else if (a != b) {
 			assertFailed(`${a} != ${b}`);
@@ -48,7 +48,7 @@ var assert = {
 	hasOne(obj, ...keys) {
 		for (let i=0, len=keys.length; i<len; i++) {
 			if (has(obj, keys[i])) {
-				return this; 
+				return this;
 			}
 		}
 
@@ -66,8 +66,11 @@ function assertFailed(msg) {
 	throw new Error(msg);
 }
 
-export default (cb, context) => {
-	if (typeof config != 'undefined' && (config.development || config.debug)) {
-		cb.call(context, assert);		
+export default function assert(cb, context) {
+	var configDebug = typeof config != 'undefined' && (config.development || config.debug);
+	var envDevelopment = process.env.NODE_ENV !== 'production';
+
+	if (configDebug || envDevelopment) {
+		cb.call(context, assert);
 	}
-} 
+}

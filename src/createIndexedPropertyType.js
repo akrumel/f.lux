@@ -1,22 +1,22 @@
-import ArrayProperty from "./ArrayProperty";
-import ArrayShadow from "./ArrayShadow";
+import IndexedProperty from "./IndexedProperty";
+import IndexedShadow from "./IndexedShadow";
 import StateTypes from "./StateTypes";
 
 
 /*
 	Creates an ArrayProperty subclass based on a custom Shadow type.
 */
-export default function createArrayPropertyType(shadowType, elementType, autoshadow, readonly) {
+export default function createIndexedPropertyType(shadowType, elementType, autoshadow, readonly) {
 	var ShadowClass;
 
 	// get the shadow class
-	if (shadowType instanceof ArrayShadow) {
+	if (shadowType instanceof IndexedShadow) {
 		// shadow class passed into method
 		ShadowClass = shadowType
 	} else {
-		class CustomArrayShadow extends ArrayShadow { }
+		class CustomIndexedShadow extends IndexedShadow { }
 
-		var proto = CustomArrayShadow.prototype;
+		var proto = CustomIndexedShadow.prototype;
 		var names = Object.getOwnPropertyNames(shadowType);
 		var name, desc;
 
@@ -27,11 +27,11 @@ export default function createArrayPropertyType(shadowType, elementType, autosha
 			Object.defineProperty(proto, name, desc);
 		}
 
-		ShadowClass = CustomArrayShadow;
+		ShadowClass = CustomIndexedShadow;
 	}
 
 	// create the property subclass
-	class CustomArrayProperty extends ArrayProperty {
+	class CustomIndexedProperty extends IndexedProperty {
 		shadowClass() {
 			return ShadowClass;
 		}
@@ -39,12 +39,12 @@ export default function createArrayPropertyType(shadowType, elementType, autosha
 
 	if (elementType) {
 		// assign state spec if present to new Property subclass
-		CustomArrayProperty.stateSpec = StateTypes.property(CustomArrayProperty)
+		CustomIndexedProperty.stateSpec = StateTypes.property(CustomIndexedProperty)
 				.setElementType(elementType);
 
-		autoshadow && CustomArrayProperty.stateSpec.autoshadow;
-		readonly && CustomArrayProperty.stateSpec.readonly;
+		autoshadow && CustomIndexedProperty.stateSpec.autoshadow;
+		readonly && CustomIndexedProperty.stateSpec.readonly;
 	}
 
-	return CustomArrayProperty;
+	return CustomIndexedProperty;
 }

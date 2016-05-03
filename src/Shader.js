@@ -73,7 +73,8 @@ export default class Shader {
 
 	addPropertyClass(name, PropertyClass, defaults, autoShadow, readonly) {
 		const property = this[_property];
-		const shader = new PropertyFactoryShader(PropertyClass, property, defaults, autoShadow, readonly);
+		const shaderReadonly = readonly || property.readonly;
+		const shader = new PropertyFactoryShader(PropertyClass, property, defaults, autoShadow, shaderReadonly);
 
 		this.add(name, shader);
 	}
@@ -134,7 +135,8 @@ export default class Shader {
 
 	setElementClass(PropertyClass, defaults, autoShadow, readonly) {
 		const property = this[_property];
-		const shader = new PropertyFactoryShader(PropertyClass, property, defaults, autoShadow, readonly);
+		const shaderReadonly = readonly || property.readonly;
+		const shader = new PropertyFactoryShader(PropertyClass, property, defaults, autoShadow, shaderReadonly);
 
 		return this.setChildShader(shader);
 	}
@@ -238,4 +240,5 @@ export default class Shader {
 		return proto.constructor.shouldAutomount && proto.constructor.shouldAutomount();
 	}
 }
+
 

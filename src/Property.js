@@ -149,7 +149,6 @@ export default class Property {
 			console.warn("Property.state property is deprecated - use Property._ instead");
 		}
 
-debugger
 		return this._ ;
 	}
 
@@ -373,7 +372,7 @@ debugger
 		Used by PropertyFactoryShader to set the shader used to create this property. External code should
 		not need to utilize this method.
 	*/
-	_setShader(shader) {
+	setShader(shader) {
 		invariant(!this[_shader], `Shader already set for property`);
 
 		this[_shader] = shader;
@@ -389,8 +388,6 @@ debugger
 			if (stateSpec instanceof StateType) {
 				shader = stateSpec.shader(this);
 			} else if (stateSpec) {
-debugger
-// ADD Shader.fromSpec()
 				shader = new StateType.shaderFromSpec(this, stateSpec);
 			} else {
 				shader = new Shader(this, this[_autoShadow]);

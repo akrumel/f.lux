@@ -1,3 +1,5 @@
+import invariant from "invariant";
+
 import isObject from "./utils/isObject";
 
 import ArrayProperty from "./MapProperty";
