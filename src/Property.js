@@ -76,8 +76,10 @@ var stateDeprecatedWarningShown = false;
 */
 export default class Property {
 	constructor(initialState, autoShadow=true, readonly=false) {
+		const { StateType } = require("./StateTypes");
+
 		this[_autoShadow] = autoShadow;
-		this[_initialState] = initialState;
+		this[_initialState] = StateType.computeInitialState(this, initialState);
 		this[_readonly] = readonly;
 	}
 
@@ -92,8 +94,9 @@ export default class Property {
 
 	/*
 		Use this.$$ in shadow methods to get access to the property. Useful in Property subclass
-		@shadow methods since the method will be bound to the shadow. Equally useful in shadow
-		literals to access functions in the property instance.
+		@shadow methods since the method will be bound to the shadow. Exposing on the property
+		proper allows for the same code to work when called as a member function using 'this' or
+		called through a shadow function.
 	*/
 	get $$() {
 		return this;

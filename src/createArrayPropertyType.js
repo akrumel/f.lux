@@ -6,7 +6,7 @@ import StateTypes from "./StateTypes";
 /*
 	Creates an ArrayProperty subclass based on a custom Shadow type.
 */
-export default function createArrayPropertyType(shadowType, elementType, autoshadow, readonly) {
+export default function createArrayPropertyType(shadowType={}, elementType, specCallback) {
 	var ShadowClass;
 
 	// get the shadow class
@@ -42,8 +42,9 @@ export default function createArrayPropertyType(shadowType, elementType, autosha
 		CustomArrayProperty.stateSpec = StateTypes.property(CustomArrayProperty)
 				.setElementType(elementType);
 
-		autoshadow && CustomArrayProperty.stateSpec.autoshadow;
-		readonly && CustomArrayProperty.stateSpec.readonly;
+		if (specCallback) {
+			specCallback(CustomIndexedProperty.stateSpec)
+		}
 	}
 
 	return CustomArrayProperty;

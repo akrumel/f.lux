@@ -9,6 +9,7 @@ import Shader from "./Shader";
 import CollectionProperty from "./collection/CollectionProperty";
 
 import assert from "./utils/assert";
+import isObject from "./utils/isObject";
 
 
 /*
@@ -30,6 +31,49 @@ export class StateType {
 		this._readonly = false;
 		this._defaults = undefined;
 		this._initialState = undefined;
+	}
+
+	static computeInitialState(property, state) {
+		var proto = Object.getPrototypeOf(property);
+		var stateSpec = proto.constructor.stateSpec;
+		var propType, propState;
+
+		if (!stateSpec) { return state; }
+
+		if (state === undefined) {
+			state = stateSpec._initialState;
+		}
+
+		if (!isObject(state)) { return state; }
+
+		var propSpecs = stateSpec._properties || stateSpec;
+
+		for (let name in propSpecs) {
+			propType = propSpecs[name];
+			propState = state[name];
+
+			state[name] = propState===undefined ?propType._initialState :propState;
+		}
+
+		return state;
+	}
+
+	static shaderFromSpec(property, stateSpec) {
+		const shader = new Shader(property, property.autoShadow);
+		var eltType;
+
+		for (let name in stateSpec) {
+			eltType = stateSpec[name];
+
+			if (eltType.isComplex()) {
+				// complex definition so need to pass entire definition to shader so can handle recusively
+				shader.addStateType(name, eltType);
+			} else {
+				shader.addPropertyClass(name, eltType._PropertyClass, eltType._defaults, eltType._autoshadow, eltType._readonly);
+			}
+		}
+
+		return shader;
 	}
 
 	/*
@@ -66,27 +110,9 @@ export class StateType {
 		return shader;
 	}
 
-	static shaderFromSpec(property, stateSpec) {
-		const shader = new Shader(property, property.autoShadow);
-		var eltType;
-
-		for (let name in stateSpec) {
-			eltType = stateSpec[name];
-
-			if (eltType.isComplex()) {
-				// complex definition so need to pass entire definition to shader so can handle recusively
-				shader.addStateType(name, eltType);
-			} else {
-				shader.addPropertyClass(name, eltType._PropertyClass, eltType._defaults, eltType._autoshadow, eltType._readonly);
-			}
-		}
-
-		return shader;
-	}
-
 	addProperty(name, type) {
 		assert( a => {
-				a.is(KeyedProperty === this._PropertyClass || KeyedProperty.isPrototypeOf(this._PropertyClass),
+				a.is(isKeyedPrototype(this._PropertyClass),
 					"PropertyClass must be a subclass of KeyedProperty")
 			});
 
@@ -123,8 +149,7 @@ export class StateType {
 
 	properties(propTypes) {
 		assert( a => {
-				a.is(KeyedProperty === this._PropertyClass || KeyedProperty.isPrototypeOf(this._PropertyClass),
-					"PropertyClass must be a subclass of KeyedProperty")
+				a.is(isKeyedPrototype(this._PropertyClass), "PropertyClass must be a subclass of KeyedProperty")
 			});
 
 		for (let name in propTypes) {
@@ -147,7 +172,7 @@ export class StateType {
 	}
 
 	setElementType(elementType) {
-		assert( a => a.is(IndexedProperty.isPrototypeOf(this._PropertyClass), "PropertyClass must be a subclass of IndexedProperty") );
+		assert( a => a.is(isIndexedPrototype(this._PropertyClass), "PropertyClass must be a subclass of IndexedProperty") );
 
 		this._elementType = elementType;
 
@@ -186,6 +211,16 @@ export class StateType {
 		}
 	}
 }
+
+
+function isIndexedPrototype(obj) {
+	return IndexedProperty === obj || IndexedProperty.isPrototypeOf(obj);
+}
+
+function isKeyedPrototype(obj) {
+	return KeyedProperty === obj || KeyedProperty.isPrototypeOf(obj);
+}
+
 
 export default {
 	get Primitive() {
