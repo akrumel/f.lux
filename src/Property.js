@@ -79,10 +79,6 @@ export default class Property {
 		this[_autoShadow] = autoShadow;
 		this[_initialState] = initialState;
 		this[_readonly] = readonly;
-
-		// Use this.$$ in @shadow methods to get access to the property since the method will
-		// be bound to the shadow.
-		Object.defineProperty(this, '$$', { enumerable: true, value: this });
 	}
 
 	/*
@@ -95,7 +91,16 @@ export default class Property {
 	}
 
 	/*
-		Anything is possible (almost) with the PropertyImpl reference.
+		Use this.$$ in shadow methods to get access to the property. Useful in Property subclass
+		@shadow methods since the method will be bound to the shadow. Equally useful in shadow
+		literals to access functions in the property instance.
+	*/
+	get $$() {
+		return this;
+	}
+
+	/*
+		Anything is possible (almost) with the ShadowImpl reference.
 	*/
 	get __() {
 		return this[_impl];

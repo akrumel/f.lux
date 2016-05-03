@@ -29,6 +29,7 @@ export class StateType {
 		this._autoshadow = true;
 		this._readonly = false;
 		this._defaults = undefined;
+		this._initialState = undefined;
 	}
 
 	/*
@@ -106,6 +107,12 @@ export class StateType {
 
 	defaults(state) {
 		this._defaults = state;
+
+		return this;
+	}
+
+	initialState(state) {
+		this._initialState = state;
 
 		return this;
 	}
