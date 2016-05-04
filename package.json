@@ -18,6 +18,7 @@
     "lodash.isequal": "^4.1.4",
     "lodash.isfunction": "^3.0.8",
     "lodash.isplainobject": "^4.0.4",
+    "lodash.isstring": "^4.0.1",
     "lodash.omit": "^4.2.1",
     "lodash.range": "^3.1.4",
     "lodash.result": "^4.3.0",
