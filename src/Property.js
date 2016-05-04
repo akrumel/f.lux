@@ -446,7 +446,7 @@ export default class Property {
 		const { StateType } = require("./StateTypes");
 		const initialState = state === undefined ?this[_initialState] :state;
 
-		return StateType.initialStateWithDefaults(this, state);
+		return StateType.initialStateWithDefaults(this, initialState);
 	}
 
 	propertyWillShadow() { /* subscribe to websockets */ }

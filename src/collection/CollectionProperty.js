@@ -248,11 +248,11 @@ export default class CollectionProperty extends KeyedProperty {
 		saved.
 
 		Parameters:
-			states - array of model values
+			models - array of model values
 			merge - boolean declaring whether each state should be merged over an existing model with
 				the same ID. False means a current model will be replaced with the new model value.
 	*/
-	addModels(states, mergeOp=DEFAULTS_OPTION, syncOp=true) {
+	addModels(models, mergeOp=DEFAULTS_OPTION, syncOp=true) {
 		if (!this.isConnected()) { throw new(`Collection ${this.slashPath} is not connected`) }
 
 		var id, state;
@@ -261,18 +261,18 @@ export default class CollectionProperty extends KeyedProperty {
 			this.set(_synced, true);
 		}
 
-		for (let i=0, len=states.length; i<len; i++) {
-			this.addModel(states[i], mergeOp);
+		for (let i=0, len=models.length; i<len; i++) {
+			this.addModel(models[i], mergeOp);
 		}
 	}
 
 	/*
 		Combines an add and save actions.
 	*/
-	create(state) {
+	create(model) {
 		if (!this.isConnected()) { return Store.reject(`Collection ${this.slashPath} is not connected`) }
 
-		const cid = this.addModel(states);
+		const cid = this.addModel(model);
 
 		return Store.promise( (resolve, reject) => {
 			// wait for the new model to be placed into state
@@ -354,14 +354,14 @@ export default class CollectionProperty extends KeyedProperty {
 
 						return this.onError(error, "Fetch all models")
 					});
-			} catch(error) {
-				this.setIsFetching(false);
+		} catch(error) {
+			this.setIsFetching(false);
 
-				// invoke the callback with the error
-				callback && callback(error, null);
+			// invoke the callback with the error
+			callback && callback(error, null);
 
-				throw error;
-			}
+			throw error;
+		}
 	}
 
 	find(id) {
