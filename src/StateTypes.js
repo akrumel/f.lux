@@ -271,15 +271,16 @@ export default {
 		return type;
 	},
 
-	collectionOf(elementStateType) {
-		const type = new StateType(CollectionProperty);
+// CollectionProperty needs refactoring to support
+	// collectionOf(elementStateType) {
+	// 	const type = new StateType(CollectionProperty);
 
-		// will call the setElementType() method after property created - will need to add
-		// functionality to the factory shader
-		type.setManagedPropertyType(elementStateType);
+	// 	// will call the setElementType() method after property created - will need to add
+	// 	// functionality to the factory shader
+	// 	type.setManagedPropertyType(elementStateType);
 
-		return type;
-	},
+	// 	return type;
+	// },
 
 	keyed(defn={}) {
 		const type = new StateType(KeyedProperty);
