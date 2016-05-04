@@ -443,7 +443,10 @@ export default class Property {
 			parameter
 	*/
 	getInitialState(state) {
-		return state === undefined ?this[_initialState] :state;
+		const { StateType } = require("./StateTypes");
+		const initialState = state === undefined ?this[_initialState] :state;
+
+		return StateType.initialStateWithDefaults(this, state);
 	}
 
 	propertyWillShadow() { /* subscribe to websockets */ }

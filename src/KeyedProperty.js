@@ -62,13 +62,29 @@ export default class KeyedProperty extends Property {
 	// State lifecycle methods
 	//------------------------------------------------------------------------------------------------------
 
+	/*
+		Gets the initial state for a property at the beginning of the property mounting process. This
+		implementation merges the 'initialState' parameter passed to the constructor or set using the
+		initialState() method with the state passed in from the existing store state. The store's state
+		property values take precedence.
+
+		Parameters:
+			state - the store's property state at the time of mounting.
+
+		Returns - merged state with the state parameter taking precedence if the initial state is set
+			otherwise returns the state parameter. This base implementation simply returns the state
+			parameter
+	*/
 	getInitialState(state) {
+		const { StateType } = require("./StateTypes");
+		var initialState = state;
+
 		if (this.initialState) {
 			// state take precedence
-			return { ...this.initialState, ...state };
+			initialState = { ...this.initialState, ...state };
 		}
 
-		return state;
+		return StateType.initialStateWithDefaults(this, initialState);
 	}
 
 

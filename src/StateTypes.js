@@ -1,3 +1,4 @@
+import defaults from "lodash.defaults";
 
 import ArrayProperty from "./ArrayProperty";
 import IndexedProperty from "./IndexedProperty";
@@ -58,6 +59,30 @@ export class StateType {
 		return state;
 	}
 
+	static initialStateWithDefaults(property, state) {
+		var proto = Object.getPrototypeOf(property);
+		var stateSpec = proto.constructor.stateSpec;
+		var propType, propState;
+
+		if (!stateSpec || !isObject(state)) { return state; }
+
+		var propSpecs = stateSpec._properties || stateSpec;
+
+		if (isObject(stateSpec._defaults)) {
+			state = defaults({}, state, stateSpec._defaults);
+		}
+
+		for (let name in propSpecs) {
+			propType = propSpecs[name];
+
+			if (propType && propType._defaults !== undefined) {
+				state[name] = defaults({}, state[name], propType._defaults);
+			}
+		}
+
+		return state;
+	}
+
 	static shaderFromSpec(property, stateSpec) {
 		const shader = new Shader(property, property.autoShadow);
 		var eltType;
@@ -69,7 +94,12 @@ export class StateType {
 				// complex definition so need to pass entire definition to shader so can handle recusively
 				shader.addStateType(name, eltType);
 			} else {
-				shader.addPropertyClass(name, eltType._PropertyClass, eltType._defaults, eltType._autoshadow, eltType._readonly);
+				shader.addPropertyClass(
+						name,
+						eltType._PropertyClass,
+						eltType._initialState,
+						eltType._autoshadow,
+						eltType._readonly);
 			}
 		}
 
@@ -92,7 +122,7 @@ export class StateType {
 		const shader = new PropertyFactoryShader(
 				this._PropertyClass,
 				parentProperty,
-				this._defaults,
+				this._initialState,
 				this._autoshadow,
 				this._readonly || parentProperty.readonly,
 				this._automount);
@@ -205,7 +235,7 @@ export class StateType {
 					// complex definition so need to pass entire definition to shader so can handle recusively
 					shader.addStateType(name, eltType);
 				} else {
-					shader.addPropertyClass(name, eltType._PropertyClass, eltType._defaults, eltType._autoshadow, eltType._readonly);
+					shader.addPropertyClass(name, eltType._PropertyClass, eltType._initialState, eltType._autoshadow, eltType._readonly);
 				}
 			}
 		}

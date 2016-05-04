@@ -15,20 +15,20 @@ export default class PropertyFactoryShader {
 			PropertyClass - the Property subclass's class
 			parent - the parent Property instance (not ShadowImpl subclass)
 	*/
-	constructor(PropertyClass, parent, defaults, autoShadow, readonly) {
+	constructor(PropertyClass, parent, initialState, autoShadow, readonly) {
 		assert( a => a.is(Property.isPrototypeOf(PropertyClass), "PropertyClass must be a subclass of Property") );
 
 		this.PropertyClass = PropertyClass;
 		this.parent = parent;
-		this.defaults = defaults;
+		this.initialState = initialState;
 		this.autoShadow = autoShadow;
 		this.readonly = readonly;
 	}
 
-	setElementClass(PropertyClass, defaults, autoShadow, readonly) {
+	setElementClass(PropertyClass, initialState, autoShadow, readonly) {
 		this.childShaderDefn = {
 				PropertyClass: PropertyClass,
-				defaults: defaults,
+				initialState: initialState,
 				autoShadow: autoShadow,
 				readonly: readonly,
 			};
@@ -38,14 +38,14 @@ export default class PropertyFactoryShader {
 		this.childShaderDefn = stateType;
 	}
 
-	addPropertyClass(name, PropertyClass, defaults, autoShadow, readonly) {
+	addPropertyClass(name, PropertyClass, initialState, autoShadow, readonly) {
 		if (!this.propertyShaderDefn) {
 			this.propertyShaderDefn = { };
 		}
 
 		this.propertyShaderDefn[name] = {
 				PropertyClass: PropertyClass,
-				defaults: defaults,
+				initialState: initialState,
 				autoShadow: autoShadow,
 				readonly: readonly,
 			};
@@ -69,7 +69,7 @@ export default class PropertyFactoryShader {
 			return null;
 		}
 
-		const property = new this.PropertyClass(this.defaults, this.autoShadow);
+		const property = new this.PropertyClass(this.initialState, this.autoShadow);
 		const shader = new Shader(property, property.autoShadow);
 
 		// setup the shader and set on property
@@ -100,9 +100,9 @@ export default class PropertyFactoryShader {
 			if (this.childShaderDefn instanceof StateType) {
 				shader.setElementShader(this.childShaderDefn.factory(property));
 			} else {
-				let { PropertyClass, defaults, autoShadow, readonly } = this.childShaderDefn;
+				let { PropertyClass, initialState, autoShadow, readonly } = this.childShaderDefn;
 
-				shader.setElementClass(PropertyClass, defaults, autoShadow, readonly || this.readonly);
+				shader.setElementClass(PropertyClass, initialState, autoShadow, readonly || this.readonly);
 			}
 		} else if (this.propertyShaderDefn) {
 			let keys = Object.keys(this.propertyShaderDefn);
@@ -114,9 +114,9 @@ export default class PropertyFactoryShader {
 				if (defn instanceof StateType) {
 					shader.add(key, defn.factory(property));
 				} else {
-					let { PropertyClass, defaults, autoShadow, readonly } = defn;
+					let { PropertyClass, initialState, autoShadow, readonly } = defn;
 
-					shader.addPropertyClass(key, PropertyClass, defaults, autoShadow, readonly || this.readonly);
+					shader.addPropertyClass(key, PropertyClass, initialState, autoShadow, readonly || this.readonly);
 				}
 			}
 		}
