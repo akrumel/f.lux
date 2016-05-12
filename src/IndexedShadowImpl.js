@@ -343,6 +343,10 @@ export default class IndexedShadowImpl extends ShadowImpl {
 		return [ ...this[_impls] ];
 	}
 
+	getChild(idx) {
+		return this.childAt(idx);
+	}
+
 	/*
 		Gets the keys/indices for this property.
 

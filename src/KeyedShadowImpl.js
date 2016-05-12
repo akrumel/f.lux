@@ -282,6 +282,13 @@ export default class KeyedShadowImpl extends ShadowImpl {
 		return Object.values(this[_impls]);
 	}
 
+	/*
+		Gets a child implementation matching a property name or undefined if no such property exists.
+	*/
+	getChild(name) {
+		return this.get(name);
+	}
+
 	isMapped() {
 		return this[_mapped];
 	}
