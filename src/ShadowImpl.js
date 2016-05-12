@@ -368,7 +368,7 @@ export default class ShadowImpl {
 	}
 
 	latest() {
-		return this[_store].root.findByPath(this.path());
+		return this[_store].findByPath(this.path());
 	}
 
 	/*

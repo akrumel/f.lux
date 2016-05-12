@@ -1,3 +1,4 @@
 .babelrc
 .DS_Store
+.npmignore
 node_modules
