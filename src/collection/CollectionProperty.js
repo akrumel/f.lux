@@ -11,7 +11,7 @@ import isObject from "../utils/isObject";
 import uuid from "../utils/uuid";
 import doneIterator from "../utils/doneIterator";
 import iteratorFor from "../utils/iteratorFor";
-import iterateOver from "../utils/iterateOver";
+import iteratorOver from "../utils/iteratorOver";
 
 import CollectionShadow from "./CollectionShadow";
 import ModelProperty from "./ModelProperty";
@@ -445,7 +445,7 @@ export default class CollectionProperty extends KeyedProperty {
 		const models = state[_models];
 		const keys = this.modelKeysArray(state);
 
-		return iterateOver(keys, key => [key, this.getModel(key)] );
+		return iteratorOver(keys, key => [key, this.getModel(key)] );
 	}
 
 	modelKeys(state=this._) {
@@ -462,7 +462,7 @@ export default class CollectionProperty extends KeyedProperty {
 	}
 
 	modelValues(state=this._) {
-		return iterateOver(this.modelKeysArray(state), key => this.getModel(key, state));
+		return iteratorOver(this.modelKeysArray(state), key => this.getModel(key, state));
 	}
 
 	/*

@@ -1,5 +1,5 @@
 
-export default function iterateOver(keys, callback) {
+export default function iteratorOver(keys, callback) {
 	var i = -1;
 	const len = keys.length;
 
@@ -12,7 +12,7 @@ export default function iterateOver(keys, callback) {
 			return { done: true }
 		}
 	}
-	
+
 	return {
 		next: next,
 		[Symbol.iterator]() { return { next: next } }

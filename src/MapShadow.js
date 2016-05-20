@@ -1,6 +1,7 @@
 
 import Shadow from "./Shadow";
 import iteratorFor from "./utils/iteratorFor";
+import iteratorOver from "./utils/iteratorOver";
 
 
 /*
@@ -18,8 +19,8 @@ export default class MapShadow extends Shadow {
 	get size() {
 		return this.__.size
 	}
-	
-	clear() { 
+
+	clear() {
 		this.__.clear();
 	}
 
@@ -28,7 +29,7 @@ export default class MapShadow extends Shadow {
 	}
 
 	entries() {
-		return iterateOver(this.__.keys(), key => [ key, this[key] ] ); 
+		return iteratorOver(this.__.keys(), key => [ key, this[key] ] );
 	}
 
 	get(key) {
@@ -48,7 +49,7 @@ export default class MapShadow extends Shadow {
 	}
 
 	values() {
-		return iterateOver(this.__.keys(), key => this[key]); 
+		return iteratorOver(this.__.keys(), key => this[key]);
 	}
 
 	[Symbol.iterator]() { return this.entries() }

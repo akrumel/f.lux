@@ -4,7 +4,7 @@ import StateTypes from "./StateTypes";
 
 
 /*
-	Creates an ArrayProperty subclass based on a custom Shadow type.
+	Creates an KeyedProperty subclass based on a custom Shadow type.
 */
 export default function createKeyedPropertyType(shadowType={}, stateSpec, specCallback) {
 	var ShadowClass;

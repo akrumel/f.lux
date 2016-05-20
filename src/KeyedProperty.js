@@ -8,7 +8,7 @@ import PropertyFactoryShader from "./PropertyFactoryShader";
 import assert from "./utils/assert";
 import doneIterator from "./utils/doneIterator";
 import iteratorFor from "./utils/iteratorFor";
-import iterateOver from "./utils/iterateOver";
+import iteratorOver from "./utils/iteratorOver";
 
 
 /*
@@ -126,7 +126,7 @@ export default class KeyedProperty extends Property {
 	entries() {
 		if (!this.isActive()) { return doneIterator; }
 
-		return iterateOver(this.keysArray(), key => [key, this.get(key)] );
+		return iteratorOver(this.keysArray(), key => [key, this.get(key)] );
 	}
 
 	get(key) {
@@ -175,7 +175,7 @@ export default class KeyedProperty extends Property {
 	values() {
 		if (!this.isActive()) { return doneIterator; }
 
-		return iterateOver(this.keysArray(), key => this.get(key));
+		return iteratorOver(this.keysArray(), key => this.get(key));
 	}
 
 	[Symbol.iterator]() { return this.entries() }
