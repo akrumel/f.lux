@@ -144,13 +144,14 @@ export default class KeyedProperty extends Property {
 	keysArray() {
 		if (!this.isActive()) { return doneIterator }
 
-		return this.__.keys();
+		// use Object.keys() so do not get non-enumerable properties
+		return Object.keys(this._);
 	}
 
 	keys() {
 		if (!this.isActive()) { return doneIterator; }
 
-		return iteratorFor(this.__.keys());
+		return iteratorFor(keysArray());
 	}
 
 	set(key, value) {

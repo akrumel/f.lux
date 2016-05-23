@@ -298,7 +298,7 @@ export function createConsoleLogger(logger) {
 		},
 
 		get help() {
-			console.log(HELP_MSG+this.name+"\n\n");
+			console.log(HELP_MSG+logger.name+"\n\n");
 		},
 
 		get maxFrames() {
