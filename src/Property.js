@@ -360,6 +360,24 @@ export default class Property {
 		return this;
 	}
 
+	/*
+		Triggers a reshadow of the properties shadow state. This is handy when a calculated state value changes
+		while concrete state values remain unchanged.
+	*/
+	touch() {
+		if (this.isActive()) {
+			this.__.update( state => ( { name: "Property.touch()", nextState: state } ) );
+		}
+	}
+
+	update(callback) {
+		if (this.isActive()) {
+			this.__.update(callback);
+		} else {
+			throw new Error("Property must be active to invoke update()");
+		}
+	}
+
 
 	//------------------------------------------------------------------------------------------------------
 	// Property subclasses may want to override thise methods

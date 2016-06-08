@@ -288,7 +288,6 @@ export default class CollectionProperty extends KeyedProperty {
 		});
 	}
 
-
 	destroy(id) {
 		if (!this.hasModel(id)) {
 			return Store.resolve(this._);

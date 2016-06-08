@@ -4,21 +4,21 @@ import Shadow from "./Shadow";
 
 export default class ArrayShadow extends Shadow {
 	get length() {
-		return this.__.length; 
+		return this.__.length;
 	}
 
 
 	//------------------------------------------------------------------------------------------------------
 	//	Read-only array methods
 	//------------------------------------------------------------------------------------------------------
-	
+
 	every(pred, context) {
 		for (let i=0, len=this.length; i<len; i++) {
 			if (!pred.call(context, this[i], i, this)) {
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
 
@@ -73,7 +73,7 @@ export default class ArrayShadow extends Shadow {
 		return result;
 	}
 
-	includes(searchElement, fromIndex=0) {		
+	includes(searchElement, fromIndex=0) {
 		return this.indexOf(searchElement, fromIndex) != -1;
 	}
 
@@ -129,7 +129,7 @@ export default class ArrayShadow extends Shadow {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
 
@@ -140,11 +140,25 @@ export default class ArrayShadow extends Shadow {
 		var i = 0;
 		const length = this.length;
 		const next = () => i<length ?{ value: this[i++], done: false } :{ done: true };
-		
+
 		return {
 			next: next,
 			[Symbol.iterator]() { return { next: next } }
 		}
+	}
+
+	valuesArray() {
+		if (!this.__valuesArray__) {
+			var values = [];
+
+			for (let i=0, len=this.length; i<len; i++) {
+				values.push(this[i]);
+			}
+
+			Object.defineProperty(this, '__valuesArray__', { enumerable: false, value: values });
+		}
+
+		return this.__valuesArray__;
 	}
 
 	[Symbol.iterator]() { return this.values() }

@@ -340,8 +340,9 @@ export default class ShadowImpl {
 		Parameters:
 			childImpl - the child implementation triggering this call or undefined if this implementation
 				started the invalidation process
+			source - the shadow implementation that triggered the invalidation
 	*/
-	invalidate(childImpl, source) {
+	invalidate(childImpl, source=this) {
 		if (childImpl) {
 			this[_property].onChildInvalidated(childImpl.property, source.property);
 		}

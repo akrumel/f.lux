@@ -24,7 +24,7 @@ export default class CollectionShadow extends Shadow {
 	}
 
 	//------------------------------------------------------------------------------------------------------
-	// Paging API 
+	// Paging API
 	//------------------------------------------------------------------------------------------------------
 
 	get limit() {
@@ -60,7 +60,7 @@ export default class CollectionShadow extends Shadow {
 			merge - boolean declaring whether this state should be merged over an existing model with
 				the same ID. False means a current model will be replaced with the new model value.
 
-		Returns the object's ID. And ID is assigned if the 'id' parameter was not set and it could not 
+		Returns the object's ID. And ID is assigned if the 'id' parameter was not set and it could not
 			be found in the 'state' parameter.
 	*/
 	addModel(state, mergeOp=DEFAULTS_OPTION) {
@@ -68,7 +68,7 @@ export default class CollectionShadow extends Shadow {
 	}
 
 	/*
-		Bulk adds multiple models. Models must have an ID as it is assumed they have been previously 
+		Bulk adds multiple models. Models must have an ID as it is assumed they have been previously
 		saved.
 
 		Parameters:
@@ -80,7 +80,7 @@ export default class CollectionShadow extends Shadow {
 		this.$$.addModels(states, mergeOp);
 	}
 
-	clear() { 
+	clear() {
 		this.$$.removeAllModels();
 	}
 
@@ -92,7 +92,7 @@ export default class CollectionShadow extends Shadow {
 	}
 
 	destroy(id) {
-		return this.$$.destory(id);
+		return this.$$.destroy(id);
 	}
 
 	entries() {
@@ -197,7 +197,7 @@ export default class CollectionShadow extends Shadow {
 		return this.$$.isConnected();
 	}
 
-	isNew(id) { 
+	isNew(id) {
 		return this.$$.isNew(id, this);
 	}
 
