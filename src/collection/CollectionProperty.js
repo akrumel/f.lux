@@ -29,6 +29,28 @@ const _paging = '_paging';
 const _synced = "synced";
 
 const _isFetching = Symbol('isFetching');
+const _middleware = Symbol("middleware");
+
+/*
+	Middleware operation for create requests.
+*/
+export const CreateOp = "create";
+/*
+	Middleware operation for destroy requests.
+*/
+export const DestroyOp = "destroy";
+/*
+	Middleware operation for fetch requests.
+*/
+export const FetchOp = "fetch";
+/*
+	Middleware operation for find requests.
+*/
+export const FindOp = "find";
+/*
+	Middleware operation for update requests.
+*/
+export const UpdateOp = "update";
 
 
 import { DEFAULTS_OPTION, MERGE_OPTION, NONE_OPTION, REPLACE_OPTION, REPLACE_ALL_OPTION } from "./CollectionOptions";
@@ -55,6 +77,12 @@ export default class CollectionProperty extends KeyedProperty {
 	constructor(MemberPropertyClass=MapProperty, autoShadow=true, readonly=false) {
 		super({}, false);
 
+		this[_middleware] = {
+			[DestroyOp]: [],
+			[FetchOp]: [],
+			[FindOp]: [],
+		}
+
 		// keep isFetching as an instance variable because transient data and so can give immediate
 		// feedback to prevent concurrent fetches
 		this[_isFetching] = false;
@@ -80,6 +108,51 @@ export default class CollectionProperty extends KeyedProperty {
 		this.addProperty(_models, models);
 		modelsShader.setElementClass(ModelProperty, {}, true, false);
 		modelsShader.elementShader.addPropertyClass("data", MemberPropertyClass, {}, autoShadow, readonly);
+	}
+
+
+	//------------------------------------------------------------------------------------------------------
+	// Middleware API
+	//------------------------------------------------------------------------------------------------------
+
+	/*
+		Registers collection middleware function. Middleware functions are invoked assuming the following
+		format:
+
+			callback(shadow, property)
+
+		where:
+			shadow - the collection's shadow state
+			property - the f.lux Property instance
+
+		Middleware functions must return a promise and are invoked in the order registered. A function
+		generating an error will terminate the middleware chain and the collection operation will not
+		be performed.
+
+		Parameters:
+			op - one of DestroyOp, FetchOp
+			fn - the middleware function
+	*/
+	use(op, fn) {
+		assert( a => a.has(this[_middleware], op) );
+
+		this[_middleware][op].push(fn);
+	}
+
+	_on(op, idx=0) {
+		assert( a => a.is(this[_middleware][op], `Unknown middleware operation: ${op}`) );
+
+		const fns = this[_middleware][op];
+		var next = fns[idx];
+
+		if (!next) { return Store.resolve(true) }
+
+		try {
+			return next(this._, this)
+				.then( () => this._on(op, idx+1) );
+		} catch(error) {
+			return Store.reject(error);
+		}
 	}
 
 
@@ -282,7 +355,7 @@ export default class CollectionProperty extends KeyedProperty {
 							.then(resolve)
 							.catch(reject);
 					} catch(error) {
-						this.onError(error, "Fetch all models", reject);
+						this.onError(error, "Create model", reject);
 					}
 				});
 		});
@@ -301,16 +374,17 @@ export default class CollectionProperty extends KeyedProperty {
 						return resolve(this._);
 					}
 
-					this.endpoint.doDelete(id)
+					return this._on(DestroyOp)
+						.then( () => this.endpoint.doDelete(id) )
 						.then( () => {
 								this._[_models].delete(model.cid);
 								this._[_id2cid].delete(model.id);
 
 								resolve(this._);
 							})
-						.catch( error => this.onError(error, "Fetch all models", reject) );
+						.catch( error => this.onError(error, `Destroy model: ${id}`, reject) );
 				} catch(error) {
-					this.onError(error, "Fetch all models", reject);
+					this.onError(error, `Destroy model: ${id}`, reject);
 				}
 			});
 	}
@@ -324,7 +398,8 @@ export default class CollectionProperty extends KeyedProperty {
 		this.setIsFetching(true);
 
 		try {
-			return this.endpoint.doFetch(filter)
+			return this._on(FetchOp)
+				.then( () => this.endpoint.doFetch(filter) )
 				.then( models => {
 						try {
 							this.setIsFetching(false);
@@ -375,7 +450,8 @@ export default class CollectionProperty extends KeyedProperty {
 
 						resolve(model.data);
 					} else {
-						this.endpoint.doFind(id)
+						return this._on(FindOp)
+							.then( () => this.endpoint.doFind(id) )
 							.then( state => {
 									this.addModel(state, NONE_OPTION);
 
@@ -494,12 +570,14 @@ export default class CollectionProperty extends KeyedProperty {
 					const cid = model.cid;
 					const shadow = model.data;
 					const shadowState = shadow.__.state;
+					const opName = this.isNew(shadow) ?CrateOp :UpdateOp;
 
 					const op = this.isNew(shadow)
 								?this.endpoint.doCreate.bind(this.endpoint, shadow, shadowState)
 								:this.endpoint.doUpdate.bind(this.endpoint, id, shadow, shadowState);
 
-					op()
+					this._on(opName)
+						.then( () => op() )
 						.then( savedState => {
 								const currModel = model.$.latest();
 								const savedId = this.extractId(savedState);
