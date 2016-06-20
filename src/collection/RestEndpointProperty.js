@@ -40,7 +40,7 @@ export default class RestEndpointProperty extends KeyedProperty {
 
 	@shadow
 	get id() {
- 		return this._.url
+ 		return this._.url;
  	}
 
 	@shadow

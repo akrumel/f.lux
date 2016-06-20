@@ -240,6 +240,10 @@ export default class CollectionProperty extends KeyedProperty {
 		return this.isActive() && this._[_endpoint];
 	}
 
+	get endpointId() {
+		return this.isActive() && this._[_endpoint].id;
+	}
+
 	clearEndpoint() {
 		this.removeAllModels();
 		this.removeProperty(_endpoint);
@@ -426,7 +430,7 @@ export default class CollectionProperty extends KeyedProperty {
 						// invoke the callback with the error
 						callback && callback(error, null);
 
-						return this.onError(error, "Fetch all models")
+						return this.onError(error, `Fetch all models`)
 					});
 		} catch(error) {
 			this.setIsFetching(false);
@@ -666,12 +670,15 @@ export default class CollectionProperty extends KeyedProperty {
 		var msg;
 
 		if (error.status) {
-			msg = `Error during collection operation '${opMsg}' - Server Error: status=` +
-			      `${error.status} (${error.response.statusText})`;
+			let statusText = error.status
+				?error.response.statusText || `HTTP Code=${error.status}`
+				:"HTTP status code not specified"
+			msg = `Error during collection operation '${opMsg} (${ this.endpointId })' - ` +
+			      `Server Error: status=${statusText}`;
 		} else if (error.message) {
-			msg = `Error during collection operation '${opMsg}' - Collection Error: ${error.message}`;
+			msg = `Error during collection operation '${opMsg} (${ this.endpointId })' - Collection Error: ${error.message}`;
 		} else {
-			msg = `Error during collection operation '${opMsg}' - Error: ${error}`;
+			msg = `Error during collection operation '${opMsg} (${ this.endpointId })' - Error: ${error}`;
 		}
 
 		console.warn(msg);
@@ -680,7 +687,7 @@ export default class CollectionProperty extends KeyedProperty {
 		if (reject) {
 			reject(new Error(msg));
 		} else {
-			return Store.reject(msg);
+			return Store.reject(new Error(msg));
 		}
 	}
 
