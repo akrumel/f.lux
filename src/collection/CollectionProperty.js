@@ -641,6 +641,9 @@ export default class CollectionProperty extends KeyedProperty {
 						return this.get(id);
 					})
 				.catch( error => this.onError(error, `Save ${id} - cid=${shadow.$.cid}`) );
+		} catch(error) {
+			this.onError(error, `Save ${id} - cid=${shadow.$.cid}`);
+		}
 	}
 
 	setIdName(idName) {
