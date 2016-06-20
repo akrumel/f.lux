@@ -116,40 +116,70 @@ export default class CollectionProperty extends KeyedProperty {
 	//------------------------------------------------------------------------------------------------------
 
 	/*
-		Registers collection middleware function. Middleware functions are invoked assuming the following
-		format:
+		Registers collection middleware operations. Middleware operations may implement two optional
+		functions:
+			pre(shadow, property, op)
+				Invoked before asynchronous/network operation is started
 
-			callback(shadow, property)
+				parameters:
+					shadow - the collection's shadow state
+					property - the f.lux Property instance
+					op - one of CreateOp, DestroyOp, FetchOp, FindOp, UpdateOp
+			post(currShadow, preShadow, property, operation)
+				Invoked after asynchronous/network operation completes
 
-		where:
-			shadow - the collection's shadow state
-			property - the f.lux Property instance
+				parameters:
+					currShadow - the collection's shadow following the operation
+					preShadow - the collection's shadow state before the operation
+					property - the f.lux Property instance
+					op - one of CreateOp, DestroyOp, FetchOp, FindOp, UpdateOp
 
 		Middleware functions must return a promise and are invoked in the order registered. A function
 		generating an error will terminate the middleware chain and the collection operation will not
 		be performed.
-
-		Parameters:
-			op - one of DestroyOp, FetchOp
-			fn - the middleware function
 	*/
-	use(op, fn) {
+	use(op, mw) {
 		assert( a => a.has(this[_middleware], op) );
 
-		this[_middleware][op].push(fn);
+		this[_middleware][op].push(mw);
 	}
 
-	_on(op, idx=0) {
+	_on(op, pre=true, prevShadow, idx=0) {
 		assert( a => a.is(this[_middleware][op], `Unknown middleware operation: ${op}`) );
 
-		const fns = this[_middleware][op];
-		var next = fns[idx];
+		const mw = this[_middleware][op];
+		const next = mw[idx];
 
-		if (!next) { return Store.resolve(true) }
+		if (!next) {
+			return Store.resolve(this._);
+		} else if (pre) {
+			return this._pre(next, op, idx);
+		} else {
+			return this._post(next, op, idx, prevShadow);
+		}
+	}
+
+	_pre(next, op, idx) {
+		if (!next.pre) {
+			return this._on(op, true, undefined, idx+1);
+		}
 
 		try {
-			return next(this._, this)
-				.then( () => this._on(op, idx+1) );
+			return next.pre(this._, this, op)
+				.then( () => this._on(op, true, undefined, idx+1) );
+		} catch(error) {
+			return Store.reject(error);
+		}
+	}
+
+	_post(next, op, idx, prevShadow) {
+		if (!next.post) {
+			return this._on(op, false, prevShadow, idx+1);
+		}
+
+		try {
+			return next.post(this._, prevShadow, this, op)
+				.then( () => this._on(op, false, prevShadow, idx+1) );
 		} catch(error) {
 			return Store.reject(error);
 		}
@@ -351,18 +381,7 @@ export default class CollectionProperty extends KeyedProperty {
 
 		const cid = this.addModel(model);
 
-		return Store.promise( (resolve, reject) => {
-			// wait for the new model to be placed into state
-			this.store.waitFor( () => {
-					try {
-						this.save(cid)
-							.then(resolve)
-							.catch(reject);
-					} catch(error) {
-						this.onError(error, "Create model", reject);
-					}
-				});
-		});
+		return this.save(cid);
 	}
 
 	destroy(id) {
@@ -370,27 +389,28 @@ export default class CollectionProperty extends KeyedProperty {
 			return Store.resolve(this._);
 		}
 
-		return Store.promise( (resolve, reject) => {
-				try {
-					const model = this._getModel(id);
+		try {
+			const model = this._getModel(id);
+			const prevShadow = this._;
 
-					if (!model || model.isNew()) {
-						return resolve(this._);
-					}
+			if (!model || model.isNew()) {
+				return Store.resolve(this._);
+			}
 
-					return this._on(DestroyOp)
-						.then( () => this.endpoint.doDelete(id) )
-						.then( () => {
-								this._[_models].delete(model.cid);
-								this._[_id2cid].delete(model.id);
+			return this._on(DestroyOp)
+				.then( () => this.endpoint.doDelete(id) )
+				.then( () => {
+						this._[_models].delete(model.cid);
+						this._[_id2cid].delete(model.id);
 
-								resolve(this._);
-							})
-						.catch( error => this.onError(error, `Destroy model: ${id}`, reject) );
-				} catch(error) {
-					this.onError(error, `Destroy model: ${id}`, reject);
-				}
-			});
+						this.store.updateNow();
+
+						return this._on(DestroyOp, false, prevShadow);
+					})
+				.catch( error => this.onError(error, `Destroy model: ${id}`) );
+		} catch(error) {
+			this.onError(error, `Destroy model: ${id}`);
+		}
 	}
 
 	// No reset option - always resets
@@ -398,6 +418,7 @@ export default class CollectionProperty extends KeyedProperty {
 		if (!this.isConnected()) { return Store.reject(`Collection ${this.slashPath} is not connected`) }
 
 		const syncOp = !filter;
+		const prevShadow = this._;
 
 		this.setIsFetching(true);
 
@@ -418,6 +439,7 @@ export default class CollectionProperty extends KeyedProperty {
 							}
 
 							this.store.updateNow();
+							this._on(FetchOp, false, prevShadow)
 
 							return models;
 						} catch(error) {
@@ -445,30 +467,27 @@ export default class CollectionProperty extends KeyedProperty {
 	find(id) {
 		if (!this.isConnected()) { return Store.reject(`Collection ${this.slashPath} is not connected`) }
 
-		return Store.promise( (resolve, reject) => {
-				try {
-					const model = this._getModel(id);
+		try {
+			const model = this._getModel(id);
 
-					if (model) {
-						//log( l => l.requestSuccess(this, `Find model ${ mid(id) }`) );
+			if (model) {
+				return Store.resolve(model.data);
+			} else {
+				return this._on(FindOp)
+					.then( () => this.endpoint.doFind(id) )
+					.then( state => {
+							this.addModel(state, NONE_OPTION);
 
-						resolve(model.data);
-					} else {
-						return this._on(FindOp)
-							.then( () => this.endpoint.doFind(id) )
-							.then( state => {
-									this.addModel(state, NONE_OPTION);
+							this.store.updateNow();
+							this._on(FindOp, false, undefined);
 
-									this.store.waitFor( () => {
-											resolve(this.getModel(id));
-										});
-								})
-							.catch( error => this.onError(error, `Find model ${id}`, reject) );
-					}
-				} catch(error) {
-					this.onError(error, `Find model ${id}`, reject);
-				}
-			});
+							return this.getModel(id);
+						})
+					.catch( error => this.onError(error, `Find model ${id}`) );
+			}
+		} catch(error) {
+			this.onError(error, `Find model ${id}`);
+		}
 	}
 
 	getModel(id, state=this._) {
@@ -568,54 +587,60 @@ export default class CollectionProperty extends KeyedProperty {
 	save(id, mergeOp=DEFAULTS_OPTION) {
 		if (!this.isConnected()) { return Store.reject(`Collection ${this.slashPath} is not connected`) }
 
-		return Store.promise( (resolve, reject) => {
-				try {
-					const model = this._getModel(id);
-					const cid = model.cid;
-					const shadow = model.data;
-					const shadowState = shadow.__.state;
-					const opName = this.isNew(shadow) ?CrateOp :UpdateOp;
+		try {
+			const model = this._getModel(id);
+			const cid = model.cid;
+			const shadow = model.data;
+			const shadowState = shadow.__.nextState();
+			const opName = this.isNew(shadow) ?CrateOp :UpdateOp;
+			const prevShadow = this._;
+			const op = this.isNew(shadow)
+						?this.endpoint.doCreate.bind(this.endpoint, shadow, shadowState)
+						:this.endpoint.doUpdate.bind(this.endpoint, id, shadow, shadowState);
 
-					const op = this.isNew(shadow)
-								?this.endpoint.doCreate.bind(this.endpoint, shadow, shadowState)
-								:this.endpoint.doUpdate.bind(this.endpoint, id, shadow, shadowState);
+			this._on(opName)
+				.then( () => {
+						if (this.isNew(shadow)) {
+							return this.endpoint.doCreate(this.endpoint, shadow, shadowState);
+						} else {
+							return this.endpoint.doUpdate(this.endpoint, id, shadow, shadowState);
+						}
+					})
+				.then( savedState => {
+						const currModel = model.$.latest();
+						const savedId = this.extractId(savedState);
 
-					this._on(opName)
-						.then( () => op() )
-						.then( savedState => {
-								const currModel = model.$.latest();
-								const savedId = this.extractId(savedState);
+						// Put an entry in id->cid mapping
+						if (savedId != id) {
+							this._[_id2cid].set(id, cid);
+						}
 
-								// Put an entry in id->cid mapping
-								if (savedId != id) {
-									this._[_id2cid].set(id, cid);
+						switch (mergeOp) {
+							case NONE_OPTION:
+								if (savedId !== id) {
+									currModel.changeId(savedId);
 								}
 
-								switch (mergeOp) {
-									case NONE_OPTION:
-										if (savedId !== id) {
-											currModel.changeId(savedId);
-										}
+								break;
+							case MERGE_OPTION:
+								currModel.merge(savedState);
+								break;
+							case REPLACE_OPTION:
+								currModel.setData(savedState);
+								break;
+							case DEFAULTS_OPTION:
+								currModel.defaults(saveState);
+								break;
+							default:
+								return Store.reject(`Invalid post-save option: ${mergeOp}`);
+						}
 
-										break;
-									case MERGE_OPTION:
-										currModel.merge(savedState);
-										break;
-									case REPLACE_OPTION:
-										currModel.setData(savedState);
-										break;
-									case DEFAULTS_OPTION:
-										currModel.defaults(saveState);
-										break;
-									default:
-										return reject(`Invalid post-save option: ${mergeOp}`)
-								}
-							})
-						.catch( error => this.onError(error, `Save ${id} - cid=${shadow.$.cid}`, reject) );
-				} catch(error) {
-					this.onError(error, "Save model", reject);
-				}
-			});
+						this.store.updateNow();
+						this._on(opName, false, prevShadow);
+
+						return this.get(id);
+					})
+				.catch( error => this.onError(error, `Save ${id} - cid=${shadow.$.cid}`) );
 	}
 
 	setIdName(idName) {
@@ -666,7 +691,7 @@ export default class CollectionProperty extends KeyedProperty {
 		return isObject(model) ?model[idName] :model;
 	}
 
-	onError(error, opMsg, reject) {
+	onError(error, opMsg) {
 		var msg;
 
 		if (error.status) {
@@ -684,11 +709,7 @@ export default class CollectionProperty extends KeyedProperty {
 		console.warn(msg);
 		if (error.stack) { console.warn(error.stack) }
 
-		if (reject) {
-			reject(new Error(msg));
-		} else {
-			return Store.reject(new Error(msg));
-		}
+		return Store.reject(new Error(msg));
 	}
 
 	//------------------------------------------------------------------------------------------------------
