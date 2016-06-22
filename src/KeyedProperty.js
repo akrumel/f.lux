@@ -5,10 +5,16 @@ import KeyedShadowImpl from "./KeyedShadowImpl";
 import Property from "./Property";
 import PropertyFactoryShader from "./PropertyFactoryShader";
 
-import assert from "./utils/assert";
-import doneIterator from "./utils/doneIterator";
-import iteratorFor from "./utils/iteratorFor";
-import iteratorOver from "./utils/iteratorOver";
+import {
+	assert,
+	doneIterator,
+	iteratorFor,
+	iterateOver,
+} from "akutils";
+// import assert from "./utils/assert";
+// import doneIterator from "./utils/doneIterator";
+// import iteratorFor from "./utils/iteratorFor";
+// import iterateOver from "./utils/iterateOver";
 
 
 /*
@@ -126,7 +132,7 @@ export default class KeyedProperty extends Property {
 	entries() {
 		if (!this.isActive()) { return doneIterator; }
 
-		return iteratorOver(this.keysArray(), key => [key, this.get(key)] );
+		return iterateOver(this.keysArray(), key => [key, this.get(key)] );
 	}
 
 	get(key) {
@@ -176,7 +182,7 @@ export default class KeyedProperty extends Property {
 	values() {
 		if (!this.isActive()) { return doneIterator; }
 
-		return iteratorOver(this.keysArray(), key => this.get(key));
+		return iterateOver(this.keysArray(), key => this.get(key));
 	}
 
 	[Symbol.iterator]() { return this.entries() }

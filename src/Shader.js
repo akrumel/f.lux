@@ -5,7 +5,7 @@ import noParentStateErrorMsg from "./noParentStateErrorMsg";
 import PropertyFactoryShader from "./PropertyFactoryShader";
 import shadowProperty from "./shadowProperty";
 
-import isSomething from "./utils/isSomething";
+import { isSomething } from "akutils";
 
 
 const readonlyAutoShader = new AutoShader(true);

@@ -5,9 +5,12 @@ import PrimitiveProperty from "../PrimitiveProperty";
 import shadow from "../decorators/shadow";
 import Store from "../Store";
 
+import appDebug from "../debug";
 import { getOptions, extendOptions } from "./fetchOptions";
 import RestQueryBuilder from "./RestQueryBuilder";
 
+
+const debug = appDebug("f.lux:collection");
 
 /*
 
@@ -138,7 +141,7 @@ function rejectOnError(response, url) {
 
 	// TODO: extract text and generate a standard error description value (like login) that will make
 	//       sense across end point types
-	response.text( text => console.warn(`RestEndpointProperty error: status=${response.status}, text=${text}`));
+	response.text( text => debug(`RestEndpointProperty error: status=${response.status}, text=${text}`));
 
 	return Store.reject(error);
 }

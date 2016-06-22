@@ -19,6 +19,14 @@ export default class CollectionShadow extends Shadow {
 		return this._endpoint;
 	}
 
+	get fetching() {
+		return this.$$.isFetching();
+	}
+
+	get id() {
+		return this._endpoint && this._endpoint.id;
+	}
+
 	get size() {
 		return this._models.size;
 	}

@@ -6,19 +6,24 @@ import MapProperty from "../MapProperty";
 import PrimitiveProperty from "../PrimitiveProperty";
 import Store from "../Store";
 
-import assert from "../utils/assert";
-import isObject from "../utils/isObject";
-import uuid from "../utils/uuid";
-import doneIterator from "../utils/doneIterator";
-import iteratorFor from "../utils/iteratorFor";
-import iteratorOver from "../utils/iteratorOver";
+import {
+	assert,
+	isObject,
+	uuid,
+	doneIterator,
+	iteratorFor,
+	iterateOver,
+} from "akutils";
 
+import appDebug from "../debug";
 import CollectionShadow from "./CollectionShadow";
 import ModelProperty from "./ModelProperty";
 
 
+const debug = appDebug("f.lux:collection");
+
 const _endpoint = "_endpoint";
-const _fetching = 'fetching';
+//const _fetching = '_fetching';
 const _id2cid = "_id2cid";
 const _idName = "idName";
 const _lastPageSize = 'lastPageSize';
@@ -28,7 +33,8 @@ const _nextOffset = 'nextOffset';
 const _paging = '_paging';
 const _synced = "synced";
 
-const _isFetching = Symbol('isFetching');
+const _offlineState = Symbol('offlineState');
+const _fetching = Symbol('fetching');
 const _middleware = Symbol("middleware");
 
 /*
@@ -51,7 +57,10 @@ export const FindOp = "find";
 	Middleware operation for update requests.
 */
 export const UpdateOp = "update";
-
+/*
+	All middleware operations.
+*/
+export const AllOp = [ CreateOp, DestroyOp, FetchOp, FindOp, UpdateOp ];
 
 import { DEFAULTS_OPTION, MERGE_OPTION, NONE_OPTION, REPLACE_OPTION, REPLACE_ALL_OPTION } from "./CollectionOptions";
 
@@ -78,17 +87,18 @@ export default class CollectionProperty extends KeyedProperty {
 		super({}, false);
 
 		this[_middleware] = {
+			[CreateOp]: [],
 			[DestroyOp]: [],
 			[FetchOp]: [],
 			[FindOp]: [],
+			[UpdateOp]: [],
 		}
 
-		// keep isFetching as an instance variable because transient data and so can give immediate
+		// keep isFetching as an instance variable because transient data and gives immediate
 		// feedback to prevent concurrent fetches
-		this[_isFetching] = false;
+		this[_fetching] = false;
 
 		this.addProperty(_idName, new PrimitiveProperty("id", true));
-		this.addProperty(_fetching, new PrimitiveProperty(false, false, true));
 		this.addProperty(_id2cid, new MapProperty({}, true));
 		this.addProperty(_synced, new PrimitiveProperty(false, false, true));
 
@@ -108,6 +118,38 @@ export default class CollectionProperty extends KeyedProperty {
 		this.addProperty(_models, models);
 		modelsShader.setElementClass(ModelProperty, {}, true, false);
 		modelsShader.elementShader.addPropertyClass("data", MemberPropertyClass, {}, autoShadow, readonly);
+	}
+
+
+
+	//------------------------------------------------------------------------------------------------------
+	// Offline data support API
+	//------------------------------------------------------------------------------------------------------
+
+	/*
+		Experimental feature
+
+		Gets an object capable of providing a persisted version of this collection. The object must
+		expose a single method with the form:
+
+			restore()
+				Method sets the collection state for offline access.
+	*/
+	getOfflineState() {
+		return this[_offlineState];
+	}
+
+	/*
+		Experimental feature
+
+		Sets an object capable of providing a persisted version of this collection. The object must
+		expose a single method with the form:
+
+			restore()
+				Method sets the collection state for offline access.
+	*/
+	setOfflineState(offline) {
+		this[_offlineState] = offline;
 	}
 
 
@@ -139,9 +181,13 @@ export default class CollectionProperty extends KeyedProperty {
 		be performed.
 	*/
 	use(op, mw) {
-		assert( a => a.has(this[_middleware], op) );
+		op = Array.isArray(op) ?op :[ op ];
 
-		this[_middleware][op].push(mw);
+		assert( a => { for (const o of op) a.has(this[_middleware], o) });
+
+		for (const mwop of op) {
+			this[_middleware][mwop].push(mw);
+		}
 	}
 
 	_on(op, pre=true, prevShadow, idx=0) {
@@ -211,7 +257,6 @@ export default class CollectionProperty extends KeyedProperty {
 
 				this.pagingTime = null;
 				this.set(_paging, false);
-
 				if (error) { return }
 
 				this.set(_nextOffset, this._[_nextOffset] + models.length);
@@ -236,6 +281,7 @@ export default class CollectionProperty extends KeyedProperty {
 	}
 
 	resetPaging() {
+		this.pagingTime = null;
 		this.set(_lastPageSize, null);
 		this.set(_nextOffset, 0);
 		this.set(_paging, false);
@@ -299,7 +345,7 @@ export default class CollectionProperty extends KeyedProperty {
 	//------------------------------------------------------------------------------------------------------
 
 	get modelsCount() {
-		return state[_models].size;
+		return this._[_models].size;
 	}
 
 	/*
@@ -420,14 +466,14 @@ export default class CollectionProperty extends KeyedProperty {
 		const syncOp = !filter;
 		const prevShadow = this._;
 
-		this.setIsFetching(true);
+		this.setFetching(true);
 
 		try {
 			return this._on(FetchOp)
 				.then( () => this.endpoint.doFetch(filter) )
 				.then( models => {
 						try {
-							this.setIsFetching(false);
+							this.setFetching(false);
 
 							// invoke the callback before processing models
 							callback && callback(null, models);
@@ -447,7 +493,7 @@ export default class CollectionProperty extends KeyedProperty {
 						}
 					})
 				.catch( error => {
-						this.setIsFetching(false);
+						this.setFetching(false);
 
 						// invoke the callback with the error
 						callback && callback(error, null);
@@ -455,7 +501,7 @@ export default class CollectionProperty extends KeyedProperty {
 						return this.onError(error, `Fetch all models`)
 					});
 		} catch(error) {
-			this.setIsFetching(false);
+			this.setFetching(false);
 
 			// invoke the callback with the error
 			callback && callback(error, null);
@@ -507,6 +553,10 @@ export default class CollectionProperty extends KeyedProperty {
 		return this._[_endpoint] && this._[_endpoint].isConnected();
 	}
 
+	isFetching() {
+		return this[_fetching];
+	}
+
 	isNew(id, state=this._) {
 		const model = this._getModel(id, state);
 
@@ -543,7 +593,7 @@ export default class CollectionProperty extends KeyedProperty {
 		const models = state[_models];
 		const keys = this.modelKeysArray(state);
 
-		return iteratorOver(keys, key => [key, this.getModel(key)] );
+		return iterateOver(keys, key => [key, this.getModel(key)] );
 	}
 
 	modelKeys(state=this._) {
@@ -560,7 +610,7 @@ export default class CollectionProperty extends KeyedProperty {
 	}
 
 	modelValues(state=this._) {
-		return iteratorOver(this.modelKeysArray(state), key => this.getModel(key, state));
+		return iterateOver(this.modelKeysArray(state), key => this.getModel(key, state));
 	}
 
 	/*
@@ -650,9 +700,10 @@ export default class CollectionProperty extends KeyedProperty {
 		this._[_idName] = idName;
 	}
 
-	setIsFetching(fetching) {
-		this[_isFetching] = fetching;
-		this.set(_fetching, fetching);
+	setFetching(fetching) {
+		this[_fetching] = fetching;
+		this.touch();
+//		this.set(_fetching, fetching);
 	}
 
 	/*
@@ -709,8 +760,8 @@ export default class CollectionProperty extends KeyedProperty {
 			msg = `Error during collection operation '${opMsg} (${ this.endpointId })' - Error: ${error}`;
 		}
 
-		console.warn(msg);
-		if (error.stack) { console.warn(error.stack) }
+		debug(msg);
+		if (error.stack) { debug(error.stack) }
 
 		return Store.reject(new Error(msg));
 	}

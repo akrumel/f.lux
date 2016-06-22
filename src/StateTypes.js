@@ -9,8 +9,10 @@ import PrimitiveProperty from "./PrimitiveProperty";
 import Shader from "./Shader";
 import CollectionProperty from "./collection/CollectionProperty";
 
-import assert from "./utils/assert";
-import isObject from "./utils/isObject";
+import {
+	assert,
+	isObject
+} from "akutils";
 
 
 /*

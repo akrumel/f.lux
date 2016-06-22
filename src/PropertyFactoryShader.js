@@ -3,8 +3,10 @@ import noParentStateErrorMsg from "./noParentStateErrorMsg";
 import Property from "./Property";
 import Shader from "./Shader";
 
-import assert from "./utils/assert";
-import isSomething from "./utils/isSomething";
+import {
+	assert,
+	isSomething,
+} from "akutils";
 
 
 export default class PropertyFactoryShader {

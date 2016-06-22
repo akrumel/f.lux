@@ -1,6 +1,8 @@
 import invariant from "invariant";
 
-import isObject from "./utils/isObject";
+import { isObject } from "akutils";
+
+import appDebug from "./debug";
 
 import ArrayProperty from "./MapProperty";
 import KeyedProperty from "./KeyedProperty";
@@ -9,6 +11,9 @@ import Property from "./Property";
 import ShadowImpl from "./ShadowImpl";
 import Shader from "./Shader";
 import tick from "./tick";
+
+
+const debug = appDebug("f.lux:store");
 
 var _Promise = Promise;
 var _clearInterval = clearInterval;
@@ -381,8 +386,8 @@ export default class Store {
 	}
 
 	_onError(msg, error) {
-		console.warn(`State error: ${error}`);
-		error && error.stack && console.warn(error.stack);
+		debug(`State error: ${error}`);
+		error && error.stack && debug(error.stack);
 
 	debugger
 		this.onError(msg, error);

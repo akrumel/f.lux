@@ -2,9 +2,11 @@ import clone from "lodash.clone";
 import cloneDeep from "lodash.clonedeep";
 import isString from "lodash.isstring";
 
-import assert from "./utils/assert";
-import isPrimitive from "./utils/isPrimitive";
-import isSomething from "./utils/isSomething";
+import {
+	assert,
+	isPrimitive,
+	isSomething,
+} from "akutils";
 
 import Access from "./Access";
 import extendProperty from "./extendProperty";

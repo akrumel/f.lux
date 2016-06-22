@@ -4,7 +4,7 @@ import PrimitiveShadowImpl from "./PrimitiveShadowImpl";
 import PrimitiveShadow from "./PrimitiveShadowImpl";
 import Property from "./Property";
 
-import isPrimitive from "./utils/isPrimitive";
+import { isPrimitive } from "akutils";
 
 
 export default class PrimitiveProperty extends Property {

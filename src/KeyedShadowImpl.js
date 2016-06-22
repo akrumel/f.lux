@@ -2,8 +2,10 @@ import has from "lodash.has";
 import omit from "lodash.omit";
 import isEqual from "lodash.isequal";
 
-import isObject from "./utils/isObject";
-import removeFromArray from "./utils/removeFromArray";
+import {
+	isObject,
+	removeFromArray,
+} from "akutils";
 
 import ShadowImpl from "./ShadowImpl";
 import reshadow from "./reshadow";

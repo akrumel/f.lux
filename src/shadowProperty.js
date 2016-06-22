@@ -1,4 +1,4 @@
-import isObject from "./utils/isObject";
+import { isObject } from "akutils";
 
 /*
 	Function used by shaders to instantiate shadow implementation classes, subclasses of ShadowImpl.

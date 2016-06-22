@@ -6,7 +6,7 @@ import Shader from "./Shader";
 import Shadow from "./Shadow";
 import ShadowImpl from "./ShadowImpl";
 
-import isObject from "./utils/isObject";
+import { isObject } from "akutils";
 
 const _autoShadow = Symbol('autoShadow');
 const _impl = Symbol('impl');
