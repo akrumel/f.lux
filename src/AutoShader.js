@@ -1,9 +1,9 @@
 import invariant from "invariant";
+import { isObject } from "akutils";
+
 
 import noParentStateErrorMsg from "./noParentStateErrorMsg";
 import PropertyFactoryShader from "./PropertyFactoryShader";
-
-import isObject from "./utils/isObject";
 
 
 export default class AutoShader {
@@ -12,7 +12,7 @@ export default class AutoShader {
 	}
 
 	shaderFor(name, state) {
-		return this;	
+		return this;
 	}
 
 	shadowProperty(time, name, parentState, parentImpl, store) {
@@ -32,11 +32,11 @@ export default class AutoShader {
 		}
 
 		const shader = new PropertyFactoryShader(PropertyClass, parentProperty, undefined, true, this.readonly);
-		
+
 		return shader.shadowProperty(time, name, parentState, parentImpl);
 	}
 
-	shouldAutomount() { 
+	shouldAutomount() {
 		return this.automount;
 	}
 }

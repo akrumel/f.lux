@@ -1,8 +1,8 @@
 import has from "lodash.has";
 import sortBy from "lodash.sortby";
+import { iteratorFor } from "akutils";
 
 import Shadow from "../Shadow";
-import iteratorFor from "../utils/iteratorFor";
 
 import { DEFAULTS_OPTION, REPLACE_OPTION } from "./CollectionOptions";
 
