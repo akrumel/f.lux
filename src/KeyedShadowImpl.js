@@ -270,6 +270,8 @@ export default class KeyedShadowImpl extends ShadowImpl {
 		Subclasses should implement this method in such a way as not to trigger a mapping.
 	*/
 	childCount() {
+		if (!this.state) { return 0 }
+
 		if (this[_size] === undefined) {
 			this[_size] = Object.keys(this.state).length;
 		}

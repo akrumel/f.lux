@@ -39,7 +39,7 @@ var stateDeprecatedWarningShown = false;
 
 		propertyDidUpdate()
 
-		propertyWillUnmount()
+		onPropertyWillUnshadow()
 			Invoked just before the shadow property is removed from the shadow state because the state
 			property being shadowed has been removed from the application state.
 

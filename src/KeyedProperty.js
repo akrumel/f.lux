@@ -131,6 +131,24 @@ export default class KeyedProperty extends Property {
 		return iterateOver(this.keysArray(), key => [key, this.get(key)] );
 	}
 
+	filter(callback, context) {
+		const keys = this.keysArray();
+		const shadow = this._;
+		const acc = [];
+		var key, value;
+
+		for (let i=0, len=keys.length; i<len; i++) {
+			key = keys[i];
+			value = shadow[key];
+
+			if (callback.call(context, value, key, shadow)) {
+				acc.push(value);
+			}
+		}
+
+		return acc;
+	}
+
 	get(key) {
 		if (this.isActive()) {
 			return this._[key];
@@ -153,7 +171,7 @@ export default class KeyedProperty extends Property {
 	keys() {
 		if (!this.isActive()) { return doneIterator; }
 
-		return iteratorFor(keysArray());
+		return iteratorFor(this.keysArray());
 	}
 
 	set(key, value) {

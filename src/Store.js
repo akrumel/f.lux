@@ -313,6 +313,7 @@ export default class Store {
 	_exec() {
 		const updateAction = this._updateAction;
 		const waitFor = this._waitFor;
+		const prevShadow = this.shadow;
 
 		// Reset the pending actions
 		this._updateAction = null;
@@ -360,14 +361,78 @@ export default class Store {
 		}
 
 		this._notifyWaitFors(waitFor);
-		this._notifySubscribers();
+		this._notifySubscribers(prevShadow);
 	}
 
-	_notifySubscribers() {
+	_notifySubscribers(prevShadow) {
 		// Iterate each subscriber
 		for (let i=0, subscriber; subscriber = this._subscribers[i]; i++) {
 			try {
-				subscriber(this);
+				subscriber(this, shadow, prevShadow);
+			} catch(error) {
+				this._onError(`Store subscriber notification caused an exception: ${error}`, error);
+			}
+		}
+	}
+	_exec() {
+		const updateAction = this._updateAction;
+		const waitFor = this._waitFor;
+		const prevShadow = this.shadow;
+
+		// Reset the pending actions
+		this._updateAction = null;
+		this._waitFor = [];
+
+		if (updateAction) {
+			if (this._updating) {
+				debugger
+				throw new Error("Already updating state - use store.waitFor()");
+			}
+
+			try {
+				this._updating = true;
+
+				const currState = this._state;
+				const time = this._updateTime = tick();
+
+				// inform middleware going to perform an update
+				this.onPreUpdate(currState, time);
+
+				this._rootImpl.willShadow(false);
+
+				// perform the update action
+				const impl = updateAction(time);
+
+				if (!(impl instanceof ShadowImpl)) {
+					this._onError("Property update action did not return a ShadowImpl type");
+				} else if (impl.property != this._root) {
+					this._onError("Property update action cannot replace the root state");
+				} else {
+					this._rootImpl = impl;
+					this._state = impl.state;
+
+					// Have each property invoke did shadow/update lifecycle methods now that store is coherent with new stat
+					this._rootImpl.didShadow(time, false);
+				}
+
+				// inform middleware update completed
+				this.onPostUpdate(time, this._state, currState);
+			} catch(error) {
+				this._onError(`State dispatch UPDATE action exception: ${error}`, error);
+			} finally {
+				this._updating = false;
+			}
+		}
+
+		this._notifyWaitFors(waitFor);
+		this._notifySubscribers(prevShadow);
+	}
+
+	_notifySubscribers(prevShadow) {
+		// Iterate each subscriber
+		for (let i=0, subscriber; subscriber = this._subscribers[i]; i++) {
+			try {
+				subscriber(this, this.shadow, prevShadow);
 			} catch(error) {
 				this._onError(`Store subscriber notification caused an exception: ${error}`, error);
 			}
