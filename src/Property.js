@@ -89,7 +89,7 @@ export default class Property {
 	get _() {
 		const impl = this[_impl];
 
-		return impl.isMapped() ?impl.shadow() :result(this.store.shadow, impl.dotPath());
+		return this.isActive() && impl.isMapped() ?impl.shadow() :result(this.store.shadow, impl.dotPath());
 	}
 
 	/*

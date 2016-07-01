@@ -13,10 +13,6 @@ export default class Shadow {
 		Object.defineProperty(this, '__state__', { enumerable: false, value: impl.state });
 	}
 
-	static attachState(attach) {
-		attachState = attach;
-	}
-
 	toString() {
 		return JSON.stringify(this);
 	}

@@ -1,13 +1,13 @@
 import URI from "urijs";
 
+import { getOptions, extendOptions } from "./fetchOptions";
+import RestQueryBuilder from "./RestQueryBuilder";
+
+import appDebug from "../debug";
 import KeyedProperty from "../KeyedProperty";
 import PrimitiveProperty from "../PrimitiveProperty";
 import shadow from "../decorators/shadow";
 import Store from "../Store";
-
-import appDebug from "../debug";
-import { getOptions, extendOptions } from "./fetchOptions";
-import RestQueryBuilder from "./RestQueryBuilder";
 
 
 const debug = appDebug("f.lux:collection");
