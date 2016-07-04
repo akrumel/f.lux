@@ -1,3 +1,4 @@
+import Emitter from "component-emitter";
 import invariant from "invariant";
 
 import ArrayProperty from "../ArrayProperty";
@@ -36,6 +37,11 @@ const _synced = "synced";
 const _offlineState = Symbol('offlineState');
 const _fetching = Symbol('fetching');
 const _middleware = Symbol("middleware");
+
+/*
+	Event emitted on collection changes.
+*/
+export const ChangeEvent = "change";
 
 /*
 	Middleware operation for create requests.
@@ -120,6 +126,11 @@ export default class CollectionProperty extends KeyedProperty {
 		modelsShader.elementShader.addPropertyClass("data", MemberPropertyClass, {}, autoShadow, readonly);
 	}
 
+	onPropertyDidUpdate() {
+		super.onPropertyWillUpdate();
+
+		this.emit(ChangeEvent, this._, this);
+	}
 
 
 	//------------------------------------------------------------------------------------------------------
@@ -158,23 +169,9 @@ export default class CollectionProperty extends KeyedProperty {
 	//------------------------------------------------------------------------------------------------------
 
 	/*
-		Registers collection middleware operations. Middleware operations may implement two optional
-		functions:
-			pre(shadow, property, op)
-				Invoked before asynchronous/network operation is started
-
-				parameters:
-					shadow - the collection's shadow state
-					property - the f.lux Property instance
-					op - one of CreateOp, DestroyOp, FetchOp, FindOp, UpdateOp
-			post(currShadow, preShadow, property, operation)
-				Invoked after asynchronous/network operation completes
-
-				parameters:
-					currShadow - the collection's shadow following the operation
-					preShadow - the collection's shadow state before the operation
-					property - the f.lux Property instance
-					op - one of CreateOp, DestroyOp, FetchOp, FindOp, UpdateOp
+		Registers collection middleware operation. A middleware operation is invoked before each asynchronous/
+		network operation. Middleware operations are functions with the following format:
+			fn(shadow, property)
 
 		Middleware functions must return a promise and are invoked in the order registered. A function
 		generating an error will terminate the middleware chain and the collection operation will not
@@ -190,7 +187,10 @@ export default class CollectionProperty extends KeyedProperty {
 		}
 	}
 
-	_on(op, pre=true, prevShadow, idx=0) {
+	/*
+		Serially invokes each middleware function for the specified operation.
+	*/
+	_on(op, idx=0) {
 		assert( a => a.is(this[_middleware][op], `Unknown middleware operation: ${op}`) );
 
 		const mw = this[_middleware][op];
@@ -198,34 +198,11 @@ export default class CollectionProperty extends KeyedProperty {
 
 		if (!next) {
 			return Store.resolve(this._);
-		} else if (pre) {
-			return this._pre(next, op, idx);
-		} else {
-			return this._post(next, op, idx, prevShadow);
-		}
-	}
-
-	_pre(next, op, idx) {
-		if (!next.pre) {
-			return this._on(op, true, undefined, idx+1);
 		}
 
 		try {
-			return next.pre(this._, this, op)
-				.then( () => this._on(op, true, undefined, idx+1) );
-		} catch(error) {
-			return Store.reject(error);
-		}
-	}
-
-	_post(next, op, idx, prevShadow) {
-		if (!next.post) {
-			return this._on(op, false, prevShadow, idx+1);
-		}
-
-		try {
-			return next.post(this._, prevShadow, this, op)
-				.then( () => this._on(op, false, prevShadow, idx+1) );
+			return next(this._, this, op)
+				.then( () => this._on(op, idx+1) );
 		} catch(error) {
 			return Store.reject(error);
 		}
@@ -364,6 +341,7 @@ export default class CollectionProperty extends KeyedProperty {
 		if (!this.isConnected()) { throw new Error(`Collection is not connected.`) }
 
 		const id = this.extractId(state);
+		var modelId;
 
 		// just add the model
 		if (!id || !this.hasModel(id) || mergeOp === REPLACE_OPTION) {
@@ -372,7 +350,7 @@ export default class CollectionProperty extends KeyedProperty {
 
 			models.set(modelDefn.cid, modelDefn);
 
-			return modelDefn.id;
+			modelId = modelDefn.id;
 		} else {
 			const currModel = this._getModel(id);
 
@@ -392,8 +370,10 @@ export default class CollectionProperty extends KeyedProperty {
 					throw new Error(`Invalid post-save option: ${mergeOp}`)
 			}
 
-			return currModel.id;
+			modelId = currModel.id;
 		}
+
+		return modelId;
 	}
 
 	/*
@@ -437,7 +417,6 @@ export default class CollectionProperty extends KeyedProperty {
 
 		try {
 			const model = this._getModel(id);
-			const prevShadow = this._;
 
 			if (!model || model.isNew()) {
 				return Store.resolve(this._);
@@ -449,9 +428,7 @@ export default class CollectionProperty extends KeyedProperty {
 						this._[_models].delete(model.cid);
 						this._[_id2cid].delete(model.id);
 
-						this.store.updateNow();
-
-						return this._on(DestroyOp, false, prevShadow);
+						return id;
 					})
 				.catch( error => this.onError(error, `Destroy model: ${id}`) );
 		} catch(error) {
@@ -464,7 +441,6 @@ export default class CollectionProperty extends KeyedProperty {
 		if (!this.isConnected()) { return Store.reject(`Collection ${this.slashPath} is not connected`) }
 
 		const syncOp = !filter;
-		const prevShadow = this._;
 
 		this.setFetching(true);
 
@@ -483,9 +459,6 @@ export default class CollectionProperty extends KeyedProperty {
 							} else {
 								this.addModels(models, mergeOp, syncOp);
 							}
-
-							this.store.updateNow();
-							this._on(FetchOp, false, prevShadow)
 
 							return models;
 						} catch(error) {
@@ -523,9 +496,6 @@ export default class CollectionProperty extends KeyedProperty {
 					.then( () => this.endpoint.doFind(id) )
 					.then( state => {
 							this.addModel(state, NONE_OPTION);
-
-							this.store.updateNow();
-							this._on(FindOp, false, undefined);
 
 							return this.getModel(id);
 						})
@@ -613,6 +583,16 @@ export default class CollectionProperty extends KeyedProperty {
 		return iterateOver(this.modelKeysArray(state), key => this.getModel(key, state));
 	}
 
+	remove(id) {
+		if (!this.hasModel(id)) { return }
+
+		const model = this._getModel(id);
+		const prevShadow = this._;
+
+		this._[_models].delete(model.cid);
+		this._[_id2cid].delete(model.id);
+	}
+
 	/*
 		Removes all models from the collection and marks the collection as having not synched with the
 		endpoint.
@@ -643,7 +623,6 @@ export default class CollectionProperty extends KeyedProperty {
 			const shadow = model.data;
 			const shadowState = shadow.__.nextState();
 			const opName = this.isNew(shadow) ?CrateOp :UpdateOp;
-			const prevShadow = this._;
 			const op = this.isNew(shadow)
 						?this.endpoint.doCreate.bind(this.endpoint, shadow, shadowState)
 						:this.endpoint.doUpdate.bind(this.endpoint, id, shadow, shadowState);
@@ -684,9 +663,6 @@ export default class CollectionProperty extends KeyedProperty {
 							default:
 								return Store.reject(`Invalid post-save option: ${mergeOp}`);
 						}
-
-						this.store.updateNow();
-						this._on(opName, false, prevShadow);
 
 						return this.get(id);
 					})
@@ -780,3 +756,6 @@ export default class CollectionProperty extends KeyedProperty {
 		return state[_models].get(cid);
 	}
 }
+
+// Mix in `Emitter`
+Emitter(CollectionProperty);
