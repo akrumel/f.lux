@@ -39,6 +39,10 @@ export default class CollectionShadow extends Shadow {
 		return this._limit;
 	}
 
+	get nextOffset() {
+		return this.$$.nextOffset();
+	}
+
 	get paging() {
 		return this.$$.isPaging(this);
 	}

@@ -16,12 +16,12 @@ import {
 	iterateOver,
 } from "akutils";
 
-import appDebug from "../debug";
+import appDebug, { CollectionPropertyKey as DebugKey } from "../debug";
 import CollectionShadow from "./CollectionShadow";
 import ModelProperty from "./ModelProperty";
 
 
-const debug = appDebug("f.lux:collection");
+const debug = appDebug(DebugKey);
 
 const _endpoint = "_endpoint";
 //const _fetching = '_fetching';
@@ -257,6 +257,10 @@ export default class CollectionProperty extends KeyedProperty {
 			(!state[_lastPageSize] || this._[_lastPageSize] >= this._[_limit]);
 	}
 
+	nextOffset() {
+		return this.get(_nextOffset);
+	}
+
 	resetPaging() {
 		this.pagingTime = null;
 		this.set(_lastPageSize, null);
@@ -294,7 +298,9 @@ export default class CollectionProperty extends KeyedProperty {
 	}
 
 	get endpointId() {
-		return this.isActive() && this._[_endpoint].id;
+		const endpoint = this.endpoint;
+
+		return endpoint && endpoint.id;
 	}
 
 	clearEndpoint() {
@@ -471,7 +477,7 @@ export default class CollectionProperty extends KeyedProperty {
 						// invoke the callback with the error
 						callback && callback(error, null);
 
-						return this.onError(error, `Fetch all models`)
+						return this.onError(error, `Fetch all models`);
 					});
 		} catch(error) {
 			this.setFetching(false);
@@ -736,7 +742,7 @@ export default class CollectionProperty extends KeyedProperty {
 			msg = `Error during collection operation '${opMsg} (${ this.endpointId })' - Error: ${error}`;
 		}
 
-		debug(msg);
+		debug(`${DebugKey} Error: ${msg}`);
 		if (error.stack) { debug(error.stack) }
 
 		return Store.reject(new Error(msg));
@@ -758,4 +764,4 @@ export default class CollectionProperty extends KeyedProperty {
 }
 
 // Mix in `Emitter`
-Emitter(CollectionProperty);
+Emitter(CollectionProperty.prototype);
