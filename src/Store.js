@@ -237,6 +237,14 @@ export default class Store {
 		_setTimeout( () => this._exec() )
 	}
 
+	update(action) {
+		invariant(action, "Store.update() requires a callback function");
+
+		action();
+
+		this._exec();
+	}
+
 	/*
 		Executes all pending updates and waitFor() requests synchronously.
 	*/

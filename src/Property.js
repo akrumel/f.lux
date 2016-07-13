@@ -134,10 +134,6 @@ export default class Property {
 		return this[_impl] ?this[_impl].path :null;
 	}
 
-	get slashPath() {
-		return this[_impl] ?this[_impl].slashPath() :null;
-	}
-
 	get readonly() {
 		return this[_readonly];
 	}
@@ -148,6 +144,10 @@ export default class Property {
 
 	get rootState() {
 		return this.store.root.state;
+	}
+
+	get slashPath() {
+		return this[_impl] ?this[_impl].slashPath() :null;
 	}
 
 	get state() {
@@ -177,6 +177,10 @@ export default class Property {
 
 	isRoot() {
 		return !this.parent;
+	}
+
+	nextState() {
+		return this[_impl] && this[_impl].nextState();
 	}
 
 	/*
