@@ -42,6 +42,10 @@ const _middleware = Symbol("middleware");
 	Event emitted on collection changes.
 */
 export const ChangeEvent = "change";
+/*
+	Event emitted on error during an operation.
+*/
+export const ErrorEvent = "error";
 
 /*
 	Middleware operation for create requests.
@@ -745,7 +749,14 @@ export default class CollectionProperty extends KeyedProperty {
 		debug(`${DebugKey} Error: ${msg}`);
 		if (error.stack) { debug(error.stack) }
 
-		return Store.reject(new Error(msg));
+		const collectionError = new Error(msg);
+
+		collectionError.status = error.status;
+		collectionError.endpointError = error;
+
+		this.emit(ErrorEvent, collectionError, this._, this);
+
+		return Store.reject(collectionError);
 	}
 
 	//------------------------------------------------------------------------------------------------------
