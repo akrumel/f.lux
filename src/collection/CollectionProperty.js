@@ -16,12 +16,12 @@ import {
 	iterateOver,
 } from "akutils";
 
-import appDebug, { CollectionPropertyKey as DebugKey } from "../debug";
 import CollectionShadow from "./CollectionShadow";
 import ModelProperty from "./ModelProperty";
 
-
+import appDebug, { CollectionPropertyKey as DebugKey } from "../debug";
 const debug = appDebug(DebugKey);
+
 
 const _endpoint = "_endpoint";
 //const _fetching = '_fetching';
@@ -212,6 +212,51 @@ export default class CollectionProperty extends KeyedProperty {
 		}
 	}
 
+	/*
+		Experimental feature to update values with any modifications from the server.
+	*/
+	resync() {
+		const values = this._.valuesArray();
+		var currSync;
+		var lastUpdate = null;
+		var initialId = Number.MAX_SAFE_INTEGER;
+		var filter, id, v, updatedAt;
+
+		// Todo: break out filter parameters to a pluggable function
+		// iterate all values and determine the greatest updated_at
+		for (let i=0, len=values.length; i<len; i++) {
+			v = values[i];
+
+			if (!v) { continue }
+
+			id = v.id;
+			updatedAt = v.updated_at;
+
+			if (id < initialId) {
+				initialId = id;
+			}
+
+			if (!lastUpdate || lastUpdate < updatedAt) {
+				lastUpdate = updatedAt;
+			}
+		}
+
+		// setup the refresh criteria
+		if (lastUpdate) {
+			filter = this.endpoint.queryBuilder();
+
+			filter.gte("initial_id", initialId);
+			filter.gt("updated_at", lastUpdate);
+		}
+
+		debug(`resync() - path=${ this.dotPath() }, initial_id=${initialId}, updated_at=${lastUpdate}`);
+
+// Todo: rework network call returns two arrays: new/modified models and deleted model IDs
+//       as currently structured there is no delete support.
+//       What about dirty models? Perhaps they should not be touched if there is a conflict.
+
+		return this.fetch(filter, MERGE_OPTION, !lastUpdate);
+	}
 
 	//------------------------------------------------------------------------------------------------------
 	// Paging API (could improve by adding two offsets and maintain max pages)
@@ -489,7 +534,9 @@ export default class CollectionProperty extends KeyedProperty {
 			// invoke the callback with the error
 			callback && callback(error, null);
 
-			throw error;
+			debug(`fetch() top level error: ${error.stack || error}`);
+
+			throw Store.reject(error);
 		}
 	}
 

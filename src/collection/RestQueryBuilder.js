@@ -7,17 +7,21 @@ export default class RestQueryBuilder {
 	}
 
 	toString() {
-		return _.reduce(this.filter, (memo, n, v) => {
-				return `'${memo}${memo.length ?', ' :''}${n}=${v}`;
-			}, "");
+		return Object.keys(this.filter)
+			.reduce( (memo, n, v) => {
+					return `'${memo}${memo.length ?', ' :''}${n}=${v}`;
+				}, "");
+		// return reduce(this.filter, (memo, n, v) => {
+		// 		return `'${memo}${memo.length ?', ' :''}${n}=${v}`;
+		// 	}, "");
 	}
 
 	/**
-		Updates the collection URL instance variable. 
+		Updates the collection URL instance variable.
 
 		Note: This method will permanently overwrite the currently set URL.
 	*/
-	applyFilter(url) { 
+	applyFilter(url) {
 		const uri = new URI(url);
 
 		uri.setSearch(this.filter);
@@ -30,7 +34,7 @@ export default class RestQueryBuilder {
 	*/
 	equals(name, value) {
 		this.filter[name] = value;
-		
+
 		return this;
 	}
 
@@ -67,7 +71,7 @@ export default class RestQueryBuilder {
 	*/
 	filterOp(name, op, value) {
 		this.filter[name] = `${op}(${value})`;
-		
+
 		return this;
 	}
 

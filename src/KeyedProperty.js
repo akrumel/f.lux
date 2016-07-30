@@ -45,7 +45,7 @@ export default class KeyedProperty extends Property {
 				this.set(name, initialState);
 			}
 
-			this.refresh();
+			this.touch();
 		} else {
 			this.initialState[name] = initialState;
 		}

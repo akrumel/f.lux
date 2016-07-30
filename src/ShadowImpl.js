@@ -569,7 +569,7 @@ export default class ShadowImpl {
 
 			// mark property as having pending updates if the action callback returns a different
 			// object/value or requests a replacement be created. An example where neither would be
-			// true is a property refresh() call because its shadow function signature changed.
+			// true is a property touch() call because its shadow function signature changed.
 			if (nextState !== next || replace) {
 				this[_changed] = true;
 			}

@@ -146,10 +146,6 @@ export default class Property {
 		return this.store.root.state;
 	}
 
-	get slashPath() {
-		return this[_impl] ?this[_impl].slashPath() :null;
-	}
-
 	get state() {
 		if (!stateDeprecatedWarningShown) {
 			stateDeprecatedWarningShown = true;
@@ -169,6 +165,10 @@ export default class Property {
 		}
 
 		return this[_store];
+	}
+
+	dotPath() {
+		return this[_impl] ?this[_impl].dotPath() :null;
 	}
 
 	isActive() {
@@ -276,14 +276,6 @@ export default class Property {
 	}
 
 	/*
-		Invalidates the component so that its shadow will be regenerated. This is handy to trigger when
-		the shadow() output is altered. Changes to the shadow state will automatically trigger a refresh.
-	*/
-	refresh() {
-		this[_impl] && this[_impl].update( state => ({ name: "refresh", nextState: state  }) );
-	}
-
-	/*
 		Sets the auto shadow property flag.
 
 		Parameters:
@@ -362,6 +354,10 @@ export default class Property {
 		this[_store] = store;
 
 		return this;
+	}
+
+	slashPath() {
+		return this[_impl] ?this[_impl].slashPath() :null;
 	}
 
 	/*

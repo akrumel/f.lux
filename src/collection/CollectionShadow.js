@@ -253,6 +253,10 @@ export default class CollectionShadow extends Shadow {
 		return acc;
 	}
 
+	resync() {
+		return this.$$.resync();
+	}
+
 	setEndpoint(endPoint) {
 		this.$$.setEndpoint(endPoint);
 	}

@@ -36,6 +36,7 @@ export const CollectionPropertyKey = 'f.lux:collection:property';
 // uncomment to turn on all postop-stores logging (or selectively using one of keys above)
 //debug.enable(AllKey);
 
+debug.enable(CollectionPropertyKey);
 
 
 export default debug;
