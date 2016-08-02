@@ -577,7 +577,7 @@ export default class CollectionProperty extends KeyedProperty {
 		Gets if the collection is active (has a shadow) and an endpoint.
 	*/
 	isConnected() {
-		return this._[_endpoint] && this._[_endpoint].isConnected();
+		return this._ && this._[_endpoint] && this._[_endpoint].isConnected();
 	}
 
 	isFetching() {

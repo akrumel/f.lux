@@ -11,14 +11,20 @@ import sortBy from "lodash.sortby";
 */
 
 const HELP_MSG = `f.lux logger commands:
-\tclear     - removes all logs
-\thelp      - f.lux logger commands
-\tmaxFrames - # of store updates to cache (default=50)
-\tprint     - print logs to console
-\tstore     - gets the f.lux store
-\nFunctions:
-\tsetMaxFrames(maxFrames) - set the maximum number of store states to maintain (default=50)
-\ttail(count=10)          - prints last 'count' store updates
+\tback          - moves backward in time by one store state frame
+\tclear         - removes all logs
+\tforward       - moves forward in time by one store state frame
+\thelp          - f.lux logger commands
+\rindex         - active index of store state frames
+\tmaxFrames     - # of store updates to cache (default=50)
+\tprint         - print logs to console
+\tprintNoState  - print logs to console without state objects
+\rsize          - # of store state frames available
+\tstore         - gets the f.lux store
+\n\nFunctions:
+\tgoto(idx)                           - move to a specific store state frame
+\tsetMaxFrames(maxFrames)             - set the maximum number of store states to maintain (default=50)
+\ttail(count=10, printState=false)    - prints last 'count' store updates
 \n
 f.lux log available at window.`;
 
@@ -50,18 +56,18 @@ export default class Logger {
 		this.currFrame = new LogFrame(store, this.nextFrameId++);
 	}
 
-	print() {
+	print(printState=true) {
 		const frames = this.frames;
 
 		console.log(`f.lux log`);
 
 		for (let i=0, frame; frame=frames[i]; i++) {
-			frame.print(this.filter, frames[i-1]);
+			frame.print(this.filter, frames[i-1], printState);
 		}
 
 		if (this.currFrame.actions.length) {
 			console.log(`\nf.lux log current frame:`);
-			this.currFrame.print();
+			this.currFrame.print(null, null, printState);
 		}
 
 		console.log("\n\n");
@@ -81,16 +87,16 @@ export default class Logger {
 		this.truncateFrames();
 	}
 
-	tail(count=10) {
+	tail(count=10, printState=true) {
 		const frames = this.frames;
 		const start = frames.length>count ?frames.length - count :0;
 		var prevFrame;
 
-		console.log(`f.lux tail - count=${count}`);
+		console.log(`f.lux tail - count=${count}, printState=${printState}`);
 
 		for (let i=start, frame; frame=this.frames[i]; i++) {
-			frame.print(this.filter, prevFrame);
-			prevFrame = frame
+			frame.print(this.filter, prevFrame, printState);
+			prevFrame = frame;
 		}
 	}
 
@@ -244,12 +250,16 @@ export class LogFrame {
 		this.captureTime = new Date();
 	}
 
-	print(filter=null, prevFrame) {
+	print(filter=null, prevFrame, printState=true) {
 		var when = !this.captureTime
 			?"n/a"
 			:!prevFrame ?this.captureTime.toLocaleString() :`+${this.captureTime - prevFrame.captureTime} ms`
 
-		console.log(`\tID=${this.id}, active=${this.active}, completed=${when}, final state:`, this.state);
+		if (printState) {
+			console.log(`\tID=${this.id}, active=${this.active}, completed=${when}, final state:`, this.state);
+		} else {
+			console.log(`\tID=${this.id}, active=${this.active}, completed=${when}`);
+		}
 
 		var actions = sortBy(this.actions, a => {
 				const path = a.impl.dotPath();
@@ -266,7 +276,7 @@ export class LogFrame {
 		}
 
 		for (let i=0, action; action=actions[i]; i++) {
-			action.print();
+			action.print(printState);
 		}
 
 		if (this.error) {
@@ -283,10 +293,15 @@ export class FrameAction {
 		this.impl = impl;
 	}
 
-	print() {
+	print(printState=true) {
 		const { action, impl } = this;
 
-		console.log(`\t\t${impl.dotPath()}::${action.name}, replace=${!!action.replace} nextState=%O, startState=%O`, action.nextState, impl.state);
+		if (printState) {
+			console.log(`\t\t${impl.dotPath()}::${action.name}, replace=${!!action.replace} nextState=%O, startState=%O`,
+					action.nextState, impl.state);
+		} else {
+			console.log(`\t\t${impl.dotPath()}::${action.name}, replace=${!!action.replace}`);
+		}
 	}
 }
 
@@ -309,6 +324,10 @@ export function createConsoleLogger(logger) {
 			logger.print();
 		},
 
+		get printNoState() {
+			logger.print(false);
+		},
+
 		get store() {
 			return logger.store;
 		},
@@ -321,8 +340,8 @@ export function createConsoleLogger(logger) {
 			logger.setMaxFrames(maxFrames);
 		},
 
-		tail(count) {
-			logger.tail(count);
+		tail(count, printState) {
+			logger.tail(count, printState);
 		},
 
 		get index() {
