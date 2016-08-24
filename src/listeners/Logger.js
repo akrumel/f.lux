@@ -1,8 +1,12 @@
+import { uuid } from "akutils";
 import autobind from "autobind-decorator";
 import has from "lodash.has";
 import invariant from "invariant";
+import isFunction from "lodash.isfunction";
+import isEqual from "lodash.isequal";
+import isString from "lodash.isstring"
 import sortBy from "lodash.sortby";
-
+import result from "lodash.result";
 
 /*
 	Todo:
@@ -22,8 +26,11 @@ const HELP_MSG = `f.lux logger commands:
 \tsize          - # of store state frames available
 \tstore         - gets the f.lux store
 \nFunctions:
+\tclearTrap(name)                    - clears a trap set by 'setTrap()'
 \tgoto(idx)                          - move to a specific store state frame
 \tsetMaxFrames(maxFrames)            - set the maximum number of store states to maintain (default=50)
+\tsetTrap(cond, value, name=uuid)    - sets a debugger trap and returns name. conditino argument may be
+\t                                     a function taking next state or a string path to get a value
 \ttail(count=10, printState=true)    - prints last 'count' store updates
 \n
 f.lux log available at window.`;
@@ -36,6 +43,7 @@ export default class Logger {
 		this.filter = null;
 		this.frames = [];
 		this.maxFrames = 50;
+		this.traps = null;
 
 		this.activeFrame = new LogFrame(store, this.nextFrameId++);
 
@@ -45,7 +53,9 @@ export default class Logger {
 		this.currFrame = new LogFrame(store, this.nextFrameId++);
 
 		window[name] = this.console = createConsoleLogger(this);
-		this.console.help
+
+		// print help message to console
+		this.console.help;
 	}
 
 	clear() {
@@ -87,6 +97,30 @@ export default class Logger {
 		this.truncateFrames();
 	}
 
+	clearTrap(name) {
+		if (!this.traps) { return }
+
+		delete this.traps[name];
+
+		if (Object.keys(this.traps).length === 0) {
+			this.traps = null;
+		}
+	}
+
+	setTrap(condition, value, name=uuid()) {
+		invariant(isFunction(condition) || isString(condition), "Traps must be either a regular expression or function");
+
+		this.traps = this.traps || {};
+
+		this.traps[name] = {
+			eval: condition,
+			name: name,
+			value: value
+		}
+
+		return name;
+	}
+
 	tail(count=10, printState=true) {
 		const frames = this.frames;
 		const start = frames.length>count ?frames.length - count :0;
@@ -123,6 +157,23 @@ export default class Logger {
 	@autobind
 	onPostStateUpdate(store, action, impl) {
 		this.currFrame.addAction(action, impl);
+
+		if (this.traps) {
+			const traps = Object.values(this.traps);
+			const nextState = store.shadow.__.nextState();
+
+			for (let i=0, t; t=traps[i]; i++) {
+				var value = isString(t.eval)
+					?result(nextState, t.eval)
+					:t.eval(nextState)
+
+				if (isEqual(value, t.value)) {
+					debugger;
+
+					this.clearTrap(t.name);
+				}
+			}
+		}
 	}
 
 	@autobind
@@ -332,12 +383,20 @@ export function createConsoleLogger(logger) {
 			return logger.store;
 		},
 
+		clearTrap(name) {
+			logger.clearTrap(name);
+		},
+
 		setActionFilter(filter) {
 			logger.setActionFilter(filter);
 		},
 
 		setMaxFrames(maxFrames) {
 			logger.setMaxFrames(maxFrames);
+		},
+
+		setTrap(condition, value, name) {
+			return logger.setTrap(condition, value, name);
 		},
 
 		tail(count, printState) {
