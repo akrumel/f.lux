@@ -215,10 +215,12 @@ export class StateType {
 		if (this._elementType) {
 			let eltType = this._elementType;
 
-			if (eltType.isComplex()) {
+			if (eltType.isComplex && eltType.isComplex()) {
 				shader.setElementStateType(eltType);
-			} else {
+			} else if (eltType.PropertyClass) {
 				shader.setElementClass(eltType.PropertyClass, eltType.defaults, eltType.autoShadow, eltType.readonly);
+			} else {
+				shader.setElementClass(eltType);
 			}
 		} else if (this._managedPropertyType) {
 			// will call the setElementType() method after property created - will need to add
@@ -272,6 +274,21 @@ export default {
 
 		return type;
 	},
+
+	get Indexed() {
+		const type = new StateType(IndexedProperty);
+
+		return type;
+	},
+
+	indexedOf(elementStateType) {
+		const type = new StateType(IndexedProperty);
+
+		type.setElementType(elementStateType);
+
+		return type;
+	},
+
 
 // CollectionProperty needs refactoring to support
 	// collectionOf(elementStateType) {

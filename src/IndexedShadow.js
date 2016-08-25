@@ -2,7 +2,7 @@ import has from "lodash.has";
 
 import Shadow from "./Shadow";
 
-export default class ArrayShadow extends Shadow {
+export default class IndexedShadow extends Shadow {
 	get length() {
 		return this.__.length;
 	}

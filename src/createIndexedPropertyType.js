@@ -37,14 +37,14 @@ export default function createIndexedPropertyType(shadowType, elementType, specC
 		}
 	}
 
-	if (elementType) {
-		// assign state spec if present to new Property subclass
-		CustomIndexedProperty.stateSpec = StateTypes.property(CustomIndexedProperty)
-				.setElementType(elementType);
+	CustomIndexedProperty.stateSpec = StateTypes.property(CustomIndexedProperty);
 
-		if (specCallback) {
-			specCallback(CustomIndexedProperty.stateSpec)
-		}
+	if (elementType) {
+		CustomIndexedProperty.stateSpec.setElementType(elementType);
+	}
+
+	if (specCallback) {
+		specCallback(CustomIndexedProperty.stateSpec)
 	}
 
 	return CustomIndexedProperty;
