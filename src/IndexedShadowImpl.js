@@ -1,3 +1,4 @@
+import flatten from "lodash.flatten";
 import range from "lodash.range";
 
 import ShadowImpl from "./ShadowImpl";
@@ -135,7 +136,7 @@ export default class IndexedShadowImpl extends ShadowImpl {
 	concat(...values) {
 		modelizeArray(values);
 
-		this.update( state => ( { nextState: state.contcat(values) } ) );
+		this.update( state => ( { nextState: flatten(state.concat(values)) } ) );
 
 		return [...this.nextState() ];
 	}

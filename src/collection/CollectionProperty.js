@@ -82,15 +82,6 @@ import { DEFAULTS_OPTION, MERGE_OPTION, NONE_OPTION, REPLACE_OPTION, REPLACE_ALL
 			- setElementShader(shader/factoryShader)
 			- setElementType(type, initState, autoshadow, readonly)
 		- method to get element shader (shader.modelsShader.element)
-
-
-	CollectionProperty.dataSpec = {
-		[_idName]: StateTypes.Primitive.initialState("id"),
-		[_fetching]: StateTypes.Primitive.initialState(false).readonly,
-		[_id2cid]: StateTypes.Map,
-		[_synced]: StateTypes.Primitive.initialState(false).autoshadowOff.readonly,
-		[_models]: StateTypes.mapOf(StateTypes.property(ModelProperty))
-	}
 */
 export default class CollectionProperty extends KeyedProperty {
 	constructor(MemberPropertyClass=MapProperty, autoShadow=true, readonly=false) {
