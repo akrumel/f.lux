@@ -134,11 +134,7 @@ export default class IndexedShadowImpl extends ShadowImpl {
 
 	// This method does not change this object's state.
 	concat(...values) {
-		modelizeArray(values);
-
-		this.update( state => ( { nextState: flatten(state.concat(values)) } ) );
-
-		return [...this.nextState() ];
+		return flatten(this.values(), values);
 	}
 
 	pop() {

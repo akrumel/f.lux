@@ -12,6 +12,10 @@ export default class IndexedShadow extends Shadow {
 	//	Read-only array methods
 	//------------------------------------------------------------------------------------------------------
 
+	concat(...values) {
+		return this.valuesArray().concat(...values);
+	}
+
 	every(pred, context) {
 		for (let i=0, len=this.length; i<len; i++) {
 			if (!pred.call(context, this[i], i, this)) {

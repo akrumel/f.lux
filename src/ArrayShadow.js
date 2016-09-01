@@ -2,7 +2,7 @@
 import IndexedShadow from "./IndexedShadow";
 
 export default class ArrayShadow extends IndexedShadow {
-	clear() { 
+	clear() {
 		this.__.clear();
 	}
 
@@ -10,10 +10,6 @@ export default class ArrayShadow extends IndexedShadow {
 	//------------------------------------------------------------------------------------------------------
 	//	Write capable array methods
 	//------------------------------------------------------------------------------------------------------
-	
-	concat(...values) {
-		return this.__.concat(...values);
-	}
 
 	pop() {
 		return this.__.pop();
@@ -35,7 +31,7 @@ export default class ArrayShadow extends IndexedShadow {
 		}
 	}
 
-	shift() { 
+	shift() {
 		return this.__.shift();
 	}
 
