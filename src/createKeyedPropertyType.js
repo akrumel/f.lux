@@ -32,6 +32,10 @@ export default function createKeyedPropertyType(shadowType={}, stateSpec, specCa
 
 	// create the property subclass
 	class CustomKeyedProperty extends KeyedProperty {
+		constructor(initialState=stateSpec._initialState, autoShadow=stateSpec._autoshadow, readonly=stateSpec._readonly) {
+			super(initialState, autoShadow, readonly);
+		}
+
 		shadowClass() {
 			return ShadowClass;
 		}

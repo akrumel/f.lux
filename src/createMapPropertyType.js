@@ -32,6 +32,10 @@ export default function createMapPropertyType(shadowType={}, stateSpec, specCall
 
 	// create the property subclass
 	class CustomMapProperty extends MapProperty {
+		constructor(initialState=stateSpec._initialState, autoShadow=stateSpec._autoshadow, readonly=stateSpec._readonly) {
+			super(initialState, autoShadow, readonly);
+		}
+
 		shadowClass() {
 			return ShadowClass;
 		}

@@ -31,9 +31,9 @@ export class StateType {
 
 		// setup default values
 		this._autoshadow = true;
-		this._readonly = false;
 		this._defaults = undefined;
 		this._initialState = undefined;
+		this._readonly = false;
 	}
 
 	static computeInitialState(property, state) {

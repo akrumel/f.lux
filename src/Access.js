@@ -7,8 +7,8 @@ export default class Access {
 		Object.defineProperty(this, '__', { enumerable: true, value: impl })
 	}
 
-	property() {
-		return this.__.property;
+	dotPath() {
+		return this.__.dotPath();
 	}
 
 	isValid() {
@@ -25,12 +25,20 @@ export default class Access {
 		return impl && impl.shadow();
 	}
 
+	merge(data) {
+		this.__.merge(data);
+	}
+
 	nextState() {
 		return this.__.nextState();
 	}
 
 	path() {
 		return this.__.path();
+	}
+
+	property() {
+		return this.__.property;
 	}
 
 	rootShadow() {
@@ -50,13 +58,13 @@ export default class Access {
 	}
 
 	/*
-		Performs an update on the state values. 
+		Performs an update on the state values.
 
 		The callback should be pure and have the form:
 
 			callback(nextState) : nextState
 
-				 - or - 
+				 - or -
 
 			callback(nextState) : { name, nextState }
 
@@ -65,7 +73,7 @@ export default class Access {
 		call.
 
 		if the callback returns an object should be:
-			name - a stort moniker identifying the update call purpose. This will passed to the store middleware.  
+			name - a stort moniker identifying the update call purpose. This will passed to the store middleware.
 				This value is optional with the default value being '[path].$.update()'.
 			nextState - the value for the next state after the update functionality
 	*/
@@ -78,16 +86,16 @@ export default class Access {
 			// mark as a replacement (expensive but conservative) since very unlikely a caller through the access
 			// variable will have made all the book keeping updates and no way of knowing how deep their changes
 			// were in the object hierarchy.
-			return { 
-				name: result.name || `${ this.slashPath() }.$.update()`, 
+			return {
+				name: result.name || `${ this.slashPath() }.$.update()`,
 				nextState: result.nextState,
-				replace: true 
+				replace: true
 			};
 		})
 	}
 
 	waitFor(callback) {
-		this.store.waitFor( () => { 
+		this.store.waitFor( () => {
 				const latest = this.latest();
 
 				callback(latest && latest.shadow());
