@@ -57,6 +57,10 @@ export default class Access {
 		return this.__.state;
 	}
 
+	store() {
+		return this.__.store;
+	}
+
 	/*
 		Performs an update on the state values.
 

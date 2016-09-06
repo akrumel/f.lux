@@ -1,4 +1,5 @@
 
+export { default as Access } from "./Access";
 export { default as ArrayProperty } from "./ArrayProperty";
 export { default as ArrayShadow } from "./ArrayShadow";
 export { default as createArrayPropertyType } from "./createArrayPropertyType";

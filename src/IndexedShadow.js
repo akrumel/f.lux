@@ -52,6 +52,8 @@ export default class IndexedShadow extends Shadow {
 				return i;
 			}
 		}
+
+		return -1;
 	}
 
 	forEach(callback, context) {
