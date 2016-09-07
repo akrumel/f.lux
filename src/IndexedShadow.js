@@ -1,4 +1,5 @@
 import has from "lodash.has";
+import sortBy from "lodash.sortby";
 
 import Shadow from "./Shadow";
 
@@ -137,6 +138,12 @@ export default class IndexedShadow extends Shadow {
 		}
 
 		return false;
+	}
+
+	sortBy(...iteratee) {
+		const values = this.valuesArray();
+
+		return sortBy.apply(null, [values, ...iteratee]);
 	}
 
 	/*
