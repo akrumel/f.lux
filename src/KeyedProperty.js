@@ -46,7 +46,9 @@ export default class KeyedProperty extends Property {
 			}
 
 			this.touch();
-		} else {
+		} else if (this.initialState) {
+			assert( a => a.is(this.initialState, "Attempting to set initial state property value with no backing object") );
+
 			this.initialState[name] = initialState;
 		}
 

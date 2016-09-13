@@ -143,12 +143,17 @@ export default class KeyedShadowImpl extends ShadowImpl {
 	}
 
 	extend(...sources) {
-		this.update( state => ({
-					name: "extend()",
-					nextState: Object.assign({ }, state, ...sources),
-					replace: true
-				})
-			);
+		this.update( state => {
+				if (state) {
+					return {
+						name: "extend()",
+						nextState: Object.assign({ }, state, ...sources),
+						replace: true
+					}
+				} else {
+					return { name: `extend()`, nextState: state };
+				}
+			});
 	}
 
 	/*
@@ -179,7 +184,11 @@ export default class KeyedShadowImpl extends ShadowImpl {
 		this.update( state => {
 				this.removeChildAt(k);
 
-				return { name: `set(${k})`, nextState: { ...state, [k]: v } };
+				if (state) {
+					return { name: `set(${k})`, nextState: { ...state, [k]: v } };
+				} else {
+					return { name: `set(${k})`, nextState: state };
+				}
 			});
 
 		return this;
@@ -361,6 +370,10 @@ export default class KeyedShadowImpl extends ShadowImpl {
 
 		if (child) {
 			this[_impls][name] = child;
+
+			if (!prevChild) {
+				child.didShadow(this.time);
+			}
 		}
 	}
 }

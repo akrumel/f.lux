@@ -9,16 +9,16 @@ export default function reshadow(time, parentState, prevImpl, parentImpl) {
 		// No values changed in prevImpl tree so just change parent and roots of decendants
 		// This case should only occur for non-root properties but no harm if so
 		if (parentImpl) {
-			prevImpl.changeParent(parentImpl); 	
+			prevImpl.changeParent(parentImpl);
 		}
 
 		return prevImpl;
 	} else if (!prevImpl.replaced()) {
-		// Invalid because a descendant property changed or a partial change property. Create a 
+		// Invalid because a descendant property changed or a partial change property. Create a
 		// copy so can keep valid properties while shadowing invalid/new properties
 		const impl = prevImpl.createCopy(time, state, parentImpl);
 
-		// Attach the new property to its parents and invoke property end update life-cycle method 
+		// Attach the new property to its parents and invoke property end update life-cycle method
 		impl.setupPropertyAccess();
 
 		// Set the properties implmentation after attaching the implementation to the shadow state
@@ -32,8 +32,8 @@ export default function reshadow(time, parentState, prevImpl, parentImpl) {
 	}
 
 	const shader = prevImpl.shader(state);
-		
-	// make an all new shadow model 
+
+	// make an all new shadow model
 	prevImpl.obsoleteTree();
 
 	if (prevImpl.isRoot()) {

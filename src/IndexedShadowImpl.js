@@ -280,30 +280,42 @@ export default class IndexedShadowImpl extends ShadowImpl {
 	}
 
 	merge(newItems) {
-		if (!Array.isArray(newItems)) {
-			return this.assign(newItems);
-		}
+		// original algorithm (commented out below) is adding duplicates where in most
+		// cases what is really wanted is one of two things:
+		//    1) add if no duplicate (exact deep compare)
+		//    2) merge if object's 'ID' is matched and add otherwise
+		//
+		// So probably need multiple algorithms driven by a property setting. Would need to worry
+		// about ordering, inserts, deletions,...
+		//
+		// In the meantime just going to do a full replace
+		return this.assign(newItems);
 
-		const impls = this.childMapping();
-		var child, value;
+		// Original algorithm (broken)
+		// if (!Array.isArray(newItems)) {
+		// 	return this.assign(newItems);
+		// }
 
-		for (let i=0, len=newItems.length; i<len; i++) {
-			child = impls[i];
-			value = newItems[i];
+		// const impls = this.childMapping();
+		// var child, value;
 
-			if (child) {
-				child.merge(value);
-			} else {
-				this.update( state => {
-						state = [...state];
+		// for (let i=0, len=newItems.length; i<len; i++) {
+		// 	child = impls[i];
+		// 	value = newItems[i];
 
-						state.splice(i, 0, value);
-						this.addChildren(i, newItems.length);
+		// 	if (child) {
+		// 		child.merge(value);
+		// 	} else {
+		// 		this.update( state => {
+		// 				state = [...state];
 
-						return { nextState: state };
-					});
-			}
-		}
+		// 				state.splice(i, 0, value);
+		// 				this.addChildren(i, newItems.length);
+
+		// 				return { nextState: state };
+		// 			});
+		// 	}
+		// }
 	}
 
 
@@ -404,6 +416,10 @@ export default class IndexedShadowImpl extends ShadowImpl {
 
 		if (child) {
 			this[_impls][idx] = child;
+
+			if (!prevChild) {
+				child.didShadow(this.time);
+			}
 		}
 	}
 }
