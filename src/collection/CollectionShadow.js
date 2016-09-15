@@ -92,6 +92,13 @@ export default class CollectionShadow extends Shadow {
 		this.$$.addModels(states, mergeOp);
 	}
 
+	/*
+		Alias for valuesArray().
+	*/
+	all() {
+		return this.valuesArray();
+	}
+
 	clear() {
 		this.$$.removeAllModels();
 	}

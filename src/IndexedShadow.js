@@ -13,6 +13,13 @@ export default class IndexedShadow extends Shadow {
 	//	Read-only array methods
 	//------------------------------------------------------------------------------------------------------
 
+	/*
+		Alias for valuesArray().
+	*/
+	all() {
+		return this.valuesArray();
+	}
+
 	concat(...values) {
 		return this.valuesArray().concat(...values);
 	}
@@ -138,6 +145,12 @@ export default class IndexedShadow extends Shadow {
 		}
 
 		return false;
+	}
+
+	sort(callback) {
+		const values = this.valuesArray();
+
+		return values.sort(callback);
 	}
 
 	sortBy(...iteratee) {
