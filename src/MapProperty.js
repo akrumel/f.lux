@@ -17,6 +17,8 @@ export default class MapProperty extends KeyedProperty {
 	//------------------------------------------------------------------------------------------------------
 
 	shadowClass() {
-		return MapShadow;
+		const { StateType } = require("./StateTypes");
+
+		return StateType.shadowClassForProperty(this, MapShadow);
 	}
 }

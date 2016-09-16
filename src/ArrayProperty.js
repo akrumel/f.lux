@@ -13,6 +13,8 @@ export default class ArrayProperty extends IndexedProperty {
 	//------------------------------------------------------------------------------------------------------
 
 	shadowClass() {
-		return ArrayShadow;
+		const { StateType } = require("./StateTypes");
+
+		return StateType.shadowClassForProperty(this, ArrayShadow);
 	}
 }

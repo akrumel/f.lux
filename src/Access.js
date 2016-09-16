@@ -7,6 +7,10 @@ export default class Access {
 		Object.defineProperty(this, '__', { enumerable: true, value: impl })
 	}
 
+	get pid() {
+		return this.property().pid;
+	}
+
 	dotPath() {
 		return this.__.dotPath();
 	}

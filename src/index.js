@@ -6,6 +6,7 @@ export { default as createArrayPropertyType } from "./createArrayPropertyType";
 export { default as createIndexedPropertyType } from "./createIndexedPropertyType";
 export { default as createKeyedPropertyType } from "./createKeyedPropertyType";
 export { default as createMapPropertyType } from "./createMapPropertyType";
+export { default as createShadowClass } from "./createShadowClass";
 export { default as IndexedProperty } from "./IndexedProperty";
 export { default as IndexedShadow } from "./IndexedShadow";
 export { default as KeyedProperty } from "./KeyedProperty";

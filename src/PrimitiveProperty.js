@@ -1,10 +1,10 @@
+import { isPrimitive } from "akutils";
 import cloneDeep from "lodash.clonedeep";
 
 import PrimitiveShadowImpl from "./PrimitiveShadowImpl";
 import PrimitiveShadow from "./PrimitiveShadowImpl";
 import Property from "./Property";
 
-import { isPrimitive } from "akutils";
 
 
 export default class PrimitiveProperty extends Property {
@@ -49,7 +49,9 @@ export default class PrimitiveProperty extends Property {
 	}
 
 	shadowClass() {
-		return PrimitiveShadow;
+		const { StateType } = require("./StateTypes");
+
+		return StateType.shadowClassForProperty(this, PrimitiveShadow);
 	}
 
 }

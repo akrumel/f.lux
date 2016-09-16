@@ -1,13 +1,14 @@
 import defaults from "lodash.defaults";
 
 import ArrayProperty from "./ArrayProperty";
+import CollectionProperty from "./collection/CollectionProperty";
 import IndexedProperty from "./IndexedProperty";
 import KeyedProperty from "./KeyedProperty";
 import MapProperty from "./MapProperty";
 import PropertyFactoryShader from "./PropertyFactoryShader";
 import PrimitiveProperty from "./PrimitiveProperty";
 import Shader from "./Shader";
-import CollectionProperty from "./collection/CollectionProperty";
+import Shadow from "./Shadow";
 
 import {
 	assert,
@@ -34,6 +35,7 @@ export class StateType {
 		this._defaults = undefined;
 		this._initialState = undefined;
 		this._readonly = false;
+		this._shadowClass = null;
 	}
 
 	static computeInitialState(property, state) {
@@ -106,6 +108,17 @@ export class StateType {
 		}
 
 		return shader;
+	}
+
+	static shadowClassForProperty(property, defaultClass=Shadow) {
+		var proto = Object.getPrototypeOf(property);
+		var stateSpec = proto.constructor.stateSpec;
+
+		if (stateSpec && stateSpec._shadowClass) {
+			return stateSpec._shadowClass;
+		} else {
+			return defaultClass;
+		}
 	}
 
 	/*
@@ -207,6 +220,12 @@ export class StateType {
 		assert( a => a.is(isIndexedPrototype(this._PropertyClass), "PropertyClass must be a subclass of IndexedProperty") );
 
 		this._elementType = elementType;
+
+		return this;
+	}
+
+	shadowClass(cls) {
+		this._shadowClass = cls;
 
 		return this;
 	}

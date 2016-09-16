@@ -13,13 +13,16 @@ const _impl = Symbol('impl');
 const _initialState = Symbol('initialState');
 const _mixins = Symbol('mixins');
 const _parent = Symbol('parent');
+const _pid = Symbol('pid');
 const _readonly = Symbol('readonly');
 const _shader = Symbol('shader');
 const _shadowDescriptors = Symbol('shadowDescriptors');
 const _store = Symbol('store');
 
 var stateDeprecatedWarningShown = false;
+var rootStateDeprecatedWarningShown = false;
 
+var nextPid = 1;
 
 /*
 	Base class for custom f.lux properties. A Property has a lifetime from when the state property
@@ -81,6 +84,7 @@ export default class Property {
 		this[_autoShadow] = autoShadow;
 		this[_initialState] = StateType.computeInitialState(this, initialState);
 		this[_readonly] = readonly;
+		this[_pid] = nextPid++;
 	}
 
 	/*
@@ -134,6 +138,10 @@ export default class Property {
 		return this[_impl] ?this[_impl].path :null;
 	}
 
+	get pid() {
+		return this[_pid];
+	}
+
 	get readonly() {
 		return this[_readonly];
 	}
@@ -143,7 +151,13 @@ export default class Property {
 	}
 
 	get rootState() {
-		return this.store.root.state;
+		if (!rootStateDeprecatedWarningShown) {
+			rootStateDeprecatedWarningShown = true;
+
+			console.warn("Property.rootState property is deprecated - use Property.rootShadow() method instead");
+		}
+
+		return this.store.root._;
 	}
 
 	get state() {
@@ -181,6 +195,10 @@ export default class Property {
 
 	nextState() {
 		return this[_impl] && this[_impl].nextState();
+	}
+
+	rootShadow() {
+		return this.store.root._;
 	}
 
 	/*
@@ -439,7 +457,9 @@ export default class Property {
 		Returns - Shadow
 	*/
 	shadowClass() {
-		return Shadow;
+		const { StateType } = require("./StateTypes");
+
+		return StateType.shadowClassForProperty(this);
 	}
 
 
