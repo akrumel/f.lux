@@ -20,6 +20,7 @@ const _cache = Symbol('cache');
 const _changed = Symbol('changed');
 const _date = Symbol('date');
 const _dead = Symbol('dead');
+const _didShadowCalled = Symbol('didShadowCalled');
 const _futureState = Symbol('futureState');
 const _name = Symbol('name');
 const _nextName = Symbol('nextName');
@@ -49,6 +50,11 @@ export default class ShadowImpl {
 		this[_store] = property.store;
 		this[_time] = time;
 		this[_previousTime] = prev && prev[_time];
+
+// quick hack till have unit tests and thought out life-cycle design
+		// didShadow() is being called multiple times which is causing a problem with property
+		// initialization that should only occur once.
+		this[_didShadowCalled] = false;
 
 		this[_root] = parent ?parent.root :this;
 
@@ -199,7 +205,9 @@ export default class ShadowImpl {
 	}
 
 	didShadow(time, newRoot) {
-		if (this[_time] == time) {
+		if (this[_time] == time && !this[_didShadowCalled]) {
+			this[_didShadowCalled] = true;
+
 			if (this.isRoot()) {
 				if (this[_previousTime] || !newRoot) {
 					this.property.onPropertyDidUpdate();
