@@ -51,7 +51,7 @@ export default class ShadowImpl {
 		this[_time] = time;
 		this[_previousTime] = prev && prev[_time];
 
-// quick hack till have unit tests and thought out life-cycle design
+// TODO: quick hack till have unit tests and thought out life-cycle design
 		// didShadow() is being called multiple times which is causing a problem with property
 		// initialization that should only occur once.
 		this[_didShadowCalled] = false;
