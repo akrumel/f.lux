@@ -93,7 +93,7 @@ export default class KeyedProperty extends Property {
 
 
 	//------------------------------------------------------------------------------------------------------
-	// Subclasses may want to override thise methods
+	// Subclasses may want to override success methods
 	//------------------------------------------------------------------------------------------------------
 
 	implementationClass() {
@@ -106,7 +106,7 @@ export default class KeyedProperty extends Property {
 	//------------------------------------------------------------------------------------------------------
 
 	get size() {
-		return this.__.size;
+		return this.__.size();
 	}
 
 	clear() {

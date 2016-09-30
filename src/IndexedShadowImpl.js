@@ -328,7 +328,7 @@ export default class IndexedShadowImpl extends ShadowImpl {
 
 		this[_automounted] = true;
 
-		const state = this.state;
+		const state = this.state();
 		const shader = this.shader(state);
 
 		for (let i=0, len=state.length; i<len; i++) {
@@ -378,7 +378,7 @@ export default class IndexedShadowImpl extends ShadowImpl {
 		this[_mapped] = true;
 
 		const shader = this.shader(state);
-		const state = this.state;
+		const state = this.state();
 
 		for (let i=0, len=state.length; i<len; i++) {
 			this.defineChildProperty(i, shader, state, prev);
@@ -409,16 +409,16 @@ export default class IndexedShadowImpl extends ShadowImpl {
 		var child;
 
 		if (prevChild) {
-			child = reshadow(this.time, state, prevChild, this);
+			child = reshadow(this.time(), state, prevChild, this);
 		} else {
-			child = elementShader.shadowProperty(this.time, idx, state, this, this.store);
+			child = elementShader.shadowProperty(this.time(), idx, state, this, this.store());
 		}
 
 		if (child) {
 			this[_impls][idx] = child;
 
 			if (!prevChild) {
-				child.didShadow(this.time);
+				child.didShadow(this.time());
 			}
 		}
 	}

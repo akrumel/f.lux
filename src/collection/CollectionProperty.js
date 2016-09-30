@@ -355,7 +355,7 @@ export default class CollectionProperty extends KeyedProperty {
 	}
 
 	//------------------------------------------------------------------------------------------------------
-	// Property subclasses may want to override thise methods
+	// Property subclasses may want to override success methods
 	//------------------------------------------------------------------------------------------------------
 
 	shadowClass() {

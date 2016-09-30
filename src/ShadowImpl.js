@@ -56,7 +56,7 @@ export default class ShadowImpl {
 		// initialization that should only occur once.
 		this[_didShadowCalled] = false;
 
-		this[_root] = parent ?parent.root :this;
+		this[_root] = parent ?parent[_root] :this;
 
 		// flag marks this property as obsolete and thus no longer to effect updates on the
 		// next data model
@@ -77,43 +77,39 @@ export default class ShadowImpl {
 		this[_cache] = {};
 	}
 
-	get access() {
-		return this[_access];
-	}
-
-	get name() {
-		return this[_name];
-	}
-
-	get parent() {
-		return this[_parent];
-	}
-
-	get previousTime() {
-		return this[_previousTime];
-	}
-
 	get property() {
 		return this[_property];
 	}
 
-	get readonly() {
+	access() {
+		return this[_access];
+	}
+
+	name() {
+		return this[_name];
+	}
+
+	parent() {
+		return this[_parent];
+	}
+
+	readonly() {
 		return this[_readonly];
 	}
 
-	get root() {
+	root() {
 		return this[_root];
 	}
 
-	get state() {
+	state() {
 		return this[_state];
 	}
 
-	get store() {
+	store() {
 		return this[_store];
 	}
 
-	get time() {
+	time() {
 		return this[_time];
 	}
 
@@ -151,7 +147,7 @@ export default class ShadowImpl {
 		Note: This value will be used directly (not copied) so ensure the state is not altered.
 	*/
 	assign(nextState, name) {
-		nextState = isShadow(nextState) ?nextState.__.state :nextState;
+		nextState = isShadow(nextState) ?nextState.__.state() :nextState;
 
 		//create a deep copy so not shared with the passed in value
 		//this.deepcopy() will use current model if no value passed or value passed is null or undefined
@@ -192,10 +188,10 @@ export default class ShadowImpl {
 		assert( a => a.is(this.isValid(), `Property must be valid to change parent: ${ this.dotPath() }`)
 			          .not(this.isRoot(), `Root properties do not have parents: ${ this.dotPath() }`) );
 
-		var prevParent = this.parent;
+		var prevParent = this[_parent];
 		this[_parent] = newParent;
 
-		this._changeRoot(newParent.root);
+		this._changeRoot(newParent[_root]);
 
 		// clear cache
 		this[_cache] = {};
@@ -210,12 +206,12 @@ export default class ShadowImpl {
 
 			if (this.isRoot()) {
 				if (this[_previousTime] || !newRoot) {
-					this.property.onPropertyDidUpdate();
+					this[_property].onPropertyDidUpdate();
 				} else {
-					this.property.onPropertyDidShadow();
+					this[_property].onPropertyDidShadow();
 				}
 			} else {
-				this[_previousTime] ?this.property.onPropertyDidUpdate() :this.property.onPropertyDidShadow();
+				this[_previousTime] ?this[_property].onPropertyDidUpdate() :this[_property].onPropertyDidShadow();
 			}
 
 			if (this.hasChildren()) {
@@ -238,13 +234,13 @@ export default class ShadowImpl {
 
 		if (parentWillUnshadow) {
 			// all properties under an unshadowed proeprty also get unshadowed
-			this.property.onPropertyWillUnshadow();
+			this[_property].onPropertyWillUnshadow();
 			willUnshadow = true;
 		} else if (this.isValid()) {
 			// nothing else to do since this property and all subproperties must be fine
 			return;
 		} else if (this[_replaced] || this[_preventUpdates]) {
-			this.property.onPropertyWillUnshadow();
+			this[_property].onPropertyWillUnshadow();
 			willUnshadow = true;
 		}
 
@@ -287,11 +283,11 @@ export default class ShadowImpl {
 
 			// update the parent's future state to reference the state returned by the action
 			if (!this.isRoot()) {
-				const parentNextData = this.parent._modelForUpdate();
+				const parentNextData = this[_parent]._modelForUpdate();
 
 				// do nothing if parentNextData is not assignable
 				if (parentNextData && !isPrimitive(parentNextData)) {
-					parentNextData[this.name] = nextState;
+					parentNextData[this[_name]] = nextState;
 				}
 			}
 
@@ -360,8 +356,8 @@ export default class ShadowImpl {
 		if (this.isValid() && this.isActive()) {
 			this.invalid = true;
 
-			if (this.parent) {
-				this.parent.invalidate(this, source);
+			if (this[_parent]) {
+				this[_parent].invalidate(this, source);
 			}
 		}
 	}
@@ -386,7 +382,7 @@ export default class ShadowImpl {
 		Gets the name after all model updates are performed.
 	*/
 	nextName() {
-		return this[_nextName] !== undefined ?this[_nextName] :this.name;
+		return this[_nextName] !== undefined ?this[_nextName] :this[_name];
 	}
 
 	/*
@@ -394,7 +390,7 @@ export default class ShadowImpl {
 		not be altered.
 	*/
 	nextState() {
-		return this.hasPendingChanges() || !this.isValid() ?this[_futureState] :this.state;
+		return this.hasPendingChanges() || !this.isValid() ?this[_futureState] :this.state();
 	}
 
 	/*
@@ -445,7 +441,7 @@ export default class ShadowImpl {
 		if (this.isRoot()) {
 			return [];
 		} else if (!this[_cache].path) {
-			this[_cache].path = this.parent.path().concat(this.name);
+			this[_cache].path = this[_parent].path().concat(this[_name]);
 		}
 
 		return this[_cache].path;
@@ -527,11 +523,11 @@ export default class ShadowImpl {
 	*/
 	toJSON() {
 		return {
-			name: this.name,
+			name: this[_name],
 			path: this.dotPath(),
 			active: !this[_dead],
 			valid: this.isValid(),
-			state: this.state,
+			state: this.state(),
 		}
 	}
 
@@ -644,7 +640,7 @@ export default class ShadowImpl {
 	//------------------------------------------------------------------------------------------------------
 
 	copyState() {
-		return cloneDeep(this.state);
+		return cloneDeep(this.state());
 	}
 
 	/*
@@ -653,13 +649,13 @@ export default class ShadowImpl {
 	defineProperty() {
 		if (this.isRoot()) { return }
 
-		const state = this.state;
+		const state = this.state();
 		const set = this[_readonly] ?undefined :newValue => this.definePropertySetValue(newValue);
 
 		// names with a leading '_' are not enumerable (way of hiding them)
-		const enumerable = !(isString(this.name) && this.name.startsWith('_'));
+		const enumerable = !(isString(this[_name]) && this[_name].startsWith('_'));
 
-		Object.defineProperty(this.parent.shadow(), this.name, {
+		Object.defineProperty(this[_parent].shadow(), this[_name], {
 				enumerable: enumerable,
 				get: () => {
 						if (isSomething(state)) {
@@ -776,11 +772,11 @@ export default class ShadowImpl {
 		update process but some descendant has been modified.
 	*/
 	createCopy(time, newModel, parentImpl) {
-		const property = this.property;
+		const property = this[_property];
 		const ImplClass = property.implementationClass();
 		const shader = this.shader(newModel);
 
-		return new ImplClass(time, property, this.name, newModel, parentImpl, shader, this);
+		return new ImplClass(time, property, this[_name], newModel, parentImpl, shader, this);
 	}
 
 	/*
@@ -845,9 +841,9 @@ export default class ShadowImpl {
 		if (!this[_futureState]) {
 			if (this.isRoot()) {
 				// next data will be a shallow copy of current model
-				this[_futureState] = clone(this.state);
+				this[_futureState] = clone(this.state());
 			} else {
-				const parentNextState = this.parent._modelForUpdate();
+				const parentNextState = this[_parent]._modelForUpdate();
 
 				// Primitive parent models do not support adding properties
 				if (isPrimitive(parentNextState)) {
@@ -855,7 +851,7 @@ export default class ShadowImpl {
 				}
 
 				// next data is a shallow copy of the parent's value of this property
-				this[_futureState] = clone(parentNextState[this.name]);
+				this[_futureState] = clone(parentNextState[this[_name]]);
 
 				// place a shallow clone in place of current value
 				parentNextState[this.nextName()] = this[_futureState]

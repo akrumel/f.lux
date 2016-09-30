@@ -45,7 +45,7 @@ export default class IndexedProperty extends Property {
 
 
 	//------------------------------------------------------------------------------------------------------
-	// Subclasses may want to override thise methods
+	// Subclasses may want to override success methods
 	//------------------------------------------------------------------------------------------------------
 
 	implementationClass() {

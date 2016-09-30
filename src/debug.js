@@ -32,6 +32,9 @@ export const AllKey = 'f.lux:*';
 export const CollectionAllKey = 'f.lux:collection:*';
 export const CollectionPropertyKey = 'f.lux:collection:property';
 
+export const StoreKey = 'f.lux:store';
+export const TransientKey = 'f.lux:transient';
+
 
 // uncomment to turn on all postop-stores logging (or selectively using one of keys above)
 //debug.enable(AllKey);

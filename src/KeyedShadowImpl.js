@@ -111,10 +111,6 @@ export default class KeyedShadowImpl extends ShadowImpl {
 	// Methods for access and manipulate subproperties.
 	//------------------------------------------------------------------------------------------------------
 
-	get size() {
-		return this.childCount();
-	}
-
 	/*
 		Removes all subproperties.
 	*/
@@ -194,6 +190,10 @@ export default class KeyedShadowImpl extends ShadowImpl {
 		return this;
 	}
 
+	size() {
+		return this.childCount();
+	}
+
 	/*
 		Gets subproperty implementation objects. Returns an array.
 	*/
@@ -265,7 +265,7 @@ export default class KeyedShadowImpl extends ShadowImpl {
 
 		this[_automounted] = true;
 
-		const state = this.state;
+		const state = this.state();
 		const shader = this.shader(state);
 
 		for (let name in state) {
@@ -279,10 +279,10 @@ export default class KeyedShadowImpl extends ShadowImpl {
 		Subclasses should implement this method in such a way as not to trigger a mapping.
 	*/
 	childCount() {
-		if (!this.state) { return 0 }
+		if (!this.state()) { return 0 }
 
 		if (this[_size] === undefined) {
-			this[_size] = Object.keys(this.state).length;
+			this[_size] = Object.keys(this.state()).length;
 		}
 
 		return this[_size];
@@ -312,7 +312,7 @@ export default class KeyedShadowImpl extends ShadowImpl {
 		Implementation note: Subclasses should implement this method in such a way as not to trigger a mapping.
 	*/
 	keys() {
-		return Object.keys(this.state);
+		return Object.keys(this.state());
 	}
 
 	/*
@@ -323,7 +323,7 @@ export default class KeyedShadowImpl extends ShadowImpl {
 
 		this[_mapped] = true;
 
-		const state = this.state;
+		const state = this.state();
 		const shader = this.shader(state);
 		var child;
 
@@ -363,16 +363,16 @@ export default class KeyedShadowImpl extends ShadowImpl {
 		}
 
 		if (prevChild) {
-			child = reshadow(this.time, state, prevChild, this);
+			child = reshadow(this.time(), state, prevChild, this);
 		} else {
-			child = elementShader.shadowProperty(this.time, name, state, this, this.store);
+			child = elementShader.shadowProperty(this.time(), name, state, this, this.store());
 		}
 
 		if (child) {
 			this[_impls][name] = child;
 
 			if (!prevChild) {
-				child.didShadow(this.time);
+				child.didShadow(this.time());
 			}
 		}
 	}

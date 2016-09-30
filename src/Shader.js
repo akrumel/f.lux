@@ -98,6 +98,10 @@ export default class Shader {
 		return this[_shaders][name];
 	}
 
+	has(name) {
+		return !!this[_shaders][name];
+	}
+
 	isAutomount(name) {
 		if (this[_automountAll]) {
 			return true;

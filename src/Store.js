@@ -1,8 +1,7 @@
 import invariant from "invariant";
 
-import { isObject } from "akutils";
+import { assert, isObject } from "akutils";
 
-import appDebug from "./debug";
 
 import ArrayProperty from "./MapProperty";
 import KeyedProperty from "./KeyedProperty";
@@ -11,9 +10,11 @@ import Property from "./Property";
 import ShadowImpl from "./ShadowImpl";
 import Shader from "./Shader";
 import tick from "./tick";
+import Transients from "./Transients";
 
+import appDebug, { StoreKey as DebugKey } from "./debug";
+const debug = appDebug(DebugKey);
 
-const debug = appDebug("f.lux:store");
 
 var _Promise = Promise;
 var _clearInterval = clearInterval;
@@ -22,11 +23,14 @@ var _setInterval = setInterval;
 var _setTimeout = setTimeout;
 
 
+const _transients = "__trans__";
+
+
 /*
 
 */
 export default class Store {
-	constructor(root, state) {
+	constructor(root, state, useTransients=true) {
 		invariant(root instanceof Property || Array.isArray(root) || isObject(root),
 			"Store root must be one of: Property subclass, object, or array");
 
@@ -39,6 +43,7 @@ export default class Store {
 			state = root.initialState
 		}
 
+		this._useTransients = useTransients;
 		this._subscribers = [];
 		this._listeners = [];
 
@@ -52,7 +57,11 @@ export default class Store {
 	}
 
 	subscribe(callback) {
-		this._subscribers.push(callback);
+		assert( a => a.is(typeof callback === 'function', "Callback must be a function") );
+
+		if (typeof callback === 'function') {
+			this._subscribers.push(callback);
+		}
 	}
 
 	unsubscribe(callback) {
@@ -63,12 +72,15 @@ export default class Store {
 	//  Properties and methods dealing with state
 	//******************************************************************************************************************
 
-	get updateTime() {
-		return this._updateTime;
-	}
-
 	get root() {
 		return this._root;
+	}
+
+	/*
+		Alias for shadow property.
+	*/
+	get _() {
+		return this._root._;
 	}
 
 	get shadow() {
@@ -77,6 +89,14 @@ export default class Store {
 
 	get state() {
 		return this._state;
+	}
+
+	get transients() {
+		return this.shadow[_transients];
+	}
+
+	get updateTime() {
+		return this._updateTime;
 	}
 
 	changeState(state, newRoot=false, time=tick()) {
@@ -94,7 +114,7 @@ export default class Store {
 		this._rootImpl = this._root.shader(state).shadowProperty(time, "/", state);
 
 		// get the final state after merging any property initial states
-		this._state = this._rootImpl.state;
+		this._state = this._rootImpl.state();
 
 		// Have each property invoke did shadow/update lifecycle methods
 		this._rootImpl.didShadow(time, newRoot);
@@ -123,7 +143,7 @@ export default class Store {
 		const currRootActive = currRoot && currRoot.isActive();
 
 		// inform property it is being replaced
-		if (currRoot && root != currRoot && currRootActive) {
+		if (currRoot && root !== currRoot && currRootActive) {
 			currRoot.__.obsoleteTree( impl => {
 				// set the root property and set it's store to this object
 				root.setStore(this);
@@ -133,12 +153,23 @@ export default class Store {
 			});
 		} else {
 			// set the root property and set it's store to this object
-			if (root != currRoot) {
+			if (root !== currRoot) {
 				root.setStore(this);
 				this._root = root;
 			}
 
-			this.changeState(state, root != currRoot);
+			this._setupTransients();
+			this.changeState(state, root !== currRoot);
+		}
+	}
+
+	_setupTransients() {
+		const root = this._root;
+		const rootShader = root.shader();
+		const keyedApi = root._keyed ?root._keyed :root;
+
+		if (this._useTransients && !rootShader.has(_transients)) {
+			keyedApi.addProperty(_transients, new Transients());
 		}
 	}
 
@@ -257,9 +288,13 @@ export default class Store {
 	}
 
 	waitFor(callback) {
-		this._waitFor.push(callback);
+		assert( a => a.is(typeof callback === 'function', "Callback must be a function") );
 
-		this.schedule();
+		if (typeof callback === 'function') {
+			this._waitFor.push(callback);
+
+			this.schedule();
+		}
 	}
 
 
@@ -353,7 +388,7 @@ export default class Store {
 					this._onError("Property update action cannot replace the root state");
 				} else {
 					this._rootImpl = impl;
-					this._state = impl.state;
+					this._state = impl.state();
 
 					// Have each property invoke did shadow/update lifecycle methods now that store is coherent with new stat
 					this._rootImpl.didShadow(time, false);
@@ -417,7 +452,7 @@ export default class Store {
 					this._onError("Property update action cannot replace the root state");
 				} else {
 					this._rootImpl = impl;
-					this._state = impl.state;
+					this._state = impl.state();
 
 					// Have each property invoke did shadow/update lifecycle methods now that store is coherent with new stat
 					this._rootImpl.didShadow(time, false);
@@ -434,6 +469,7 @@ export default class Store {
 
 		this._notifyWaitFors(waitFor);
 		this._notifySubscribers(prevShadow);
+		this._sweepTransients();
 	}
 
 	_notifySubscribers(prevShadow) {
@@ -464,5 +500,13 @@ export default class Store {
 
 	debugger
 		this.onError(msg, error);
+	}
+
+	_sweepTransients() {
+		const trans = this.shadow[_transients];
+
+		if (trans) {
+			trans.sweep();
+		}
 	}
 }

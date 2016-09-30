@@ -46,7 +46,7 @@ export default class Access {
 	}
 
 	rootShadow() {
-		return this.__.root.shadow();
+		return this.__.root().shadow();
 	}
 
 	slashPath() {
@@ -58,11 +58,11 @@ export default class Access {
 	}
 
 	state() {
-		return this.__.state;
+		return this.__.state();
 	}
 
 	store() {
-		return this.__.store;
+		return this.__.store();
 	}
 
 	/*
@@ -103,7 +103,7 @@ export default class Access {
 	}
 
 	waitFor(callback) {
-		this.store.waitFor( () => {
+		this.store().waitFor( () => {
 				const latest = this.latest();
 
 				callback(latest && latest.shadow());

@@ -1,7 +1,7 @@
 
 
 export default function reshadow(time, parentState, prevImpl, parentImpl) {
-	const state = prevImpl.isRoot() ?parentState :parentState[prevImpl.name];
+	const state = prevImpl.isRoot() ?parentState :parentState[prevImpl.name()];
 	const prevProperty = prevImpl.property && prevImpl.property;
 
 	// handle cases where node did not actually change

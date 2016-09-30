@@ -9,7 +9,7 @@ export default class ArrayProperty extends IndexedProperty {
 	}
 
 	//------------------------------------------------------------------------------------------------------
-	// Subclasses may want to override thise methods
+	// Subclasses may want to override success methods
 	//------------------------------------------------------------------------------------------------------
 
 	shadowClass() {

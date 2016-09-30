@@ -138,7 +138,7 @@ export default class ModelProperty extends KeyedProperty {
 	}
 
 	//------------------------------------------------------------------------------------------------------
-	// Property subclasses may want to override thise methods
+	// Property subclasses may want to override success methods
 	//------------------------------------------------------------------------------------------------------
 
 	/*
@@ -150,7 +150,7 @@ export default class ModelProperty extends KeyedProperty {
 	}
 
 	onChildInvalidated(childProperty) {
-		if (childProperty.__.name == "data" && !this._.dirty) {
+		if (childProperty.__.name() == "data" && !this._.dirty) {
 			this._.dirty = true;
 		}
 	}

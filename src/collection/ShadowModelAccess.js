@@ -16,7 +16,7 @@ export default class ShadowModelAccess extends Access {
 	}
 
 	get collection() {
-		return this.$$.collection.state;
+		return this.$$.collection._;
 	}
 
 	get dirty() {
@@ -31,7 +31,7 @@ export default class ShadowModelAccess extends Access {
 		return this.$$.destroy();
 	}
 
-	isNew() { 
+	isNew() {
 		return this.$$.isNew();
 	}
 

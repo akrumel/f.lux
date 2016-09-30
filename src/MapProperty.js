@@ -13,7 +13,7 @@ export default class MapProperty extends KeyedProperty {
 	}
 
 	//------------------------------------------------------------------------------------------------------
-	// Subclasses may want to override thise methods
+	// Subclasses may want to override success methods
 	//------------------------------------------------------------------------------------------------------
 
 	shadowClass() {

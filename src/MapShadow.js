@@ -19,7 +19,7 @@ export default class MapShadow extends Shadow {
 	//------------------------------------------------------------------------------------------------------
 
 	get size() {
-		return this.__.size
+		return this.__.size();
 	}
 
 	clear() {

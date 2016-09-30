@@ -13,7 +13,7 @@ export default class PrimitiveProperty extends Property {
 	}
 
 	//------------------------------------------------------------------------------------------------------
-	// PrimitiveProperty subclasses may want to override thise methods
+	// PrimitiveProperty subclasses may want to override success methods
 	//------------------------------------------------------------------------------------------------------
 
 	/*
@@ -41,7 +41,7 @@ export default class PrimitiveProperty extends Property {
 
 
 	//------------------------------------------------------------------------------------------------------
-	// Property subclasses may want to override thise methods
+	// Property subclasses may want to override success methods
 	//------------------------------------------------------------------------------------------------------
 
 	implementationClass() {

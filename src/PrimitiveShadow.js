@@ -1,6 +1,3 @@
-
-import Shadow from "./Shadow";
-
 const _impl = Symbol('impl');
 
 export default class PrimitiveShadow {

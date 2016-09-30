@@ -10,7 +10,7 @@ export default class PrimitiveShadowImpl extends ShadowImpl {
 	//------------------------------------------------------------------------------------------------------
 
 	defaults(state) {
-		if (this.state === undefined) {
+		if (this.state() === undefined) {
 			this.assign(state);
 		}
 	}
@@ -22,13 +22,13 @@ export default class PrimitiveShadowImpl extends ShadowImpl {
 	definePropertySetValue(newValue) {
 		this.property.definePropertySetValue(newValue);
 	}
-	
-	isPrimitive() { 
+
+	isPrimitive() {
 		return true;
 	}
 
 	merge(state) {
-		if (!isEqual(state, this.state)) {
+		if (!isEqual(state, this.state())) {
 			this.assign(state);
 		}
 	}

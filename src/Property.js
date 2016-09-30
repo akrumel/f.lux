@@ -18,11 +18,17 @@ const _readonly = Symbol('readonly');
 const _shader = Symbol('shader');
 const _shadowDescriptors = Symbol('shadowDescriptors');
 const _store = Symbol('store');
+const _ImplementationClass = Symbol('ImplementationClass');
+const _ShadowClass = Symbol('ShadowClass');
 
 var stateDeprecatedWarningShown = false;
 var rootStateDeprecatedWarningShown = false;
 
 var nextPid = 1;
+
+function isPropertyPrototype(obj) {
+	return Property === obj || Property.isPrototypeOf(obj);
+}
 
 /*
 	Base class for custom f.lux properties. A Property has a lifetime from when the state property
@@ -398,7 +404,7 @@ export default class Property {
 
 
 	//------------------------------------------------------------------------------------------------------
-	// Property subclasses may want to override thise methods
+	// Property subclasses may want to override success methods
 	//------------------------------------------------------------------------------------------------------
 
 	/*
@@ -409,7 +415,13 @@ export default class Property {
 	}
 
 	implementationClass() {
-		return ShadowImpl;
+		const { StateType } = require("./StateTypes");
+
+		return StateType.implementationClassForProperty(this, this[_ImplementationClass]);
+	}
+
+	setImplementationClass(PropertyClass) {
+		this[_ImplementationClass] = PropertyClass
 	}
 
 	/*
@@ -420,6 +432,10 @@ export default class Property {
 		invariant(!this[_shader], `Shader already set for property`);
 
 		this[_shader] = shader;
+	}
+
+	setShadowClass(ShadowClass) {
+		this[_ShadowClass] = ShadowClass
 	}
 
 	shader(state) {
@@ -459,7 +475,7 @@ export default class Property {
 	shadowClass() {
 		const { StateType } = require("./StateTypes");
 
-		return StateType.shadowClassForProperty(this);
+		return StateType.shadowClassForProperty(this, this[_ShadowClass]);
 	}
 
 

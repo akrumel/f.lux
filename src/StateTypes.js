@@ -7,8 +7,10 @@ import KeyedProperty from "./KeyedProperty";
 import MapProperty from "./MapProperty";
 import PropertyFactoryShader from "./PropertyFactoryShader";
 import PrimitiveProperty from "./PrimitiveProperty";
+import Property from "./Property";
 import Shader from "./Shader";
 import Shadow from "./Shadow";
+import ShadowImpl from "./ShadowImpl";
 
 import {
 	assert,
@@ -33,6 +35,7 @@ export class StateType {
 		// setup default values
 		this._autoshadow = true;
 		this._defaults = undefined;
+		this._implementationClass = null;
 		this._initialState = undefined;
 		this._readonly = false;
 		this._shadowClass = null;
@@ -61,6 +64,17 @@ export class StateType {
 		}
 
 		return state;
+	}
+
+	static implementationClassForProperty(property, defaultClass=ShadowImpl) {
+		var proto = Object.getPrototypeOf(property);
+		var stateSpec = proto.constructor.stateSpec;
+
+		if (stateSpec && stateSpec._implementationClass) {
+			return stateSpec._implementationClass;
+		} else {
+			return defaultClass;
+		}
 	}
 
 	static initialStateWithDefaults(property, state) {
@@ -121,6 +135,39 @@ export class StateType {
 		}
 	}
 
+	get autoshadow() {
+		this._autoshadow = true;
+
+		return this;
+	}
+
+	get autoshadowOff() {
+		this._autoshadow = false;
+
+		return this
+	}
+
+	get readonly() {
+		this._readonly = true;
+
+		return this;
+	}
+
+	get readonlyOff() {
+		this._readonly = false;
+
+		return this;
+	}
+
+	addProperty(name, type) {
+		assert( a => {
+				a.is(isKeyedPrototype(this._PropertyClass),
+					"PropertyClass must be a subclass of KeyedProperty")
+			});
+
+		this._properties[name] = type;
+	}
+
 	/*
 		Configures
 	*/
@@ -128,6 +175,12 @@ export class StateType {
 		shader.setAutoshadow(this._autoshadow);
 
 		this._setupShader(shader);
+	}
+
+	defaults(state) {
+		this._defaults = state;
+
+		return this;
 	}
 
 	/*
@@ -147,37 +200,8 @@ export class StateType {
 		return shader;
 	}
 
-	shader(property) {
-		const shader = new Shader(property, property.autoShadow);
-
-		this._setupShader(shader);
-
-		return shader;
-	}
-
-	addProperty(name, type) {
-		assert( a => {
-				a.is(isKeyedPrototype(this._PropertyClass),
-					"PropertyClass must be a subclass of KeyedProperty")
-			});
-
-		this._properties[name] = type;
-	}
-
-	get autoshadow() {
-		this._autoshadow = true;
-
-		return this;
-	}
-
-	get autoshadowOff() {
-		this._autoshadow = false;
-
-		return this
-	}
-
-	defaults(state) {
-		this._defaults = state;
+	implementationClass(cls) {
+		this._implementationClass = cls;
 
 		return this;
 	}
@@ -194,24 +218,13 @@ export class StateType {
 
 	properties(propTypes) {
 		assert( a => {
-				a.is(isKeyedPrototype(this._PropertyClass), "PropertyClass must be a subclass of KeyedProperty")
+				a.is(isKeyedPrototype(this._PropertyClass),
+						"PropertyClass must subclass KeyedProperty or implement supportsKeyedChildProperties()")
 			});
 
 		for (let name in propTypes) {
 			this.addProperty(name, propTypes[name]);
 		}
-
-		return this;
-	}
-
-	get readonly() {
-		this._readonly = true;
-
-		return this;
-	}
-
-	get readonlyOff() {
-		this._readonly = false;
 
 		return this;
 	}
@@ -222,6 +235,14 @@ export class StateType {
 		this._elementType = elementType;
 
 		return this;
+	}
+
+	shader(property) {
+		const shader = new Shader(property, property.autoShadow);
+
+		this._setupShader(shader);
+
+		return shader;
 	}
 
 	shadowClass(cls) {
@@ -271,7 +292,8 @@ function isIndexedPrototype(obj) {
 }
 
 function isKeyedPrototype(obj) {
-	return KeyedProperty === obj || KeyedProperty.isPrototypeOf(obj);
+	return KeyedProperty === obj || KeyedProperty.isPrototypeOf(obj) ||
+		(Property.isPrototypeOf(obj) && obj.supportsKeyedChildProperties && obj.supportsKeyedChildProperties());
 }
 
 
