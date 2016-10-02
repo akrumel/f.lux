@@ -14,7 +14,9 @@ const _desc = Symbol('desc');
 const _id = "id";
 const _lockId = Symbol('lockId');
 const _locks = Symbol('locks');
+const _subscribers = Symbol('subscribers');
 const _trans = Symbol('trans');
+const _transId = Symbol('id');
 const PrimaryLockName = "__primary__";
 
 var nextLockId = 1;
@@ -73,9 +75,7 @@ export class TransientShadow extends SimpleShadow {
 		managed when a transient object has a single consumer, such as react component.
 	*/
 	release() {
-		const primary = this.primaryLock();
-
-		primary && primary.release();
+		this.$$().release();
 	}
 }
 
@@ -90,22 +90,23 @@ export default class TransientProperty extends ObjectProperty {
 		this._keyed.addProperty(_id,  new PrimitiveProperty(id, false, true));
 
 		this.setShadowClass(TransientShadow);
+		this[_transId] = id;
 		this[_locks] = [];
 
 		// create the primary lock (ensures transient is locked before first sweep)
 		this.lock(PrimaryLockName);
 
-		debug(`transient created: id=${ id }`);
+		debug(`TransientProperty created: id=${ id }`);
+	}
+
+	get id() {
+		return this[_transId];
 	}
 
 	propertyWillUnshadow() {
 		delete this[_locks];
 
-		debug(`transient unshadowing(): id=${ this.id() }`);
-	}
-
-	id() {
-		return this._[_id];
+		debug(`propertyWillUnshadow(): id=${ this[_transId] }`);
 	}
 
 	isLocked() {
@@ -120,11 +121,17 @@ export default class TransientProperty extends ObjectProperty {
 		return this[_locks] && this[_locks].find( l => l.is(PrimaryLockName) );
 	}
 
+	release() {
+		const primary = this.primaryLock();
+
+		primary && primary.release();
+	}
+
 	_removeLock(lock) {
 		if (!this[_locks]) { return }
 
 		this[_locks] = this[_locks].filter( l => l !== lock );
-		debug(`removeLocked(): id=${ this.id() }, locked=${ this.isLocked() }, desc=${ lock.desc() }`)
+		debug(`_removeLock(): id=${ this[_transId] }, locked=${ this.isLocked() }, desc=${ lock.desc() }`)
 	}
 
 	_addLock(lock) {
@@ -133,7 +140,7 @@ export default class TransientProperty extends ObjectProperty {
 		if (!this[_locks]) { return null }
 
 		this[_locks].push(lock);
-		debug(`addLock(): id=${ this.id() }, desc=${ lock.desc() }`);
+		debug(`_addLock(): id=${ this[_transId] }, desc=${ lock.desc() }`);
 
 		return lock;
 	}

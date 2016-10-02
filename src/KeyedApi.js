@@ -58,9 +58,7 @@ export default class KeyedApi {
 			}
 
 			property.touch();
-		} else if (this.initialState) {
-			assert( a => a.is(this.initialState, "Attempting to set initial state property value with no backing object") );
-
+		} else if (property.initialState) {
 			property.initialState[name] = initialState;
 		}
 

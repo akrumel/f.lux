@@ -33,7 +33,11 @@ export default class ObjectProperty extends Property {
 				customization, such as setting autoshadow, initial state, or readonly.
 	*/
 	static createClass(shadowType={}, stateSpec, specCallback) {
-		return createPropertyClass(shadowType, stateSpec, specCallback, ObjectProperty)
+		return createPropertyClass(shadowType, stateSpec, specCallback, ObjectProperty);
+	}
+
+	static createSimpleClass(specCallback) {
+		return createPropertyClass({}, null, specCallback, ObjectProperty);
 	}
 
 	/*

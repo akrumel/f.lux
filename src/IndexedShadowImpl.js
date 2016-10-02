@@ -27,7 +27,7 @@ export default class IndexedShadowImpl extends ShadowImpl {
 		// Reusing properties allows for React components to do '===' to see if a property has changed.
 		if (prev) {
 			if (prev && prev[_mapped]) {
-				this.defineChildProperties(prev);
+				this.defineChildProperties(prev, true);
 			} else if (prev && Object.keys(prev[_impls]).length) {
 				this.automountChildren(prev);
 			}
@@ -333,7 +333,7 @@ export default class IndexedShadowImpl extends ShadowImpl {
 
 		for (let i=0, len=state.length; i<len; i++) {
 			if (shader.isAutomount(i)) {
-				this.defineChildProperty(i, shader, state, prev);
+				this.defineChildProperty(i, shader, state, prev, true);
 			}
 		}
 	}
@@ -372,7 +372,7 @@ export default class IndexedShadowImpl extends ShadowImpl {
 	/*
 		Maps all child properties onto this property using Object.defineProperty().
 	*/
-	defineChildProperties(prev) {
+	defineChildProperties(prev, inCtor) {
 		if (this[_mapped]) { return }
 
 		this[_mapped] = true;
@@ -381,7 +381,7 @@ export default class IndexedShadowImpl extends ShadowImpl {
 		const state = this.state();
 
 		for (let i=0, len=state.length; i<len; i++) {
-			this.defineChildProperty(i, shader, state, prev);
+			this.defineChildProperty(i, shader, state, prev, inCtor);
 		}
 	}
 
@@ -399,7 +399,7 @@ export default class IndexedShadowImpl extends ShadowImpl {
 			}
 	}
 
-	defineChildProperty(idx, shader, state, prev) {
+	defineChildProperty(idx, shader, state, prev, inCtor=false) {
 		// ensure not already defined
 		if (this[_impls][idx]) { return }
 
@@ -417,7 +417,7 @@ export default class IndexedShadowImpl extends ShadowImpl {
 		if (child) {
 			this[_impls][idx] = child;
 
-			if (!prevChild) {
+			if (!prevChild && !inCtor) {
 				child.didShadow(this.time());
 			}
 		}

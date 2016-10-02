@@ -665,10 +665,13 @@ export default class CollectionProperty extends KeyedProperty {
 	save(id, mergeOp=DEFAULTS_OPTION) {
 		if (!this.isConnected()) { return Store.reject(`Collection ${this.slashPath} is not connected`) }
 
+		const model = this._getModel(id);
+		const cid = model && model.cid;
+		const shadow = model && model.data;
+
+		if (!model) { return Store.reject(`Collection ${this.slashPath} model not found: id=${id}`) }
+
 		try {
-			const model = this._getModel(id);
-			const cid = model.cid;
-			const shadow = model.data;
 			const shadowState = shadow.__.nextState();
 			const opName = this.isNew(shadow) ?CrateOp :UpdateOp;
 			const op = this.isNew(shadow)
@@ -716,6 +719,7 @@ export default class CollectionProperty extends KeyedProperty {
 					})
 				.catch( error => this.onError(error, `Save ${id} - cid=${shadow.$.cid}`) );
 		} catch(error) {
+debugger
 			this.onError(error, `Save ${id} - cid=${shadow.$.cid}`);
 		}
 	}

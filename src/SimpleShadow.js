@@ -6,7 +6,7 @@ export default class SimplShadow {
 
 		// easy debug access to the raw state
 		if (process.env.NODE_ENV !== 'production') {
-			Object.defineProperty(this, '__state__', { enumerable: false, value: impl.state });
+			Object.defineProperty(this, '__state__', { enumerable: false, value: impl.state() });
 		}
 	}
 

@@ -40,4 +40,6 @@ export const TransientKey = 'f.lux:transient';
 //debug.enable(AllKey);
 
 
+debug.enable(TransientKey)
+
 export default debug;

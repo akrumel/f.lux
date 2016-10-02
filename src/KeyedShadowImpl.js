@@ -35,7 +35,7 @@ export default class KeyedShadowImpl extends ShadowImpl {
 		*/
 		if (prev) {
 			if (prev && prev[_mapped]) {
-				this.defineChildProperties(prev);
+				this.defineChildProperties(prev, true);
 			} else if (prev && Object.keys(prev[_impls]).length) {
 				this.automountChildren(prev);
 			}
@@ -270,7 +270,7 @@ export default class KeyedShadowImpl extends ShadowImpl {
 
 		for (let name in state) {
 			if (shader.isAutomount(name)) {
-				this.defineChildProperty(name, shader, state, prev);
+				this.defineChildProperty(name, shader, state, prev, true);
 			}
 		}
 	}
@@ -318,7 +318,7 @@ export default class KeyedShadowImpl extends ShadowImpl {
 	/*
 		Maps all child properties onto this property using Object.defineProperty().
 	*/
-	defineChildProperties(prev) {
+	defineChildProperties(prev, inCtor) {
 		if (this[_mapped]) { return }
 
 		this[_mapped] = true;
@@ -330,7 +330,7 @@ export default class KeyedShadowImpl extends ShadowImpl {
 		for (let name in state) {
 			if (!state.hasOwnProperty(name)) { continue }
 
-			this.defineChildProperty(name, shader, state, prev);
+			this.defineChildProperty(name, shader, state, prev, inCtor);
 		}
 	}
 
@@ -348,7 +348,7 @@ export default class KeyedShadowImpl extends ShadowImpl {
 		}
 	}
 
-	defineChildProperty(name, shader, state, prev) {
+	defineChildProperty(name, shader, state, prev, inCtor=false) {
 		// ensure not already defined
 		if (this[_impls][name]) { return }
 
@@ -371,7 +371,7 @@ export default class KeyedShadowImpl extends ShadowImpl {
 		if (child) {
 			this[_impls][name] = child;
 
-			if (!prevChild) {
+			if (!prevChild && !inCtor) {
 				child.didShadow(this.time());
 			}
 		}

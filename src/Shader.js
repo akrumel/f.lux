@@ -121,7 +121,7 @@ export default class Shader {
 		const automountIdx = this[_automount].indexOf(name);
 
 		if (automountIdx != -1) {
-			this[_automount].splice(automountId, 1);
+			this[_automount].splice(automountIdx, 1);
 		}
 
 		return this;

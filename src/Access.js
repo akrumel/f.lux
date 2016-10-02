@@ -15,12 +15,16 @@ export default class Access {
 		return this.__.dotPath();
 	}
 
+	isActive() {
+		return this.__.isActive();
+	}
+
 	isValid() {
 		return this.__.isValid();
 	}
 
-	isActive() {
-		return this.__.isActive();
+	isReadonly() {
+		return this.property().readonly;
 	}
 
 	latest() {
