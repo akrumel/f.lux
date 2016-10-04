@@ -478,7 +478,7 @@ export default class CollectionProperty extends KeyedProperty {
 					})
 				.catch( error => this.onError(error, `Destroy model: ${id}`) );
 		} catch(error) {
-			this.onError(error, `Destroy model: ${id}`);
+			return this.onError(error, `Destroy model: ${id}`);
 		}
 	}
 
@@ -550,7 +550,7 @@ export default class CollectionProperty extends KeyedProperty {
 					.catch( error => this.onError(error, `Find model ${id}`) );
 			}
 		} catch(error) {
-			this.onError(error, `Find model ${id}`);
+			return this.onError(error, `Find model ${id}`);
 		}
 	}
 
@@ -662,7 +662,7 @@ export default class CollectionProperty extends KeyedProperty {
 
 		Returns a promise. The resolve function arguments are F.lux models and this adapter as arguments
 	*/
-	save(id, mergeOp=DEFAULTS_OPTION) {
+	save(id, mergeOp=MERGE_OPTION) {
 		if (!this.isConnected()) { return Store.reject(`Collection ${this.slashPath} is not connected`) }
 
 		const model = this._getModel(id);
@@ -672,18 +672,15 @@ export default class CollectionProperty extends KeyedProperty {
 		if (!model) { return Store.reject(`Collection ${this.slashPath} model not found: id=${id}`) }
 
 		try {
-			const shadowState = shadow.__.nextState();
-			const opName = this.isNew(shadow) ?CrateOp :UpdateOp;
-			const op = this.isNew(shadow)
-						?this.endpoint.doCreate.bind(this.endpoint, shadow, shadowState)
-						:this.endpoint.doUpdate.bind(this.endpoint, id, shadow, shadowState);
+			const shadowState = shadow.__().nextState();
+			const opName = this.isNew(shadow) ?CreateOp :UpdateOp;
 
-			this._on(opName)
+			return this._on(opName)
 				.then( () => {
 						if (this.isNew(shadow)) {
-							return this.endpoint.doCreate(this.endpoint, shadow, shadowState);
+							return this.endpoint.doCreate(shadow, shadowState);
 						} else {
-							return this.endpoint.doUpdate(this.endpoint, id, shadow, shadowState);
+							return this.endpoint.doUpdate(id, shadow, shadowState);
 						}
 					})
 				.then( savedState => {
@@ -709,7 +706,7 @@ export default class CollectionProperty extends KeyedProperty {
 								currModel.setData(savedState);
 								break;
 							case DEFAULTS_OPTION:
-								currModel.defaults(saveState);
+								currModel.defaults(savedState);
 								break;
 							default:
 								return Store.reject(`Invalid post-save option: ${mergeOp}`);
@@ -720,7 +717,7 @@ export default class CollectionProperty extends KeyedProperty {
 				.catch( error => this.onError(error, `Save ${id} - cid=${shadow.$.cid}`) );
 		} catch(error) {
 debugger
-			this.onError(error, `Save ${id} - cid=${shadow.$.cid}`);
+			return this.onError(error, `Save ${id} - cid=${shadow.$.cid}`);
 		}
 	}
 

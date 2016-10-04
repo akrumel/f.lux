@@ -19,7 +19,7 @@ export default class KeyedApi {
 	}
 
 	impl() {
-		return this._property.__;
+		return this._property.__();
 	}
 
 	isActive() {

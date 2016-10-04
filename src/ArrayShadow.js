@@ -3,7 +3,7 @@ import IndexedShadow from "./IndexedShadow";
 
 export default class ArrayShadow extends IndexedShadow {
 	clear() {
-		this.__.clear();
+		this.__().clear();
 	}
 
 
@@ -12,15 +12,15 @@ export default class ArrayShadow extends IndexedShadow {
 	//------------------------------------------------------------------------------------------------------
 
 	pop() {
-		return this.__.pop();
+		return this.__().pop();
 	}
 
 	push(...values) {
-		return this.__.push(...values);
+		return this.__().push(...values);
 	}
 
 	remove(idx) {
-		return this.__.remove(idx);
+		return this.__().remove(idx);
 	}
 
 	removeValue(value) {
@@ -32,14 +32,14 @@ export default class ArrayShadow extends IndexedShadow {
 	}
 
 	shift() {
-		return this.__.shift();
+		return this.__().shift();
 	}
 
 	splice(start, deleteCount, ...newItems) {
-		return this.__.splice(start, deleteCount, ...newItems);
+		return this.__().splice(start, deleteCount, ...newItems);
 	}
 
 	unshift(...values) {
-		return this.__.unshift(...values);
+		return this.__().unshift(...values);
 	}
 }

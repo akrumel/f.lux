@@ -64,55 +64,55 @@ export default class IndexedProperty extends Property {
 	//------------------------------------------------------------------------------------------------------
 
 	get length() {
-		return this.__.length;
+		return this.__().length;
 	}
 
 	// Select Array methods (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)
 	clear() {
 		if (this.isActive()) {
-			this.__.clear();
+			this.__().clear();
 		}
 	}
 
 	concat(...values) {
 		if (this.isActive()) {
-			return this.__.concat(...values);
+			return this.__().concat(...values);
 		}
 	}
 
 	pop() {
 		if (this.isActive()) {
-			return this.__.pop();
+			return this.__().pop();
 		}
 	}
 
 	push(...values) {
 		if (this.isActive()) {
-			return this.__.push(...values);
+			return this.__().push(...values);
 		}
 	}
 
 	remove(idx) {
 		if (this.isActive()) {
-			return this.__.remove(idx);
+			return this.__().remove(idx);
 		}
 	}
 
 	shift() {
 		if (this.isActive()) {
-			return this.__.shift();
+			return this.__().shift();
 		}
 	}
 
 	splice(start, deleteCount, ...newItems) {
 		if (this.isActive()) {
-			return this.__.splice(start, deleteCount, ...newItems);
+			return this.__().splice(start, deleteCount, ...newItems);
 		}
 	}
 
 	unshift(...values) {
 		if (this.isActive()) {
-			return this.__.unshift(...values);
+			return this.__().unshift(...values);
 		}
 	}
 }

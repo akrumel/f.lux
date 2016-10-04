@@ -1,26 +1,30 @@
 import has from "lodash.has";
 
+const _impl = Symbol('impl');
 
 export default class Access {
 	constructor(impl) {
-		// invisible property for the internals
-		Object.defineProperty(this, '__', { enumerable: true, value: impl })
+		this[_impl] = impl;
 	}
 
 	get pid() {
 		return this.property().pid;
 	}
 
+	__() {
+		return this[_impl];
+	}
+
 	dotPath() {
-		return this.__.dotPath();
+		return this[_impl].dotPath();
 	}
 
 	isActive() {
-		return this.__.isActive();
+		return this[_impl].isActive();
 	}
 
 	isValid() {
-		return this.__.isValid();
+		return this[_impl].isValid();
 	}
 
 	isReadonly() {
@@ -28,45 +32,45 @@ export default class Access {
 	}
 
 	latest() {
-		const impl = this.__.latest();
+		const impl = this[_impl].latest();
 
 		return impl && impl.shadow();
 	}
 
 	merge(data) {
-		this.__.merge(data);
+		this[_impl].merge(data);
 	}
 
 	nextState() {
-		return this.__.nextState();
+		return this[_impl].nextState();
 	}
 
 	path() {
-		return this.__.path();
+		return this[_impl].path();
 	}
 
 	property() {
-		return this.__.property;
+		return this[_impl].property;
 	}
 
 	rootShadow() {
-		return this.__.root().shadow();
+		return this[_impl].root().shadow();
 	}
 
 	slashPath() {
-		return this.__.slashPath();
+		return this[_impl].slashPath();
 	}
 
 	shadow() {
-		return this.__.shadow();
+		return this[_impl].shadow();
 	}
 
 	state() {
-		return this.__.state();
+		return this[_impl].state();
 	}
 
 	store() {
-		return this.__.store();
+		return this[_impl].store();
 	}
 
 	/*
@@ -90,7 +94,7 @@ export default class Access {
 			nextState - the value for the next state after the update functionality
 	*/
 	update(callback) {
-		this.__.update( next => {
+		this[_impl].update( next => {
 			var result = callback(next);
 
 			result = has(result, "nextState") ?result :{ nextState: nexresultt };

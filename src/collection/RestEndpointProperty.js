@@ -119,8 +119,6 @@ export default class RestEndpointProperty extends KeyedProperty {
 				},
 				body: JSON.stringify(changedProps),
 			};
-
-
 		return fetch(uri.toString(), getOptions("PUT", options))
 			.then( response => {
 					if (!response.ok) {

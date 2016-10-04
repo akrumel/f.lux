@@ -5,7 +5,7 @@ import Shadow from "./Shadow";
 
 export default class IndexedShadow extends Shadow {
 	get length() {
-		return this.__.length;
+		return this.__().length;
 	}
 
 
@@ -104,7 +104,7 @@ export default class IndexedShadow extends Shadow {
 	}
 
 	join(separator=',') {
-		return this.__.state().join(separator);
+		return this.__().state().join(separator);
 	}
 
 	lastIndexOf(value, fromIndex=this.length-1) {

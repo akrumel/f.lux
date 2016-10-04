@@ -11,7 +11,7 @@ export default function modelize(values) {
 		var value = values[i];
 
 		if (isShadow(value)) {
-			value = value.__.state();
+			value = value.__().state();
 		}
 	}
 }

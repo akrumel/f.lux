@@ -8,7 +8,7 @@ export default class ModelAccess extends Access {
 	*/
 	create$ForChild(childImpl) {
 		if (childImpl.name() == "data") {
-			return new ShadowModelAccess(this.__.property, childImpl);
+			return new ShadowModelAccess(this.property(), childImpl);
 		} else {
 			return new Access(childImpl);
 		}

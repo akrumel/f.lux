@@ -129,7 +129,7 @@ export default class Store {
 	}
 
 	findByPath(path) {
-		const rootImpl = this._root.__;
+		const rootImpl = this._root.__();
 
 		return rootImpl.findByPath(path);
 	}
@@ -144,7 +144,7 @@ export default class Store {
 
 		// inform property it is being replaced
 		if (currRoot && root !== currRoot && currRootActive) {
-			currRoot.__.obsoleteTree( impl => {
+			currRoot.__().obsoleteTree( impl => {
 				// set the root property and set it's store to this object
 				root.setStore(this);
 				this._root = root;

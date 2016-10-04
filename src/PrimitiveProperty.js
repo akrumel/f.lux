@@ -36,7 +36,7 @@ export default class PrimitiveProperty extends Property {
 	}
 
 	definePropertySetValue(newValue) {
-		this.__.assign(newValue);
+		this.__().assign(newValue);
 	}
 
 

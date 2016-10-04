@@ -40,10 +40,6 @@ export default class ModelProperty extends KeyedProperty {
 		return this._.data;
 	}
 
-	get dirty() {
-		return this._.dirty;
-	}
-
 	/*
 		Gets the ID by which the collection is tracking the model. This will be the persistent storage
 		ID or an ID created by the collection
@@ -70,7 +66,7 @@ export default class ModelProperty extends KeyedProperty {
 			this._.id = id;
 		}
 
-		this._.data.__.defaults(data);
+		this._.data.__().defaults(data);
 
 		// reset to not dirty if was not dirty before the merge since assuming data being merged
 		// is coming from a source of truth, such as data returned from a save
@@ -82,6 +78,10 @@ export default class ModelProperty extends KeyedProperty {
 	@shadowBound
 	destroy() {
 		return this.collection.destroy(this.cid);
+	}
+
+	isDirty() {
+		return this._.dirty;
 	}
 
 	/*
@@ -106,7 +106,7 @@ export default class ModelProperty extends KeyedProperty {
 			this._.id = id;
 		}
 
-		this._.data.__.merge(data);
+		this._.data.__().merge(data);
 
 		// reset to not dirty if was not dirty before the merge since assuming data being merged
 		// is coming from a source of truth, such as data returned from a save
@@ -117,7 +117,7 @@ export default class ModelProperty extends KeyedProperty {
 
 	@shadowBound
 	save() {
-		this.collection.save(this.cid);
+		return this.collection.save(this.cid);
 	}
 
 	@shadowBound
@@ -150,7 +150,7 @@ export default class ModelProperty extends KeyedProperty {
 	}
 
 	onChildInvalidated(childProperty) {
-		if (childProperty.__.name() == "data" && !this._.dirty) {
+		if (childProperty.__().name() == "data" && !this._.dirty) {
 			this._.dirty = true;
 		}
 	}

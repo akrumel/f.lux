@@ -19,19 +19,19 @@ export default class MapShadow extends Shadow {
 	//------------------------------------------------------------------------------------------------------
 
 	get size() {
-		return this.__.size();
+		return this.__().size();
 	}
 
 	clear() {
-		this.__.clear();
+		this.__().clear();
 	}
 
 	delete(key) {
-		return this.__.delete(key);
+		return this.__().delete(key);
 	}
 
 	entries() {
-		return iterateOver(this.__.keys(), key => [ key, this[key] ] );
+		return iterateOver(this.__().keys(), key => [ key, this[key] ] );
 	}
 
 	get(key) {
@@ -39,19 +39,19 @@ export default class MapShadow extends Shadow {
 	}
 
 	has(key) {
-		return this.__.has(key);
+		return this.__().has(key);
 	}
 
 	keys() {
-		return iteratorFor(this.__.keys());
+		return iteratorFor(this.__().keys());
 	}
 
 	set(key, value) {
-		return this.__.set(key, value);
+		return this.__().set(key, value);
 	}
 
 	values() {
-		return iterateOver(this.__.keys(), key => this[key]);
+		return iterateOver(this.__().keys(), key => this[key]);
 	}
 
 	[Symbol.iterator]() { return this.entries() }

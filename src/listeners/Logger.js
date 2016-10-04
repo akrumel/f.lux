@@ -160,7 +160,7 @@ export default class Logger {
 
 		if (this.traps) {
 			const traps = Object.values(this.traps);
-			const nextState = store.shadow.__.nextState();
+			const nextState = store.shadow.__().nextState();
 
 			for (let i=0, t; t=traps[i]; i++) {
 				var value = isString(t.eval)

@@ -112,13 +112,6 @@ export default class Property {
 		return this;
 	}
 
-	/*
-		Anything is possible (almost) with the ShadowImpl reference.
-	*/
-	get __() {
-		return this[_impl];
-	}
-
 	get autoShadow() {
 		return this[_autoShadow];
 	}
@@ -185,6 +178,13 @@ export default class Property {
 		}
 
 		return this[_store];
+	}
+
+	/*
+		Anything is possible (almost) with the ShadowImpl reference.
+	*/
+	__() {
+		return this[_impl];
 	}
 
 	dotPath() {
@@ -390,13 +390,13 @@ export default class Property {
 	*/
 	touch() {
 		if (this.isActive()) {
-			this.__.update( state => ( { name: "Property.touch()", nextState: state } ) );
+			this.__().update( state => ( { name: "Property.touch()", nextState: state } ) );
 		}
 	}
 
 	update(callback) {
 		if (this.isActive()) {
-			this.__.update(callback);
+			this.__().update(callback);
 		} else {
 			throw new Error("Property must be active to invoke update()");
 		}

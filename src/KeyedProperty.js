@@ -106,12 +106,12 @@ export default class KeyedProperty extends Property {
 	//------------------------------------------------------------------------------------------------------
 
 	get size() {
-		return this.__.size();
+		return this.__().size();
 	}
 
 	clear() {
 		if (this.isActive()) {
-			this.__.clear();
+			this.__().clear();
 		}
 	}
 
@@ -121,7 +121,7 @@ export default class KeyedProperty extends Property {
 
 			// need to perform action even if value is undefined because could be a queued action
 			// to add it.
-			this.__.delete(key);
+			this.__().delete(key);
 
 			return value;
 		}
@@ -178,7 +178,7 @@ export default class KeyedProperty extends Property {
 
 	set(key, value) {
 		if (this.isActive()) {
-			this.__.set(key, value);
+			this.__().set(key, value);
 		}
 	}
 

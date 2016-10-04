@@ -67,7 +67,7 @@ export default class ShadowImpl {
 		this[_changed] = false;
 
 		if (parent && parent[_access].create$ForChild) {
-			// property does not know about this impl yet. So impl.property() will work but property.__ will not
+			// property does not know about this impl yet. So impl.property() will work but property.__() will not
 			this[_access] = parent[_access].create$ForChild(this);
 		} else {
 			this[_access] = property.create$(this);
@@ -147,7 +147,7 @@ export default class ShadowImpl {
 		Note: This value will be used directly (not copied) so ensure the state is not altered.
 	*/
 	assign(nextState, name) {
-		nextState = isShadow(nextState) ?nextState.__.state() :nextState;
+		nextState = isShadow(nextState) ?nextState.__().state() :nextState;
 
 		//create a deep copy so not shared with the passed in value
 		//this.deepcopy() will use current model if no value passed or value passed is null or undefined

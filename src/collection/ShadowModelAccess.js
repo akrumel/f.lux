@@ -20,7 +20,10 @@ export default class ShadowModelAccess extends Access {
 	}
 
 	get dirty() {
-		return this.$$.dirty;
+debugger
+console.error("Deprecated - use $().isDirty()");
+
+		return this.$$.isDirty();
 	}
 
 	get id() {
@@ -29,6 +32,10 @@ export default class ShadowModelAccess extends Access {
 
 	destroy() {
 		return this.$$.destroy();
+	}
+
+	isDirty() {
+		return this.$$.isDirty();
 	}
 
 	isNew() {
