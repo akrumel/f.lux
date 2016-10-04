@@ -1,4 +1,5 @@
 import defaults from "lodash.defaults";
+import isArray from "lodash.isarray";
 
 import ArrayProperty from "./ArrayProperty";
 import CollectionProperty from "./collection/CollectionProperty";
@@ -80,22 +81,28 @@ export class StateType {
 	static initialStateWithDefaults(property, state) {
 		var proto = Object.getPrototypeOf(property);
 		var stateSpec = proto.constructor.stateSpec;
-		var propType, propState;
+		var arrayType = isArray(state);
+		var defaultState, propType, propState;
 
-		if (!stateSpec || !isObject(state)) { return state; }
+		if (!stateSpec || (!isObject(state) && !arrayType)) { return state; }
 
 		var propSpecs = stateSpec._properties || stateSpec;
 
 		if (isObject(stateSpec._defaults)) {
-			state = defaults({}, state, stateSpec._defaults);
+			state = defaults( (arrayType ?[] :{}), state, stateSpec._defaults);
 		}
 
 		for (let name in propSpecs) {
 			propType = propSpecs[name];
 
 			if (propType && propType._defaults !== undefined) {
-				state[name] = defaults({}, state[name], propType._defaults);
+				defaultState = defaultState || (arrayType ?[] :{});
+				defaultState[name] = propType._defaults ;
 			}
+		}
+
+		if (defaultState) {
+			state= defaults((arrayType ?[] :{}), state, defaultState);
 		}
 
 		return state;
@@ -177,7 +184,11 @@ export class StateType {
 		this._setupShader(shader);
 	}
 
-	defaults(state) {
+	createProperty() {
+		return new this._PropertyClass(this._initialState, this._autoshadow, this._readonly);
+	}
+
+	default(state) {
 		this._defaults = state;
 
 		return this;
@@ -198,6 +209,10 @@ export class StateType {
 		this._setupShader(shader);
 
 		return shader;
+	}
+
+	getTypeName() {
+		return this.ProperClass.__fluxTypeName__;
 	}
 
 	implementationClass(cls) {
@@ -249,6 +264,10 @@ export class StateType {
 		this._shadowClass = cls;
 
 		return this;
+	}
+
+	typeName(name) {
+		this._PropertyClass.__fluxTypeName__ = name;
 	}
 
 	_setupShader(shader) {

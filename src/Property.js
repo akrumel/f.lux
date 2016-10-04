@@ -394,6 +394,10 @@ export default class Property {
 		}
 	}
 
+	typeName() {
+		return this.constructor.__fluxTypeName__ || this.constructor.name;
+	}
+
 	update(callback) {
 		if (this.isActive()) {
 			this.__().update(callback);

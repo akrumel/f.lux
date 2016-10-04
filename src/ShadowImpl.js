@@ -661,7 +661,16 @@ export default class ShadowImpl {
 						if (isSomething(state)) {
 							this.defineChildProperties();
 
-							return this.definePropertyGetValue(state);
+//							return this.definePropertyGetValue(state);
+							var shadow = this.definePropertyGetValue(state);
+
+							// freeze shadows in dev mode to provide check not assigning to non-shadowed property
+							// this can have performance penalties so skip in production mode
+							if (process.env.NODE_ENV !== 'production') {
+								!Object.isFrozen(shadow) && Object.freeze(shadow);
+							}
+
+							return shadow;
 						} else {
 							return state;
 						}

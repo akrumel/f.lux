@@ -53,8 +53,6 @@ export default class ObjectProperty extends Property {
 		var propType;
 
 		for (let key in defn) {
-			propType = defn[key];
-
 			type.addProperty(key, defn[key]);
 		}
 

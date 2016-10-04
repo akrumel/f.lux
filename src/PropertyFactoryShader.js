@@ -71,16 +71,24 @@ export default class PropertyFactoryShader {
 			return null;
 		}
 
-		const property = new this.PropertyClass(this.initialState, this.autoShadow);
-		const shader = new Shader(property, property.autoShadow);
+		const stateSpec = this.PropertyClass.stateSpec;
+		var property, shader;
 
 		// setup the shader and set on property
-		this._configureShader(shader, property);
-		property.setShader(shader);
+		if (stateSpec) {
+			property = stateSpec.createProperty();
+			shader = property.shader();
+		} else {
+			// old school method of hand configuring the factory shaders
+			property = new this.PropertyClass(this.initialState, this.autoShadow);
+			shader = property.shader();
 
-		// setup the readonly flag
-		if (this.readonly) {
-			property.setReadonly(true);
+			this._configureShader(shader, property);
+
+			// setup the readonly flag
+			if (this.readonly) {
+				property.setReadonly(true);
+			}
 		}
 
 		// set the proprety's parent property

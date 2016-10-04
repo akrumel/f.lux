@@ -4,15 +4,18 @@ import { iteratorFor } from "akutils";
 
 import Shadow from "../Shadow";
 
-import { DEFAULTS_OPTION, REPLACE_OPTION } from "./CollectionOptions";
+import { DEFAULTS_OPTION, MERGE_OPTION, REPLACE_OPTION } from "./CollectionOptions";
 
 
 const _valuesArray = Symbol('_valuesArray');
 const _keysArray = Symbol('_keysArray');
+const _cache = Symbol("_cache");
 
 export default class CollectionShadow extends Shadow {
 	constructor(impl) {
-		super(impl)
+		super(impl);
+
+		this[_cache] = {};
 	}
 
 	get endpoint() {
@@ -75,7 +78,7 @@ export default class CollectionShadow extends Shadow {
 		Returns the object's ID. And ID is assigned if the 'id' parameter was not set and it could not
 			be found in the 'state' parameter.
 	*/
-	addModel(state, mergeOp=DEFAULTS_OPTION) {
+	addModel(state, mergeOp=MERGE_OPTION) {
 		return this.$$.addModel(state, mergeOp);
 	}
 
@@ -88,7 +91,7 @@ export default class CollectionShadow extends Shadow {
 			merge - boolean declaring whether each state should be merged over an existing model with
 				the same ID. False means a current model will be replaced with the new model value.
 	*/
-	addModels(states, mergeOp=DEFAULTS_OPTION) {
+	addModels(states, mergeOp=MERGE_OPTION) {
 		this.$$.addModels(states, mergeOp);
 	}
 
@@ -225,11 +228,11 @@ export default class CollectionShadow extends Shadow {
 	}
 
 	keysArray() {
-		if (!this[_keysArray]) {
-			this[_keysArray] = this.$$.modelKeysArray(this);
+		if (!this[_cache][_keysArray]) {
+			this[_cache][_keysArray] = this.$$.modelKeysArray(this);
 		}
 
-		return this[_keysArray];
+		return this[_cache][_keysArray];
 	}
 
 	map(iteratee, context) {
@@ -302,11 +305,11 @@ export default class CollectionShadow extends Shadow {
 	}
 
 	valuesArray() {
-		if (!this[_valuesArray]) {
-			this[_valuesArray] = this.$$.modelsArray(this);
+		if (!this[_cache][_valuesArray]) {
+			this[_cache][_valuesArray] = this.$$.modelsArray(this);
 		}
 
-		return this[_valuesArray];
+		return this[_cache][_valuesArray];
 	}
 
 	[Symbol.iterator]() { return this.$$.modelEntries(this) }

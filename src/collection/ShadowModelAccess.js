@@ -30,6 +30,10 @@ console.error("Deprecated - use $().isDirty()");
 		return this.$$.id;
 	}
 
+	cid() {
+		return this.$$.cid;
+	}
+
 	destroy() {
 		return this.$$.destroy();
 	}

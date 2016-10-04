@@ -76,6 +76,14 @@ import { DEFAULTS_OPTION, MERGE_OPTION, NONE_OPTION, REPLACE_OPTION, REPLACE_ALL
 
 
 /*
+	Temporary convenient function until the '()' transition is complete
+*/
+function shadow$(shadow) {
+	return typeof shadow.$ === 'function' ?shadow.$() :shadow.$;
+}
+
+
+/*
 	Rework API:
 		- same ctor as all other properties
 		- separate method to setup element shader:
@@ -578,8 +586,13 @@ export default class CollectionProperty extends KeyedProperty {
 	isNew(id, state=this._) {
 		const model = this._getModel(id, state);
 
-		return model && model.isNew();
+		return !model || model.isNew();
+	}
 
+	isNewModel(shadow) {
+		const id = this.extractId(shadow);
+
+		return !id;
 	}
 
 	/*
@@ -673,18 +686,18 @@ export default class CollectionProperty extends KeyedProperty {
 
 		try {
 			const shadowState = shadow.__().nextState();
-			const opName = this.isNew(shadow) ?CreateOp :UpdateOp;
+			const opName = this.isNewModel(shadow) ?CreateOp :UpdateOp;
 
 			return this._on(opName)
 				.then( () => {
-						if (this.isNew(shadow)) {
+						if (this.isNewModel(shadow)) {
 							return this.endpoint.doCreate(shadow, shadowState);
 						} else {
 							return this.endpoint.doUpdate(id, shadow, shadowState);
 						}
 					})
 				.then( savedState => {
-						const currModel = model.$.latest();
+						const currModel = shadow$(model).latest();
 						const savedId = this.extractId(savedState);
 
 						// Put an entry in id->cid mapping
@@ -714,10 +727,9 @@ export default class CollectionProperty extends KeyedProperty {
 
 						return this.get(id);
 					})
-				.catch( error => this.onError(error, `Save ${id} - cid=${shadow.$.cid}`) );
+				.catch( error => this.onError(error, `Save ${id} - cid=${shadow$(shadow).cid}`) );
 		} catch(error) {
-debugger
-			return this.onError(error, `Save ${id} - cid=${shadow.$.cid}`);
+			return this.onError(error, `Save ${id} - cid=${shadow$(shadow).cid}`);
 		}
 	}
 
@@ -768,6 +780,21 @@ debugger
 		var idName = this._[_idName];
 
 		return isObject(model) ?model[idName] :model;
+	}
+
+	/*
+		Gets an ID suitable for obtaining the shadow model even if the model has yet to be persisted.
+	*/
+	extractRefId(model) {
+		var idName = this._[_idName];
+
+		if (!isObject(model)) { return model }
+
+		if (model[idName]) {
+			return model[idName];
+		} else if (model.$) {
+			return shadow$(model).$$.cid;
+		}
 	}
 
 	onError(error, opMsg) {
