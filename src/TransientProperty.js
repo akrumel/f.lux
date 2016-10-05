@@ -96,7 +96,7 @@ export default class TransientProperty extends ObjectProperty {
 		// create the primary lock (ensures transient is locked before first sweep)
 		this.lock(PrimaryLockName);
 
-		debug(`TransientProperty created: id=${ id }`);
+		debug( d => d(`TransientProperty created: id=${ id }`) );
 	}
 
 	get id() {
@@ -106,7 +106,7 @@ export default class TransientProperty extends ObjectProperty {
 	propertyWillUnshadow() {
 		delete this[_locks];
 
-		debug(`propertyWillUnshadow(): id=${ this[_transId] }`);
+		debug( d => d(`propertyWillUnshadow(): id=${ this[_transId] }`) );
 	}
 
 	isLocked() {
@@ -131,7 +131,7 @@ export default class TransientProperty extends ObjectProperty {
 		if (!this[_locks]) { return }
 
 		this[_locks] = this[_locks].filter( l => l !== lock );
-		debug(`_removeLock(): id=${ this[_transId] }, locked=${ this.isLocked() }, desc=${ lock.desc() }`)
+		debug( d => d(`_removeLock(): id=${ this[_transId] }, locked=${ this.isLocked() }, desc=${ lock.desc() }`) );
 	}
 
 	_addLock(lock) {
@@ -140,7 +140,7 @@ export default class TransientProperty extends ObjectProperty {
 		if (!this[_locks]) { return null }
 
 		this[_locks].push(lock);
-		debug(`_addLock(): id=${ this[_transId] }, desc=${ lock.desc() }`);
+		debug( d => d(`_addLock(): id=${ this[_transId] }, desc=${ lock.desc() }`) );
 
 		return lock;
 	}

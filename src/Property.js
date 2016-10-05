@@ -408,7 +408,7 @@ export default class Property {
 
 
 	//------------------------------------------------------------------------------------------------------
-	// Property subclasses may want to override success methods
+	// Property subclasses may want to override these methods - no need to call super
 	//------------------------------------------------------------------------------------------------------
 
 	/*
@@ -474,7 +474,7 @@ export default class Property {
 	/*
 		Returns the Shadow subclass used to virtualize the state property.
 
-		Returns - Shadow
+		Returns - Shadow class
 	*/
 	shadowClass() {
 		const { StateType } = require("./StateTypes");

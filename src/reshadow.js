@@ -18,13 +18,15 @@ export default function reshadow(time, parentState, prevImpl, parentImpl) {
 		// copy so can keep valid properties while shadowing invalid/new properties
 		const impl = prevImpl.createCopy(time, state, parentImpl);
 
-		// Attach the new property to its parents and invoke property end update life-cycle method
-		impl.setupPropertyAccess();
-
 		// Set the properties implmentation after attaching the implementation to the shadow state
 		prevImpl.property.setImpl(impl);
 
-		// mark previous implementation dead after new implementation in place so property can querey
+		// Attach the new property to its parents and invoke property end update life-cycle method
+		impl.setupPropertyAccess(prevImpl);
+
+		impl.reshadowed(prevImpl);
+
+		// mark previous implementation dead after new implementation in place so property can query
 		// the previous implementation during the life-cycle change and it will read active (not dead).
 		prevImpl.updated();
 

@@ -32,6 +32,7 @@ export const AllKey = 'f.lux:*';
 export const CollectionAllKey = 'f.lux:collection:*';
 export const CollectionPropertyKey = 'f.lux:collection:property';
 
+export const ShadowImplKey = 'f.lux:shadowImpl';
 export const StoreKey = 'f.lux:store';
 export const TransientKey = 'f.lux:transient';
 
@@ -40,6 +41,20 @@ export const TransientKey = 'f.lux:transient';
 //debug.enable(AllKey);
 
 
+debug.enable(CollectionPropertyKey)
 debug.enable(TransientKey)
 
-export default debug;
+
+function debugoff() { }
+
+export default function devDebug(modname) {
+	if (process.env.NODE_ENV !== 'production') {
+		let appDebug = debug(modname);
+
+		return function appDebugFn(cb) {
+			cb(appDebug);
+		}
+	} else {
+		return debugoff;
+	}
+}

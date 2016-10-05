@@ -228,10 +228,23 @@ export default class Shader {
 		const ImplClass = property.implementationClass();
 		const impl = shadowProperty(time, ImplClass, property, name, state, parentImpl, this);
 
-		// set the current implementation
-		property.setImpl(impl);
-
 		return impl;
+	}
+
+	shadowUndefinedProperties(state, impl, define) {
+		const keys = Object.keys(this[_shaders]);
+		const shadow = impl.shadow();
+		const propNames = Object.getOwnPropertyNames(shadow);
+		var key, shader;
+
+		for (let i=0, len=keys.length; i<len; i++) {
+			key = keys[i];
+			shader = this[_shaders][key];
+
+			if (propNames.indexOf(key) !== -1) { continue }
+
+			define(key, shader);
+		}
 	}
 
 	/*

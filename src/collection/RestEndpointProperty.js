@@ -58,7 +58,14 @@ export default class RestEndpointProperty extends KeyedProperty {
 
 	@shadow
 	doCreate(shadowModel, model) {
-		return fetch(this._.url, getOptions("POST", { body: JSON.stringify(model) }) )
+		const options = getOptions("POST", {
+				body: JSON.stringify(model),
+				headers: {
+					'Content-Type': 'application/json'
+				},
+			});
+
+		return fetch(this._.url, options)
 			.then( response => {
 					if (!response.ok) {
 						return rejectOnError(response, url.toString());

@@ -25,17 +25,25 @@ export default class IndexedShadowImpl extends ShadowImpl {
 
 		// go ahead and map properties so can reuse valid properties without creating a closure reference.
 		// Reusing properties allows for React components to do '===' to see if a property has changed.
-		if (prev) {
-			if (prev && prev[_mapped]) {
-				this.defineChildProperties(prev, true);
-			} else if (prev && Object.keys(prev[_impls]).length) {
-				this.automountChildren(prev);
-			}
+		// if (prev) {
+		// 	if (prev && prev[_mapped]) {
+		// 		this.defineChildProperties(prev, true);
+		// 	} else if (prev && Object.keys(prev[_impls]).length) {
+		// 		this.automountChildren(prev);
+		// 	}
 
-			// Kill invalid() nodes that are still active
-			prev._killInvalidButActiveChildren();
+		// 	// Kill invalid() nodes that are still active
+		// 	prev._killInvalidButActiveChildren();
+		// }
+	}
 
-		}
+	/*
+		Map properties so can reuse valid properties. Reusing properties allows for React components
+		to do '===' to see if a property has changed.
+	*/
+	onReshadow(prev) {
+		// Kill invalid() nodes that are still active
+		prev._killInvalidButActiveChildren();
 	}
 
 	isMapped() {
@@ -379,31 +387,23 @@ export default class IndexedShadowImpl extends ShadowImpl {
 
 		const shader = this.shader(state);
 		const state = this.state();
+		var elementShader;
 
 		for (let i=0, len=state.length; i<len; i++) {
-			this.defineChildProperty(i, shader, state, prev, inCtor);
+			elementShader = shader.shaderFor(i, state);
+
+			this.defineChildProperty(i, elementShader, state, prev, inCtor);
 		}
+
+		shader.shadowUndefinedProperties(state, this, (name, shader) => {
+				this.defineChildProperty(name, shader, state, prev, inCtor);
+			});
 	}
 
-	_killInvalidButActiveChildren() {
-		// kill any unvisited children
-			const children = this.children();
-			var child;
-
-			for (let i=0, len=children.length; i<len; i++) {
-				child = children[i];
-
-				if (!child.isValid() && child.isActive()) {
-					child.obsoleteTree();
-				}
-			}
-	}
-
-	defineChildProperty(idx, shader, state, prev, inCtor=false) {
+	defineChildProperty(idx, elementShader, state, prev, inCtor=false) {
 		// ensure not already defined
 		if (this[_impls][idx]) { return }
 
-		const elementShader = shader.shaderFor(idx, state);
 		const prevMapping = prev && prev.childMapping();
 		const prevChild = prevMapping && prevMapping[idx];
 		var child;
@@ -421,6 +421,20 @@ export default class IndexedShadowImpl extends ShadowImpl {
 				child.didShadow(this.time());
 			}
 		}
+	}
+
+	_killInvalidButActiveChildren() {
+		// kill any unvisited children
+			const children = this.children();
+			var child;
+
+			for (let i=0, len=children.length; i<len; i++) {
+				child = children[i];
+
+				if (!child.isValid() && child.isActive()) {
+					child.obsoleteTree();
+				}
+			}
 	}
 }
 

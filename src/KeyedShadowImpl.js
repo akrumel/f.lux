@@ -33,17 +33,27 @@ export default class KeyedShadowImpl extends ShadowImpl {
 			Mapping properties when 'prev' is set enables the reuse of unchanged shadow properties. This
 			reduces number of objects created and affords use of '===' operator for detecting change.
 		*/
-		if (prev) {
-			if (prev && prev[_mapped]) {
-				this.defineChildProperties(prev, true);
-			} else if (prev && Object.keys(prev[_impls]).length) {
-				this.automountChildren(prev);
-			}
+		// if (prev) {
+		// 	if (prev && prev[_mapped]) {
+		// 		this.defineChildProperties(prev, true);
+		// 	} else if (prev && Object.keys(prev[_impls]).length) {
+		// 		this.automountChildren(prev);
+		// 	}
 
-			// Kill invalid() nodes that are still active
-			prev._killInvalidButActiveChildren();
+		// 	// Kill invalid() nodes that are still active
+		// 	prev._killInvalidButActiveChildren();
+		// }
+	}
 
-		}
+	/*
+		Define child properties for root properties and copies (prev is defined). The root case is
+		necessary since cannot trigger child property setting on an access through parent property.
+		Mapping properties when 'prev' is set enables the reuse of unchanged shadow properties. This
+		reduces number of objects created and affords use of '===' operator for detecting change.
+	*/
+	onReshadow(prev) {
+		// Kill invalid() nodes that are still active
+		prev._killInvalidButActiveChildren();
 	}
 
 	/*
@@ -61,6 +71,8 @@ export default class KeyedShadowImpl extends ShadowImpl {
 	*/
 	nextMapping() {
 		if (this[_nextMapping] === undefined) {
+			this.ensureMounted();
+
 			if (!this.isMapped()) {
 				this.defineChildProperties();
 			}
@@ -226,7 +238,7 @@ export default class KeyedShadowImpl extends ShadowImpl {
 			if (child) {
 				child.defaults(stateValue);
 			} else {
-				this.extend({ [key]: stateValue });
+				this.set(key, stateValue);
 			}
 		}
 	}
@@ -250,7 +262,7 @@ export default class KeyedShadowImpl extends ShadowImpl {
 			if (child) {
 				child.merge(stateValue);
 			} else {
-				this.extend({ [key]: stateValue });
+				this.set(key, stateValue);
 			}
 		}
 	}
@@ -325,13 +337,24 @@ export default class KeyedShadowImpl extends ShadowImpl {
 
 		const state = this.state();
 		const shader = this.shader(state);
-		var child;
+		var child, elementShader;
 
 		for (let name in state) {
 			if (!state.hasOwnProperty(name)) { continue }
 
-			this.defineChildProperty(name, shader, state, prev, inCtor);
+			elementShader = shader.shaderFor(name, state);
+
+			if (!elementShader) {
+				console.warn(`KeyedShadowImpl.defineChildProperties() - no shader found - name=${name}, path=${this.dotPath()}`);
+				continue;
+			}
+
+			this.defineChildProperty(name, elementShader, state, prev, inCtor);
 		}
+
+		shader.shadowUndefinedProperties(state, this, (name, shader) => {
+				this.defineChildProperty(name, shader, state, prev, inCtor);
+			});
 	}
 
 	_killInvalidButActiveChildren() {
@@ -348,19 +371,12 @@ export default class KeyedShadowImpl extends ShadowImpl {
 		}
 	}
 
-	defineChildProperty(name, shader, state, prev, inCtor=false) {
+	defineChildProperty(name, elementShader, state, prev, inCtor=false) {
 		// ensure not already defined
 		if (this[_impls][name]) { return }
 
-		var child;
-
 		const prevChild = prev && prev[_impls][name];
-		const elementShader = shader.shaderFor(name, state);
-
-		if (!elementShader) {
-			console.warn(`KeyedShadowImpl.defineChildProperties() - no shader found - name=${name}, path=${this.dotPath()}`);
-			return;
-		}
+		var child;
 
 		if (prevChild) {
 			child = reshadow(this.time(), state, prevChild, this);

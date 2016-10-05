@@ -2,13 +2,14 @@ import has from "lodash.has";
 import isFunction from "lodash.isfunction";
 
 /*
-	Extends a shadow property with the definition returned by the assoicated Property shadow() method.
+	Extends a shadow property with the definition returned by the assoicated Property methods
+	marked using the @shadow and @shadowBound decorators.
 
 	NOTE: function must be called after subclasses are created.
 */
 export default function extendProperty(property, impl, shadow) {
 	const proto = Object.getPrototypeOf(property);
-	const shadowDescriptors = proto.constructor.shadowDescriptors; 
+	const shadowDescriptors = proto.constructor.shadowDescriptors;
 
 	if (shadowDescriptors) {
 		defineProperties(shadowDescriptors, shadow, property, impl);
@@ -44,7 +45,7 @@ function defineProperties(shadowDescriptors, shadow, property, impl, mixin) {
 			const value = bindProperty ?descriptor.value.bind(property) :descriptor.value;
 
 			// Functions are not enumerable in javascript classes so adher to convention
-			Object.defineProperty(shadow, name, { 
+			Object.defineProperty(shadow, name, {
 					enumerable: false,
 					value: value
 				});
@@ -54,14 +55,14 @@ function defineProperties(shadowDescriptors, shadow, property, impl, mixin) {
 			const set = bindProperty && descriptor.set ?descriptor.set.bind(property) :descriptor.set
 
 			if (descriptor.get) {
-				Object.defineProperty(shadow, name, { 
-						enumerable: enumerable, 
+				Object.defineProperty(shadow, name, {
+						enumerable: enumerable,
 						get: get, // && descriptor.get.bind(property),
 						set: set, // && descriptor.set.bind(property),
 					});
 			} else {
 				Object.defineProperty(shadow, name, {
-						enumerable: enumerable, 
+						enumerable: enumerable,
 						value: descriptor.value,
 						writable: false,
 					});

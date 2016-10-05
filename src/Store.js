@@ -72,15 +72,26 @@ export default class Store {
 	//  Properties and methods dealing with state
 	//******************************************************************************************************************
 
-	get root() {
-		return this._root;
-	}
-
 	/*
 		Alias for shadow property.
 	*/
 	get _() {
 		return this._root._;
+	}
+
+	/*
+		Alias for rootImpl property.
+	*/
+	get __() {
+		return this._rootImpl;
+	}
+
+	get root() {
+		return this._root;
+	}
+
+	get rootImpl() {
+		return this._rootImpl;
 	}
 
 	get shadow() {
@@ -495,8 +506,7 @@ export default class Store {
 	}
 
 	_onError(msg, error) {
-		debug(`State error: ${error}`);
-		error && error.stack && debug(error.stack);
+		debug( d => d(`Store error: ${msg}`, error) );
 
 	debugger
 		this.onError(msg, error);

@@ -49,9 +49,7 @@ export default class PrimitiveProperty extends Property {
 	}
 
 	shadowClass() {
-		const { StateType } = require("./StateTypes");
-
-		return StateType.shadowClassForProperty(this, PrimitiveShadow);
+		return null;
 	}
 
 }

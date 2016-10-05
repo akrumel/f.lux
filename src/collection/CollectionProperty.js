@@ -248,7 +248,7 @@ export default class CollectionProperty extends KeyedProperty {
 			filter.gt("updated_at", lastUpdate);
 		}
 
-		debug(`resync() - path=${ this.dotPath() }, initial_id=${initialId}, updated_at=${lastUpdate}`);
+		debug( d => d(`resync() - path=${ this.dotPath() }, initial_id=${initialId}, updated_at=${lastUpdate}`) );
 
 // Todo: rework network call returns two arrays: new/modified models and deleted model IDs
 //       as currently structured there is no delete support.
@@ -533,7 +533,7 @@ export default class CollectionProperty extends KeyedProperty {
 			// invoke the callback with the error
 			callback && callback(error, null);
 
-			debug(`fetch() top level error: ${error.stack || error}`);
+			debug( d => d(`fetch() top level error: ${error.stack || error}`) );
 
 			throw Store.reject(error);
 		}
@@ -812,8 +812,7 @@ export default class CollectionProperty extends KeyedProperty {
 			msg = `Error during collection operation '${opMsg} (${ this.endpointId })' - Error: ${error}`;
 		}
 
-		debug(`${DebugKey} Error: ${msg}`);
-		if (error.stack) { debug(error.stack) }
+		debug( d => d(`Error: ${msg}`, error) );
 
 		const collectionError = new Error(msg);
 

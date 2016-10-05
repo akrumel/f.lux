@@ -10,6 +10,9 @@ export default function shadowProperty(time, ImplClass, property, name, state, p
 		impl.setReadonly(true);
 	}
 
+	// set the current implementation
+	property.setImpl(impl);
+
 	impl.setupPropertyAccess();
 
 	return impl;
