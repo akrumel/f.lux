@@ -472,19 +472,36 @@ export default class CollectionProperty extends KeyedProperty {
 		try {
 			const model = this._getModel(id);
 
-			if (!model || model.isNew()) {
-				return Store.resolve(this._);
+			if (!model) {
+				return Store.resolve(id);
+			} else if (model.isNew()) {
+				this._[_models].delete(model.cid);
+				this._[_id2cid].delete(model.id);
+
+				return Store.resolve(id);
 			}
 
 			return this._on(DestroyOp)
-				.then( () => this.endpoint.doDelete(id) )
+				.then( () => {
+					model.waiting = true;
+
+					this.endpoint.doDelete(id)
+				})
 				.then( () => {
 						this._[_models].delete(model.cid);
 						this._[_id2cid].delete(model.id);
 
 						return id;
 					})
-				.catch( error => this.onError(error, `Destroy model: ${id}`) );
+				.catch( error => {
+						const currModel = shadow$(model).latest();
+
+						if (currModel) {
+							currModel.waiting = false
+						}
+
+						this.onError(error, `Destroy model: ${id}`)
+					});
 		} catch(error) {
 			return this.onError(error, `Destroy model: ${id}`);
 		}
@@ -690,6 +707,8 @@ export default class CollectionProperty extends KeyedProperty {
 
 			return this._on(opName)
 				.then( () => {
+						model.waiting = true;
+
 						if (this.isNewModel(shadow)) {
 							return this.endpoint.doCreate(shadow, shadowState);
 						} else {
@@ -699,6 +718,8 @@ export default class CollectionProperty extends KeyedProperty {
 				.then( savedState => {
 						const currModel = shadow$(model).latest();
 						const savedId = this.extractId(savedState);
+
+						currModel.waiting = false;
 
 						// Put an entry in id->cid mapping
 						if (savedId != id) {
@@ -725,9 +746,19 @@ export default class CollectionProperty extends KeyedProperty {
 								return Store.reject(`Invalid post-save option: ${mergeOp}`);
 						}
 
+						model.$$.clearDirty();
+
 						return this.get(id);
 					})
-				.catch( error => this.onError(error, `Save ${id} - cid=${shadow$(shadow).cid}`) );
+				.catch( error => {
+						let currModel = shadow$(model).latest();
+
+						if (currModel) {
+							currModel.waiting = false
+						}
+
+						this.onError(error, `Save ${id} - cid=${shadow$(shadow).cid}`)
+					});
 		} catch(error) {
 			return this.onError(error, `Save ${id} - cid=${shadow$(shadow).cid}`);
 		}

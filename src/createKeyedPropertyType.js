@@ -10,7 +10,7 @@ export default function createKeyedPropertyType(shadowType={}, stateSpec, specCa
 	var ShadowClass;
 
 	// get the shadow class
-	if (shadowType instanceof Shadow) {
+	if (typeof shadowType === 'function') {
 		// shadow class passed into method
 		ShadowClass = shadowType
 	} else {
@@ -30,17 +30,16 @@ export default function createKeyedPropertyType(shadowType={}, stateSpec, specCa
 		ShadowClass = CustomKeyedShadow;
 	}
 
-	// default spec for constructor
-	var spec = stateSpec || {};
-
 	// create the property subclass
 	class CustomKeyedProperty extends KeyedProperty {
-		constructor(initialState=spec._initialState, autoShadow=spec._autoshadow, readonly=spec._readonly) {
+		constructor(
+				initialState=CustomKeyedProperty.stateSpec._initialState,
+				autoShadow=CustomKeyedProperty.stateSpec._autoshadow,
+				readonly=CustomKeyedProperty.stateSpec._readonly)
+		{
 			super(initialState, autoShadow, readonly);
-		}
 
-		shadowClass() {
-			return ShadowClass;
+			this.setShadowClass(ShadowClass);
 		}
 	}
 

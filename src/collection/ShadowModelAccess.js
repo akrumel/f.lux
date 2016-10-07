@@ -38,6 +38,10 @@ console.error("Deprecated - use $().isDirty()");
 		return this.$$.destroy();
 	}
 
+	isWaiting() {
+		return this.$$.isWaiting();
+	}
+
 	isDirty() {
 		return this.$$.isDirty();
 	}

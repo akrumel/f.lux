@@ -17,7 +17,7 @@ const _locks = Symbol('locks');
 const _subscribers = Symbol('subscribers');
 const _trans = Symbol('trans');
 const _transId = Symbol('id');
-const PrimaryLockName = "__primary__";
+//const PrimaryLockName = "__primary__";
 
 var nextLockId = 1;
 
@@ -52,9 +52,9 @@ export class TransientLock {
 
 
 export class TransientShadow extends SimpleShadow {
-	get primaryLock() {
-		return this.$$().primaryLock();
-	}
+	// get primaryLock() {
+	// 	return this.$$().primaryLock();
+	// }
 
 	delete() {
 		const transRoot = this.$$().parent._();
@@ -74,9 +74,9 @@ export class TransientShadow extends SimpleShadow {
 		Releases the primary lock. Convenience method so the lock does not have to be independently
 		managed when a transient object has a single consumer, such as react component.
 	*/
-	release() {
-		this.$$().release();
-	}
+	// release() {
+	// 	this.$$().release();
+	// }
 }
 
 /*
@@ -94,7 +94,7 @@ export default class TransientProperty extends ObjectProperty {
 		this[_locks] = [];
 
 		// create the primary lock (ensures transient is locked before first sweep)
-		this.lock(PrimaryLockName);
+//		this.lock(PrimaryLockName);
 
 		debug( d => d(`TransientProperty created: id=${ id }`) );
 	}
@@ -117,15 +117,15 @@ export default class TransientProperty extends ObjectProperty {
 		return this._addLock(new TransientLock(nextLockId++, desc, this));
 	}
 
-	primaryLock() {
-		return this[_locks] && this[_locks].find( l => l.is(PrimaryLockName) );
-	}
+	// primaryLock() {
+	// 	return this[_locks] && this[_locks].find( l => l.is(PrimaryLockName) );
+	// }
 
-	release() {
-		const primary = this.primaryLock();
+	// release() {
+	// 	const primary = this.primaryLock();
 
-		primary && primary.release();
-	}
+	// 	primary && primary.release();
+	// }
 
 	_removeLock(lock) {
 		if (!this[_locks]) { return }

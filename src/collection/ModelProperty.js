@@ -25,6 +25,8 @@ export default class ModelProperty extends KeyedProperty {
 			cid: cid,
 			data: state,
 			dirty: false,
+			lastReqId: -1,
+			waiting: false,
 		}
 	}
 
@@ -55,6 +57,10 @@ export default class ModelProperty extends KeyedProperty {
 		}
 	}
 
+	clearDirty() {
+		this._.dirty = false;
+	}
+
 	@shadowBound
 	defaults(data) {
 		const id = this.collection.extractId(data);
@@ -78,6 +84,11 @@ export default class ModelProperty extends KeyedProperty {
 	@shadowBound
 	destroy() {
 		return this.collection.destroy(this.cid);
+	}
+
+	@shadowBound
+	isWaiting() {
+		return this._.waiting;
 	}
 
 	isDirty() {
@@ -118,6 +129,13 @@ export default class ModelProperty extends KeyedProperty {
 	@shadowBound
 	save() {
 		return this.collection.save(this.cid);
+	}
+
+	setBusy(busy) {
+		if (busy === this[_busy]) { return }
+
+		this[_busy] = busy;
+		this.touch();
 	}
 
 	@shadowBound
