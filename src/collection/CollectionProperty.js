@@ -483,10 +483,10 @@ export default class CollectionProperty extends KeyedProperty {
 
 			return this._on(DestroyOp)
 				.then( () => {
-					model.waiting = true;
+						model.waiting = true;
 
-					this.endpoint.doDelete(id)
-				})
+						return this.endpoint.doDelete(id)
+					})
 				.then( () => {
 						this._[_models].delete(model.cid);
 						this._[_id2cid].delete(model.id);
@@ -500,7 +500,7 @@ export default class CollectionProperty extends KeyedProperty {
 							currModel.waiting = false
 						}
 
-						this.onError(error, `Destroy model: ${id}`)
+						return this.onError(error, `Destroy model: ${id}`)
 					});
 		} catch(error) {
 			return this.onError(error, `Destroy model: ${id}`);
@@ -757,7 +757,7 @@ export default class CollectionProperty extends KeyedProperty {
 							currModel.waiting = false
 						}
 
-						this.onError(error, `Save ${id} - cid=${shadow$(shadow).cid}`)
+						return this.onError(error, `Save ${id} - cid=${shadow$(shadow).cid}`)
 					});
 		} catch(error) {
 			return this.onError(error, `Save ${id} - cid=${shadow$(shadow).cid}`);
