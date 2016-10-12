@@ -485,7 +485,7 @@ export default class CollectionProperty extends KeyedProperty {
 				.then( () => {
 						model.waiting = true;
 
-						return this.endpoint.doDelete(id)
+						return this.endpoint.doDelete(model.id)
 					})
 				.then( () => {
 						this._[_models].delete(model.cid);
@@ -650,7 +650,7 @@ export default class CollectionProperty extends KeyedProperty {
 	}
 
 	modelKeysArray(state) {
-		if (!state && !this.isActive()) { return doneIterator; }
+		if (!state && !this.isActive()) { return []; }
 
 		state = state || this._;
 
@@ -723,7 +723,7 @@ export default class CollectionProperty extends KeyedProperty {
 
 						// Put an entry in id->cid mapping
 						if (savedId != id) {
-							this._[_id2cid].set(id, cid);
+							this._[_id2cid].set(savedId, cid);
 						}
 
 						switch (mergeOp) {
@@ -757,10 +757,10 @@ export default class CollectionProperty extends KeyedProperty {
 							currModel.waiting = false
 						}
 
-						return this.onError(error, `Save ${id} - cid=${shadow$(shadow).cid}`)
+						return this.onError(error, `Save ${id} - cid=${shadow$(shadow).$$.cid}`)
 					});
 		} catch(error) {
-			return this.onError(error, `Save ${id} - cid=${shadow$(shadow).cid}`);
+			return this.onError(error, `Save ${id} - cid=${shadow$(shadow).$$.cid}`);
 		}
 	}
 
@@ -793,7 +793,7 @@ export default class CollectionProperty extends KeyedProperty {
 		Generates an ID for a new object. The default implementation generates: temp-[UUID].
 	*/
 	makeId() {
-		return `temp-${ uuid() }`;
+		return `temp_${ uuid('_') }`;
 	}
 
 	/*

@@ -111,10 +111,6 @@ export default class Access {
 	}
 
 	waitFor(callback) {
-		this.store().waitFor( () => {
-				const latest = this.latest();
-
-				callback(latest && latest.shadow());
-			});
+		this.store().waitFor( () => callback && callback(this.latest()) );
 	}
 }

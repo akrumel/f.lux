@@ -188,13 +188,14 @@ export default class KeyedProperty extends Property {
 	}
 
 	valuesArray() {
-		if (!this.isActive()) { return doneIterator; }
+		if (!this.isActive()) { return []; }
 
 		const keys = this.keysArray();
+		const shadow = this._;
 		const values = [];
 
 		for (let i=0, len=keys.length; i<len; i++) {
-			values.push( this[keys[i]] );
+			values.push( shadow[keys[i]] );
 		}
 
 		return values;
