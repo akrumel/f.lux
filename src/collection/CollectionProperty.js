@@ -76,14 +76,6 @@ import { DEFAULTS_OPTION, MERGE_OPTION, NONE_OPTION, REPLACE_OPTION, REPLACE_ALL
 
 
 /*
-	Temporary convenient function until the '()' transition is complete
-*/
-function shadow$(shadow) {
-	return typeof shadow.$ === 'function' ?shadow.$() :shadow.$;
-}
-
-
-/*
 	Rework API:
 		- same ctor as all other properties
 		- separate method to setup element shader:
@@ -380,7 +372,7 @@ export default class CollectionProperty extends KeyedProperty {
 	}
 
 	/*
-		Synchronously adds a new model object to the store. Call model.$.save() to persist the newly added
+		Synchronously adds a new model object to the store. Call model.$().save() to persist the newly added
 		object.
 
 		Parmaeters:
@@ -494,7 +486,7 @@ export default class CollectionProperty extends KeyedProperty {
 						return id;
 					})
 				.catch( error => {
-						const currModel = shadow$(model).latest();
+						const currModel = model.$().latest();
 
 						if (currModel) {
 							currModel.waiting = false
@@ -716,7 +708,7 @@ export default class CollectionProperty extends KeyedProperty {
 						}
 					})
 				.then( savedState => {
-						const currModel = shadow$(model).latest();
+						const currModel = model.$().latest();
 						const savedId = this.extractId(savedState);
 
 						currModel.waiting = false;
@@ -746,21 +738,21 @@ export default class CollectionProperty extends KeyedProperty {
 								return Store.reject(`Invalid post-save option: ${mergeOp}`);
 						}
 
-						model.$$.clearDirty();
+						model.$$().clearDirty();
 
 						return this.get(id);
 					})
 				.catch( error => {
-						let currModel = shadow$(model).latest();
+						let currModel = model.$().latest();
 
 						if (currModel) {
 							currModel.waiting = false
 						}
 
-						return this.onError(error, `Save ${id} - cid=${shadow$(shadow).$$.cid}`)
+						return this.onError(error, `Save ${id} - cid=${currModel.$().$$().cid}`)
 					});
 		} catch(error) {
-			return this.onError(error, `Save ${id} - cid=${shadow$(shadow).$$.cid}`);
+			return this.onError(error, `Save ${id} - cid=${model.$().$$().cid}`);
 		}
 	}
 
@@ -824,7 +816,7 @@ export default class CollectionProperty extends KeyedProperty {
 		if (model[idName]) {
 			return model[idName];
 		} else if (model.$) {
-			return shadow$(model).$$.cid;
+			return model.$().$$().cid;
 		}
 	}
 

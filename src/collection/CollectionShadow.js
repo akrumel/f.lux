@@ -23,7 +23,7 @@ export default class CollectionShadow extends Shadow {
 	}
 
 	get fetching() {
-		return this.$$.isFetching();
+		return this.$$().isFetching();
 	}
 
 	get id() {
@@ -43,23 +43,23 @@ export default class CollectionShadow extends Shadow {
 	}
 
 	get nextOffset() {
-		return this.$$.nextOffset();
+		return this.$$().nextOffset();
 	}
 
 	get paging() {
-		return this.$$.isPaging(this);
+		return this.$$().isPaging(this);
 	}
 
 	fetchNext(mergeOp=REPLACE_OPTION) {
-		return this.$$.fetchNext(mergeOp);
+		return this.$$().fetchNext(mergeOp);
 	}
 
 	hasMorePages() {
-		return this.$$.hasMorePages(this);
+		return this.$$().hasMorePages(this);
 	}
 
 	setLimit(limit) {
-		this.$$.setLimit(limit);
+		this.$$().setLimit(limit);
 	}
 
 	//------------------------------------------------------------------------------------------------------
@@ -67,7 +67,7 @@ export default class CollectionShadow extends Shadow {
 	//------------------------------------------------------------------------------------------------------
 
 	/*
-		Synchronously adds a new model object to the store. Call model.$.save() to persist the newly added
+		Synchronously adds a new model object to the store. Call model.$().save() to persist the newly added
 		object.
 
 		Parmaeters:
@@ -79,7 +79,7 @@ export default class CollectionShadow extends Shadow {
 			be found in the 'state' parameter.
 	*/
 	addModel(state, mergeOp=MERGE_OPTION) {
-		return this.$$.addModel(state, mergeOp);
+		return this.$$().addModel(state, mergeOp);
 	}
 
 	/*
@@ -92,7 +92,7 @@ export default class CollectionShadow extends Shadow {
 				the same ID. False means a current model will be replaced with the new model value.
 	*/
 	addModels(states, mergeOp=MERGE_OPTION) {
-		this.$$.addModels(states, mergeOp);
+		this.$$().addModels(states, mergeOp);
 	}
 
 	/*
@@ -103,22 +103,22 @@ export default class CollectionShadow extends Shadow {
 	}
 
 	clear() {
-		this.$$.removeAllModels();
+		this.$$().removeAllModels();
 	}
 
 	/*
 		Compbines an add and save actions.
 	*/
 	create(model) {
-		return this.$$.create(model);
+		return this.$$().create(model);
 	}
 
 	destroy(id) {
-		return this.$$.destroy(id);
+		return this.$$().destroy(id);
 	}
 
 	entries() {
-		return this.$$.modelEntries(this);
+		return this.$$().modelEntries(this);
 	}
 
 	every(iteratee, context) {
@@ -138,7 +138,7 @@ export default class CollectionShadow extends Shadow {
 	}
 
 	fetch(filter=null, mergeOp=REPLACE_OPTION) {
-		return this.$$.fetch(filter, mergeOp);
+		return this.$$().fetch(filter, mergeOp);
 	}
 
 	filter(iteratee, context) {
@@ -159,7 +159,7 @@ export default class CollectionShadow extends Shadow {
 	}
 
 	find(id) {
-		return this.$$.find(id);
+		return this.$$().find(id);
 	}
 
 	findModel(iteratee, context) {
@@ -190,7 +190,7 @@ export default class CollectionShadow extends Shadow {
 	}
 
 	get(id) {
-		return this.$$.getModel(id, this);
+		return this.$$().getModel(id, this);
 	}
 
 	groupBy(callback, context) {
@@ -212,24 +212,24 @@ export default class CollectionShadow extends Shadow {
 	}
 
 	has(id) {
-		return this.$$.hasModel(id, this);
+		return this.$$().hasModel(id, this);
 	}
 
 	isConnected() {
-		return this.$$.isConnected();
+		return this.$$().isConnected();
 	}
 
 	isNew(id) {
-		return this.$$.isNew(id, this);
+		return this.$$().isNew(id, this);
 	}
 
 	keys() {
-		return this.$$.modelKeys(this);
+		return this.$$().modelKeys(this);
 	}
 
 	keysArray() {
 		if (!this[_cache][_keysArray]) {
-			this[_cache][_keysArray] = this.$$.modelKeysArray(this);
+			this[_cache][_keysArray] = this.$$().modelKeysArray(this);
 		}
 
 		return this[_cache][_keysArray];
@@ -264,15 +264,15 @@ export default class CollectionShadow extends Shadow {
 	}
 
 	resync() {
-		return this.$$.resync();
+		return this.$$().resync();
 	}
 
 	setEndpoint(endPoint) {
-		this.$$.setEndpoint(endPoint);
+		this.$$().setEndpoint(endPoint);
 	}
 
 	setModels(models) {
-		this.$$.setModels(models);
+		this.$$().setModels(models);
 	}
 
 	some(iteratee, context) {
@@ -301,17 +301,17 @@ export default class CollectionShadow extends Shadow {
 	}
 
 	values() {
-		return this.$$.modelValues(this);
+		return this.$$().modelValues(this);
 	}
 
 	valuesArray() {
 		if (!this[_cache][_valuesArray]) {
-			this[_cache][_valuesArray] = this.$$.modelsArray(this);
+			this[_cache][_valuesArray] = this.$$().modelsArray(this);
 		}
 
 		return this[_cache][_valuesArray];
 	}
 
-	[Symbol.iterator]() { return this.$$.modelEntries(this) }
+	[Symbol.iterator]() { return this.$$().modelEntries(this) }
 }
 

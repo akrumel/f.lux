@@ -90,7 +90,7 @@ export default class Access {
 
 		if the callback returns an object should be:
 			name - a stort moniker identifying the update call purpose. This will passed to the store middleware.
-				This value is optional with the default value being '[path].$.update()'.
+				This value is optional with the default value being '[path].$().update()'.
 			nextState - the value for the next state after the update functionality
 	*/
 	update(callback) {
@@ -103,7 +103,7 @@ export default class Access {
 			// variable will have made all the book keeping updates and no way of knowing how deep their changes
 			// were in the object hierarchy.
 			return {
-				name: result.name || `${ this.slashPath() }.$.update()`,
+				name: result.name || `${ this.slashPath() }.$().update()`,
 				nextState: result.nextState,
 				replace: true
 			};

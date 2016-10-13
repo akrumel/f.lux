@@ -102,16 +102,6 @@ export default class Property {
 		return this.isActive() && impl.isMapped() ?impl.shadow() :result(this.store.shadow, impl.dotPath());
 	}
 
-	/*
-		Use this.$$ in shadow methods to get access to the property. Useful in Property subclass
-		@shadow methods since the method will be bound to the shadow. Exposing on the property
-		proper allows for the same code to work when called as a member function using 'this' or
-		called through a shadow function.
-	*/
-	get $$() {
-		return this;
-	}
-
 	get autoShadow() {
 		return this[_autoShadow];
 	}
@@ -178,6 +168,16 @@ export default class Property {
 		}
 
 		return this[_store];
+	}
+
+	/*
+		Use this.$$() in shadow methods to get access to the property. Useful in Property subclass
+		@shadow methods since the method will be bound to the shadow. Exposing on the property
+		proper allows for the same code to work when called as a member function using 'this' or
+		called through a shadow function.
+	*/
+	$$() {
+		return this;
 	}
 
 	/*

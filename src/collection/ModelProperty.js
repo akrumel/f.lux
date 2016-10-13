@@ -65,7 +65,7 @@ export default class ModelProperty extends KeyedProperty {
 	defaults(data) {
 		const id = this.collection.extractId(data);
 		const state = this._;
-		const currDirty = state.$.nextState().dirty;
+		const currDirty = state.$().nextState().dirty;
 
 		// update the ID if it has changed
 		if (this._.id !== id) {
@@ -110,7 +110,7 @@ export default class ModelProperty extends KeyedProperty {
 	merge(data) {
 		const id = this.collection.extractId(data);
 		const state = this._;
-		const currDirty = state.$.nextState().dirty;
+		const currDirty = state.$().nextState().dirty;
 
 		// update the ID if it has changed
 		if (this._.id !== id) {
