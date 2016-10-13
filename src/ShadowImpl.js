@@ -481,7 +481,8 @@ export default class ShadowImpl {
 		const property = this[_property];
 
 		// Invoke property life-cycle method that starting an update
-		property.isActive() ?property.onPropertyWillUpdate() :property.onPropertyWillShadow();
+		prev ?property.onPropertyWillUpdate() :property.onPropertyWillShadow();
+//		property.isActive() ?property.onPropertyWillUpdate() :property.onPropertyWillShadow();
 
 		if (this.isRoot()) {
 			this._setupShadow(prev);
