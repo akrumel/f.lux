@@ -31,7 +31,7 @@ export default class ModelProperty extends KeyedProperty {
 	}
 
 	get cid() {
-		return this._.cid;
+		return this._().cid;
 	}
 
 	get collection() {
@@ -39,7 +39,7 @@ export default class ModelProperty extends KeyedProperty {
 	}
 
 	get data() {
-		return this._.data;
+		return this._().data;
 	}
 
 	/*
@@ -47,37 +47,37 @@ export default class ModelProperty extends KeyedProperty {
 		ID or an ID created by the collection
 	*/
 	get id() {
-		return this._.id;
+		return this._().id;
 	}
 
 	@shadow
 	changeId(id) {
-		if (this._.id !== id) {
-			this._.id = id;
+		if (this._().id !== id) {
+			this._().id = id;
 		}
 	}
 
 	clearDirty() {
-		this._.dirty = false;
+		this._().dirty = false;
 	}
 
 	@shadowBound
 	defaults(data) {
 		const id = this.collection.extractId(data);
-		const state = this._;
+		const state = this._();
 		const currDirty = state.$().nextState().dirty;
 
 		// update the ID if it has changed
-		if (this._.id !== id) {
-			this._.id = id;
+		if (this._().id !== id) {
+			this._().id = id;
 		}
 
-		this._.data.__().defaults(data);
+		this._().data.__().defaults(data);
 
 		// reset to not dirty if was not dirty before the merge since assuming data being merged
 		// is coming from a source of truth, such as data returned from a save
 		if (!currDirty) {
-			this._.dirty = false;
+			this._().dirty = false;
 		}
 	}
 
@@ -88,11 +88,11 @@ export default class ModelProperty extends KeyedProperty {
 
 	@shadowBound
 	isWaiting() {
-		return this._.waiting;
+		return this._().waiting;
 	}
 
 	isDirty() {
-		return this._.dirty;
+		return this._().dirty;
 	}
 
 	/*
@@ -109,20 +109,20 @@ export default class ModelProperty extends KeyedProperty {
 	@shadowBound
 	merge(data) {
 		const id = this.collection.extractId(data);
-		const state = this._;
+		const state = this._();
 		const currDirty = state.$().nextState().dirty;
 
 		// update the ID if it has changed
-		if (this._.id !== id) {
-			this._.id = id;
+		if (state.id !== id) {
+			state.id = id;
 		}
 
-		this._.data.__().merge(data);
+		state.data.__().merge(data);
 
 		// reset to not dirty if was not dirty before the merge since assuming data being merged
 		// is coming from a source of truth, such as data returned from a save
 		if (!currDirty) {
-			this._.dirty = false;
+			state.dirty = false;
 		}
 	}
 
@@ -141,7 +141,7 @@ export default class ModelProperty extends KeyedProperty {
 	@shadowBound
 	setData(data) {
 		const id = this.collection.extractId(state);
-		const state = this._;
+		const state = this._();
 
 		// set state first since we trap the invalidate() call and set the dirty flag
 		state.data = data;
@@ -168,8 +168,8 @@ export default class ModelProperty extends KeyedProperty {
 	}
 
 	onChildInvalidated(childProperty) {
-		if (childProperty.__().name() == "data" && !this._.dirty) {
-			this._.dirty = true;
+		if (childProperty.__().name() == "data" && !this._().dirty) {
+			this._().dirty = true;
 		}
 	}
 }

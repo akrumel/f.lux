@@ -1,4 +1,4 @@
-import SimpleShadow from "./SimpleShadow";
+import Shadow from "./Shadow";
 
 
 /*
@@ -14,14 +14,14 @@ import SimpleShadow from "./SimpleShadow";
 			customization, such as setting autoshadow, initial state, or readonly.
 		PropertyClass: the base class for defining the property. Must be a Property subclass.
 		BaseShadowClass: The base shadow class for when shadowType parameter is not a class/function
-			(default is SimpleShadow)
+			(default is Shadow)
 */
 export default function createPropertyClass(
 	shadowType,
 	stateSpec,
 	specCallback,
 	PropertyClass,
-	BaseShadowClass=SimpleShadow)
+	BaseShadowClass=Shadow)
 {
 	const { default: StateTypes } = require("./StateTypes");
 	var ShadowClass;

@@ -6,7 +6,7 @@ import {
 } from "akutils";
 
 import ObjectProperty from "./ObjectProperty";
-import SimpleShadow from "./SimpleShadow";
+import Shadow from "./Shadow";
 import TransientProperty from "./TransientProperty";
 
 import appDebug, { TransientKey as DebugKey } from "./debug";
@@ -16,7 +16,7 @@ const debug = appDebug(DebugKey);
 /*
 
 */
-export class TransientsShadow extends SimpleShadow {
+export class TransientsShadow extends Shadow {
 	get size() {
 		return this.__().size();
 	}

@@ -124,7 +124,7 @@ export default class CollectionProperty extends KeyedProperty {
 	onPropertyDidUpdate() {
 		super.onPropertyWillUpdate();
 
-		this.emit(ChangeEvent, this._, this);
+		this.emit(ChangeEvent, this._(), this);
 	}
 
 
@@ -192,11 +192,11 @@ export default class CollectionProperty extends KeyedProperty {
 		const next = mw[idx];
 
 		if (!next) {
-			return Store.resolve(this._);
+			return Store.resolve(this._());
 		}
 
 		try {
-			return next(this._, this, op)
+			return next(this._(), this, op)
 				.then( () => this._on(op, idx+1) );
 		} catch(error) {
 			return Store.reject(error);
@@ -207,7 +207,7 @@ export default class CollectionProperty extends KeyedProperty {
 		Experimental feature to update values with any modifications from the server.
 	*/
 	resync() {
-		const values = this._.valuesArray();
+		const values = this._().valuesArray();
 		var currSync;
 		var lastUpdate = null;
 		var initialId = Number.MAX_SAFE_INTEGER;
@@ -257,7 +257,7 @@ export default class CollectionProperty extends KeyedProperty {
 		if (this.pagingTime) {
 			throw new Error("Paging operation in progress");
 		} else if (!this.hasMorePages()) {
-			return Store.resolve(this._);
+			return Store.resolve(this._());
 		}
 
 		const filter = this.endpoint.queryBuilder();
@@ -265,8 +265,8 @@ export default class CollectionProperty extends KeyedProperty {
 
 		this.set(_paging, true);
 
-		filter.equals("offset", this._[_nextOffset]);
-		filter.equals("limit", this._[_limit]);
+		filter.equals("offset", this._()[_nextOffset]);
+		filter.equals("limit", this._()[_limit]);
 
 		return this.fetch(filter, mergeOp, false, (error, models) => {
 				// bail if paging times do not match (offset likely reset)
@@ -276,25 +276,25 @@ export default class CollectionProperty extends KeyedProperty {
 				this.set(_paging, false);
 				if (error) { return }
 
-				this.set(_nextOffset, this._[_nextOffset] + models.length);
+				this.set(_nextOffset, this._()[_nextOffset] + models.length);
 				this.set(_lastPageSize, models.length);
 
-				if (models.length < this._[_limit]) {
+				if (models.length < this._()[_limit]) {
 					this.set(_synced, true);
 				}
 			});
 	}
 
-	isPaging(state=this._) {
+	isPaging(state=this._()) {
 		// use pagingTime instance variable (instant) and _paging state variable (tied to state) to
 		// return the most conservative value
 		return this.pagingTime || state[_paging];
 	}
 
-	hasMorePages(state=this._) {
+	hasMorePages(state=this._()) {
 		return this.isConnected() &&
 			!state[_synced] &&
-			(!state[_lastPageSize] || this._[_lastPageSize] >= this._[_limit]);
+			(!state[_lastPageSize] || this._()[_lastPageSize] >= this._()[_limit]);
 	}
 
 	nextOffset() {
@@ -322,7 +322,7 @@ export default class CollectionProperty extends KeyedProperty {
 	//------------------------------------------------------------------------------------------------------
 
 	setElementClass(MemberPropertyClass=MapProperty, initialState={}, autoShadow=true, readonly=false) {
-		const models = this._[_models];
+		const models = this._()[_models];
 		const modelsShader = models.shader();
 
 		modelsShader.elementShader.setElementClass(MemberPropertyClass, initialState, autoShadow, readonly);
@@ -334,7 +334,7 @@ export default class CollectionProperty extends KeyedProperty {
 	//------------------------------------------------------------------------------------------------------
 
 	get endpoint() {
-		return this.isActive() && this._[_endpoint];
+		return this.isActive() && this._()[_endpoint];
 	}
 
 	get endpointId() {
@@ -368,7 +368,7 @@ export default class CollectionProperty extends KeyedProperty {
 	//------------------------------------------------------------------------------------------------------
 
 	get modelsCount() {
-		return this._[_models].size;
+		return this._()[_models].size;
 	}
 
 	/*
@@ -392,7 +392,7 @@ export default class CollectionProperty extends KeyedProperty {
 		// just add the model
 		if (!id || !this.hasModel(id) || mergeOp === REPLACE_OPTION) {
 			const modelDefn = ModelProperty.modelDefinitionFor(state, this);
-			const models = this._[_models];
+			const models = this._()[_models];
 
 			models.set(modelDefn.cid, modelDefn);
 
@@ -458,7 +458,7 @@ export default class CollectionProperty extends KeyedProperty {
 
 	destroy(id) {
 		if (!this.hasModel(id)) {
-			return Store.resolve(this._);
+			return Store.resolve(this._());
 		}
 
 		try {
@@ -467,8 +467,8 @@ export default class CollectionProperty extends KeyedProperty {
 			if (!model) {
 				return Store.resolve(id);
 			} else if (model.isNew()) {
-				this._[_models].delete(model.cid);
-				this._[_id2cid].delete(model.id);
+				this._()[_models].delete(model.cid);
+				this._()[_id2cid].delete(model.id);
 
 				return Store.resolve(id);
 			}
@@ -480,8 +480,8 @@ export default class CollectionProperty extends KeyedProperty {
 						return this.endpoint.doDelete(model.id)
 					})
 				.then( () => {
-						this._[_models].delete(model.cid);
-						this._[_id2cid].delete(model.id);
+						this._()[_models].delete(model.cid);
+						this._()[_id2cid].delete(model.id);
 
 						return id;
 					})
@@ -571,13 +571,13 @@ export default class CollectionProperty extends KeyedProperty {
 		}
 	}
 
-	getModel(id, state=this._) {
+	getModel(id, state=this._()) {
 		const model = this._getModel(id, state);
 
 		return model && model.data;
 	}
 
-	hasModel(id, state=this._) {
+	hasModel(id, state=this._()) {
 		return state[_id2cid].has(id) || state[_models].has(id);
 	}
 
@@ -585,14 +585,14 @@ export default class CollectionProperty extends KeyedProperty {
 		Gets if the collection is active (has a shadow) and an endpoint.
 	*/
 	isConnected() {
-		return this._ && this._[_endpoint] && this._[_endpoint].isConnected();
+		return this._() && this._()[_endpoint] && this._()[_endpoint].isConnected();
 	}
 
 	isFetching() {
 		return this[_fetching];
 	}
 
-	isNew(id, state=this._) {
+	isNew(id, state=this._()) {
 		const model = this._getModel(id, state);
 
 		return !model || model.isNew();
@@ -612,7 +612,7 @@ export default class CollectionProperty extends KeyedProperty {
 	modelsArray(state) {
 		if (!state && !this.isConnected()) { throw new Error(`Collection is not connected.`) }
 
-		state = state || this._;
+		state = state || this._();
 
 		const models = state[_models];
 		const keys = Object.keys(models);
@@ -628,7 +628,7 @@ export default class CollectionProperty extends KeyedProperty {
 	modelEntries(state) {
 		if (!state && !this.isActive()) { return doneIterator; }
 
-		state = state || this._;
+		state = state || this._();
 
 		const models = state[_models];
 		const keys = this.modelKeysArray(state);
@@ -636,7 +636,7 @@ export default class CollectionProperty extends KeyedProperty {
 		return iterateOver(keys, key => [key, this.getModel(key)] );
 	}
 
-	modelKeys(state=this._) {
+	modelKeys(state=this._()) {
 		// too brute force but quick and sure to work
 		return iteratorFor(this.modelKeysArray(state));
 	}
@@ -644,12 +644,12 @@ export default class CollectionProperty extends KeyedProperty {
 	modelKeysArray(state) {
 		if (!state && !this.isActive()) { return []; }
 
-		state = state || this._;
+		state = state || this._();
 
 		return Object.keys(state[_models]);
 	}
 
-	modelValues(state=this._) {
+	modelValues(state=this._()) {
 		return iterateOver(this.modelKeysArray(state), key => this.getModel(key, state));
 	}
 
@@ -657,10 +657,10 @@ export default class CollectionProperty extends KeyedProperty {
 		if (!this.hasModel(id)) { return }
 
 		const model = this._getModel(id);
-		const prevShadow = this._;
+		const prevShadow = this._();
 
-		this._[_models].delete(model.cid);
-		this._[_id2cid].delete(model.id);
+		this._()[_models].delete(model.cid);
+		this._()[_id2cid].delete(model.id);
 	}
 
 	/*
@@ -671,8 +671,8 @@ export default class CollectionProperty extends KeyedProperty {
 		if (!this.isActive()) { return }
 
 		this.set(_synced, false);
-		this._[_models].clear();
-		this._[_id2cid].clear();
+		this._()[_models].clear();
+		this._()[_id2cid].clear();
 	}
 
 	/*
@@ -715,7 +715,7 @@ export default class CollectionProperty extends KeyedProperty {
 
 						// Put an entry in id->cid mapping
 						if (savedId != id) {
-							this._[_id2cid].set(savedId, cid);
+							this._()[_id2cid].set(savedId, cid);
 						}
 
 						switch (mergeOp) {
@@ -757,7 +757,7 @@ export default class CollectionProperty extends KeyedProperty {
 	}
 
 	setIdName(idName) {
-		this._[_idName] = idName;
+		this._()[_idName] = idName;
 	}
 
 	setFetching(fetching) {
@@ -800,7 +800,7 @@ export default class CollectionProperty extends KeyedProperty {
 		subclass doXXX() apis. The default implementation simply returns the 'id' model property.
 	*/
 	extractId(model) {
-		var idName = this._[_idName];
+		var idName = this._()[_idName];
 
 		return isObject(model) ?model[idName] :model;
 	}
@@ -809,7 +809,7 @@ export default class CollectionProperty extends KeyedProperty {
 		Gets an ID suitable for obtaining the shadow model even if the model has yet to be persisted.
 	*/
 	extractRefId(model) {
-		var idName = this._[_idName];
+		var idName = this._()[_idName];
 
 		if (!isObject(model)) { return model }
 
@@ -842,7 +842,7 @@ export default class CollectionProperty extends KeyedProperty {
 		collectionError.status = error.status;
 		collectionError.endpointError = error;
 
-		this.emit(ErrorEvent, collectionError, this._, this);
+		this.emit(ErrorEvent, collectionError, this._(), this);
 
 		return Store.reject(collectionError);
 	}
@@ -854,7 +854,7 @@ export default class CollectionProperty extends KeyedProperty {
 	/*
 		Gets the Model container object NOT the actual model.
 	*/
-	_getModel(id, state=this._) {
+	_getModel(id, state=this._()) {
 		const id2cid = state[_id2cid];
 		var cid = id2cid.has(id) ?id2cid.get(id) :id;
 

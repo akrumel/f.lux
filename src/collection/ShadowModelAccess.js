@@ -19,7 +19,7 @@ export default class ShadowModelAccess extends Access {
 	}
 
 	get collection() {
-		return this.$$().collection._;
+		return this.$$().collection._();
 	}
 
 	get id() {

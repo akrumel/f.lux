@@ -122,7 +122,7 @@ export default class KeyedProperty extends Property {
 
 	delete(key) {
 		if (this.isActive()) {
-			const value = this._[key];
+			const value = this._()[key];
 
 			// need to perform action even if value is undefined because could be a queued action
 			// to add it.
@@ -140,7 +140,7 @@ export default class KeyedProperty extends Property {
 
 	filter(callback, context) {
 		const keys = this.keysArray();
-		const shadow = this._;
+		const shadow = this._();
 		const acc = [];
 		var key, value;
 
@@ -158,13 +158,13 @@ export default class KeyedProperty extends Property {
 
 	get(key) {
 		if (this.isActive()) {
-			return this._[key];
+			return this._()[key];
 		}
 	}
 
 	has(key) {
 		if (this.isActive()) {
-			return has(this._, key);
+			return has(this._(), key);
 		}
 	}
 
@@ -172,7 +172,7 @@ export default class KeyedProperty extends Property {
 		if (!this.isActive()) { return doneIterator }
 
 		// use Object.keys() so do not get non-enumerable properties
-		return Object.keys(this._);
+		return Object.keys(this._());
 	}
 
 	keys() {
@@ -191,7 +191,7 @@ export default class KeyedProperty extends Property {
 		if (!this.isActive()) { return []; }
 
 		const keys = this.keysArray();
-		const shadow = this._;
+		const shadow = this._();
 		const values = [];
 
 		for (let i=0, len=keys.length; i<len; i++) {

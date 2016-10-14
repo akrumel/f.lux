@@ -3,7 +3,7 @@ import { assert } from "akutils";
 import createShadowClass from "./createShadowClass";
 import ObjectProperty from "./ObjectProperty";
 import PrimitiveProperty from "./PrimitiveProperty";
-import SimpleShadow from "./SimpleShadow";
+import Shadow from "./Shadow";
 
 import appDebug, { TransientKey as DebugKey } from "./debug";
 const debug = appDebug(DebugKey);
@@ -51,7 +51,7 @@ export class TransientLock {
 }
 
 
-export class TransientShadow extends SimpleShadow {
+export class TransientShadow extends Shadow {
 	// get primaryLock() {
 	// 	return this.$$().primaryLock();
 	// }

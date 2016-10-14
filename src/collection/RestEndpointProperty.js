@@ -43,12 +43,12 @@ export default class RestEndpointProperty extends KeyedProperty {
 
 	@shadow
 	get id() {
- 		return this._.url;
+ 		return this._().url;
  	}
 
 	@shadow
 	isConnected() {
-		return !!this._.url;
+		return !!this._().url;
 	}
 
 	@shadow
@@ -58,7 +58,7 @@ export default class RestEndpointProperty extends KeyedProperty {
 
 	@shadow
 	doCreate(shadowModel, model) {
-		const url = this._.url;
+		const url = this._().url;
 		const options = getOptions("POST", {
 				body: JSON.stringify(model),
 				headers: {
@@ -78,7 +78,7 @@ export default class RestEndpointProperty extends KeyedProperty {
 
 	@shadow
 	doDelete(id, options={}) {
-		const uri = URI(`${id}`).absoluteTo(this._.url);
+		const uri = URI(`${id}`).absoluteTo(this._().url);
 
 		return fetch(uri.toString(), getOptions("DELETE", options))
 			.then( response => {
@@ -92,7 +92,7 @@ export default class RestEndpointProperty extends KeyedProperty {
 
 	@shadow
 	doFetch(filter) {
-		const url = filter ?filter.applyFilter(this._.url) :this._.url;
+		const url = filter ?filter.applyFilter(this._().url) :this._().url;
 
 		return fetch(url, getOptions("GET"))
 			.then( response => {
@@ -106,7 +106,7 @@ export default class RestEndpointProperty extends KeyedProperty {
 
 	@shadow
 	doFind(id) {
-		const uri = URI(`${id}`).absoluteTo(this._.url);
+		const uri = URI(`${id}`).absoluteTo(this._().url);
 
 		return fetch(uri.toString(), getOptions("GET"))
 			.then( response => {
@@ -120,7 +120,7 @@ export default class RestEndpointProperty extends KeyedProperty {
 
 	@shadow
 	doUpdate(id, shadowModel, changedProps) {
-		const uri = URI(`${id}`).absoluteTo(this._.url);
+		const uri = URI(`${id}`).absoluteTo(this._().url);
 		const options = {
 				headers: {
 					'Content-Type': 'application/json'

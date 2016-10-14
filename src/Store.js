@@ -76,7 +76,7 @@ export default class Store {
 		Alias for shadow property.
 	*/
 	get _() {
-		return this._root._;
+		return this._root._();
 	}
 
 	/*
@@ -95,7 +95,7 @@ export default class Store {
 	}
 
 	get shadow() {
-		return this._root._;
+		return this._root._();
 	}
 
 	get state() {

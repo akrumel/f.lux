@@ -96,7 +96,7 @@ export default class Property {
 	/*
 		Gets the actual shadow property exposed to application code.
 	*/
-	get _() {
+	_() {
 		const impl = this[_impl];
 
 		return this.isActive() && impl.isMapped() ?impl.shadow() :result(this[_store].shadow, impl.dotPath());
@@ -265,7 +265,7 @@ export default class Property {
 	}
 
 	rootShadow() {
-		return this[_store].root._;
+		return this[_store]._;
 	}
 
 	/*

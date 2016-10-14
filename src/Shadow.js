@@ -9,9 +9,6 @@ export default class Shadow {
 		if (process.env.NODE_ENV !== 'production') {
 			Object.defineProperty(this, '__state__', { enumerable: false, value: impl.state() });
 		}
-
-		// for @state Property mappings - just this object
-		Object.defineProperty(this, '_', { enumerable: false, value: this });
 	}
 
 	_() {

@@ -27,7 +27,7 @@ export default class KeyedApi {
 	}
 
 	shadow() {
-		return this._property._;
+		return this._property._();
 	}
 
 	addProperty(name, property, automount) {
