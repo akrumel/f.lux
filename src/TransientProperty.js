@@ -57,7 +57,7 @@ export class TransientShadow extends SimpleShadow {
 	// }
 
 	delete() {
-		const transRoot = this.$$().parent._();
+		const transRoot = this.$$().parent()._();
 
 		transRoot.delete(this.id);
 	}

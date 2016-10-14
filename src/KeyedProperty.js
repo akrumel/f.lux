@@ -38,10 +38,12 @@ export default class KeyedProperty extends Property {
 	}
 
 	addPropertyShader(name, shader, initialState, automount) {
+		const propInitialState = this.initialState();
+
 		// initial state has two sources: parameter and the shader
 		initialState = initialState !== undefined
 				?initialState
-				:shader.initialState ?shader.initialState :this.initialState && this.initialState[name];
+				:shader.initialState ?shader.initialState :propInitialState && propInitialState[name];
 
 		this.shader().add(name, shader, automount);
 
@@ -51,10 +53,8 @@ export default class KeyedProperty extends Property {
 			}
 
 			this.touch();
-		} else if (this.initialState) {
-			assert( a => a.is(this.initialState, "Attempting to set initial state property value with no backing object") );
-
-			this.initialState[name] = initialState;
+		} else if (propInitialState) {
+			propInitialState[name] = initialState;
 		}
 
 		// return shader so can be further customized
@@ -88,9 +88,9 @@ export default class KeyedProperty extends Property {
 		const { StateType } = require("./StateTypes");
 		var initialState = state;
 
-		if (this.initialState) {
+		if (this.initialState()) {
 			// state take precedence
-			initialState = { ...this.initialState, ...state };
+			initialState = { ...this.initialState(), ...state };
 		}
 
 		return StateType.initialStateWithDefaults(this, initialState);

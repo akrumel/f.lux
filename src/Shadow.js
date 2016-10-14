@@ -14,6 +14,10 @@ export default class Shadow {
 		Object.defineProperty(this, '_', { enumerable: false, value: this });
 	}
 
+	_() {
+		return this;
+	}
+
 	__() {
 		return this[_impl];
 	}
@@ -23,7 +27,7 @@ export default class Shadow {
 	}
 
 	$$() {
-		return this[_impl].property;
+		return this[_impl].property();
 	}
 
 	toString() {

@@ -73,7 +73,7 @@ export default class Shader {
 
 	addPropertyClass(name, PropertyClass, defaults, autoShadow, readonly) {
 		const property = this[_property];
-		const shaderReadonly = readonly || property.readonly;
+		const shaderReadonly = readonly || property.isReadonly();
 		const shader = new PropertyFactoryShader(PropertyClass, property, defaults, autoShadow, shaderReadonly);
 
 		this.add(name, shader);
@@ -88,7 +88,7 @@ export default class Shader {
 
 	autoShader() {
 		if (this[_autoshadow]) {
-			return this[_property].readonly ?readonlyAutoShader :readWriteAutoShader;
+			return this[_property].isReadonly() ?readonlyAutoShader :readWriteAutoShader;
 		} else {
 			return null;
 		}
@@ -139,7 +139,7 @@ export default class Shader {
 
 	setElementClass(PropertyClass, defaults, autoShadow, readonly) {
 		const property = this[_property];
-		const shaderReadonly = readonly || property.readonly;
+		const shaderReadonly = readonly || property.isReadonly();
 		const shader = new PropertyFactoryShader(PropertyClass, property, defaults, autoShadow, shaderReadonly);
 
 		return this.setElementShader(shader);

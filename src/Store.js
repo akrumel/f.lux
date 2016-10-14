@@ -40,7 +40,7 @@ export default class Store {
 
 			root = Array.isArray() ?new ArrayProperty() :new MapProperty();
 		} else if (state === undefined) {
-			state = root.initialState
+			state = root.initialState();
 		}
 
 		this._useTransients = useTransients;
@@ -395,7 +395,7 @@ export default class Store {
 
 				if (!(impl instanceof ShadowImpl)) {
 					this._onError("Property update action did not return a ShadowImpl type");
-				} else if (impl.property != this._root) {
+				} else if (impl.property() != this._root) {
 					this._onError("Property update action cannot replace the root state");
 				} else {
 					this._rootImpl = impl;
@@ -459,7 +459,7 @@ export default class Store {
 
 				if (!(impl instanceof ShadowImpl)) {
 					this._onError("Property update action did not return a ShadowImpl type");
-				} else if (impl.property != this._root) {
+				} else if (impl.property() != this._root) {
 					this._onError("Property update action cannot replace the root state");
 				} else {
 					this._rootImpl = impl;

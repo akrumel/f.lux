@@ -44,11 +44,12 @@ export default class KeyedApi {
 
 	addPropertyShader(name, shader, initialState, automount) {
 		const property = this._property;
+		const propInitialState = property.initialState();
 
 		// initial state has two sources: parameter and the shader
 		initialState = initialState !== undefined
 				?initialState
-				:shader.initialState ?shader.initialState :property.initialState && property.initialState[name];
+				:shader.initialState ?shader.initialState :propInitialState && propInitialState[name];
 
 		property.shader().add(name, shader, automount);
 
@@ -58,8 +59,8 @@ export default class KeyedApi {
 			}
 
 			property.touch();
-		} else if (property.initialState) {
-			property.initialState[name] = initialState;
+		} else if (propInitialState) {
+			propInitialState[name] = initialState;
 		}
 
 		// return shader so can be further customized

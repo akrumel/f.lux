@@ -23,7 +23,7 @@ export default class SimplShadow {
 	}
 
 	$$() {
-		return this[_impl].property;
+		return this[_impl].property();
 	}
 
 	toJSON() {

@@ -16,11 +16,11 @@ export default class PrimitiveShadowImpl extends ShadowImpl {
 	}
 
 	definePropertyGetValue(state) {
-		return this.property.definePropertyGetValue(state);
+		return this.property().definePropertyGetValue(state);
 	}
 
 	definePropertySetValue(newValue) {
-		this.property.definePropertySetValue(newValue);
+		this.property().definePropertySetValue(newValue);
 	}
 
 	isPrimitive() {

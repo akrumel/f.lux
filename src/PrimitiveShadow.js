@@ -18,7 +18,7 @@ export default class PrimitiveShadow {
 	}
 
 	$$() {
-		return this[_impl].property;
+		return this[_impl].property();
 	}
 
 	toJSON() {

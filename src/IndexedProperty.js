@@ -28,8 +28,8 @@ export default class IndexedProperty extends Property {
 	//------------------------------------------------------------------------------------------------------
 
 	getInitialState(state) {
-		if (this.initialState) {
-			const initState = [ ...this.initialState ];
+		if (this.initialState()) {
+			const initState = [ ...this.initialState() ];
 
 			if (state && Array.isArray(state)) {
 				for (let i=0, len=state.length; i<len; i++) {

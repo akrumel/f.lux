@@ -6,7 +6,7 @@ import { isObject } from "akutils";
 export default function shadowProperty(time, ImplClass, property, name, state, parent, shader, prev) {
 	const impl = new ImplClass(time, property, name, state, parent, shader, prev);
 
-	if (property.readonly) {
+	if (property.isReadonly()) {
 		impl.setReadonly(true);
 	}
 

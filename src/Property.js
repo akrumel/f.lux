@@ -99,75 +99,14 @@ export default class Property {
 	get _() {
 		const impl = this[_impl];
 
-		return this.isActive() && impl.isMapped() ?impl.shadow() :result(this.store.shadow, impl.dotPath());
-	}
-
-	get autoShadow() {
-		return this[_autoShadow];
-	}
-
-	get initialState() {
-		return this[_initialState];
-	}
-
-	get parent() {
-		return this[_parent];
+		return this.isActive() && impl.isMapped() ?impl.shadow() :result(this[_store].shadow, impl.dotPath());
 	}
 
 	/*
-		Gets the parent shadow property, a BaseProperty subclass.
+		Anything is possible (almost) with the ShadowImpl reference.
 	*/
-	get parentState() {
-		const parentImpl = this[_parent] && this[_parent][_impl];
-
-		return parentImpl && parentImpl.shadow();
-	}
-
-	get path() {
-		return this[_impl] ?this[_impl].path :null;
-	}
-
-	get pid() {
-		return this[_pid];
-	}
-
-	get readonly() {
-		return this[_readonly];
-	}
-
-	get root() {
-		return this.store.root;
-	}
-
-	get rootState() {
-		if (!rootStateDeprecatedWarningShown) {
-			rootStateDeprecatedWarningShown = true;
-
-			console.warn("Property.rootState property is deprecated - use Property.rootShadow() method instead");
-		}
-
-		return this.store.root._;
-	}
-
-	get state() {
-		if (!stateDeprecatedWarningShown) {
-			stateDeprecatedWarningShown = true;
-
-			console.warn("Property.state property is deprecated - use Property._ instead");
-		}
-
-		return this._ ;
-	}
-
-	/*
-		Gets the store containing the application state.
-	*/
-	get store() {
-		if (!this[_store] && this.parent) {
-			this[_store] = this.parent.store;
-		}
-
-		return this[_store];
+	__() {
+		return this[_impl];
 	}
 
 	/*
@@ -180,31 +119,32 @@ export default class Property {
 		return this;
 	}
 
-	/*
-		Anything is possible (almost) with the ShadowImpl reference.
-	*/
-	__() {
-		return this[_impl];
+	autoShadow() {
+		return this[_autoShadow];
 	}
 
 	dotPath() {
 		return this[_impl] ?this[_impl].dotPath() :null;
 	}
 
+	initialState() {
+		return this[_initialState];
+	}
+
 	isActive() {
 		return this[_impl] && this[_impl].isActive();
 	}
 
+	isReadonly() {
+		return this[_readonly];
+	}
+
 	isRoot() {
-		return !this.parent;
+		return !this[_parent];
 	}
 
 	nextState() {
 		return this[_impl] && this[_impl].nextState();
-	}
-
-	rootShadow() {
-		return this.store.root._;
 	}
 
 	/*
@@ -299,6 +239,35 @@ export default class Property {
 		this.propertyDidUnshadow();
 	}
 
+	parent() {
+		return this[_parent];
+	}
+
+	path() {
+		return this[_impl] ?this[_impl].path :null;
+	}
+
+	/*
+		Gets the parent shadow property, a BaseProperty subclass.
+	*/
+	parentShadow() {
+		const parentImpl = this[_parent] && this[_parent][_impl];
+
+		return parentImpl && parentImpl.shadow();
+	}
+
+	pid() {
+		return this[_pid];
+	}
+
+	root() {
+		return this[_store].root;
+	}
+
+	rootShadow() {
+		return this[_store].root._;
+	}
+
 	/*
 		Sets the auto shadow property flag.
 
@@ -382,6 +351,17 @@ export default class Property {
 
 	slashPath() {
 		return this[_impl] ?this[_impl].slashPath() :null;
+	}
+
+	/*
+		Gets the store containing the application state.
+	*/
+	store() {
+		if (!this[_store] && this[_parent]) {
+			this[_store] = this[_parent][_store];
+		}
+
+		return this[_store];
 	}
 
 	/*

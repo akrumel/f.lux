@@ -109,7 +109,7 @@ export class StateType {
 	}
 
 	static shaderFromSpec(property, stateSpec) {
-		const shader = new Shader(property, property.autoShadow);
+		const shader = new Shader(property, property.autoShadow());
 		var eltType;
 
 		for (let name in stateSpec) {
@@ -203,7 +203,7 @@ export class StateType {
 				parentProperty,
 				this._initialState,
 				this._autoshadow,
-				this._readonly || parentProperty.readonly,
+				this._readonly || parentProperty.isReadonly(),
 				this._automount);
 
 		this._setupShader(shader);
@@ -253,7 +253,7 @@ export class StateType {
 	}
 
 	shader(property) {
-		const shader = new Shader(property, property.autoShadow);
+		const shader = new Shader(property, property.autoShadow());
 
 		this._setupShader(shader);
 

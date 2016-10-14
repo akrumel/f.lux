@@ -35,7 +35,7 @@ export default class ModelProperty extends KeyedProperty {
 	}
 
 	get collection() {
-		return this.parent.parent;
+		return this.parent().parent();
 	}
 
 	get data() {

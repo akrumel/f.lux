@@ -20,7 +20,7 @@ export default class AutoShader {
 		invariant(parentImpl, "Auto shader properties must have a parent property");
 
 		const state = parentState[name];
-		const parentProperty = parentImpl.property;
+		const parentProperty = parentImpl.property();
 		var PropertyClass;
 
 		if (Array.isArray(state)) {

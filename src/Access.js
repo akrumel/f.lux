@@ -7,10 +7,6 @@ export default class Access {
 		this[_impl] = impl;
 	}
 
-	get pid() {
-		return this.property().pid;
-	}
-
 	__() {
 		return this[_impl];
 	}
@@ -28,7 +24,7 @@ export default class Access {
 	}
 
 	isReadonly() {
-		return this.property().readonly;
+		return this.property().isReadonly();
 	}
 
 	latest() {
@@ -49,8 +45,12 @@ export default class Access {
 		return this[_impl].path();
 	}
 
+	pid() {
+		return this.property().pid();
+	}
+
 	property() {
-		return this[_impl].property;
+		return this[_impl].property();
 	}
 
 	rootShadow() {

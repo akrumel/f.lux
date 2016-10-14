@@ -57,7 +57,7 @@ export default class ShadowImpl {
 		this[_parent] = parent;
 		this[_shader] = shader;   // access through shader() method
 		this[_state] = state;
-		this[_store] = property.store;
+		this[_store] = property.store();
 		this[_time] = time;
 		this[_previousTime] = prev && prev[_time];
 
@@ -87,10 +87,6 @@ export default class ShadowImpl {
 		this[_cache] = {};
 	}
 
-	get property() {
-		return this[_property];
-	}
-
 	access() {
 		return this[_access];
 	}
@@ -101,6 +97,10 @@ export default class ShadowImpl {
 
 	parent() {
 		return this[_parent];
+	}
+
+	property() {
+		return this[_property];
 	}
 
 	readonly() {
@@ -344,7 +344,7 @@ export default class ShadowImpl {
 	*/
 	invalidate(childImpl, source=this) {
 		if (childImpl) {
-			this[_property].onChildInvalidated(childImpl.property, source.property);
+			this[_property].onChildInvalidated(childImpl.property(), source.property());
 		}
 
 		if (this.isValid() && this.isActive()) {
