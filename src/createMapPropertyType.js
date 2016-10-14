@@ -3,11 +3,18 @@ import MapShadow from "./MapShadow";
 import StateTypes from "./StateTypes";
 
 
+var deprecatedWarningShown = false;
+
 /*
-	Creates an ArrayProperty subclass based on a custom Shadow type.
+	Deprecated - Use MapProperty.createClass().
 */
 export default function createMapPropertyType(shadowType={}, stateSpec, specCallback) {
 	var ShadowClass;
+
+	if (!deprecatedWarningShown) {
+		console.warn("createMapPropertyType() deprecated and will be removed soon - use MapProperty.createClass()");
+		deprecatedWarningShown = true;
+	}
 
 	// get the shadow class
 	if (shadowType instanceof MapShadow) {

@@ -41,10 +41,6 @@ export const TransientKey = 'f.lux:transient';
 //debug.enable(AllKey);
 
 
-debug.enable(CollectionPropertyKey)
-debug.enable(TransientKey)
-
-
 function debugoff() { }
 
 export default function devDebug(modname) {

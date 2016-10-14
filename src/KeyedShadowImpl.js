@@ -20,6 +20,7 @@ const _nextMapping = Symbol('nextMapping');
 const _size = Symbol('size');
 const _shadow = Symbol('shadow');
 
+
 export default class KeyedShadowImpl extends ShadowImpl {
 	constructor(time, property, name, state, parent, shader, prev) {
 		super(time, property, name, state, parent, shader, prev);
@@ -352,9 +353,11 @@ export default class KeyedShadowImpl extends ShadowImpl {
 			this.defineChildProperty(name, elementShader, state, prev, inCtor);
 		}
 
-		shader.shadowUndefinedProperties(state, this, (name, shader) => {
-				this.defineChildProperty(name, shader, state, prev, inCtor);
-			});
+		if (isObject(state)) {
+			shader.shadowUndefinedProperties(state, this, (name, shader) => {
+					this.defineChildProperty(name, shader, state, prev, inCtor);
+				});
+		}
 	}
 
 	_killInvalidButActiveChildren() {

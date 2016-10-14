@@ -1,5 +1,5 @@
 
-import KeyedProperty from "./KeyedProperty";
+import ObjectProperty from "./ObjectProperty";
 import MapShadow from "./MapShadow";
 
 
@@ -7,18 +7,69 @@ import MapShadow from "./MapShadow";
 	Exposes a Map interface on a shadow property. The Map API is exposed throught in MapShadow, which uses
 	the KeyedProperty methods for implementation.
 */
-export default class MapProperty extends KeyedProperty {
+export default class MapProperty extends ObjectProperty {
 	constructor(initialState, autoShadow, readonly) {
 		super(initialState, autoShadow, readonly);
+
+		this.setShadowClass(MapShadow)
 	}
 
-	//------------------------------------------------------------------------------------------------------
-	// Subclasses may want to override success methods
-	//------------------------------------------------------------------------------------------------------
+	/*
+		Factory function for creating an MapProperty subclass suitable for using with new.
 
-	shadowClass() {
+		Parameters (all are optional):
+			shadowType - one of a pojo or class. This parameter defines the new property
+				shadow. If pojo specified, each property and function is mapped onto a Shadow subclass.
+			stateSpec - a StateType instance defining the Property
+			specCallback - a callback function that will be passed the StateType spec for additional
+				customization, such as setting autoshadow, initial state, or readonly.
+	*/
+	static createClass(shadowType={}, stateSpec, specCallback) {
+		return createPropertyClass(shadowType, stateSpec, specCallback, MapProperty);
+	}
+
+	static createSimpleClass(specCallback) {
+		return createPropertyClass({}, null, specCallback, MapProperty);
+	}
+
+	/*
+		Creates a StateType defining a MapProperty where each property is a particular type.
+
+		Parameters:
+			elementStateType - StateType defining the child properties
+	*/
+	static mapTypeOf(elementStateType) {
 		const { StateType } = require("./StateTypes");
+		const type = new StateType(MapProperty);
 
-		return StateType.shadowClassForProperty(this, MapShadow);
+		type.setElementType(elementStateType);
+
+		return type;
+	}
+
+	/*
+		Creates a StateType defining an MapProperty.
+
+		Parameters:
+			defn - a pojo where each property is a StateType definition and defines the properties
+				for the new type.
+	*/
+	static mapType(defn={}) {
+		const { StateType } = require("./StateTypes");
+		const type = new StateType(MapProperty);
+		var propType;
+
+		for (let key in defn) {
+			type.addProperty(key, defn[key]);
+		}
+
+		return type;
+	}
+
+	/*
+		Used by StateTypes to determine if StateTypes.properties(propTypes) may be invoked.
+	*/
+	static supportsKeyedChildProperties() {
+		return true;
 	}
 }

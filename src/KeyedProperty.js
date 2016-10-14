@@ -14,6 +14,7 @@ import {
 
 
 /*
+	Deprecated - Use ObjectProperty.
 */
 export default class KeyedProperty extends Property {
 	constructor(initialState={}, autoShadow, readonly) {

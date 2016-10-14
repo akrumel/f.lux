@@ -395,9 +395,11 @@ export default class IndexedShadowImpl extends ShadowImpl {
 			this.defineChildProperty(i, elementShader, state, prev, inCtor);
 		}
 
-		shader.shadowUndefinedProperties(state, this, (name, shader) => {
-				this.defineChildProperty(name, shader, state, prev, inCtor);
-			});
+		if (state) {
+			shader.shadowUndefinedProperties(state, this, (name, shader) => {
+					this.defineChildProperty(name, shader, state, prev, inCtor);
+				});
+		}
 	}
 
 	defineChildProperty(idx, elementShader, state, prev, inCtor=false) {

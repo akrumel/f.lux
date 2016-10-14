@@ -374,6 +374,7 @@ export default {
 		return type;
 	},
 
+	// Deprecated - use MapProperty.mapType()
 	map(defn={}) {
 		const type = new StateType(MapProperty);
 		var propType;
@@ -387,6 +388,7 @@ export default {
 		return type;
 	},
 
+	// Deprecated - use MapProperty.mapTypeOf()
 	mapOf(elementStateType) {
 		const type = new StateType(MapProperty);
 
