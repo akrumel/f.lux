@@ -908,7 +908,6 @@ export default class ShadowImpl {
 					return this.definePropertySetValue(newValue);
 				}
 
-if (this.dotPath() === 'aws') debugger
 		try {
 			Object.defineProperty(parentShadow, this[_name], {
 					enumerable: enumerable,
