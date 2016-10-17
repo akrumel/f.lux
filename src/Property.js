@@ -84,13 +84,18 @@ function isPropertyPrototype(obj) {
 
 */
 export default class Property {
-	constructor(initialState, autoShadow=true, readonly=false) {
+	constructor(initialState, autoShadow, readonly) {
 		const StateType = require("./StateType").default;
+		const stateSpec = this.constructor.stateSpec;
 
-		this[_autoShadow] = autoShadow;
-		this[_initialState] = StateType.computeInitialState(this, initialState);
-		this[_readonly] = readonly;
 		this[_pid] = nextPid++;
+		this[_initialState] = StateType.computeInitialState(this, initialState);
+		this[_autoShadow] = autoShadow !== undefined
+			?autoShadow
+			:(stateSpec && stateSpec._autoshadow) || true;
+		this[_readonly] = readonly !== undefined
+			?readonly
+			:(stateSpec && stateSpec._readonly) || false;
 	}
 
 	/*
