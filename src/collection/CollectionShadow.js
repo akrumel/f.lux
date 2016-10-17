@@ -7,9 +7,10 @@ import Shadow from "../Shadow";
 import { DEFAULTS_OPTION, MERGE_OPTION, REPLACE_OPTION } from "./CollectionOptions";
 
 
-const _valuesArray = Symbol('_valuesArray');
-const _keysArray = Symbol('_keysArray');
 const _cache = Symbol("_cache");
+const _keysArray = Symbol('_keysArray');
+const _valuesArray = Symbol('_valuesArray');
+
 
 export default class CollectionShadow extends Shadow {
 	constructor(impl) {

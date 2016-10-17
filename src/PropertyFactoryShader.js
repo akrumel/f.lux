@@ -102,7 +102,7 @@ export default class PropertyFactoryShader {
 	}
 
 	_configureShader(shader, property) {
-		const { StateType } = require("./StateTypes");
+		const StateType = require("./StateType").default;
 
 //		configureShaderFromStateTypes(property, shader);
 
@@ -138,7 +138,7 @@ export default class PropertyFactoryShader {
 	Obsolete - leaving for now to ensure no longer needed
 */
 export function configureShaderFromStateTypes(property, shader) {
-	const { StateType } = require("./StateTypes");
+	const StateType = require("./StateType").default;
 	var proto = property;
 	var spec;
 

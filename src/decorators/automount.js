@@ -2,12 +2,12 @@
 /*
 	Class level decorator that marks a Property subclass as needing to automount when
 	the parent is shadowed. This is useful for implementing mixin properties that provide
-	behavior for the parent property. Using automount will cause the child property to 
+	behavior for the parent property. Using automount will cause the child property to
 	be immediately shadowed and not wait for the app to access it.
 
 	Example:
 		@automount
-		class PostopSubscriptionMixinProperty extends KeyedProperty {
+		class PostopSubscriptionMixinProperty extends ObjectProperty {
 			...
 		}
 */

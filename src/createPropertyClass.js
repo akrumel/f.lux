@@ -1,4 +1,5 @@
 import Shadow from "./Shadow";
+import StateType from "./StateType";
 
 
 /*
@@ -23,7 +24,6 @@ export default function createPropertyClass(
 	PropertyClass,
 	BaseShadowClass=Shadow)
 {
-	const { default: StateTypes } = require("./StateTypes");
 	var ShadowClass;
 
 	// get the shadow class
@@ -61,7 +61,7 @@ export default function createPropertyClass(
 	}
 
 	// assign state spec if present to new Property subclass
-	CustomProperty.stateSpec = stateSpec || StateTypes.property(CustomProperty);
+	CustomProperty.stateSpec = stateSpec || new StateType(CustomProperty);
 
 	if (specCallback) {
 		specCallback(CustomProperty.stateSpec);

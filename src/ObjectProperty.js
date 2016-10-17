@@ -1,8 +1,9 @@
+import createPropertyClass from "./createPropertyClass";
 import KeyedApi from "./KeyedApi";
 import KeyedShadowImpl from "./KeyedShadowImpl";
 import Property from "./Property";
 import Shadow from "./Shadow";
-import createPropertyClass from "./createPropertyClass";
+import StateType from "./StateType";
 
 
 /*
@@ -36,10 +37,6 @@ export default class ObjectProperty extends Property {
 		return createPropertyClass(shadowType, stateSpec, specCallback, ObjectProperty);
 	}
 
-	static createSimpleClass(specCallback) {
-		return createPropertyClass({}, null, specCallback, ObjectProperty);
-	}
-
 	/*
 		Creates a StateType defining an ObjectProperty.
 
@@ -48,7 +45,6 @@ export default class ObjectProperty extends Property {
 				for the new type.
 	*/
 	static objectType(defn={}) {
-		const { StateType } = require("./StateTypes");
 		const type = new StateType(ObjectProperty);
 		var propType;
 
@@ -66,3 +62,8 @@ export default class ObjectProperty extends Property {
 		return true;
 	}
 }
+
+
+Object.defineProperty(ObjectProperty, "type", {
+		get: () => new StateType(MapProperty)
+	})

@@ -1,6 +1,6 @@
 import MapProperty from "./MapProperty";
 import MapShadow from "./MapShadow";
-import StateTypes from "./StateTypes";
+import StateType from "./StateType";
 
 
 var deprecatedWarningShown = false;
@@ -52,7 +52,7 @@ export default function createMapPropertyType(shadowType={}, stateSpec, specCall
 	}
 
 	// assign state spec if present to new Property subclass
-	CustomMapProperty.stateSpec = stateSpec || StateTypes.property(CustomMapProperty);
+	CustomMapProperty.stateSpec = stateSpec || new StateType(CustomMapProperty);
 
 	if (specCallback) {
 		specCallback(CustomMapProperty.stateSpec)

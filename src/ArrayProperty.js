@@ -1,6 +1,7 @@
 
 import ArrayShadow from "./ArrayShadow";
 import IndexedProperty from "./IndexedProperty";
+import StateType from "./StateType";
 
 
 export default class ArrayProperty extends IndexedProperty {
@@ -13,8 +14,6 @@ export default class ArrayProperty extends IndexedProperty {
 	//------------------------------------------------------------------------------------------------------
 
 	shadowClass() {
-		const { StateType } = require("./StateTypes");
-
 		return StateType.shadowClassForProperty(this, ArrayShadow);
 	}
 }

@@ -15,7 +15,7 @@ import Property from "../Property";
 	A minimal mixin example:
 
 		function mixinFactory(property) {
-			// perform sub-property setup on the property (this example assumes KeyedProperty subclass)
+			// perform sub-property setup on the property (this example assumes ObjectProperty subclass)
 			property.addPropertyClass(_connected, PrimitiveProperty, false, true);
 
 			return {

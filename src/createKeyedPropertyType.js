@@ -1,6 +1,6 @@
 import KeyedProperty from "./KeyedProperty";
 import Shadow from "./Shadow";
-import StateTypes from "./StateTypes";
+import StateType from "./StateType";
 
 
 /*
@@ -44,7 +44,7 @@ export default function createKeyedPropertyType(shadowType={}, stateSpec, specCa
 	}
 
 	// assign state spec if present to new Property subclass
-	CustomKeyedProperty.stateSpec = stateSpec || StateTypes.property(CustomKeyedProperty);
+	CustomKeyedProperty.stateSpec = stateSpec || new StateType(CustomKeyedProperty);
 
 	if (specCallback) {
 		specCallback(CustomKeyedProperty.stateSpec)

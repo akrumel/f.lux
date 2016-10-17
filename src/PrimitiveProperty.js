@@ -4,7 +4,7 @@ import cloneDeep from "lodash.clonedeep";
 import PrimitiveShadowImpl from "./PrimitiveShadowImpl";
 import PrimitiveShadow from "./PrimitiveShadowImpl";
 import Property from "./Property";
-
+import StateType from "./StateType";
 
 
 export default class PrimitiveProperty extends Property {
@@ -51,5 +51,9 @@ export default class PrimitiveProperty extends Property {
 	shadowClass() {
 		return null;
 	}
-
 }
+
+
+Object.defineProperty(PrimitiveProperty, "type", {
+		get: () => new StateType(PrimitiveProperty)
+	})

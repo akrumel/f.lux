@@ -1,6 +1,6 @@
 import ArrayProperty from "./ArrayProperty";
 import ArrayShadow from "./ArrayShadow";
-import StateTypes from "./StateTypes";
+import StateType from "./StateType";
 
 
 /*
@@ -39,7 +39,7 @@ export default function createArrayPropertyType(shadowType={}, elementType, spec
 
 	if (elementType) {
 		// assign state spec if present to new Property subclass
-		CustomArrayProperty.stateSpec = StateTypes.property(CustomArrayProperty)
+		CustomArrayProperty.stateSpec = new StateType(CustomArrayProperty)
 				.setElementType(elementType);
 
 		if (specCallback) {

@@ -4,7 +4,6 @@ import { assert, isObject } from "akutils";
 
 
 import ArrayProperty from "./MapProperty";
-import KeyedProperty from "./KeyedProperty";
 import MapProperty from "./MapProperty";
 import Property from "./Property";
 import ShadowImpl from "./ShadowImpl";

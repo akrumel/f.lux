@@ -1,6 +1,6 @@
 import IndexedProperty from "./IndexedProperty";
 import IndexedShadow from "./IndexedShadow";
-import StateTypes from "./StateTypes";
+import StateType from "./StateType";
 
 
 /*
@@ -37,7 +37,7 @@ export default function createIndexedPropertyType(shadowType, elementType, specC
 		}
 	}
 
-	CustomIndexedProperty.stateSpec = StateTypes.property(CustomIndexedProperty);
+	CustomIndexedProperty.stateSpec = new StateType(CustomIndexedProperty);
 
 	if (elementType) {
 		CustomIndexedProperty.stateSpec.setElementType(elementType);

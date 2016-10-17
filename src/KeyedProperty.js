@@ -4,6 +4,7 @@ import has from "lodash.has";
 import KeyedShadowImpl from "./KeyedShadowImpl";
 import Property from "./Property";
 import PropertyFactoryShader from "./PropertyFactoryShader";
+import StateType from "./StateType";
 
 import {
 	assert,
@@ -86,7 +87,6 @@ export default class KeyedProperty extends Property {
 			parameter
 	*/
 	getInitialState(state) {
-		const { StateType } = require("./StateTypes");
 		var initialState = state;
 
 		if (this.initialState()) {

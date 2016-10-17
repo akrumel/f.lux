@@ -1,11 +1,12 @@
 
 import ObjectProperty from "./ObjectProperty";
 import MapShadow from "./MapShadow";
+import StateType from "./StateType";
 
 
 /*
-	Exposes a Map interface on a shadow property. The Map API is exposed throught in MapShadow, which uses
-	the KeyedProperty methods for implementation.
+	Exposes a Map interface on a shadow property. The Map API is exposed through the MapShadow class, which uses
+	the ObjectProperty methods for implementation.
 */
 export default class MapProperty extends ObjectProperty {
 	constructor(initialState, autoShadow, readonly) {
@@ -28,10 +29,6 @@ export default class MapProperty extends ObjectProperty {
 		return createPropertyClass(shadowType, stateSpec, specCallback, MapProperty);
 	}
 
-	static createSimpleClass(specCallback) {
-		return createPropertyClass({}, null, specCallback, MapProperty);
-	}
-
 	/*
 		Creates a StateType defining a MapProperty where each property is a particular type.
 
@@ -39,7 +36,6 @@ export default class MapProperty extends ObjectProperty {
 			elementStateType - StateType defining the child properties
 	*/
 	static mapTypeOf(elementStateType) {
-		const { StateType } = require("./StateTypes");
 		const type = new StateType(MapProperty);
 
 		type.setElementType(elementStateType);
@@ -55,7 +51,6 @@ export default class MapProperty extends ObjectProperty {
 				for the new type.
 	*/
 	static mapType(defn={}) {
-		const { StateType } = require("./StateTypes");
 		const type = new StateType(MapProperty);
 		var propType;
 
@@ -73,3 +68,8 @@ export default class MapProperty extends ObjectProperty {
 		return true;
 	}
 }
+
+
+Object.defineProperty(MapProperty, "type", {
+		get: () => new StateType(MapProperty)
+	})

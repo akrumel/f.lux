@@ -85,7 +85,7 @@ function isPropertyPrototype(obj) {
 */
 export default class Property {
 	constructor(initialState, autoShadow=true, readonly=false) {
-		const { StateType } = require("./StateTypes");
+		const StateType = require("./StateType").default;
 
 		this[_autoShadow] = autoShadow;
 		this[_initialState] = StateType.computeInitialState(this, initialState);
@@ -399,7 +399,7 @@ export default class Property {
 	}
 
 	implementationClass() {
-		const { StateType } = require("./StateTypes");
+		const StateType = require("./StateType").default;
 
 		return StateType.implementationClassForProperty(this, this[_ImplementationClass]);
 	}
@@ -426,7 +426,7 @@ export default class Property {
 		if (!this[_shader]) {
 			let proto = Object.getPrototypeOf(this);
 			let stateSpec = proto.constructor.stateSpec;
-			let { StateType } = require("./StateTypes");
+			let StateType = require("./StateType").default;
 			let shader;
 
 			if (stateSpec instanceof StateType) {
@@ -457,7 +457,7 @@ export default class Property {
 		Returns - Shadow class
 	*/
 	shadowClass() {
-		const { StateType } = require("./StateTypes");
+		const StateType = require("./StateType").default;
 
 		return StateType.shadowClassForProperty(this, this[_ShadowClass]);
 	}
@@ -481,7 +481,7 @@ export default class Property {
 			parameter
 	*/
 	getInitialState(state) {
-		const { StateType } = require("./StateTypes");
+		const StateType = require("./StateType").default;
 		const initialState = state === undefined ?this[_initialState] :state;
 
 		return StateType.initialStateWithDefaults(this, initialState);

@@ -14,6 +14,7 @@ export { default as Property } from "./Property";
 export { default as Shader } from "./Shader";
 export { default as Shadow } from "./Shadow";
 export { default as StateTypes } from "./StateTypes";
+export { default as StateType } from "./StateType";
 export { default as Store } from "./Store";
 
 export { default as createArrayPropertyType } from "./createArrayPropertyType";

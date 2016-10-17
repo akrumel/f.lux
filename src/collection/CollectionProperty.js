@@ -2,7 +2,7 @@ import Emitter from "component-emitter";
 import invariant from "invariant";
 
 import ArrayProperty from "../ArrayProperty";
-import KeyedProperty from "../KeyedProperty";
+import ObjectProperty from "../ObjectProperty";
 import MapProperty from "../MapProperty";
 import PrimitiveProperty from "../PrimitiveProperty";
 import Store from "../Store";
@@ -43,9 +43,25 @@ const _middleware = Symbol("middleware");
 */
 export const ChangeEvent = "change";
 /*
+	Event emitted on collection destroy() success.
+*/
+export const DeletedEvent = "deleted";
+/*
+	Event emitted on collection fetch() success.
+*/
+export const FetchedEvent = "fetched";
+/*
+	Event emitted on collection find() success.
+*/
+export const FoundEvent = "sound";
+/*
 	Event emitted on error during an operation.
 */
 export const ErrorEvent = "error";
+/*
+	Event emitted on collection save() success.
+*/
+export const SavedEvent = "saved";
 
 /*
 	Middleware operation for create requests.
@@ -83,7 +99,7 @@ import { DEFAULTS_OPTION, MERGE_OPTION, NONE_OPTION, REPLACE_OPTION, REPLACE_ALL
 			- setElementType(type, initState, autoshadow, readonly)
 		- method to get element shader (shader.modelsShader.element)
 */
-export default class CollectionProperty extends KeyedProperty {
+export default class CollectionProperty extends ObjectProperty {
 	constructor(MemberPropertyClass=MapProperty, autoShadow=true, readonly=false) {
 		super({}, false);
 
@@ -99,24 +115,24 @@ export default class CollectionProperty extends KeyedProperty {
 		// feedback to prevent concurrent fetches
 		this[_fetching] = false;
 
-		this.addProperty(_idName, new PrimitiveProperty("id", true));
-		this.addProperty(_id2cid, new MapProperty({}, true));
-		this.addProperty(_synced, new PrimitiveProperty(false, false, true));
+		this._keyed.addProperty(_idName, new PrimitiveProperty("id", true));
+		this._keyed.addProperty(_id2cid, new MapProperty({}, true));
+		this._keyed.addProperty(_synced, new PrimitiveProperty(false, false, true));
 
 		// pagingTime instance variable used for ensuring overlapping paging requests do not mess up offset
 		// this can happen when a paging request is in progress when limit is changed
 		this.pagingTime = null;
-		this.addProperty(_lastPageSize, new PrimitiveProperty(null, false, true));
-		this.addProperty(_limit, new PrimitiveProperty(50, false, true));
-		this.addProperty(_nextOffset, new PrimitiveProperty(0, false, true));
-		this.addProperty(_paging, new PrimitiveProperty(false, false, true));
+		this._keyed.addProperty(_lastPageSize, new PrimitiveProperty(null, false, true));
+		this._keyed.addProperty(_limit, new PrimitiveProperty(50, false, true));
+		this._keyed.addProperty(_nextOffset, new PrimitiveProperty(0, false, true));
+		this._keyed.addProperty(_paging, new PrimitiveProperty(false, false, true));
 
 		// '_models' property contains ModelProperty objects which in turn keep their model state in
 		// the 'data' whose type is specified by the 'MemberPropertyClass' parameter.
 		const models = new MapProperty();
 		const modelsShader = models.shader();
 
-		this.addProperty(_models, models);
+		this._keyed.addProperty(_models, models);
 		modelsShader.setElementClass(ModelProperty, {}, true, false);
 		modelsShader.elementShader.addPropertyClass("data", MemberPropertyClass, {}, autoShadow, readonly);
 	}
@@ -263,7 +279,7 @@ export default class CollectionProperty extends KeyedProperty {
 		const filter = this.endpoint.queryBuilder();
 		const time = this.pagingTime = Date.now();
 
-		this.set(_paging, true);
+		this._keyed.set(_paging, true);
 
 		filter.equals("offset", this._()[_nextOffset]);
 		filter.equals("limit", this._()[_limit]);
@@ -273,14 +289,14 @@ export default class CollectionProperty extends KeyedProperty {
 				if (time !== this.pagingTime) { return }
 
 				this.pagingTime = null;
-				this.set(_paging, false);
+				this._keyed.set(_paging, false);
 				if (error) { return }
 
-				this.set(_nextOffset, this._()[_nextOffset] + models.length);
-				this.set(_lastPageSize, models.length);
+				this._keyed.set(_nextOffset, this._()[_nextOffset] + models.length);
+				this._keyed.set(_lastPageSize, models.length);
 
 				if (models.length < this._()[_limit]) {
-					this.set(_synced, true);
+					this._keyed.set(_synced, true);
 				}
 			});
 	}
@@ -298,23 +314,23 @@ export default class CollectionProperty extends KeyedProperty {
 	}
 
 	nextOffset() {
-		return this.get(_nextOffset);
+		return this._keyed.get(_nextOffset);
 	}
 
 	resetPaging() {
 		this.pagingTime = null;
-		this.set(_lastPageSize, null);
-		this.set(_nextOffset, 0);
-		this.set(_paging, false);
+		this._keyed.set(_lastPageSize, null);
+		this._keyed.set(_nextOffset, 0);
+		this._keyed.set(_paging, false);
 	}
 
 	setLimit(limit) {
 		this.pagingTime = null;
 
-		this.set(_limit, limit);
-		this.set(_lastPageSize, null);
-		this.set(_nextOffset, 0);
-		this.set(_paging, false);
+		this._keyed.set(_limit, limit);
+		this._keyed.set(_lastPageSize, null);
+		this._keyed.set(_nextOffset, 0);
+		this._keyed.set(_paging, false);
 	}
 
 	//------------------------------------------------------------------------------------------------------
@@ -351,7 +367,7 @@ export default class CollectionProperty extends KeyedProperty {
 	setEndpoint(endPoint) {
 		this.resetPaging();
 		this.removeAllModels();
-		this.addProperty(_endpoint, endPoint);
+		this._keyed.addProperty(_endpoint, endPoint);
 	}
 
 	//------------------------------------------------------------------------------------------------------
@@ -437,7 +453,7 @@ export default class CollectionProperty extends KeyedProperty {
 		var id, state;
 
 		if (syncOp) {
-			this.set(_synced, true);
+			this._keyed.set(_synced, true);
 		}
 
 		for (let i=0, len=models.length; i<len; i++) {
@@ -485,6 +501,11 @@ export default class CollectionProperty extends KeyedProperty {
 
 						return id;
 					})
+				.then( id => {
+						this.store().waitFor( () => this.emit(DeletedEvent, this._(), this) )
+
+						return id;
+					})
 				.catch( error => {
 						const currModel = model.$().latest();
 
@@ -528,6 +549,11 @@ export default class CollectionProperty extends KeyedProperty {
 							return this.onError(error, "Fetch error while setting models");
 						}
 					})
+				.then( models => {
+						this.store().waitFor( () => this.emit(FetchedEvent, this._(), this) )
+
+						return models;
+					})
 				.catch( error => {
 						this.setFetching(false);
 
@@ -563,6 +589,11 @@ export default class CollectionProperty extends KeyedProperty {
 							this.addModel(state, NONE_OPTION);
 
 							return this.getModel(id);
+						})
+					.then( model => {
+							this.store().waitFor( () => this.emit(FoundEvent, this._(), this) )
+
+							return model;
 						})
 					.catch( error => this.onError(error, `Find model ${id}`) );
 			}
@@ -670,7 +701,7 @@ export default class CollectionProperty extends KeyedProperty {
 	removeAllModels() {
 		if (!this.isActive()) { return }
 
-		this.set(_synced, false);
+		this._keyed.set(_synced, false);
 		this._()[_models].clear();
 		this._()[_id2cid].clear();
 	}
@@ -740,7 +771,12 @@ export default class CollectionProperty extends KeyedProperty {
 
 						model.$$().clearDirty();
 
-						return this.get(id);
+						return this._keyed.get(id);
+					})
+				.then( models => {
+						this.store().waitFor( () => this.emit(SavedEvent, this._(), this) )
+
+						return models;
 					})
 				.catch( error => {
 						let currModel = model.$().latest();
@@ -749,6 +785,7 @@ export default class CollectionProperty extends KeyedProperty {
 							currModel.waiting = false
 						}
 
+						return this.onError(error, `Save ${id} - cid=${currModel.$().$$().cid}`)
 						return this.onError(error, `Save ${id} - cid=${currModel.$().$$().cid}`)
 					});
 		} catch(error) {
@@ -763,7 +800,7 @@ export default class CollectionProperty extends KeyedProperty {
 	setFetching(fetching) {
 		this[_fetching] = fetching;
 		this.touch();
-//		this.set(_fetching, fetching);
+//		this._keyed.set(_fetching, fetching);
 	}
 
 	/*

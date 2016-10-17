@@ -3,11 +3,21 @@ import sortBy from "lodash.sortby";
 
 import Shadow from "./Shadow";
 
+
+const _cache = Symbol("_cache");
+const _valuesArray = Symbol('_valuesArray');
+
+
 export default class IndexedShadow extends Shadow {
+	constructor(impl) {
+		super(impl);
+
+		this[_cache] = {};
+	}
+
 	get length() {
 		return this.__().length;
 	}
-
 
 	//------------------------------------------------------------------------------------------------------
 	//	Read-only array methods
@@ -174,17 +184,17 @@ export default class IndexedShadow extends Shadow {
 	}
 
 	valuesArray() {
-		if (!this.__valuesArray__) {
+		if (!this[_cache][_valuesArray]) {
 			var values = [];
 
 			for (let i=0, len=this.length; i<len; i++) {
 				values.push(this[i]);
 			}
 
-			Object.defineProperty(this, '__valuesArray__', { enumerable: false, value: values });
+			this[_cache][_valuesArray] = values;
 		}
 
-		return this.__valuesArray__;
+		return this[_cache][_valuesArray];
 	}
 
 	[Symbol.iterator]() { return this.values() }

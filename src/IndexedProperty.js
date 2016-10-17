@@ -3,6 +3,7 @@ import IndexedShadow from "./IndexedShadow";
 import IndexedShadowImpl from "./IndexedShadowImpl";
 import Property from "./Property";
 import PropertyFactoryShader from "./PropertyFactoryShader";
+import StateType from "./StateType";
 
 
 const _propertyShader = Symbol('propertyClass');
@@ -53,8 +54,6 @@ export default class IndexedProperty extends Property {
 	}
 
 	shadowClass() {
-		const { StateType } = require("./StateTypes");
-
 		return StateType.shadowClassForProperty(this, IndexedShadow);
 	}
 
