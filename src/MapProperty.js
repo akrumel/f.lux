@@ -38,7 +38,7 @@ export default class MapProperty extends ObjectProperty {
 	static mapTypeOf(elementStateType) {
 		const type = new StateType(MapProperty);
 
-		type.setElementType(elementStateType);
+		type.setElementClass(elementStateType);
 
 		return type;
 	}

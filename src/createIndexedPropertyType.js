@@ -40,7 +40,7 @@ export default function createIndexedPropertyType(shadowType, elementType, specC
 	CustomIndexedProperty.stateSpec = new StateType(CustomIndexedProperty);
 
 	if (elementType) {
-		CustomIndexedProperty.stateSpec.setElementType(elementType);
+		CustomIndexedProperty.stateSpec.setElementClass(elementType);
 	}
 
 	if (specCallback) {

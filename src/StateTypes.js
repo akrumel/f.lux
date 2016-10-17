@@ -23,7 +23,7 @@ export default {
 	arrayOf(elementStateType) {
 		const type = new StateType(ArrayProperty);
 
-		type.setElementType(elementStateType);
+		type.setElementClass(elementStateType);
 
 		return type;
 	},
@@ -37,7 +37,7 @@ export default {
 	indexedOf(elementStateType) {
 		const type = new StateType(IndexedProperty);
 
-		type.setElementType(elementStateType);
+		type.setElementClass(elementStateType);
 
 		return type;
 	},
@@ -47,7 +47,7 @@ export default {
 	// collectionOf(elementStateType) {
 	// 	const type = new StateType(CollectionProperty);
 
-	// 	// will call the setElementType() method after property created - will need to add
+	// 	// will call the setElementClass() method after property created - will need to add
 	// 	// functionality to the factory shader
 	// 	type.setManagedPropertyType(elementStateType);
 
@@ -82,10 +82,10 @@ export default {
 	},
 
 	// Deprecated - use MapProperty.mapTypeOf()
-	mapOf(elementStateType) {
+	mapOf(elementStateClass) {
 		const type = new StateType(MapProperty);
 
-		type.setElementType(elementStateType);
+		type.setElementClass(elementStateClass);
 
 		return type;
 	},

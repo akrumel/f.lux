@@ -244,14 +244,6 @@ export default class StateType {
 		return this;
 	}
 
-	setElementType(elementType) {
-		assert( a => a.is(isIndexedPrototype(this._PropertyClass), "PropertyClass must be a subclass of IndexedProperty") );
-
-		this._elementType = elementType;
-
-		return this;
-	}
-
 	shader(property) {
 		const shader = new Shader(property, property.autoShadow());
 
@@ -307,12 +299,6 @@ export default class StateType {
 	}
 }
 
-
-function isIndexedPrototype(obj) {
-	const IndexedProperty = require("./IndexedProperty").default;
-
-	return IndexedProperty === obj || IndexedProperty.isPrototypeOf(obj);
-}
 
 function isKeyedPrototype(obj) {
 	const KeyedProperty = require("./KeyedProperty").default;

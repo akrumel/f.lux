@@ -96,7 +96,7 @@ import { DEFAULTS_OPTION, MERGE_OPTION, NONE_OPTION, REPLACE_OPTION, REPLACE_ALL
 		- same ctor as all other properties
 		- separate method to setup element shader:
 			- setElementShader(shader/factoryShader)
-			- setElementType(type, initState, autoshadow, readonly)
+			- setElementClass(type, initState, autoshadow, readonly)
 		- method to get element shader (shader.modelsShader.element)
 */
 export default class CollectionProperty extends ObjectProperty {

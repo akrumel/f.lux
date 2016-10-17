@@ -40,7 +40,7 @@ export default function createArrayPropertyType(shadowType={}, elementType, spec
 	if (elementType) {
 		// assign state spec if present to new Property subclass
 		CustomArrayProperty.stateSpec = new StateType(CustomArrayProperty)
-				.setElementType(elementType);
+				.setElementClass(elementType);
 
 		if (specCallback) {
 			specCallback(CustomIndexedProperty.stateSpec)
