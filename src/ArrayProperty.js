@@ -17,3 +17,8 @@ export default class ArrayProperty extends IndexedProperty {
 		return StateType.shadowClassForProperty(this, ArrayShadow);
 	}
 }
+
+
+Object.defineProperty(ArrayProperty, "type", {
+		get: () => new StateType(ArrayProperty)
+	})
