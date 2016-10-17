@@ -1,4 +1,4 @@
-
+import createPropertyClass from "./createPropertyClass";
 import IndexedShadow from "./IndexedShadow";
 import IndexedShadowImpl from "./IndexedShadowImpl";
 import Property from "./Property";
@@ -11,6 +11,23 @@ const _propertyShader = Symbol('propertyClass');
 export default class IndexedProperty extends Property {
 	constructor(initialState=[], autoShadow, readonly) {
 		super(initialState, autoShadow, readonly);
+
+		this.setImplementationClass(IndexedShadowImpl);
+		this.setShadowClass(IndexedShadow);
+	}
+
+	/*
+		Factory function for creating an IndexedProperty subclass suitable for using with new.
+
+		Parameters (all are optional):
+			shadowType: one of a pojo or class. This parameter defines the new property
+				shadow. If pojo specified, each property and function is mapped onto a Shadow subclass.
+			stateSpec: a StateType instance defining the Property
+			specCallback: a callback function that will be passed the StateType spec for additional
+				customization, such as setting autoshadow, initial state, or readonly.
+	*/
+	static createClass(shadowType={}, stateSpec, specCallback) {
+		return createPropertyClass(shadowType, stateSpec, specCallback, IndexedProperty);
 	}
 
 	clearValueShader() {
@@ -42,19 +59,6 @@ export default class IndexedProperty extends Property {
 		}
 
 		return state;
-	}
-
-
-	//------------------------------------------------------------------------------------------------------
-	// Subclasses may want to override success methods
-	//------------------------------------------------------------------------------------------------------
-
-	implementationClass() {
-		return IndexedShadowImpl;
-	}
-
-	shadowClass() {
-		return StateType.shadowClassForProperty(this, IndexedShadow);
 	}
 
 
