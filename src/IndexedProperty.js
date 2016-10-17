@@ -116,3 +116,7 @@ export default class IndexedProperty extends Property {
 	}
 }
 
+
+Object.defineProperty(IndexedProperty, "type", {
+		get: () => new StateType(IndexedProperty)
+	})
