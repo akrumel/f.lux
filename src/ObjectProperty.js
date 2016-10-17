@@ -36,34 +36,9 @@ export default class ObjectProperty extends Property {
 	static createClass(shadowType={}, stateSpec, specCallback) {
 		return createPropertyClass(shadowType, stateSpec, specCallback, ObjectProperty);
 	}
-
-	/*
-		Creates a StateType defining an ObjectProperty.
-
-		Parameters:
-			defn: a pojo where each property is a StateType definition and defines the properties
-				for the new type.
-	*/
-	static objectType(defn={}) {
-		const type = new StateType(ObjectProperty);
-		var propType;
-
-		for (let key in defn) {
-			type.addProperty(key, defn[key]);
-		}
-
-		return type;
-	}
-
-	/*
-		Used by StateTypes to determine if StateTypes.properties(propTypes) may be invoked.
-	*/
-	static supportsKeyedChildProperties() {
-		return true;
-	}
 }
 
 
 Object.defineProperty(ObjectProperty, "type", {
-		get: () => new StateType(MapProperty)
+		get: () => new StateType(ObjectProperty)
 	})

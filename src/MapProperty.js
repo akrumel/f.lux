@@ -42,31 +42,6 @@ export default class MapProperty extends ObjectProperty {
 
 		return type;
 	}
-
-	/*
-		Creates a StateType defining an MapProperty.
-
-		Parameters:
-			defn - a pojo where each property is a StateType definition and defines the properties
-				for the new type.
-	*/
-	static mapType(defn={}) {
-		const type = new StateType(MapProperty);
-		var propType;
-
-		for (let key in defn) {
-			type.addProperty(key, defn[key]);
-		}
-
-		return type;
-	}
-
-	/*
-		Used by StateTypes to determine if StateTypes.properties(propTypes) may be invoked.
-	*/
-	static supportsKeyedChildProperties() {
-		return true;
-	}
 }
 
 

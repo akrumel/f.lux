@@ -64,7 +64,7 @@ export default function createPropertyClass(
 	CustomProperty.stateSpec = stateSpec || new StateType(CustomProperty);
 
 	if (specCallback) {
-		specCallback(CustomProperty.stateSpec);
+		specCallback(CustomProperty.stateSpec, CustomProperty);
 	}
 
 	return CustomProperty;

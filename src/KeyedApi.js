@@ -1,3 +1,4 @@
+import has from "lodash.has";
 import {
 	assert,
 	doneIterator,

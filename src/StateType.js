@@ -238,6 +238,12 @@ export default class StateType {
 		return this;
 	}
 
+	setElementClass(elementClass) {
+		this._elementType = elementClass;
+
+		return this;
+	}
+
 	setElementType(elementType) {
 		assert( a => a.is(isIndexedPrototype(this._PropertyClass), "PropertyClass must be a subclass of IndexedProperty") );
 
