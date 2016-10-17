@@ -27,7 +27,7 @@ export default class IndexedProperty extends Property {
 				customization, such as setting autoshadow, initial state, or readonly.
 	*/
 	static createClass(shadowType={}, stateSpec, specCallback) {
-		return createPropertyClass(shadowType, stateSpec, specCallback, IndexedProperty);
+		return createPropertyClass(shadowType, stateSpec, specCallback, IndexedProperty, IndexedShadow);
 	}
 
 	clearValueShader() {

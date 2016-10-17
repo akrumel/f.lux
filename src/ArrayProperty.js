@@ -22,7 +22,7 @@ export default class ArrayProperty extends IndexedProperty {
 				customization, such as setting autoshadow, initial state, or readonly.
 	*/
 	static createClass(shadowType={}, stateSpec, specCallback) {
-		return createPropertyClass(shadowType, stateSpec, specCallback, ArrayProperty);
+		return createPropertyClass(shadowType, stateSpec, specCallback, ArrayProperty, ArrayShadow);
 	}
 }
 
