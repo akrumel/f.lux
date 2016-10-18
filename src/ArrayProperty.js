@@ -1,4 +1,4 @@
-
+import createPropertyClass from "./createPropertyClass";
 import ArrayShadow from "./ArrayShadow";
 import IndexedProperty from "./IndexedProperty";
 import StateType from "./StateType";
