@@ -3,14 +3,13 @@ import URI from "urijs";
 import { getOptions, extendOptions } from "./fetchOptions";
 import RestQueryBuilder from "./RestQueryBuilder";
 
-import appDebug from "../debug";
 import KeyedProperty from "../KeyedProperty";
 import PrimitiveProperty from "../PrimitiveProperty";
 import shadow from "../decorators/shadow";
 import Store from "../Store";
 
-
-const debug = appDebug("f.lux:collection");
+import appDebug, { CollectionRestEndpointPropertyKey as DebugKey } from "../debug";
+const debug = appDebug(DebugKey);
 
 /*
 
@@ -92,16 +91,33 @@ export default class RestEndpointProperty extends KeyedProperty {
 
 	@shadow
 	doFetch(filter) {
+		const startTime = Date.now();
 		const url = filter ?filter.applyFilter(this._().url) :this._().url;
+
+		debug( d => d(`doFetch() - path=${ this.$().dotPath() }, url=${url}`) );
 
 		return fetch(url, getOptions("GET"))
 			.then( response => {
+					debug( d => d(`doFetch() response - path=${ this.$().dotPath() }, url=${url}, ok=${response.ok}, ` +
+						`elapsed=${Date.now() - startTime}`, response) );
+
 					if (!response.ok) {
 						return rejectOnError(response, url.toString());
 					}
 
 					return response.json();
 				})
+			.then( json => {
+					debug( d => d(`doFetch() success - path=${ this.$().dotPath() }, url=${url}, ` +
+						`elapsed=${ Date.now() - startTime }`, json) );
+
+					return json;
+				})
+			.catch( error => {
+				debug( d => d(`doFetch() Fetch Error - path=${ this.$().dotPath() }, url=${url}`, error) );
+
+				return Promise.reject(error);
+			})
 	}
 
 	@shadow
@@ -138,6 +154,8 @@ export default class RestEndpointProperty extends KeyedProperty {
 	}
 }
 
+// TODO: extract text and generate a standard error description value (like login) that will make
+//       sense across end point types
 function rejectOnError(response, url) {
 	const error = new Error(`${response.statusText} - status=${response.status}`);
 
@@ -145,9 +163,7 @@ function rejectOnError(response, url) {
 	error.status = response.status;
 	error.response = response;
 
-	// TODO: extract text and generate a standard error description value (like login) that will make
-	//       sense across end point types
-	response.text( text => debug(`RestEndpointProperty error: status=${response.status}, text=${text}`));
+	debug( d => response.text( text =>  d(`Response Error - url=${url}, text=${ text }`, response) ) );
 
 	return Store.reject(error);
 }

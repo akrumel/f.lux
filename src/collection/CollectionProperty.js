@@ -526,14 +526,18 @@ export default class CollectionProperty extends ObjectProperty {
 
 		const syncOp = !filter;
 
-		this.setFetching(true);
+		if (replaceAll) {
+			this.setFetching(true);
+		}
 
 		try {
 			return this._on(FetchOp)
 				.then( () => this.endpoint.doFetch(filter) )
 				.then( models => {
 						try {
-							this.setFetching(false);
+							if (replaceAll) {
+								this.setFetching(false);
+							}
 
 							// invoke the callback before processing models
 							callback && callback(null, models);
@@ -555,7 +559,9 @@ export default class CollectionProperty extends ObjectProperty {
 						return models;
 					})
 				.catch( error => {
-						this.setFetching(false);
+						if (replaceAll) {
+							this.setFetching(false);
+						}
 
 						// invoke the callback with the error
 						callback && callback(error, null);
@@ -563,7 +569,9 @@ export default class CollectionProperty extends ObjectProperty {
 						return this.onError(error, `Fetch all models`);
 					});
 		} catch(error) {
-			this.setFetching(false);
+			if (replaceAll) {
+				this.setFetching(false);
+			}
 
 			// invoke the callback with the error
 			callback && callback(error, null);

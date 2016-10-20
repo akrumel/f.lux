@@ -903,7 +903,13 @@ export default class ShadowImpl {
 		const set = this[_readonly]
 			?undefined
 			:newValue => {
-					if (!this.isActive())  { return }
+					if (!this.isActive())  {
+						if (process.env.NODE_ENV !== 'production') {
+							console.error(`Attempting to set value on inactive property: ${this.dotPath()}`, newValue);
+						}
+
+						return
+					}
 
 					return this.definePropertySetValue(newValue);
 				}
