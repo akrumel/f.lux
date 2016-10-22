@@ -399,7 +399,7 @@ export default class CollectionProperty extends ObjectProperty {
 		Returns the object's ID. And ID is assigned if the 'id' parameter was not set and it could not
 			be found in the 'state' parameter.
 	*/
-	addModel(state, mergeOp=DEFAULTS_OPTION) {
+	addModel(state, mergeOp=REPLACE_OPTION) {
 		if (!this.isConnected()) { throw new Error(`Collection is not connected.`) }
 
 		const id = this.extractId(state);
@@ -446,8 +446,9 @@ export default class CollectionProperty extends ObjectProperty {
 			models - array of model values
 			merge - boolean declaring whether each state should be merged over an existing model with
 				the same ID. False means a current model will be replaced with the new model value.
+			syncOp - sets the synced flag to true if this parameter is true
 	*/
-	addModels(models, mergeOp=DEFAULTS_OPTION, syncOp=true) {
+	addModels(models, mergeOp=REPLACE_OPTION, syncOp=true) {
 		if (!this.isConnected()) { throw new(`Collection ${this.slashPath} is not connected`) }
 
 		var id, state;
@@ -692,6 +693,9 @@ export default class CollectionProperty extends ObjectProperty {
 		return iterateOver(this.modelKeysArray(state), key => this.getModel(key, state));
 	}
 
+	/*
+		Synchronously removes the model from the collection without performing an endpoint operation.
+	*/
 	remove(id) {
 		if (!this.hasModel(id)) { return }
 

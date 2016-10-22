@@ -79,7 +79,7 @@ export default class CollectionShadow extends Shadow {
 		Returns the object's ID. And ID is assigned if the 'id' parameter was not set and it could not
 			be found in the 'state' parameter.
 	*/
-	addModel(state, mergeOp=MERGE_OPTION) {
+	addModel(state, mergeOp=REPLACE_OPTION) {
 		return this.$$().addModel(state, mergeOp);
 	}
 
@@ -91,9 +91,10 @@ export default class CollectionShadow extends Shadow {
 			states - array of model values
 			merge - boolean declaring whether each state should be merged over an existing model with
 				the same ID. False means a current model will be replaced with the new model value.
+			syncOp - sets the synced flag to true if this parameter is true
 	*/
-	addModels(states, mergeOp=MERGE_OPTION) {
-		this.$$().addModels(states, mergeOp);
+	addModels(models, mergeOp=REPLACE_OPTION, syncOp) {
+		this.$$().addModels(models, mergeOp, syncOp);
 	}
 
 	/*
@@ -262,6 +263,10 @@ export default class CollectionShadow extends Shadow {
 		}
 
 		return acc;
+	}
+
+	remove(id) {
+		return this.$$().remove(id);
 	}
 
 	resync() {

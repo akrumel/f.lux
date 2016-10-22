@@ -50,6 +50,10 @@ export default class ShadowModelAccess extends Access {
 		return this.$$().isNew();
 	}
 
+	remove() {
+		return this.$$().remove(this.id);
+	}
+
 	save() {
 		return this.$$().save();
 	}
