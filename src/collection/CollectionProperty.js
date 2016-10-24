@@ -747,7 +747,7 @@ export default class CollectionProperty extends ObjectProperty {
 						if (this.isNewModel(shadow)) {
 							return this.endpoint.doCreate(shadow, shadowState);
 						} else {
-							return this.endpoint.doUpdate(id, shadow, shadowState);
+							return this.endpoint.doUpdate(model.id, shadow, shadowState);
 						}
 					})
 				.then( savedState => {
