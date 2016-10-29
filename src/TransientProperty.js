@@ -52,10 +52,6 @@ export class TransientLock {
 
 
 export class TransientShadow extends Shadow {
-	// get primaryLock() {
-	// 	return this.$$().primaryLock();
-	// }
-
 	delete() {
 		const transRoot = this.$$().parent()._();
 
@@ -69,14 +65,6 @@ export class TransientShadow extends Shadow {
 	lock(desc) {
 		return this.$$().lock(desc);
 	}
-
-	/*
-		Releases the primary lock. Convenience method so the lock does not have to be independently
-		managed when a transient object has a single consumer, such as react component.
-	*/
-	// release() {
-	// 	this.$$().release();
-	// }
 }
 
 /*
@@ -93,20 +81,23 @@ export default class TransientProperty extends ObjectProperty {
 		this[_transId] = id;
 		this[_locks] = [];
 
-		// create the primary lock (ensures transient is locked before first sweep)
-//		this.lock(PrimaryLockName);
-
 		debug( d => d(`TransientProperty created: id=${ id }`) );
-	}
-
-	get id() {
-		return this[_transId];
 	}
 
 	propertyWillUnshadow() {
 		delete this[_locks];
 
 		debug( d => d(`propertyWillUnshadow(): id=${ this[_transId] }`) );
+	}
+
+	get id() {
+		return this[_transId];
+	}
+
+	data() {
+		const transObj = this._();
+
+		return transObj && transObj.data;
 	}
 
 	isLocked() {
@@ -116,16 +107,6 @@ export default class TransientProperty extends ObjectProperty {
 	lock(desc=`lock:${nextLockId}`) {
 		return this._addLock(new TransientLock(nextLockId++, desc, this));
 	}
-
-	// primaryLock() {
-	// 	return this[_locks] && this[_locks].find( l => l.is(PrimaryLockName) );
-	// }
-
-	// release() {
-	// 	const primary = this.primaryLock();
-
-	// 	primary && primary.release();
-	// }
 
 	_removeLock(lock) {
 		if (!this[_locks]) { return }

@@ -104,6 +104,8 @@ export default class Property {
 	_() {
 		const impl = this[_impl];
 
+		if (!this[_store]) { return undefined }
+
 		return this.isActive() && impl.isMapped() ?impl.shadow() :result(this[_store].shadow, impl.dotPath());
 	}
 
