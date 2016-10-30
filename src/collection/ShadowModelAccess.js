@@ -18,12 +18,11 @@ export default class ShadowModelAccess extends Access {
 		return new ShadowModelAccess(this[_modelProperty], childImpl);
 	}
 
-	get collection() {
-		return this.$$().collection._();
-	}
-
-	get id() {
-		return this.$$().id;
+	/*
+		Override parent version so can reset dirty flag in model
+	*/
+	resetToCheckpoint() {
+		this.$$().resetDataToCheckpoint();
 	}
 
 	$$() {
@@ -34,8 +33,16 @@ export default class ShadowModelAccess extends Access {
 		return this.$$().cid;
 	}
 
+	collection() {
+		return this.$$().collection._();
+	}
+
 	destroy() {
 		return this.$$().destroy();
+	}
+
+	id() {
+		return this.$$().id;
 	}
 
 	isWaiting() {

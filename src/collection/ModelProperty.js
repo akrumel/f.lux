@@ -57,7 +57,24 @@ export default class ModelProperty extends KeyedProperty {
 		}
 	}
 
+	clearCheckpoint() {
+		const { collection, data } = this;
+		const dataProp = data && data.$$();
+
+		if (collection.isAutocheckpoint() && dataProp) {
+			dataProp.clearCheckpoint();
+		}
+	}
+
 	clearDirty() {
+		this._().dirty = false;
+		this.clearCheckpoint();
+	}
+
+	resetDataToCheckpoint() {
+		const dataProp = this.data && this.data.$$();
+
+		dataProp && dataProp.resetToCheckpoint();
 		this._().dirty = false;
 	}
 
@@ -77,7 +94,7 @@ export default class ModelProperty extends KeyedProperty {
 		// reset to not dirty if was not dirty before the merge since assuming data being merged
 		// is coming from a source of truth, such as data returned from a save
 		if (!currDirty) {
-			this._().dirty = false;
+			this.clearDirty();
 		}
 	}
 
@@ -122,7 +139,7 @@ export default class ModelProperty extends KeyedProperty {
 		// reset to not dirty if was not dirty before the merge since assuming data being merged
 		// is coming from a source of truth, such as data returned from a save
 		if (!currDirty) {
-			state.dirty = false;
+			this.clearDirty();
 		}
 	}
 
@@ -147,7 +164,7 @@ export default class ModelProperty extends KeyedProperty {
 		state.data = data;
 
 		// now we can explicitly set the dirty flag
-		state.dirty = false;
+		this.clearDirty();
 
 		// update the id if it has changed
 		if (state.id !== id) {
@@ -170,6 +187,10 @@ export default class ModelProperty extends KeyedProperty {
 	onChildInvalidated(childProperty) {
 		if (childProperty.__().name() == "data" && !this._().dirty) {
 			this._().dirty = true;
+
+			if (this.collection.isAutocheckpoint && !childProperty.hasCheckpoint()) {
+				childProperty.checkpoint();
+			}
 		}
 	}
 }

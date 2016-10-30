@@ -11,8 +11,24 @@ export default class Access {
 		return this[_impl];
 	}
 
+	checkpoint() {
+		this.property().checkpoint();
+	}
+
+	clearCheckpoint() {
+		this.property().clearCheckpoint();
+	}
+
 	dotPath() {
 		return this[_impl].dotPath();
+	}
+
+	getCheckpoint() {
+		return this.property().getCheckpoint();
+	}
+
+	hasCheckpoint() {
+		return this.property().hasCheckpoint();
 	}
 
 	isActive() {
@@ -51,6 +67,10 @@ export default class Access {
 
 	property() {
 		return this[_impl].property();
+	}
+
+	resetToCheckpoint() {
+		this.property().resetToCheckpoint();
 	}
 
 	rootShadow() {

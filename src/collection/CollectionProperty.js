@@ -34,9 +34,10 @@ const _nextOffset = 'nextOffset';
 const _paging = '_paging';
 const _synced = "synced";
 
-const _offlineState = Symbol('offlineState');
+const _autocheckpoint = Symbol("autocheckpoint");
 const _fetching = Symbol('fetching');
 const _middleware = Symbol("middleware");
+const _offlineState = Symbol('offlineState');
 
 /*
 	Event emitted on collection changes.
@@ -114,6 +115,7 @@ export default class CollectionProperty extends ObjectProperty {
 		// keep isFetching as an instance variable because transient data and gives immediate
 		// feedback to prevent concurrent fetches
 		this[_fetching] = false;
+		this[_autocheckpoint] = false;
 
 		this._keyed.addProperty(_idName, new PrimitiveProperty("id", true));
 		this._keyed.addProperty(_id2cid, new MapProperty({}, true));
@@ -143,6 +145,17 @@ export default class CollectionProperty extends ObjectProperty {
 		this.emit(ChangeEvent, this._(), this);
 	}
 
+
+	//------------------------------------------------------------------------------------------------------
+	// Checkpoint support API
+	//------------------------------------------------------------------------------------------------------
+	isAutocheckpoint() {
+		return this[_autocheckpoint];
+	}
+
+	setAutocheckpoint(auto) {
+		this[_autocheckpoint] = auto;
+	}
 
 	//------------------------------------------------------------------------------------------------------
 	// Offline data support API
@@ -797,11 +810,10 @@ export default class CollectionProperty extends ObjectProperty {
 							currModel.waiting = false
 						}
 
-						return this.onError(error, `Save ${id} - cid=${currModel.$().$$().cid}`)
-						return this.onError(error, `Save ${id} - cid=${currModel.$().$$().cid}`)
+						return this.onError(error, `Save ${id} - cid=${currModel.cid}`)
 					});
 		} catch(error) {
-			return this.onError(error, `Save ${id} - cid=${model.$().$$().cid}`);
+			return this.onError(error, `Save ${id} - cid=${model.cid}`);
 		}
 	}
 
@@ -852,21 +864,6 @@ export default class CollectionProperty extends ObjectProperty {
 		var idName = this._()[_idName];
 
 		return isObject(model) ?model[idName] :model;
-	}
-
-	/*
-		Gets an ID suitable for obtaining the shadow model even if the model has yet to be persisted.
-	*/
-	extractRefId(model) {
-		var idName = this._()[_idName];
-
-		if (!isObject(model)) { return model }
-
-		if (model[idName]) {
-			return model[idName];
-		} else if (model.$) {
-			return model.$().$$().cid;
-		}
 	}
 
 	onError(error, opMsg) {

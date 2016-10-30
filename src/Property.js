@@ -1,3 +1,4 @@
+import { assert } from "akutils";
 import invariant from "invariant";
 import result from "lodash.result";
 
@@ -9,6 +10,7 @@ import ShadowImpl from "./ShadowImpl";
 import { isObject } from "akutils";
 
 const _autoShadow = Symbol('autoShadow');
+const _checkpoint = Symbol('checkpoint');
 const _impl = Symbol('impl');
 const _initialState = Symbol('initialState');
 const _mixins = Symbol('mixins');
@@ -96,6 +98,34 @@ export default class Property {
 		this[_readonly] = readonly !== undefined
 			?readonly
 			:(stateSpec && stateSpec._readonly) || false;
+	}
+
+	checkpoint() {
+		assert( a => a.not(this[_checkpoint], `Checkpoint already set: ${ this.dotPath() }`) );
+
+		if (!this[_checkpoint]) {
+			this[_checkpoint] = { data: this.state() };
+		}
+	}
+
+	clearCheckpoint() {
+		delete this[_checkpoint];
+	}
+
+	getCheckpoint() {
+		return this[_checkpoint] && this[_checkpoint].data;
+	}
+
+	hasCheckpoint() {
+		return !!this[_checkpoint];
+	}
+
+	resetToCheckpoint() {
+		if (this[_impl] && this[_checkpoint]) {
+			this[_impl].assign(this[_checkpoint].data);
+		}
+
+		this.clearCheckpoint();
 	}
 
 	/*
@@ -358,6 +388,13 @@ export default class Property {
 
 	slashPath() {
 		return this[_impl] ?this[_impl].slashPath() :null;
+	}
+
+	/*
+		Gets the underlying property state.
+	*/
+	state() {
+		return this[_impl] && this[_impl].state();
 	}
 
 	/*

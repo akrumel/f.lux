@@ -64,6 +64,33 @@ export default class CollectionShadow extends Shadow {
 	}
 
 	//------------------------------------------------------------------------------------------------------
+	// Autocheckpointing API
+	//------------------------------------------------------------------------------------------------------
+
+	isAutocheckpoint() {
+		return this.$$().isAutocheckpoint();
+	}
+
+	setAutocheckpoint(auto) {
+		this.$$().setAutocheckpoint(auto);
+	}
+
+	resetToLastEndpointState() {
+		const auto = this.isAutocheckpoint();
+
+		this.forEach( m => {
+				const m$ = m.$();
+
+				if (m$.isNew()) {
+					m$.destroy();
+				} else if (auto && m$.isDirty()) {
+					m$.resetToCheckpoint()
+				}
+			});
+	}
+
+
+	//------------------------------------------------------------------------------------------------------
 	// Stable API
 	//------------------------------------------------------------------------------------------------------
 
