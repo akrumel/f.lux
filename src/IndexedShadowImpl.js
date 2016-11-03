@@ -94,7 +94,7 @@ export default class IndexedShadowImpl extends ShadowImpl {
 			let child = mapping[start+i];
 
 			if (child) {
-				child.blockFurtherUpdates();
+				child.blockFurtherUpdates(true);
 			}
 		}
 

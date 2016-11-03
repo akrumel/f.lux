@@ -177,7 +177,7 @@ export default class ShadowImpl {
 		const children = this.children();
 
 		for (let i=0, child; child=children[i]; i++) {
-			child.blockFurtherUpdates();
+			child.blockFurtherUpdates(true);
 		}
 	}
 
@@ -187,9 +187,13 @@ export default class ShadowImpl {
 		The update() method invokes this method when the callback returns a different object than the
 		one passed into the callback.
 	*/
-	blockFurtherUpdates() {
+	blockFurtherUpdates(replaced) {
 		this[_preventUpdates] = true;
 		this.invalidate(null, this);
+
+		if (replaced) {
+			this[_replaced] = true;
+		}
 
 		this.blockFurtherChildUpdates();
 	}
@@ -632,7 +636,7 @@ export default class ShadowImpl {
 	}
 
 	updatesAllowed() {
-		return !this[_preventUpdates];
+		return !this[_preventUpdates] && !this[_replaced];
 	}
 
 	/*

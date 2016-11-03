@@ -92,7 +92,7 @@ export default class KeyedShadowImpl extends ShadowImpl {
 			child - the child property implementation instance
 	*/
 	removeChild(child) {
-		child.blockFurtherUpdates();
+		child.blockFurtherUpdates(true);
 	}
 
 	/*

@@ -36,16 +36,23 @@ export default class StateType {
 		this._shadowClass = null;
 	}
 
-	static computeInitialState(property, state) {
+	static computeInitialState(property, ctorInitState) {
 		var proto = Object.getPrototypeOf(property);
 		var stateSpec = proto.constructor.stateSpec;
-		var propType, propState;
+		var propType, propState, state;
 
-		if (!stateSpec) { return state; }
+		if (!stateSpec) { return ctorInitState; }
 
-		if (state === undefined) {
+		// give state spec initial state priority since explicitly set
+		if (stateSpec._initialState !== undefined) {
 			state = stateSpec._initialState;
+		} else {
+			state = ctorInitState
 		}
+		// code from before making state spec priority (keep for a bit 11/2/16)
+		// if (state === undefined) {
+		// 	state = stateSpec._initialState;
+		// }
 
 		if (!isObject(state)) { return state; }
 

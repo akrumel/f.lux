@@ -66,6 +66,16 @@ export default class Logger {
 		this.currFrame = new LogFrame(store, this.nextFrameId++);
 	}
 
+	clearTrap(name) {
+		if (!this.traps) { return }
+
+		delete this.traps[name];
+
+		if (Object.keys(this.traps).length === 0) {
+			this.traps = null;
+		}
+	}
+
 	print(printState=true) {
 		const frames = this.frames;
 
@@ -95,16 +105,6 @@ export default class Logger {
 		this.maxFrames = maxFrames;
 
 		this.truncateFrames();
-	}
-
-	clearTrap(name) {
-		if (!this.traps) { return }
-
-		delete this.traps[name];
-
-		if (Object.keys(this.traps).length === 0) {
-			this.traps = null;
-		}
 	}
 
 	setTrap(condition, value, name=uuid()) {
@@ -185,7 +185,7 @@ export default class Logger {
 			this.frames = this.frames.slice(0, activeIdx + 1);
 		}
 
-		// mark current active frame as not active
+		// mark current active frame as not actives
 		this.activeFrame.active = false;
 
 		// complete the current frame and mark active then create a new current frame
@@ -349,7 +349,7 @@ export class FrameAction {
 
 		if (printState) {
 			console.log(`\t\t${impl.dotPath()}::${action.name}, replace=${!!action.replace} nextState=%O, startState=%O`,
-					action.nextState, impl.state);
+					action.nextState, impl.state());
 		} else {
 			console.log(`\t\t${impl.dotPath()}::${action.name}, replace=${!!action.replace}`);
 		}
