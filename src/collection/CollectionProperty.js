@@ -794,14 +794,14 @@ export default class CollectionProperty extends ObjectProperty {
 								return Store.reject(`Invalid post-save option: ${mergeOp}`);
 						}
 
-						model.$$().clearDirty();
+						currModel.$$().clearDirty();
 
-						return this._keyed.get(id);
+						return this.store().waitThen().then( () => currModel.$().latest() );
 					})
-				.then( models => {
+				.then( model => {
 						this.store().waitFor( () => this.emit(SavedEvent, this._(), this) )
 
-						return models;
+						return model.data;
 					})
 				.catch( error => {
 						let currModel = model.$().latest();

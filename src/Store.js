@@ -307,6 +307,12 @@ export default class Store {
 		}
 	}
 
+	waitThen() {
+		return new Promise( (resolve, reject) => {
+			this.waitFor(resolve);
+		})
+	}
+
 
 	//******************************************************************************************************************
 	//  Promise and timer setup methods
