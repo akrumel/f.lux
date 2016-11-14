@@ -31,7 +31,7 @@ export default class ModelProperty extends KeyedProperty {
 	}
 
 	get cid() {
-		return this._().cid;
+		return this._() && this._().cid;
 	}
 
 	get collection() {
@@ -39,7 +39,7 @@ export default class ModelProperty extends KeyedProperty {
 	}
 
 	get data() {
-		return this._().data;
+		return this._() && this._().data;
 	}
 
 	/*
@@ -47,12 +47,12 @@ export default class ModelProperty extends KeyedProperty {
 		ID or an ID created by the collection
 	*/
 	get id() {
-		return this._().id;
+		return this._() && this._().id;
 	}
 
 	@shadow
 	changeId(id) {
-		if (this._().id !== id) {
+		if (this._() && this._().id !== id) {
 			this._().id = id;
 		}
 	}
@@ -67,7 +67,10 @@ export default class ModelProperty extends KeyedProperty {
 	}
 
 	clearDirty() {
-		this._().dirty = false;
+		if (this._()) {
+			this._().dirty = false;
+		}
+
 		this.clearCheckpoint();
 	}
 
@@ -75,7 +78,10 @@ export default class ModelProperty extends KeyedProperty {
 		const dataProp = this.data && this.data.$$();
 
 		dataProp && dataProp.resetToCheckpoint();
-		this._().dirty = false;
+
+		if (this._()) {
+			this._().dirty = false;
+		}
 	}
 
 	@shadowBound
@@ -105,11 +111,11 @@ export default class ModelProperty extends KeyedProperty {
 
 	@shadowBound
 	isWaiting() {
-		return this._().waiting;
+		return this._() && this._().waiting;
 	}
 
 	isDirty() {
-		return this._().dirty;
+		return this._() && this._().dirty;
 	}
 
 	/*

@@ -106,6 +106,24 @@ export default class CollectionShadow extends Shadow {
 		Returns the object's ID. And ID is assigned if the 'id' parameter was not set and it could not
 			be found in the 'state' parameter.
 	*/
+	add(state, mergeOp=REPLACE_OPTION) {
+		return this.$$().addModel(state, mergeOp);
+	}
+
+	/*
+		Synchronously adds a new model object to the store. Call model.$().save() to persist the newly added
+		object.
+
+		Parmaeters:
+			state - the object model to add to the collection
+			merge - boolean declaring whether this state should be merged over an existing model with
+				the same ID. False means a current model will be replaced with the new model value.
+
+		Returns the object's ID. And ID is assigned if the 'id' parameter was not set and it could not
+			be found in the 'state' parameter.
+
+		Deprecated: use add()
+	*/
 	addModel(state, mergeOp=REPLACE_OPTION) {
 		return this.$$().addModel(state, mergeOp);
 	}
