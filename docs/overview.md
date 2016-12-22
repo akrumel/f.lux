@@ -3,22 +3,25 @@
 ## What is f.lux
 f.lux is a data management library inspired by the [React flux architecture](https://facebook.github.io/flux/docs/overview.html) and influenced by [Redux](http://redux.js.org/) and [immutable.js](https://facebook.github.io/immutable-js/). This is third version of the f.lux approach and the first to be published open source. This version is actively used in commercial projects on both web and react-native platforms and really shines when implementing complex "business rule" applications, such as enterprise applications or rules based systems.
 
-### High-level feature list
+## High-level feature list
 
-* Single store
+### Single store
+
 All application state is stored in a single object tree as inspired by [Redux's single store approach](http://redux.js.org/docs/introduction/ThreePrinciples.html#single-source-of-truth). A single source of truth greatly simplifies application state management, reduces complexity, and eases debugging.
 
-* Co-locate state and action functions
+### Co-locate state and action functions
+
 The f.lux store efficiently virtualizes the state tree into a shadow state as inspired by the React shadow DOM. The virtualization process, called shadowing, binds action-type functions onto the state tree properties. Binding the functions with the data makes explicit the operations that may be performed on a state tree property. The virtualization process can also expose virtualized properties for the underlying data that when set using `=` generates an update action without having to write any code. The exposed properties may also be set to readonly and will ensure the value is not updated, handy for object IDs.
+
 The virtualization process is central to the f.lux architecture and is designed to be simple for common cases while exposing a straight-forward, declarative mechanism to customize the process on a per property basis. The application works with shadow objects just like traditional javascript objects. This means your application logic looks "normal" and you can interact and inspect state objects in the javascript console like regular objects. The shadow objects are immutable so interacting with them through property assignments and function invocation result in actions being dispatched to the store for in order processing. The store then generates a change event on the next tick for the application to process the new state.
 
-* Immutable state
+## Immutable state
 
 All state changes occur indirectly through actions, usually through shadow object bound functions and properties.
 
 Making changes through actions ensures changes happen in a strict order and store listeners receive a coherent and atomically updated state tree.
 
-* Collections (remote data)
+## Collections (remote data)
 
 f.lux provides built-in support for working with remote data through Collections.
 
@@ -26,7 +29,7 @@ The Collections api is inspired by the simple (Backbone)[] collections for perfo
 
 Collections live in the virtualized state tree like any other property and store all information in the actual state tree making them time travel compatible.
 
-* Logging and time travel debugger
+## Logging and time travel debugger
 
 F.lux includes a logging facility and time travel debugger accessed through the javascript console.
 
@@ -60,6 +63,6 @@ f.lux log available at window.flog
 
 The store api used for implementing the logger and time travel debugger can be utilized to implement alternative implementations.
 
-* `react-ui`
+## `react-ui`
 
 An add-on module providing React support for mapping store state to React component properties, collection mappings, and form components.
