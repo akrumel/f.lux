@@ -152,7 +152,7 @@ Functions:
 	clearTrap(name)                    - clears a trap set by 'setTrap()'
 	goto(idx)                          - move to a specific store state frame
 	setMaxFrames(maxFrames)            - set the maximum number of store states to maintain (default=50)
-	setTrap(cond, value, name=uuid)    - sets a debugger trap and returns name. conditino argument may be
+	setTrap(cond, value, name=uuid)    - sets a debugger trap and returns name. Condition argument may be
 	                                     a function taking next state or a string path to get a value
 	tail(count=10, printState=true)    - prints last 'count' store updates
 
