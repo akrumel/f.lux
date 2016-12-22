@@ -25,7 +25,7 @@ Making changes through actions ensures changes happen in a strict order and stor
 
 ## Property life-cycle
 
-State tree properties have a life-cycle that mirrors the React component life-cycle.
+State tree properties have a life-cycle that analogous to the React component life-cycle.
 
 The property life-cycle is:
 
@@ -35,7 +35,7 @@ The property life-cycle is:
 * `propertyDidUpdate` - revirtualization completed
 * `propertyWillUnshadow` - property is being removed from the state tree
 
-The motivating use for the life-cycle was inegrating with state changes external to the application code. External state changes examples include:
+The life-cycle motivating use case was integrating with state changes external to the application code. External state changes examples include:
 
 * web socket messages - a property can register for web socket messages when shadowed and unregister upon unshdadowing. This puts the logic for how to handle the message colocated with the other functions associated with that state property making the application logic easier to reason about and debug.
 * push notifications - a dedicated state property can register for push notifications and store the associated information in a single location for the UI to process. Changes to the notification property will trigger a store change and provide a known state tree location to inspect. With a shadow function to `clear()` the notification the UI can remove the notification after performing any necessary UI update.
@@ -45,7 +45,7 @@ The motivating use for the life-cycle was inegrating with state changes external
 The virtualization architecture divides a shadow property into two entities:
 
 * shadow - the virtualized interface used by the application logic to inspect and modify the state tree.
-* property - analogous to a React component with a life-cycle (think of the shadow as the `render()` function though in the case it is an object). F.lux properties are by writing an ES2016 class.
+* property - analogous to a React component with a life-cycle (think of the shadow as the `render()` function though in the case it is an object). F.lux properties are implemented using ES2016 classes.
 
 Here is an example of a `react-native` orientation property:
 
@@ -109,7 +109,7 @@ const { orientation } = store.shadow;
 
 console.log(orientation.direction);
 
-if (store.shadow.orientation.direction === LandscapeOrientation) {
+if (orientation.direction === LandscapeOrientation) {
 	// do something specific to landscape mode here
 } else {
 	// do something portriat specific here
@@ -117,9 +117,9 @@ if (store.shadow.orientation.direction === LandscapeOrientation) {
 
 ```
 
-The `direction` sub-property would be an ideal candidate for being readonly so the application logic could not change it though the `OrientationProperty` could change it using the line `this._keyed.set(_direction, orientation);`.
+The `direction` sub-property would be an ideal candidate for being readonly so the application logic could not change it. The `OrientationProperty` could still change it using the line `this._keyed.set(_direction, orientation);`.
 
-Implementing properties is one of the few cases where f.lux utilizes inheritance and seems natural since this is defining a new type. The f.lux approach is to avoid defining Property class hierarchies. A facility is provided for mixins where shared functionality needs to tie into the property life-cycle; a rarely needed but useful capability to have when desired.
+Implementing properties is one of the few cases where f.lux utilizes inheritance, which feels natural since this is defining a new type. The f.lux approach is to avoid defining Property class hierarchies. A facility is provided for sharing functionality through mixins when the shared code needs to tie into the property life-cycle; a rarely needed but useful capability to have when desired.
 
 ## Collections (remote data)
 
