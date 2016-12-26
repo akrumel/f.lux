@@ -1,39 +1,49 @@
 import {
-	createIndexedPropertyType,
-	StateTypes
+	IndexedProperty,
+	IndexedShadow,
+	ObjectProperty,
 } from "f.lux";
 
 
 /*
 	The shadow literal defines methods and computed properties (es2015 get/set) that will be exposed
-	on the shadow property. This technique removes the need to inherit from a specific Shadow class.
+	on the shadow property. This technique removes the need to inherit from a specific Shadow class as
+	required by the Property type. In this case, you would need to subclass IndexedShadow or the the
+	state shadow would not have the expected methods and properties: length, map(), reduce(), find(),...
 
-	The actual property and shadow types will be created by the createIndexedPropertyType() function
+	The IndexedProperty.createClass() function will create an IndexedShadow subclass and add any
+	methods and get/set properties defined in the POJO to the IndexedShadow subclass.
+
+	The actual property and shadow classes are created by the IndexedProperty.createClass() function
 	below.
+
+	Alternatively, you could subclass IndexedShadow and pass that as first parameter to
+	IndexedProperty.createClass().
+
+		export class CounterLog extends IndexedShadow {
+			addAction(action, time) { ... }
+		}
 */
 export const CounterLog = {
 	addAction(action, time) {
-		this.$$.push({
+		this.$$().push({
 				action: action,
 				time: time
 			});
-	},
+	}
 }
 
+
 /*
-	Each log entry will be a KeyedProperty, which means no API is exposed
-	to extend the entry. Each element will be readonly.
+	Create an IndexedProperty subclass which is like an array sans mutable methods, like push() and pop().
+	Log entries are adde using the shadow state method 'addAction()'. No api is exposed for removing log
+	entries.
+
+	Note: the ArrayProperty exposes the full javascript array api.
 */
-export const elementSpec = StateTypes
-	.keyed({
-			action: StateTypes.Primitive,
-			time: StateTypes.Primitive
-		})
-	.readonly;
+export default IndexedProperty.createClass(CounterLog, null, spec => {
+	spec.setElementClass(ObjectProperty)     // each element will be an ObjectProperty (default is MapProperty)
+		.readonly                            // log and all elements will be readonly
+		.typeName("CounterLogProperty");     // useful for debugging (no other use)
+})
 
-// create the property type as an IndexedProperty subclass. The StateSpec created by createIndexedPropertyType()
-// is extended to specify an initial state, which ensures the log is created as soon as the parent property
-// is shadowed.
-const CounterLogProperty = createIndexedPropertyType(CounterLog, elementSpec, spec => spec.initialState([]) );
-
-export default CounterLogProperty;

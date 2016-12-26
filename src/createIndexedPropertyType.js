@@ -4,7 +4,7 @@ import StateType from "./StateType";
 
 
 /*
-	Creates an ArrayProperty subclass based on a custom Shadow type.
+	Creates an IndexedProperty subclass based on a custom Shadow type.
 */
 export default function createIndexedPropertyType(shadowType, elementType, specCallback) {
 	var ShadowClass;

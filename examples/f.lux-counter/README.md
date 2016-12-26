@@ -5,9 +5,9 @@ A simple, standalone f.lux data component example. The app store has a state wit
 * counter - shadowed by CounterProperty. This state property maintains the counter value and whether
 	the counter is currently running. This property demonstrates how to tie into the Property
 	life-cycle and maintain transient state using instance variables.
-* log - shadowed by CounterLogProperty. This state maintains an array that lists when the counter was
-	started, stopped, and reset. The log property demonstrates how to use a shadow literal to create
-	a property, removing the need to subclass a Property class and using the decorators.
+* log - shadowed by CounterLogProperty. This state maintains a list of log entries describing when the
+	counter was started, stopped, and reset. The log property demonstrates how to use a shadow literal
+	to createa property, removing the need for subclassing a Property or Shadow class.
 
 Two data components provide the shadow models for the store's state:
 

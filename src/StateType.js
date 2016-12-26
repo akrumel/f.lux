@@ -68,6 +68,14 @@ export default class StateType {
 		return state;
 	}
 
+	/*
+		Convenience class method to avoid using 'new StateType(...)' making chaining on the
+		newly created StateType easier to read.
+	*/
+	static create(PropertyClass) {
+		return new StateType(PropertyClass);
+	}
+
 	static implementationClassForProperty(property, defaultClass=ShadowImpl) {
 		var proto = Object.getPrototypeOf(property);
 		var stateSpec = proto.constructor.stateSpec;
