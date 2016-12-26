@@ -37,10 +37,17 @@ export default class KeyedApi {
 		return this.addPropertyShader(name, property.shader(), property.getInitialState(), automount);
 	}
 
+	/*
+		The initialState, autoShadow, readonly, automount parameters are legacy and are ignored if the
+		propClass parameter has a stateSpec class variable.
+	*/
 	addPropertyClass(name, propClass, initialState, autoShadow, readonly, automount) {
-		const shader = new PropertyFactoryShader(propClass, this._property, initialState, autoShadow, readonly, automount);
+		const iState = propClass.stateSpec ?propClass.stateSpec._initialState :initialState;
+		const shader = propClass.stateSpec
+				?propClass.stateSpec.factory(this._property)   //ignores other arguments
+				:new PropertyFactoryShader(propClass, this._property, initialState, autoShadow, readonly, automount);
 
-		return this.addPropertyShader(name, shader, initialState);
+		return this.addPropertyShader(name, shader, iState);
 	}
 
 	addPropertyShader(name, shader, initialState, automount) {

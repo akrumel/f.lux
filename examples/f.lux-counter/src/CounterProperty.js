@@ -180,11 +180,13 @@ export default class CounterProperty extends ObjectProperty {
 	Autoshadowing is enabled by default so f.lux will automatically shadow the 'count' and 'isRunning'
 	properties from the initial state using primitive property types.
 */
-CounterProperty.stateSpec = new StateType(CounterProperty)
+CounterProperty.stateSpec = StateType.create(CounterProperty)
 	.initialState({ count: 0, isRunning: false })
 	.readonly
 	.typeName("CounterProperty");
 
+StateType.defineType(CounterProperty);
+console.log("CounterProperty.type", CounterProperty.type)
 
 // this directive has the same affect as the '.initialState({...})' directive above
 // this form is handy when autoshadow is disabled or want to be very explicit

@@ -46959,7 +46959,7 @@
 	*/
 	exports.default = _f.ObjectProperty.createClass({}, null, function (spec) {
 		spec.properties({
-			counter: _f.StateType.create(_CounterProperty2.default),
+			counter: _CounterProperty2.default.type,
 			log: _f.StateType.create(_CounterLogProperty2.default)
 		}).typeName("AppRootProperty");
 	});

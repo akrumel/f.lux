@@ -29,14 +29,12 @@ export default class KeyedProperty extends Property {
 	}
 
 	addPropertyClass(name, propClass, initialState, autoShadow, readonly, automount) {
+		const iState = propClass.stateSpec ?propClass.stateSpec._initialState :initialState;
 		const shader = propClass.stateSpec
 				?propClass.stateSpec.factory(this)   //ignores other arguments
 				:new PropertyFactoryShader(propClass, this, initialState, autoShadow, readonly, automount);
-//		const shader = new PropertyFactoryShader(propClass, this, initialState, autoShadow, readonly, automount);
 
-		initialState = propClass.stateSpec ?propClass.stateSpec._initialState :initialState;
-
-		return this.addPropertyShader(name, shader, initialState);
+		return this.addPropertyShader(name, shader, iState);
 	}
 
 	addPropertyShader(name, shader, initialState, automount) {

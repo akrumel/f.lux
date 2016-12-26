@@ -1,3 +1,4 @@
+import { assert, isObject } from "akutils";
 import defaults from "lodash.defaults";
 import isArray from "lodash.isarray";
 
@@ -7,17 +8,11 @@ import Shader from "./Shader";
 import Shadow from "./Shadow";
 import ShadowImpl from "./ShadowImpl";
 
-import {
-	assert,
-	isObject
-} from "akutils";
 
 
 /*
 	Todo:
 		- add managed property type support to factory shader
-		- attach shader to constructor so shared. Change will require passing property into each call
-		  so may not be worth effort. Would need to get rid of KeyedProperty.addProperty() methods.
 */
 
 
@@ -28,12 +23,14 @@ export default class StateType {
 		this._elementType = null;
 
 		// setup default values
-		this._autoshadow = true;
-		this._defaults = undefined;
-		this._implementationClass = null;
-		this._initialState = undefined;
-		this._readonly = false;
-		this._shadowClass = null;
+		const stateSpec = PropertyClass.stateSpec;
+
+		this._autoshadow = stateSpec ?stateSpec._autoShadow :true;
+		this._defaults = stateSpec ?stateSpec._defaults :undefined;
+		this._implementationClass = stateSpec ?stateSpec._implementationClass :null;
+		this._initialState = stateSpec ?stateSpec._initialState :undefined;
+		this._readonly = stateSpec ?stateSpec._readonly :false;
+		this._shadowClass = stateSpec ?stateSpec._shadowClass :null;
 	}
 
 	static computeInitialState(property, ctorInitState) {
@@ -74,6 +71,40 @@ export default class StateType {
 	*/
 	static create(PropertyClass) {
 		return new StateType(PropertyClass);
+	}
+
+	/*
+		Sets a 'type' getter on the PropertyClass. The 'type' getter is used to define properties
+		in the StateType.properties() method. The 'type' getter may be set once per class and all
+		further requests are ignored.
+
+		Example usage:
+
+			StateType.defineType(CounterProperty);
+
+			...
+
+			ObjectProperty.createClass({}, null, spec => {
+				spec.properties({
+						counter: CounterProperty.type.readonly,
+					})
+			});
+
+		Parameters:
+			PropertyClass - the Property subclass on which to define the 'type' getter
+
+		Returns:
+			new StateType instance for the PropertyClass. The value will be a clone of the
+			PropertyClass.stateSpec if defined, otherwise equals StateType.create(PropertyClass)
+	*/
+	static defineType(PropertyClass) {
+		assert( a => a.not(PropertyClass.hasOwnProperty("type"), `'type' variable already defined`) );
+
+		if (PropertyClass.hasOwnProperty("type")) { return }
+
+		Object.defineProperty(PropertyClass, "type", {
+				get: () => new StateType(PropertyClass)
+			});
 	}
 
 	static implementationClassForProperty(property, defaultClass=ShadowImpl) {

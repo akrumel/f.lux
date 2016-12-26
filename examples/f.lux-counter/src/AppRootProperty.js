@@ -18,8 +18,8 @@ import CounterProperty from "./CounterProperty";
 */
 export default ObjectProperty.createClass({}, null, spec => {
 	spec.properties({
-				counter: StateType.create(CounterProperty),
-				log: StateType.create(CounterLogProperty),
+				counter: CounterProperty.type,
+				log: CounterLogProperty.type,
 			})
 		.typeName("AppRootProperty");
 });
