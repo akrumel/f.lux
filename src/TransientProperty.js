@@ -4,6 +4,7 @@ import createShadowClass from "./createShadowClass";
 import ObjectProperty from "./ObjectProperty";
 import PrimitiveProperty from "./PrimitiveProperty";
 import Shadow from "./Shadow";
+import StateType from "./StateType";
 
 import appDebug, { TransientKey as DebugKey } from "./debug";
 const debug = appDebug(DebugKey);
@@ -72,10 +73,10 @@ export class TransientShadow extends Shadow {
 */
 export default class TransientProperty extends ObjectProperty {
 	constructor(id, property) {
-		super({}, false, true);
+		super();
 
 		this._keyed.addProperty(_data, property);
-		this._keyed.addProperty(_id,  new PrimitiveProperty(id, false, true));
+		this._keyed.set(_id,  id);
 
 		this.setShadowClass(TransientShadow);
 		this[_transId] = id;
@@ -127,6 +128,14 @@ export default class TransientProperty extends ObjectProperty {
 	}
 }
 
+TransientProperty.stateSpec = new StateType(TransientProperty)
+	.initialState({})
+	.properties({
+			[_id]: PrimitiveProperty.type,
+		})
+	.autoshadowOff
+	.readonly
+	.typeName("TransientProperty");
 
 
 

@@ -41,7 +41,7 @@ export const CounterLog = {
 
 	Note: the ArrayProperty exposes the full javascript array api.
 */
-export default IndexedProperty.createClass(CounterLog, null, spec => {
+export default IndexedProperty.createClass(CounterLog, spec => {
 	spec.setElementClass(ObjectProperty)     // each element will be an ObjectProperty (default is MapProperty)
 		.readonly                            // log and all elements will be readonly
 		.typeName("CounterLogProperty");     // useful for debugging (no other use)

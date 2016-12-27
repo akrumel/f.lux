@@ -7,6 +7,7 @@ import {
 
 import ObjectProperty from "./ObjectProperty";
 import Shadow from "./Shadow";
+import StateType from "./StateType";
 import TransientProperty from "./TransientProperty";
 
 import appDebug, { TransientKey as DebugKey } from "./debug";
@@ -71,9 +72,16 @@ export class TransientsShadow extends Shadow {
 
 export default class TransientsProperty extends ObjectProperty {
 	constructor(id, property) {
-		super({}, false, true);
+		super();
 
 		this.setShadowClass(TransientsShadow);
 	}
 }
+
+
+TransientsProperty.stateSpec = new StateType(TransientsProperty)
+	.initialState({})
+	.autoshadowOff
+	.readonly
+	.typeName("TransientsProperty");
 

@@ -1,6 +1,8 @@
-import { assert, isObject } from "akutils";
+import { assert } from "akutils";
+import cloneDeep from "lodash.clonedeep";
 import defaults from "lodash.defaults";
 import isArray from "lodash.isarray";
+import isPlainObject from "lodash.isplainobject";
 
 import PropertyFactoryShader from "./PropertyFactoryShader";
 import Property from "./Property";
@@ -25,44 +27,13 @@ export default class StateType {
 		// setup default values
 		const stateSpec = PropertyClass.stateSpec;
 
-		this._autoshadow = stateSpec ?stateSpec._autoShadow :true;
+		this._autoshadow = stateSpec ?stateSpec._autoshadow :true;
 		this._defaults = stateSpec ?stateSpec._defaults :undefined;
 		this._implementationClass = stateSpec ?stateSpec._implementationClass :null;
 		this._initialState = stateSpec ?stateSpec._initialState :undefined;
-		this._readonly = stateSpec ?stateSpec._readonly :false;
+this._readonly = stateSpec && stateSpec._readonly;
+//		this._readonly = stateSpec ?stateSpec._readonly :false;
 		this._shadowClass = stateSpec ?stateSpec._shadowClass :null;
-	}
-
-	static computeInitialState(property, ctorInitState) {
-		var proto = Object.getPrototypeOf(property);
-		var stateSpec = proto.constructor.stateSpec;
-		var propType, propState, state;
-
-		if (!stateSpec) { return ctorInitState; }
-
-		// give state spec initial state priority since explicitly set
-		if (stateSpec._initialState !== undefined) {
-			state = stateSpec._initialState;
-		} else {
-			state = ctorInitState
-		}
-		// code from before making state spec priority (keep for a bit 11/2/16)
-		// if (state === undefined) {
-		// 	state = stateSpec._initialState;
-		// }
-
-		if (!isObject(state)) { return state; }
-
-		var propSpecs = stateSpec._properties || stateSpec;
-
-		for (let name in propSpecs) {
-			propType = propSpecs[name];
-			propState = state[name];
-
-			state[name] = propState===undefined ?propType._initialState :propState;
-		}
-
-		return state;
 	}
 
 	/*
@@ -97,13 +68,21 @@ export default class StateType {
 			new StateType instance for the PropertyClass. The value will be a clone of the
 			PropertyClass.stateSpec if defined, otherwise equals StateType.create(PropertyClass)
 	*/
-	static defineType(PropertyClass) {
+	static defineType(PropertyClass, specCallback) {
 		assert( a => a.not(PropertyClass.hasOwnProperty("type"), `'type' variable already defined`) );
 
 		if (PropertyClass.hasOwnProperty("type")) { return }
 
 		Object.defineProperty(PropertyClass, "type", {
-				get: () => new StateType(PropertyClass)
+				get: () => {
+						const stateType = new StateType(PropertyClass);
+
+						if (specCallback) {
+							specCallback(stateType);
+						}
+
+						return stateType;
+					}
 			});
 	}
 
@@ -118,69 +97,28 @@ export default class StateType {
 		}
 	}
 
-	static initialStateWithDefaults(property, state) {
-		var proto = Object.getPrototypeOf(property);
-		var stateSpec = proto.constructor.stateSpec;
-		var arrayType = isArray(state);
-		var defaultState, propType, propState;
+	// static shaderFromSpec(property, stateSpec) {
+	// 	const shader = new Shader(property, property.autoShadow());
+	// 	var eltType;
 
-		if (!stateSpec || (!isObject(state) && !arrayType)) { return state; }
+	// 	for (let name in stateSpec) {
+	// 		eltType = stateSpec[name];
 
-		var propSpecs = stateSpec._properties || stateSpec;
+	// 		if (eltType.isComplex()) {
+	// 			// complex definition so need to pass entire definition to shader so can handle recusively
+	// 			shader.addStateType(name, eltType);
+	// 		} else {
+	// 			shader.addPropertyClass(
+	// 					name,
+	// 					eltType._PropertyClass,
+	// 					eltType._initialState,
+	// 					eltType._autoshadow,
+	// 					eltType._readonly);
+	// 		}
+	// 	}
 
-		if (isObject(stateSpec._defaults)) {
-			state = defaults( (arrayType ?[] :{}), state, stateSpec._defaults);
-		}
-
-		for (let name in propSpecs) {
-			propType = propSpecs[name];
-
-			if (propType && propType._defaults !== undefined) {
-				defaultState = defaultState || (arrayType ?[] :{});
-				defaultState[name] = propType._defaults ;
-			}
-		}
-
-		if (defaultState) {
-			state= defaults((arrayType ?[] :{}), state, defaultState);
-		}
-
-		return state;
-	}
-
-	static shaderFromSpec(property, stateSpec) {
-		const shader = new Shader(property, property.autoShadow());
-		var eltType;
-
-		for (let name in stateSpec) {
-			eltType = stateSpec[name];
-
-			if (eltType.isComplex()) {
-				// complex definition so need to pass entire definition to shader so can handle recusively
-				shader.addStateType(name, eltType);
-			} else {
-				shader.addPropertyClass(
-						name,
-						eltType._PropertyClass,
-						eltType._initialState,
-						eltType._autoshadow,
-						eltType._readonly);
-			}
-		}
-
-		return shader;
-	}
-
-	static shadowClassForProperty(property, defaultClass=Shadow) {
-		var proto = Object.getPrototypeOf(property);
-		var stateSpec = proto.constructor.stateSpec;
-
-		if (stateSpec && stateSpec._shadowClass) {
-			return stateSpec._shadowClass;
-		} else {
-			return defaultClass;
-		}
-	}
+	// 	return shader;
+	// }
 
 	get autoshadow() {
 		this._autoshadow = true;
@@ -215,6 +153,25 @@ export default class StateType {
 		this._properties[name] = type;
 	}
 
+	computeInitialState() {
+		const state = cloneDeep(this._initialState);
+		const propSpecs = this._properties;
+
+		if (!isPlainObject(state) || !propSpecs) { return state; }
+
+		var propType, propState;
+
+		for (let name in propSpecs) {
+			propType = propSpecs[name];
+			propState = state[name];
+
+			// update state only if current undefined
+			state[name] = propState===undefined ?propType.computeInitialState() :propState;
+		}
+
+		return state;
+	}
+
 	/*
 		Configures
 	*/
@@ -225,7 +182,7 @@ export default class StateType {
 	}
 
 	createProperty() {
-		return new this._PropertyClass(this._initialState, this._autoshadow, this._readonly);
+		return new this._PropertyClass(this);
 	}
 
 	default(state) {
@@ -238,13 +195,7 @@ export default class StateType {
 		Returns a PropertyFactoryShader that will create property instances as configured by this StateType.
 	*/
 	factory(parentProperty) {
-		const shader = new PropertyFactoryShader(
-				this._PropertyClass,
-				parentProperty,
-				this._initialState,
-				this._autoshadow,
-				this._readonly || parentProperty.isReadonly(),
-				this._automount);
+		const shader = new PropertyFactoryShader(this, parentProperty);
 
 		this._setupShader(shader);
 
@@ -265,6 +216,34 @@ export default class StateType {
 		this._initialState = state;
 
 		return this;
+	}
+
+	initialStateWithDefaults(state) {
+		var arrayType = isArray(state);
+		var defaultState, propType, propState;
+
+		if (!isPlainObject(state) && !arrayType) { return state; }
+
+		var propSpecs = this._properties;
+
+		if (isPlainObject(this._defaults)) {
+			state = defaults( (arrayType ?[] :{}), state, this._defaults);
+		}
+
+		for (let name in propSpecs) {
+			propType = propSpecs[name];
+
+			if (propType && propType._defaults !== undefined) {
+				defaultState = defaultState || (arrayType ?[] :{});
+				defaultState[name] = propType._defaults ;
+			}
+		}
+
+		if (defaultState) {
+			state= defaults((arrayType ?[] :{}), state, defaultState);
+		}
+
+		return state;
 	}
 
 	isComplex() {
@@ -291,7 +270,7 @@ export default class StateType {
 	}
 
 	shader(property) {
-		const shader = new Shader(property, property.autoShadow());
+		const shader = new Shader(property);
 
 		this._setupShader(shader);
 
@@ -302,6 +281,14 @@ export default class StateType {
 		this._shadowClass = cls;
 
 		return this;
+	}
+
+	shadowClassForProperty(defaultClass=Shadow) {
+		if (this._shadowClass) {
+			return this._shadowClass;
+		} else {
+			return defaultClass;
+		}
 	}
 
 	typeName(name) {
@@ -334,12 +321,13 @@ export default class StateType {
 			for (let name in this._properties) {
 				eltType = this._properties[name];
 
-				if (eltType.isComplex()) {
-					// complex definition so need to pass entire definition to shader so can handle recusively
-					shader.addStateType(name, eltType);
-				} else {
-					shader.addPropertyClass(name, eltType._PropertyClass, eltType._initialState, eltType._autoshadow, eltType._readonly);
-				}
+				shader.addProperty(name, eltType);
+				// if (eltType.isComplex()) {
+				// 	// complex definition so need to pass entire definition to shader so can handle recusively
+				// 	shader.addStateType(name, eltType);
+				// } else {
+				// 	shader.addPropertyClass(name, eltType._PropertyClass, eltType._initialState, eltType._autoshadow, eltType._readonly);
+				// }
 			}
 		}
 	}

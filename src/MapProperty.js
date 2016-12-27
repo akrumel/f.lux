@@ -9,8 +9,8 @@ import StateType from "./StateType";
 	the ObjectProperty methods for implementation.
 */
 export default class MapProperty extends ObjectProperty {
-	constructor(initialState, autoShadow, readonly) {
-		super(initialState, autoShadow, readonly);
+	constructor(stateType) {
+		super(stateType);
 
 		this.setShadowClass(MapShadow)
 	}
@@ -25,8 +25,8 @@ export default class MapProperty extends ObjectProperty {
 			specCallback - a callback function that will be passed the StateType spec for additional
 				customization, such as setting autoshadow, initial state, or readonly.
 	*/
-	static createClass(shadowType={}, stateSpec, specCallback) {
-		return createPropertyClass(shadowType, stateSpec, specCallback, MapProperty);
+	static createClass(shadowType={}, initialState={}, specCallback) {
+		return createPropertyClass(shadowType, initialState, specCallback, MapProperty);
 	}
 
 	/*
@@ -45,6 +45,4 @@ export default class MapProperty extends ObjectProperty {
 }
 
 
-Object.defineProperty(MapProperty, "type", {
-		get: () => new StateType(MapProperty)
-	})
+StateType.defineType(MapProperty);

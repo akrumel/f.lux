@@ -1,7 +1,7 @@
 import invariant from "invariant";
 import { isObject } from "akutils";
 
-
+import StateType from "./StateType";
 import noParentStateErrorMsg from "./noParentStateErrorMsg";
 import PropertyFactoryShader from "./PropertyFactoryShader";
 
@@ -31,7 +31,13 @@ export default class AutoShader {
 			PropertyClass = require("./PrimitiveProperty").default;
 		}
 
-		const shader = new PropertyFactoryShader(PropertyClass, parentProperty, undefined, true, this.readonly);
+		const stateType = new StateType(PropertyClass);
+
+		if (this.readonly) {
+			stateType.readonly;
+		}
+
+		const shader = new PropertyFactoryShader(stateType, parentProperty);
 
 		return shader.shadowProperty(time, name, parentState, parentImpl);
 	}

@@ -9,8 +9,8 @@ import StateType from "./StateType";
 const _propertyShader = Symbol('propertyClass');
 
 export default class IndexedProperty extends Property {
-	constructor(initialState=[], autoShadow, readonly) {
-		super(initialState, autoShadow, readonly);
+	constructor(stateType) {
+		super(stateType);
 
 		this.setImplementationClass(IndexedShadowImpl);
 		this.setShadowClass(IndexedShadow);
@@ -26,16 +26,16 @@ export default class IndexedProperty extends Property {
 			specCallback: a callback function that will be passed the StateType spec for additional
 				customization, such as setting autoshadow, initial state, or readonly.
 	*/
-	static createClass(shadowType={}, stateSpec, specCallback) {
-		return createPropertyClass(shadowType, stateSpec, specCallback, IndexedProperty, IndexedShadow);
+	static createClass(shadowType={}, specCallback, initialState=[]) {
+		return createPropertyClass(shadowType, initialState, specCallback, IndexedProperty, IndexedShadow);
 	}
 
 	clearValueShader() {
 		this.shader().setElementShader(null);
 	}
 
-	setValueShader(propertyClass, initialState, autoShadow, readonly=false) {
-		const shader = new PropertyFactoryShader(propertyClass, this, initialState, autoShadow, readonly);
+	setElementShader(stateType) {
+		const shader = new PropertyFactoryShader(stateType, this);
 
 		this.shader().setElementShader(shader);
 	}
@@ -121,6 +121,4 @@ export default class IndexedProperty extends Property {
 }
 
 
-Object.defineProperty(IndexedProperty, "type", {
-		get: () => new StateType(IndexedProperty)
-	})
+StateType.defineType(IndexedProperty);

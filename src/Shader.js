@@ -30,10 +30,12 @@ const _shaders = Symbol('shaders');
 	Combine with PropertyShader now that everything is a property.
 */
 export default class Shader {
-	constructor(property, autoShadow=false, automountAll=false) {
+	constructor(property) {
+		const stateType = property.stateType();
+
 		this[_property] = property;
-		this[_autoshadow] = autoShadow;
-		this[_automountAll] = automountAll;
+		this[_autoshadow] = stateType._autoshadow;
+		this[_automountAll] = stateType._automountAll;
 
 		// initialize instance variables
 		this[_automount] = [];
@@ -71,15 +73,7 @@ export default class Shader {
 		return this;
 	}
 
-	addPropertyClass(name, PropertyClass, defaults, autoShadow, readonly) {
-		const property = this[_property];
-		const shaderReadonly = readonly || property.isReadonly();
-		const shader = new PropertyFactoryShader(PropertyClass, property, defaults, autoShadow, shaderReadonly);
-
-		this.add(name, shader);
-	}
-
-	addStateType(name, stateType) {
+	addProperty(name, stateType) {
 		const property = this[_property];
 		const shader = stateType.factory(property);
 

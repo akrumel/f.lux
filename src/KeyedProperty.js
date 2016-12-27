@@ -18,8 +18,8 @@ import {
 	Deprecated - Use ObjectProperty.
 */
 export default class KeyedProperty extends Property {
-	constructor(initialState={}, autoShadow, readonly) {
-		super(initialState, autoShadow, readonly);
+	constructor(stateType) {
+		super(stateType);
 	}
 
 	addProperty(name, property, automount) {
@@ -92,7 +92,7 @@ export default class KeyedProperty extends Property {
 			initialState = { ...this.initialState(), ...state };
 		}
 
-		return StateType.initialStateWithDefaults(this, initialState);
+		return this.stateType().initialStateWithDefaults(initialState);
 	}
 
 

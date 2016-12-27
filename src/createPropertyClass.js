@@ -10,7 +10,7 @@ import StateType from "./StateType";
 			type. If pojo specified, each property and function is mapped onto a subclass of the
 			BaseShadowClass parameter. The BaseShadowClass parameter is ignored if this parameter
 			is a class.
-		stateSpec: a StateType instance defining the Property
+		stateType: a StateType instance defining the Property
 		specCallback: a callback function that will be passed the StateType spec for additional
 			customization, such as setting autoshadow, initial state, or readonly.
 		PropertyClass: the base class for defining the property. Must be a Property subclass.
@@ -19,7 +19,7 @@ import StateType from "./StateType";
 */
 export default function createPropertyClass(
 	shadowType,
-	stateSpec,
+	initialState,
 	specCallback,
 	PropertyClass,
 	BaseShadowClass=Shadow)
@@ -49,20 +49,20 @@ export default function createPropertyClass(
 
 	// create the property subclass
 	class CustomProperty extends PropertyClass {
-		constructor(
-				initialState=CustomProperty.stateSpec._initialState,
-				autoShadow=CustomProperty.stateSpec._autoshadow,
-				readonly=CustomProperty.stateSpec._readonly)
-		{
-			super(initialState, autoShadow, readonly);
+		constructor(stateType=CustomProperty.stateSpec) {
+			super(stateType);
 
 			this.setShadowClass(ShadowClass);
 		}
 	}
 
 	// assign state spec if present to new Property subclass
-	CustomProperty.stateSpec = stateSpec || new StateType(CustomProperty);
+	CustomProperty.stateSpec = new StateType(CustomProperty);
 	StateType.defineType(CustomProperty);
+
+	if (initialState !== undefined) {
+		CustomProperty.stateSpec.initialState(initialState);
+	}
 
 	if (specCallback) {
 		specCallback(CustomProperty.stateSpec, CustomProperty);

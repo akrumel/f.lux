@@ -37,17 +37,8 @@ export default class KeyedApi {
 		return this.addPropertyShader(name, property.shader(), property.getInitialState(), automount);
 	}
 
-	/*
-		The initialState, autoShadow, readonly, automount parameters are legacy and are ignored if the
-		propClass parameter has a stateSpec class variable.
-	*/
-	addPropertyClass(name, propClass, initialState, autoShadow, readonly, automount) {
-		const iState = propClass.stateSpec ?propClass.stateSpec._initialState :initialState;
-		const shader = propClass.stateSpec
-				?propClass.stateSpec.factory(this._property)   //ignores other arguments
-				:new PropertyFactoryShader(propClass, this._property, initialState, autoShadow, readonly, automount);
-
-		return this.addPropertyShader(name, shader, iState);
+	addPropertyType(name, stateType) {
+		return this.addPropertyShader(name, stateType.factory(this._property), stateType._initialState);
 	}
 
 	addPropertyShader(name, shader, initialState, automount) {
@@ -55,20 +46,20 @@ export default class KeyedApi {
 		const propInitialState = property.initialState();
 
 		// initial state has two sources: parameter and the shader
-		initialState = initialState !== undefined
+		const iState = initialState !== undefined
 				?initialState
 				:shader.initialState ?shader.initialState :propInitialState && propInitialState[name];
 
 		property.shader().add(name, shader, automount);
 
 		if (this.isActive()) {
-			if (initialState !== undefined) {
-				this.set(name, initialState);
+			if (iState !== undefined) {
+				this.set(name, iState);
 			}
 
 			property.touch();
 		} else if (propInitialState) {
-			propInitialState[name] = initialState;
+			propInitialState[name] = iState;
 		}
 
 		// return shader so can be further customized

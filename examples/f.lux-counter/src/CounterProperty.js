@@ -186,7 +186,7 @@ CounterProperty.stateSpec = StateType.create(CounterProperty)
 	.typeName("CounterProperty");
 
 StateType.defineType(CounterProperty);
-console.log("CounterProperty.type", CounterProperty.type)
+
 
 // this directive has the same affect as the '.initialState({...})' directive above
 // this form is handy when autoshadow is disabled or want to be very explicit

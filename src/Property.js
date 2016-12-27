@@ -19,6 +19,7 @@ const _pid = Symbol('pid');
 const _readonly = Symbol('readonly');
 const _shader = Symbol('shader');
 const _shadowDescriptors = Symbol('shadowDescriptors');
+const _stateType = Symbol('stateType');
 const _store = Symbol('store');
 const _ImplementationClass = Symbol('ImplementationClass');
 const _ShadowClass = Symbol('ShadowClass');
@@ -86,18 +87,18 @@ function isPropertyPrototype(obj) {
 
 */
 export default class Property {
-	constructor(initialState, autoShadow, readonly) {
-		const StateType = require("./StateType").default;
-		const stateSpec = this.constructor.stateSpec;
+	constructor(stateType) {
+		var proto = Object.getPrototypeOf(this);
+		var stateSpec = proto.constructor.stateSpec;
 
+		// Default state type comes from property class stateSpec
+		stateType = stateType || stateSpec;
+
+		this[_autoShadow] = stateType._autoShadow;
+		this[_initialState] = stateType.computeInitialState();
 		this[_pid] = nextPid++;
-		this[_initialState] = StateType.computeInitialState(this, initialState);
-		this[_autoShadow] = autoShadow !== undefined
-			?autoShadow
-			:(stateSpec && stateSpec._autoshadow) || true;
-		this[_readonly] = readonly !== undefined
-			?readonly
-			:(stateSpec && stateSpec._readonly) || false;
+		this[_readonly] = stateType._readonly;
+		this[_stateType] = stateType
 	}
 
 	checkpoint() {
@@ -165,7 +166,7 @@ export default class Property {
 	}
 
 	initialState() {
-		return this[_initialState];
+		return this[_stateType].computeInitialState();
 	}
 
 	isActive() {
@@ -173,7 +174,10 @@ export default class Property {
 	}
 
 	isReadonly() {
-		return this[_readonly];
+		// use readonly flag if explicitly set otherwise use value from parent
+		return this[_readonly] === undefined
+			? this[_parent] && this[_parent].isReadonly()
+			: this[_readonly];
 	}
 
 	isRoot() {
@@ -468,20 +472,7 @@ export default class Property {
 
 	shader(state) {
 		if (!this[_shader]) {
-			let proto = Object.getPrototypeOf(this);
-			let stateSpec = proto.constructor.stateSpec;
-			let StateType = require("./StateType").default;
-			let shader;
-
-			if (stateSpec instanceof StateType) {
-				shader = stateSpec.shader(this);
-			} else if (stateSpec) {
-				shader = new StateType.shaderFromSpec(this, stateSpec);
-			} else {
-				shader = new Shader(this, this[_autoShadow]);
-			}
-
-			this[_shader] = shader;
+			this[_shader] = this[_stateType].shader(this);
 		}
 
 		return this[_shader];
@@ -503,9 +494,15 @@ export default class Property {
 	shadowClass() {
 		const StateType = require("./StateType").default;
 
-		return StateType.shadowClassForProperty(this, this[_ShadowClass]);
+		return this[_stateType].shadowClassForProperty(this[_ShadowClass]);
 	}
 
+	/*
+		Gets the StateType used for creating this property.
+	*/
+	stateType() {
+		return this[_stateType];
+	}
 
 	//------------------------------------------------------------------------------------------------------
 	// State lifecycle methods
@@ -528,7 +525,7 @@ export default class Property {
 		const StateType = require("./StateType").default;
 		const initialState = state === undefined ?this[_initialState] :state;
 
-		return StateType.initialStateWithDefaults(this, initialState);
+		return this[_stateType].initialStateWithDefaults(initialState);
 	}
 
 	propertyWillShadow() { /* subscribe to websockets */ }
