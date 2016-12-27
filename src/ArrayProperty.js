@@ -27,4 +27,7 @@ export default class ArrayProperty extends IndexedProperty {
 }
 
 
-StateType.defineType(ArrayProperty);
+StateType.defineType(ArrayProperty, spec => {
+	spec.initialState([])
+		.setElementType(MapProperty.type);
+});

@@ -23,7 +23,8 @@ export default class PropertyFactoryShader {
 	}
 
 	setElementType(stateType) {
-		this.childShaderDefn = stateType;
+		// ignoring since assuming set in StateType._setupShader() and also contained in the stateType var
+		this.elementType = stateType;
 	}
 
 	addPropertyClass(name, PropertyClass, stateType=PropertyClass.stateSpec) {
@@ -62,7 +63,9 @@ export default class PropertyFactoryShader {
 	}
 
 	shouldAutomount() {
-		return this.PropertyClass.constructor.shouldAutomount && this.PropertyClass.constructor.shouldAutomount();
+		const PropertyClass = this.stateType._PropertyClass;
+
+		return PropertyClass.constructor.shouldAutomount && PropertyClass.constructor.shouldAutomount();
 	}
 }
 

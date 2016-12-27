@@ -1,6 +1,7 @@
 import createPropertyClass from "./createPropertyClass";
 import IndexedShadow from "./IndexedShadow";
 import IndexedShadowImpl from "./IndexedShadowImpl";
+import MapProperty from "./MapProperty";
 import Property from "./Property";
 import PropertyFactoryShader from "./PropertyFactoryShader";
 import StateType from "./StateType";
@@ -121,4 +122,7 @@ export default class IndexedProperty extends Property {
 }
 
 
-StateType.defineType(IndexedProperty);
+StateType.defineType(IndexedProperty, spec => {
+	spec.initialState([])
+		.setElementType(MapProperty.type);
+});

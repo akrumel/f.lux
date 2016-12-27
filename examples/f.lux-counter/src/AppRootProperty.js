@@ -21,7 +21,6 @@ export default ObjectProperty.createClass({}, spec => {
 				counter: CounterProperty.type,
 				log: CounterLogProperty.type,
 			})
-//.readonly
 		.typeName("AppRootProperty");
 });
 

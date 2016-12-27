@@ -21,19 +21,21 @@ import ShadowImpl from "./ShadowImpl";
 export default class StateType {
 	constructor(PropertyClass) {
 		this._PropertyClass = PropertyClass;
-		this._properties = { };
-		this._elementType = null;
 
 		// setup default values
 		const stateSpec = PropertyClass.stateSpec;
 
 		this._autoshadow = stateSpec ?stateSpec._autoshadow :true;
 		this._defaults = stateSpec ?stateSpec._defaults :undefined;
+		this._elementType = stateSpec ?stateSpec._elementType :null;
 		this._implementationClass = stateSpec ?stateSpec._implementationClass :null;
 		this._initialState = stateSpec ?stateSpec._initialState :undefined;
-this._readonly = stateSpec && stateSpec._readonly;
-//		this._readonly = stateSpec ?stateSpec._readonly :false;
+		this._properties = stateSpec ?stateSpec._properties :{ };
 		this._shadowClass = stateSpec ?stateSpec._shadowClass :null;
+
+		// readonly is different than other instance variables as readonly state cascades down
+		// to properties where not explicitly set to true or false
+		this._readonly = stateSpec && stateSpec._readonly;
 	}
 
 	/*
@@ -96,29 +98,6 @@ this._readonly = stateSpec && stateSpec._readonly;
 			return defaultClass;
 		}
 	}
-
-	// static shaderFromSpec(property, stateSpec) {
-	// 	const shader = new Shader(property, property.autoShadow());
-	// 	var eltType;
-
-	// 	for (let name in stateSpec) {
-	// 		eltType = stateSpec[name];
-
-	// 		if (eltType.isComplex()) {
-	// 			// complex definition so need to pass entire definition to shader so can handle recusively
-	// 			shader.addStateType(name, eltType);
-	// 		} else {
-	// 			shader.addPropertyClass(
-	// 					name,
-	// 					eltType._PropertyClass,
-	// 					eltType._initialState,
-	// 					eltType._autoshadow,
-	// 					eltType._readonly);
-	// 		}
-	// 	}
-
-	// 	return shader;
-	// }
 
 	get autoshadow() {
 		this._autoshadow = true;
@@ -263,8 +242,8 @@ this._readonly = stateSpec && stateSpec._readonly;
 		return this;
 	}
 
-	setElementClass(elementClass) {
-		this._elementType = elementClass;
+	setElementType(type) {
+		this._elementType = type;
 
 		return this;
 	}
@@ -301,20 +280,21 @@ this._readonly = stateSpec && stateSpec._readonly;
 		if (this._elementType) {
 			let eltType = this._elementType;
 
-			if (eltType.isComplex && eltType.isComplex()) {
-				shader.setElementStateType(eltType);
-			} else if (eltType.PropertyClass) {
-				shader.setElementClass(eltType.PropertyClass, eltType.defaults, eltType.autoShadow, eltType.readonly);
-			} else {
-				shader.setElementClass(eltType);
-			}
-		} else if (this._managedPropertyType) {
-			// will call the setElementType() method after property created - will need to add
-			// functionality to the factory shader
+			shader.setElementType(eltType);
+			// if (eltType.isComplex && eltType.isComplex()) {
+			// 	shader.setElementType(eltType);
+			// } else if (eltType.PropertyClass) {
+			// 	shader.setElementClass(eltType.PropertyClass, eltType.defaults, eltType.autoShadow, eltType.readonly);
+			// } else {
+			// 	shader.setElementClass(eltType);
+			// }
+// 		} else if (this._managedPropertyType) {
+// 			// will call the setElementType() method after property created - will need to add
+// 			// functionality to the factory shader
 
-// ADD setManagedPropertyType() TO FACTORY - requires changes to Collection first
+// // ADD setManagedPropertyType() TO FACTORY - requires changes to Collection first
 
-			shader.setManagedPropertyType(this._managedPropertyType);
+// 			shader.setManagedPropertyType(this._managedPropertyType);
 		} else {
 			let eltType;
 
@@ -322,12 +302,6 @@ this._readonly = stateSpec && stateSpec._readonly;
 				eltType = this._properties[name];
 
 				shader.addProperty(name, eltType);
-				// if (eltType.isComplex()) {
-				// 	// complex definition so need to pass entire definition to shader so can handle recusively
-				// 	shader.addStateType(name, eltType);
-				// } else {
-				// 	shader.addPropertyClass(name, eltType._PropertyClass, eltType._initialState, eltType._autoshadow, eltType._readonly);
-				// }
 			}
 		}
 	}

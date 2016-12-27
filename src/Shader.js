@@ -131,15 +131,15 @@ export default class Shader {
 		return this;
 	}
 
-	setElementClass(PropertyClass, defaults, autoShadow, readonly) {
-		const property = this[_property];
-		const shaderReadonly = readonly || property.isReadonly();
-		const shader = new PropertyFactoryShader(PropertyClass, property, defaults, autoShadow, shaderReadonly);
+	// setElementClass(PropertyClass, defaults, autoShadow, readonly) {
+	// 	const property = this[_property];
+	// 	const shaderReadonly = readonly || property.isReadonly();
+	// 	const shader = new PropertyFactoryShader(PropertyClass, property, defaults, autoShadow, shaderReadonly);
 
-		return this.setElementShader(shader);
-	}
+	// 	return this.setElementShader(shader);
+	// }
 
-	setElementStateType(stateType) {
+	setElementType(stateType) {
 		const property = this[_property];
 		const shader = stateType.factory(property);
 
