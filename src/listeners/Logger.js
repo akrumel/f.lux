@@ -1,4 +1,4 @@
-import { uuid } from "akutils";
+import uuid from "uuid";
 import autobind from "autobind-decorator";
 import has from "lodash.has";
 import invariant from "invariant";

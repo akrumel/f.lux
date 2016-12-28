@@ -2,6 +2,7 @@ import Emitter from "component-emitter";
 import invariant from "invariant";
 
 import ArrayProperty from "../ArrayProperty";
+import createPropertyClass from "../createPropertyClass";
 import ObjectProperty from "../ObjectProperty";
 import MapProperty from "../MapProperty";
 import PrimitiveProperty from "../PrimitiveProperty";
@@ -18,6 +19,7 @@ import {
 
 import CollectionShadow from "./CollectionShadow";
 import ModelProperty from "./ModelProperty";
+import StateType from "../StateType";
 
 import appDebug, { CollectionPropertyKey as DebugKey } from "../debug";
 const debug = appDebug(DebugKey);
@@ -93,16 +95,14 @@ import { DEFAULTS_OPTION, MERGE_OPTION, NONE_OPTION, REPLACE_OPTION, REPLACE_ALL
 
 
 /*
-	Rework API:
-		- same ctor as all other properties
-		- separate method to setup element shader:
-			- setElementShader(shader/factoryShader)
-			- setElementClass(type, initState, autoshadow, readonly)
-		- method to get element shader (shader.modelsShader.element)
+	Todo:
+		* _id2cid and _models to ObjectProperty to remove overhead
 */
 export default class CollectionProperty extends ObjectProperty {
-	constructor(MemberPropertyClass=MapProperty, autoShadow=true, readonly=false) {
-		super({}, false);
+	constructor(stateType=CollectionProperty.type) {
+		super(stateType);
+
+		this.setShadowClass(CollectionShadow);
 
 		this[_middleware] = {
 			[CreateOp]: [],
@@ -117,26 +117,44 @@ export default class CollectionProperty extends ObjectProperty {
 		this[_fetching] = false;
 		this[_autocheckpoint] = false;
 
-		this._keyed.addProperty(_idName, new PrimitiveProperty("id", true));
-		this._keyed.addProperty(_id2cid, new MapProperty({}, true));
-		this._keyed.addProperty(_synced, new PrimitiveProperty(false, false, true));
+		this._keyed.addPropertyType(_idName, PrimitiveProperty.type.initialState("id").autoshadow);
+		this._keyed.addProperty(_id2cid, new MapProperty());
+		this._keyed.addPropertyType(_synced, PrimitiveProperty.type.initialState(false).autoshadowOff.readonly);
 
 		// pagingTime instance variable used for ensuring overlapping paging requests do not mess up offset
 		// this can happen when a paging request is in progress when limit is changed
 		this.pagingTime = null;
-		this._keyed.addProperty(_lastPageSize, new PrimitiveProperty(null, false, true));
-		this._keyed.addProperty(_limit, new PrimitiveProperty(50, false, true));
-		this._keyed.addProperty(_nextOffset, new PrimitiveProperty(0, false, true));
-		this._keyed.addProperty(_paging, new PrimitiveProperty(false, false, true));
+		this._keyed.addPropertyType(_lastPageSize, PrimitiveProperty.type.initialState(null).autoshadowOff.readonly);
+		this._keyed.addPropertyType(_limit, PrimitiveProperty.type.initialState(50).autoshadowOff.readonly);
+		this._keyed.addPropertyType(_nextOffset, PrimitiveProperty.type.initialState(0).autoshadowOff.readonly);
+		this._keyed.addPropertyType(_paging, PrimitiveProperty.type.initialState(false).autoshadowOff.readonly);
 
 		// '_models' property contains ModelProperty objects which in turn keep their model state in
-		// the 'data' whose type is specified by the 'MemberPropertyClass' parameter.
+		// the 'data' whose type is specified by the stateType.getManagedType() value (default is
+		// MapProperty.type)
 		const models = new MapProperty();
 		const modelsShader = models.shader();
 
 		this._keyed.addProperty(_models, models);
-		modelsShader.setElementClass(ModelProperty, {}, true, false);
-		modelsShader.elementShader.addPropertyClass("data", MemberPropertyClass, {}, autoShadow, readonly);
+		modelsShader.setElementType(ModelProperty.type);
+
+		// set the type for each retrieved model by explicitly adding a type to the models element shader
+		const managedType = stateType.getManagedType() || MapProperty.type;
+		modelsShader.elementShader.addProperty("data", managedType);
+	}
+
+	/*
+		Factory function for creating an ObjectProperty subclass suitable for using with new.
+
+		Parameters (all are optional):
+			shadowType: one of a pojo or class. This parameter defines the new property
+				shadow. If pojo specified, each property and function is mapped onto a Shadow subclass.
+			stateSpec: a StateType instance defining the Property
+			specCallback: a callback function that will be passed the StateType spec for additional
+				customization, such as setting autoshadow, initial state, or readonly.
+	*/
+	static createClass(shadowType={}, specCallback, initialState={}) {
+		return createPropertyClass(shadowType, initialState, specCallback, CollectionProperty, CollectionShadow);
 	}
 
 	onPropertyDidUpdate() {
@@ -346,17 +364,6 @@ export default class CollectionProperty extends ObjectProperty {
 		this._keyed.set(_paging, false);
 	}
 
-	//------------------------------------------------------------------------------------------------------
-	// Experimental data spec stuff
-	//------------------------------------------------------------------------------------------------------
-
-	setElementClass(MemberPropertyClass=MapProperty, initialState={}, autoShadow=true, readonly=false) {
-		const models = this._()[_models];
-		const modelsShader = models.shader();
-
-		modelsShader.elementShader.setElementClass(MemberPropertyClass, initialState, autoShadow, readonly);
-	}
-
 
 	//------------------------------------------------------------------------------------------------------
 	// Endpoint methods
@@ -381,14 +388,6 @@ export default class CollectionProperty extends ObjectProperty {
 		this.resetPaging();
 		this.removeAllModels();
 		this._keyed.addProperty(_endpoint, endPoint);
-	}
-
-	//------------------------------------------------------------------------------------------------------
-	// Property subclasses may want to override success methods
-	//------------------------------------------------------------------------------------------------------
-
-	shadowClass() {
-		return CollectionShadow;
 	}
 
 
@@ -420,14 +419,14 @@ export default class CollectionProperty extends ObjectProperty {
 
 		// just add the model
 		if (!id || !this.hasModel(id) || mergeOp === REPLACE_OPTION) {
-			const modelDefn = ModelProperty.modelDefinitionFor(state, this);
-			const models = this._()[_models];
+			let modelDefn = ModelProperty.modelDefinitionFor(state, this);
+			let models = this._()[_models];
 
 			models.set(modelDefn.cid, modelDefn);
 
 			modelId = modelDefn.id;
 		} else {
-			const currModel = this._getModel(id);
+			let currModel = this._getModel(id);
 
 			switch (mergeOp) {
 				case NONE_OPTION:
@@ -462,7 +461,7 @@ export default class CollectionProperty extends ObjectProperty {
 			syncOp - sets the synced flag to true if this parameter is true
 	*/
 	addModels(models, mergeOp=REPLACE_OPTION, syncOp=true) {
-		if (!this.isConnected()) { throw new(`Collection ${this.slashPath} is not connected`) }
+		if (!this.isConnected()) { throw new(`Collection ${this.slashPath()} is not connected`) }
 
 		var id, state;
 
@@ -479,11 +478,12 @@ export default class CollectionProperty extends ObjectProperty {
 		Combines an add and save actions.
 	*/
 	create(model) {
-		if (!this.isConnected()) { return Store.reject(`Collection ${this.slashPath} is not connected`) }
+		if (!this.isConnected()) { return Store.reject(`Collection ${this.slashPath()} is not connected`) }
 
 		const cid = this.addModel(model);
 
-		return this.save(cid);
+		return this.store().waitThen()
+			.then( () => this.save(cid) );
 	}
 
 	destroy(id) {
@@ -536,7 +536,7 @@ export default class CollectionProperty extends ObjectProperty {
 
 	// No reset option - always resets
 	fetch(filter=null, mergeOp=REPLACE_OPTION, replaceAll=true, callback) {
-		if (!this.isConnected()) { return Store.reject(`Collection ${this.slashPath} is not connected`) }
+		if (!this.isConnected()) { return Store.reject(`Collection ${this.slashPath()} is not connected`) }
 
 		const syncOp = !filter;
 
@@ -597,7 +597,7 @@ export default class CollectionProperty extends ObjectProperty {
 	}
 
 	find(id) {
-		if (!this.isConnected()) { return Store.reject(`Collection ${this.slashPath} is not connected`) }
+		if (!this.isConnected()) { return Store.reject(`Collection ${this.slashPath()} is not connected`) }
 
 		try {
 			const model = this._getModel(id);
@@ -741,13 +741,13 @@ export default class CollectionProperty extends ObjectProperty {
 		Returns a promise. The resolve function arguments are F.lux models and this adapter as arguments
 	*/
 	save(id, mergeOp=MERGE_OPTION) {
-		if (!this.isConnected()) { return Store.reject(`Collection ${this.slashPath} is not connected`) }
+		if (!this.isConnected()) { return Store.reject(`Collection ${this.slashPath()} is not connected`) }
 
 		const model = this._getModel(id);
 		const cid = model && model.cid;
 		const shadow = model && model.data;
 
-		if (!model) { return Store.reject(`Collection ${this.slashPath} model not found: id=${id}`) }
+		if (!model) { return Store.reject(`Collection ${this.slashPath()} model not found: id=${id}`) }
 
 		try {
 			const shadowState = shadow.__().nextState();
@@ -907,6 +907,14 @@ export default class CollectionProperty extends ObjectProperty {
 		return state[_models].get(cid);
 	}
 }
+
+
+StateType.defineType(CollectionProperty, spec => {
+	spec.initialState({})
+		.autoshadowOff
+		.managedType(MapProperty.type)
+		.typeName("CollectionProperty");
+});
 
 // Mix in `Emitter`
 Emitter(CollectionProperty.prototype);

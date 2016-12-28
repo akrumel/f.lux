@@ -1,0 +1,23 @@
+
+small {
+	color: #999;
+}
+
+.addTodo {
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+}
+
+.addTodo .addTodo-desc {
+	flex: 1;
+	margin-right: 30px;
+}
+
+.addTodo i {
+	margin-right: 15px;
+}
+
+.todoContainer {
+	padding: 0 30px 30px;
+}

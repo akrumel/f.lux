@@ -5,7 +5,7 @@ import StateType from "./StateType";
 
 
 export default class ArrayProperty extends IndexedProperty {
-	constructor(stateType) {
+	constructor(stateType=ArrayProperty.type) {
 		super(stateType);
 
 		this.setShadowClass(ArrayShadow);
@@ -29,5 +29,5 @@ export default class ArrayProperty extends IndexedProperty {
 
 StateType.defineType(ArrayProperty, spec => {
 	spec.initialState([])
-		.setElementType(MapProperty.type);
+		.elementType(MapProperty.type);
 });

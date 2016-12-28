@@ -30,7 +30,8 @@ export default class StateType {
 		this._elementType = stateSpec ?stateSpec._elementType :null;
 		this._implementationClass = stateSpec ?stateSpec._implementationClass :null;
 		this._initialState = stateSpec ?stateSpec._initialState :undefined;
-		this._properties = stateSpec ?stateSpec._properties :{ };
+		this._managedType = stateSpec ?stateSpec._managedType :undefined;
+		this._properties = stateSpec ?stateSpec._properties :{};
 		this._shadowClass = stateSpec ?stateSpec._shadowClass :null;
 
 		// readonly is different than other instance variables as readonly state cascades down
@@ -170,6 +171,12 @@ export default class StateType {
 		return this;
 	}
 
+	elementType(type) {
+		this._elementType = type;
+
+		return this;
+	}
+
 	/*
 		Returns a PropertyFactoryShader that will create property instances as configured by this StateType.
 	*/
@@ -179,6 +186,10 @@ export default class StateType {
 		this._setupShader(shader);
 
 		return shader;
+	}
+
+	getManagedType() {
+		return this._managedType;
 	}
 
 	getTypeName() {
@@ -226,7 +237,13 @@ export default class StateType {
 	}
 
 	isComplex() {
-		return Object.keys(this._properties).length || this._managedPropertyType || this._elementType;
+		return Object.keys(this._properties).length || this._managedType || this._elementType;
+	}
+
+	managedType(type) {
+		this._managedType = type;
+
+		return this;
 	}
 
 	properties(propTypes) {
@@ -238,12 +255,6 @@ export default class StateType {
 		for (let name in propTypes) {
 			this.addProperty(name, propTypes[name]);
 		}
-
-		return this;
-	}
-
-	setElementType(type) {
-		this._elementType = type;
 
 		return this;
 	}
@@ -281,20 +292,6 @@ export default class StateType {
 			let eltType = this._elementType;
 
 			shader.setElementType(eltType);
-			// if (eltType.isComplex && eltType.isComplex()) {
-			// 	shader.setElementType(eltType);
-			// } else if (eltType.PropertyClass) {
-			// 	shader.setElementClass(eltType.PropertyClass, eltType.defaults, eltType.autoShadow, eltType.readonly);
-			// } else {
-			// 	shader.setElementClass(eltType);
-			// }
-// 		} else if (this._managedPropertyType) {
-// 			// will call the setElementType() method after property created - will need to add
-// 			// functionality to the factory shader
-
-// // ADD setManagedPropertyType() TO FACTORY - requires changes to Collection first
-
-// 			shader.setManagedPropertyType(this._managedPropertyType);
 		} else {
 			let eltType;
 

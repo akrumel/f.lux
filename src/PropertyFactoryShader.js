@@ -14,8 +14,8 @@ export default class PropertyFactoryShader {
 		Creates a factory that will create a shader for instantiating shadow properties for a property type.
 
 		Parameters:
-			PropertyClass - the Property subclass's class
-			parent - the parent Property instance (not ShadowImpl subclass)
+			stateType - StateType instance describing the property
+			parent - the parent Property instance
 	*/
 	constructor(stateType, parent) {
 		this.stateType = stateType;
@@ -25,14 +25,6 @@ export default class PropertyFactoryShader {
 	setElementType(stateType) {
 		// ignoring since assuming set in StateType._setupShader() and also contained in the stateType var
 		this.elementType = stateType;
-	}
-
-	addPropertyClass(name, PropertyClass, stateType=PropertyClass.stateSpec) {
-		if (!this.propertyShaderDefn) {
-			this.propertyShaderDefn = { };
-		}
-
-		this.propertyShaderDefn[name] = { PropertyClass, stateType: stateType };
 	}
 
 	addProperty(name, stateType) {
@@ -59,6 +51,8 @@ export default class PropertyFactoryShader {
 		// set the proprety's parent property
 		property.setParent(this.parent);
 
+		this._configureShader(shader);
+
 		return shader.shadowProperty(time, name, parentState, parentImpl);
 	}
 
@@ -66,6 +60,22 @@ export default class PropertyFactoryShader {
 		const PropertyClass = this.stateType._PropertyClass;
 
 		return PropertyClass.constructor.shouldAutomount && PropertyClass.constructor.shouldAutomount();
+	}
+
+	_configureShader(shader) {
+		const propertyShaderDefn = this.propertyShaderDefn;
+
+		if (!propertyShaderDefn) { return }
+
+		const keys = Object.keys(propertyShaderDefn);
+		var key, type;
+
+		for (let i=0, len=keys.length; i<len; i++) {
+			key = keys[i];
+			type = propertyShaderDefn[key];
+
+			shader.addProperty(key, type);
+		}
 	}
 }
 

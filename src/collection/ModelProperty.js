@@ -1,15 +1,21 @@
 
-import KeyedProperty from "../KeyedProperty";
+import ObjectProperty from "../ObjectProperty";
 import PrimitiveProperty from "../PrimitiveProperty";
 import shadow from "../decorators/shadow";
 import shadowBound from "../decorators/shadowBound";
+import StateType from "../StateType";
 
 import ModelAccess from "./ModelAccess";
 
 
-export default class ModelProperty extends KeyedProperty {
-	constructor(modelDefn, autoShadow=true, readonly=false) {
-		super(modelDefn, true);
+/*
+	Todo:
+		* define shadow class and remove decorators
+*/
+
+export default class ModelProperty extends ObjectProperty {
+	constructor(stateType=ModelProperty.type) {
+		super(stateType);
 	}
 
 	/*
@@ -200,3 +206,10 @@ export default class ModelProperty extends KeyedProperty {
 		}
 	}
 }
+
+
+StateType.defineType(ModelProperty, spec => {
+		spec.initialState({})
+			.typeName("ModelProperty")
+	});
+

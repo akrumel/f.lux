@@ -3,9 +3,10 @@ import URI from "urijs";
 import { getOptions, extendOptions } from "./fetchOptions";
 import RestQueryBuilder from "./RestQueryBuilder";
 
-import KeyedProperty from "../KeyedProperty";
+import ObjectProperty from "../ObjectProperty";
 import PrimitiveProperty from "../PrimitiveProperty";
 import shadow from "../decorators/shadow";
+import StateType from "../StateType";
 import Store from "../Store";
 
 import appDebug, { CollectionRestEndpointPropertyKey as DebugKey } from "../debug";
@@ -14,17 +15,18 @@ const debug = appDebug(DebugKey);
 /*
 
 */
-export default class RestEndpointProperty extends KeyedProperty {
-	constructor(initialState) {
-		super(initialState, false, true);
+export default class RestEndpointProperty extends ObjectProperty {
+	constructor(stateType=RestEndpointProperty.type) {
+		super(stateType);
 
-		this.addPropertyClass("url", PrimitiveProperty);
+		this._keyed.addPropertyType("url", PrimitiveProperty.type);
 	}
 
 	static createFor(url) {
-		url = url.endsWith("/") ?url :`${url}/`;
+		const type = RestEndpointProperty.type
+			.initialState({ url: url.endsWith("/") ?url :`${url}/` })
 
-		return new RestEndpointProperty({ url: url });
+		return new RestEndpointProperty(type);
 	}
 
 	static getGlobalOptions() {
@@ -47,7 +49,7 @@ export default class RestEndpointProperty extends KeyedProperty {
 
 	@shadow
 	isConnected() {
-		return !!this._().url;
+		return !!this.id;
 	}
 
 	@shadow
@@ -57,7 +59,7 @@ export default class RestEndpointProperty extends KeyedProperty {
 
 	@shadow
 	doCreate(shadowModel, model) {
-		const url = this._().url;
+		const url = this.id;
 		const options = getOptions("POST", {
 				body: JSON.stringify(model),
 				headers: {
@@ -77,7 +79,7 @@ export default class RestEndpointProperty extends KeyedProperty {
 
 	@shadow
 	doDelete(id, options={}) {
-		const uri = URI(`${id}`).absoluteTo(this._().url);
+		const uri = URI(`${id}`).absoluteTo(this.id);
 
 		return fetch(uri.toString(), getOptions("DELETE", options))
 			.then( response => {
@@ -92,7 +94,7 @@ export default class RestEndpointProperty extends KeyedProperty {
 	@shadow
 	doFetch(filter) {
 		const startTime = Date.now();
-		const url = filter ?filter.applyFilter(this._().url) :this._().url;
+		const url = filter ?filter.applyFilter(this.id) :this.id;
 
 		debug( d => d(`doFetch() - path=${ this.$().dotPath() }, url=${url}`) );
 
@@ -122,7 +124,7 @@ export default class RestEndpointProperty extends KeyedProperty {
 
 	@shadow
 	doFind(id) {
-		const uri = URI(`${id}`).absoluteTo(this._().url);
+		const uri = URI(`${id}`).absoluteTo(this.id);
 
 		return fetch(uri.toString(), getOptions("GET"))
 			.then( response => {
@@ -136,13 +138,14 @@ export default class RestEndpointProperty extends KeyedProperty {
 
 	@shadow
 	doUpdate(id, shadowModel, changedProps) {
-		const uri = URI(`${id}`).absoluteTo(this._().url);
+		const uri = URI(`${id}`).absoluteTo(this.id);
 		const options = {
 				headers: {
 					'Content-Type': 'application/json'
 				},
 				body: JSON.stringify(changedProps),
 			};
+
 		return fetch(uri.toString(), getOptions("PUT", options))
 			.then( response => {
 					if (!response.ok) {
@@ -167,3 +170,11 @@ function rejectOnError(response, url) {
 
 	return Store.reject(error);
 }
+
+
+StateType.defineType(RestEndpointProperty, spec => {
+		spec.autoshadowOff
+			.initialState({})
+			.readonly;
+	});
+

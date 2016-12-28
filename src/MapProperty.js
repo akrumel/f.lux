@@ -9,7 +9,7 @@ import StateType from "./StateType";
 	the ObjectProperty methods for implementation.
 */
 export default class MapProperty extends ObjectProperty {
-	constructor(stateType) {
+	constructor(stateType=MapProperty.type) {
 		super(stateType);
 
 		this.setShadowClass(MapShadow)

@@ -32,6 +32,7 @@ export const AllKey = 'f.lux:*';
 export const CollectionAllKey = 'f.lux:collection:*';
 export const CollectionPropertyKey = 'f.lux:collection:property';
 export const CollectionRestEndpointPropertyKey = 'f.lux:collection:restEnpointProperty';
+export const CollectionPojoEndpointPropertyKey = 'f.lux:collection:pojoEnpointProperty';
 
 export const ShadowImplKey = 'f.lux:shadowImpl';
 export const StoreKey = 'f.lux:store';
