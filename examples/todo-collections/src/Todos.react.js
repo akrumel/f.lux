@@ -2,6 +2,7 @@ import pluralize from "pluralize";
 import React, { Component } from "react";
 
 import AddTodo from "./AddTodo.react";
+import TodoItem from "./TodoItem.react";
 
 
 export default class Todos extends Component {
@@ -49,22 +50,29 @@ export default class Todos extends Component {
 	}
 
 	render() {
-		const { todos } = this.props.store._;
+		const { store, todos } = this.props.store._;
+		const remainingText = `${ todos.incompleteSize } ${ pluralize("item", todos.incompleteSize ) } remaining`;
 
 		return <div className="todoContainer">
 				<h1>
-					Todos <small>{ todos.size } { pluralize("item", todos.size) }</small>
+					F.lux Collection Todos <small>{ remainingText }</small>
 				</h1>
 
 				<AddTodo todos={ todos } />
 
-				<ul>
-					{
-						todos.map( t => {
-								return <li key={t.$().pid()}>{ `${t.desc} created ${ t.momentCreated().from() } - new=${t.$().isNew()}`}</li>
-							})
-					}
-				</ul>
+				{ this.renderTodos() }
 			</div>
+	}
+
+	renderTodos() {
+		const { store, todos } = this.props.store._;
+
+		if (todos.size) {
+			return todos
+				.sortBy([ 'completed', t => -t.momentCreated().valueOf() ])
+				.map( t => <TodoItem key={ t.$().pid() } store={ store } todo={ t } /> );
+		} else {
+			return <p className="noItems">What do you want to do today?</p>
+		}
 	}
 };

@@ -15,6 +15,10 @@ import {
 
 
 const TodoCollectionShadow = {
+	get incompleteSize() {
+		return this.reduce( (acc, t) => !t.completed ?acc+1 :acc, 0)
+	},
+
 	addTodo(desc) {
 		return this.create({ desc, created: moment().toISOString() })
 	}
