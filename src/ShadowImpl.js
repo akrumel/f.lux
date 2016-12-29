@@ -486,18 +486,10 @@ export default class ShadowImpl {
 
 		// Invoke property life-cycle method that starting an update
 		prev ?property.onPropertyWillUpdate() :property.onPropertyWillShadow();
-//		property.isActive() ?property.onPropertyWillUpdate() :property.onPropertyWillShadow();
 
 		if (this.isRoot()) {
 			this._setupShadow(prev);
-			// let shadow = this._createShadow();
-			// this.defineChildProperties();
 
-			// // freeze shadows in dev mode to provide check not assigning to non-shadowed property
-			// // this can have performance penalties so skip in production mode
-			// if (process.env.NODE_ENV !== 'production') {
-			// 	!Object.isFrozen(shadow) && Object.freeze(shadow);
-			// }
 		} else {
 			this[_defineProperty](prev, !!prev);
 		}
@@ -515,14 +507,6 @@ export default class ShadowImpl {
 	*/
 	shadow() {
 		if (!this.isMapped()) { throw new Error(`Property implementation not mapped: ${this.dotPath()}`) }
-
-		// if (!this[_shadow]) {
-		// 	const ShadowClass = this[_property].shadowClass();
-
-		// 	this[_shadow] = new ShadowClass(this);
-
-		// 	extendProperty(this[_property], this, this[_shadow]);
-		// }
 
 		return this[_shadow];
 	}
