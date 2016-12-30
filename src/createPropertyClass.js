@@ -49,7 +49,7 @@ export default function createPropertyClass(
 
 	// create the property subclass
 	class CustomProperty extends PropertyClass {
-		constructor(stateType=CustomProperty.stateSpec) {
+		constructor(stateType) {
 			super(stateType);
 
 			this.setShadowClass(ShadowClass);

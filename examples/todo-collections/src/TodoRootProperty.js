@@ -46,10 +46,6 @@ import TodoCollection from "./TodoCollection";
 			variables are used in multiple ways during system setup and shadowing.
 */
 export default class TodoRootProperty extends ObjectProperty {
-	constructor() {
-		super(TodoRootProperty.type);
-	}
-
 	/*
 		Property life-cycle method called when property being initially shadowed. Analygous to
 		React's properptyWillMount(). We use this as an opportunity to set the endpoint which

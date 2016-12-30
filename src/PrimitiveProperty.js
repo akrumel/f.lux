@@ -8,8 +8,7 @@ import StateType from "./StateType";
 
 
 export default class PrimitiveProperty extends Property {
-	constructor(stateType=PrimitiveProperty.type) {
-//	constructor(initialState, autoShadow=true, readonly=false) {
+	constructor(stateType) {
 		super(stateType);
 	}
 

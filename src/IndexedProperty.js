@@ -10,7 +10,7 @@ import StateType from "./StateType";
 const _propertyShader = Symbol('propertyClass');
 
 export default class IndexedProperty extends Property {
-	constructor(stateType=IndexedProperty.type) {
+	constructor(stateType) {
 		super(stateType);
 
 		this.setImplementationClass(IndexedShadowImpl);

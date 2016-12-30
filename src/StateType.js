@@ -4,9 +4,6 @@ import defaults from "lodash.defaults";
 import isArray from "lodash.isarray";
 import isPlainObject from "lodash.isplainobject";
 
-import PropertyFactoryShader from "./PropertyFactoryShader";
-import Property from "./Property";
-import Shader from "./Shader";
 import Shadow from "./Shadow";
 import ShadowImpl from "./ShadowImpl";
 
@@ -87,6 +84,21 @@ export default class StateType {
 						return stateType;
 					}
 			});
+	}
+
+	static from(prop) {
+		const ctor = prop.constructor;
+
+		/*
+			Get the prototype of prop. two cases
+				1) prop is Property instance - proto will be its prototype
+				2) prop is actually a prototype - proto will then be the parent prototype
+		*/
+		const proto = Object.getPrototypeOf(prop);
+
+		return ctor.stateSpec ||
+			ctor.type ||
+			StateType.from(ctor === proto.constructor ?Object.getPrototypeOf(proto) :proto);
 	}
 
 	static implementationClassForProperty(property, defaultClass=ShadowImpl) {
@@ -181,6 +193,7 @@ export default class StateType {
 		Returns a PropertyFactoryShader that will create property instances as configured by this StateType.
 	*/
 	factory(parentProperty) {
+		const PropertyFactoryShader = require("./PropertyFactoryShader").default;
 		const shader = new PropertyFactoryShader(this, parentProperty);
 
 		this._setupShader(shader);
@@ -260,6 +273,7 @@ export default class StateType {
 	}
 
 	shader(property) {
+		const Shader = require("./Shader").default;
 		const shader = new Shader(property);
 
 		this._setupShader(shader);
@@ -308,6 +322,7 @@ export default class StateType {
 function isKeyedPrototype(obj) {
 	const KeyedProperty = require("./KeyedProperty").default;
 	const ObjectProperty = require("./ObjectProperty").default;
+	const Property = require("./Property").default;
 
 	return KeyedProperty === obj || KeyedProperty.isPrototypeOf(obj) || ObjectProperty === obj || ObjectProperty.isPrototypeOf(obj) ||
 		(Property.isPrototypeOf(obj) && obj.supportsKeyedChildProperties && obj.supportsKeyedChildProperties());

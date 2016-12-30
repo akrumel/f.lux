@@ -11,7 +11,7 @@ import StateType from "./StateType";
 	ObjectShadowImpl. The default shadow class is Shadow.
 */
 export default class ObjectProperty extends Property {
-	constructor(stateType=ObjectProperty.type) {
+	constructor(stateType) {
 		super(stateType);
 
 		this._keyed = new KeyedApi(this);

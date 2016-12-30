@@ -1,3 +1,4 @@
+import { isSomething } from "akutils";
 import invariant from "invariant";
 
 import AutoShader from "./AutoShader";
@@ -5,7 +6,6 @@ import noParentStateErrorMsg from "./noParentStateErrorMsg";
 import PropertyFactoryShader from "./PropertyFactoryShader";
 import shadowProperty from "./shadowProperty";
 
-import { isSomething } from "akutils";
 
 
 const readonlyAutoShader = new AutoShader(true);

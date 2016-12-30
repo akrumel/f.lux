@@ -1,6 +1,8 @@
 import has from "lodash.has";
 
+
 const _impl = Symbol('impl');
+
 
 export default class Access {
 	constructor(impl) {

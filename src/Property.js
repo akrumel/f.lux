@@ -6,8 +6,7 @@ import Access from "./Access";
 import Shader from "./Shader";
 import Shadow from "./Shadow";
 import ShadowImpl from "./ShadowImpl";
-
-import { isObject } from "akutils";
+import StateType from "./StateType";
 
 const _autoShadow = Symbol('autoShadow');
 const _checkpoint = Symbol('checkpoint');
@@ -91,12 +90,11 @@ export default class Property {
 		var proto = Object.getPrototypeOf(this);
 		var stateSpec = proto.constructor.stateSpec;
 
-		// Default state type comes from property class stateSpec
-		stateType = stateType || stateSpec;
+		stateType = stateType || StateType.from(this);
 
+		this[_pid] = nextPid++;
 		this[_autoShadow] = stateType._autoShadow;
 		this[_initialState] = stateType.computeInitialState();
-		this[_pid] = nextPid++;
 		this[_readonly] = stateType._readonly;
 		this[_stateType] = stateType
 	}
@@ -447,8 +445,6 @@ export default class Property {
 	}
 
 	implementationClass() {
-		const StateType = require("./StateType").default;
-
 		return StateType.implementationClassForProperty(this, this[_ImplementationClass]);
 	}
 
@@ -492,8 +488,6 @@ export default class Property {
 		Returns - Shadow class
 	*/
 	shadowClass() {
-		const StateType = require("./StateType").default;
-
 		return this[_stateType].shadowClassForProperty(this[_ShadowClass]);
 	}
 
@@ -522,7 +516,6 @@ export default class Property {
 			parameter
 	*/
 	getInitialState(state) {
-		const StateType = require("./StateType").default;
 		const initialState = state === undefined ?this[_initialState] :state;
 
 		return this[_stateType].initialStateWithDefaults(initialState);

@@ -5,7 +5,7 @@ import StateType from "./StateType";
 
 
 export default class ArrayProperty extends IndexedProperty {
-	constructor(stateType=ArrayProperty.type) {
+	constructor(stateType) {
 		super(stateType);
 
 		this.setShadowClass(ArrayShadow);

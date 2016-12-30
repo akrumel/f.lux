@@ -99,7 +99,7 @@ import { DEFAULTS_OPTION, MERGE_OPTION, NONE_OPTION, REPLACE_OPTION, REPLACE_ALL
 		* _id2cid and _models to ObjectProperty to remove overhead
 */
 export default class CollectionProperty extends ObjectProperty {
-	constructor(stateType=CollectionProperty.type) {
+	constructor(stateType) {
 		super(stateType);
 
 		this.setShadowClass(CollectionShadow);
