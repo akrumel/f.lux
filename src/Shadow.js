@@ -32,7 +32,7 @@ export default class Shadow {
 	}
 
 	toJSON() {
-		return this.__().state();
+		return this[_impl].state();
 	}
 }
 

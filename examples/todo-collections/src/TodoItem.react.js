@@ -19,6 +19,9 @@ export default class TodoItem extends Component {
 	handleDestroy() {
 		const { todo } = this.props;
 
+		// Use the accessor, $(), to destroy the object in the collection and at endpoint
+		// Note: this method available on all todo subproperties as well when they are
+		//     complex (arrays or objects)
 		todo.$().destroy()
 			.catch( error => alert(`Unable to destroy todo.\n\n${todo.desc}`))
 	}
@@ -26,6 +29,8 @@ export default class TodoItem extends Component {
 	handleDescChange(event) {
 		const { store, todo } = this.props;
 
+		// set the <input> value on the todo 'desc' shadow property. This will create an update
+		// action to set the new value. Remember, 'todo' is an instance of TodoShadow.
 		todo.desc = event.target.value;
 
 		// Synchronously update the state otherwise react/dom will push cursor to the end if inserting text.

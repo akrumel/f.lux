@@ -29,6 +29,11 @@ import TodoItem from "./TodoItem.react";
 
 	The f.lux-react module has collection higher order components to remove the boiler plate from your
 	code when working with collections.
+
+	This sample demonstrates some basic CollectionProperty APIs and techniques and how to integrate it
+	with a React UI. It cuts corners on error handling, dynamic enpoint changes based on user actions,
+	and addquately dealing with network delays. Shortcuts taken to more clearly highlight working with
+	collections and not on writing robust network applications (a different demo).
 */
 export default class Todos extends Component {
 	constructor(props) {
@@ -40,7 +45,11 @@ export default class Todos extends Component {
 		// bind onStateChange callback so can use it to register/unregister
 		this.onStateChangeCallback = this.onStateChange.bind(this);
 
+		// register for store change notificiations
 		store.subscribe(this.onStateChangeCallback);
+
+		// retrieve the todo items from the endpoint. See TodoRootProperty for how this was setup.
+		// likely not connected yet so will be a noop
 		this.fetchTodos();
 	}
 
@@ -51,7 +60,9 @@ export default class Todos extends Component {
 		const { store } = this.props;
 		const { todos } = store._;
 
-		if (todos.isConnected()) {
+		// fetch will work only if connected to an endpoint. Additionally, no need to check
+		// if collection in the process of retrieving or already fetched collection models
+		if (todos.isConnected() && !todos.synced && !todos.fetching) {
 			todos.fetch()
 				.catch( error => alert(`Unabled to retrieve todos\n\n${error}`));
 		}
@@ -67,13 +78,12 @@ export default class Todos extends Component {
 		Store subscribe callback for each time state changes.
 	*/
 	onStateChange() {
-		const { store } = this.props;
-		const { todos } = store._;
+		// a bit busy way to do it but collection is guarded. a normal app would use a HOC
+		// and work with props in componentWillReceiveProps() to decide when to fetch. keeping
+		// it simple here
+		this.fetchTodos();
 
-		if (!todos.synced && !todos.fetching) {
-			this.fetchTodos();
-		}
-
+		// brute force update entire UI on store change to keep demo app simple
 		this.forceUpdate();
 	}
 
@@ -94,7 +104,7 @@ export default class Todos extends Component {
 
 	/*
 		This function would normally be implemented as a component but keeping it simple to make logic
-		easier to follow as the point is workign with collections.
+		easier to follow as the point is working with collections.
 	*/
 	renderTodos() {
 		const { store, todos } = this.props.store._;

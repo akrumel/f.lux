@@ -210,6 +210,7 @@ export default class ModelProperty extends ObjectProperty {
 
 StateType.defineType(ModelProperty, spec => {
 		spec.initialState({})
+			.readonlyOff
 			.typeName("ModelProperty")
 	});
 

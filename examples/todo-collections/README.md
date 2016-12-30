@@ -1,27 +1,8 @@
-A simple, standalone f.lux data component example. The app store has a state with two object properties:
+A simple, standalong f.lux CollectionProperty example. A CollectionProperty provides built-in support for working with remote data. Collections are generic and perform data operations through an endpoint which could be a RESTful api, graphql, or a local data source. In this app, we use the PojoEndpointProperty to perform data operations against a local object. This makes getting the app up and running super easy and reliable.
 
-* root - the store's root property shadowed by AppRootProperty. The property is created using only
-	the StateTypes for the child properties - super simple.
-* counter - shadowed by CounterProperty. This state property maintains the counter value and whether
-	the counter is currently running. This property demonstrates how to tie into the Property
-	life-cycle and maintain transient state using instance variables.
-* log - shadowed by CounterLogProperty. This state maintains a list of log entries describing when the
-	counter was started, stopped, and reset. The log property demonstrates how to use a shadow literal
-	to createa property, removing the need for subclassing a Property or Shadow class.
+Each file is heavily commented to provide context and interesting CollectionProperty related features and techiques. I encourage you to run the app and then explore the files. The store contains a root state that contains a single property containing the todo items stored in a TodoCollection. Each todo is represented using the TodoProperty type.
 
-Two data components provide the shadow models for the store's state:
-
-* CounterProperty - monotomically increments a counter value every second when running. The data
-	component exposes three methods: start(), stop(), and reset(). Each method logs an action
-	entry to the state.log property.
-* CounterLogProperty - implements a log using an array. Exposes a single method that
-	appends an entry to the log array:
-
-	> `add(action, time)`
-
-
-The react UI is passed the 'store' property that references the single application store. It renders the
-counter, buttons for each counter property method, and prints the log.
+The react UI is passed the 'store' property that references the single application store.
 
 
 * * *
@@ -30,9 +11,12 @@ counter, buttons for each counter property method, and prints the log.
 The project consists of the following files:
 
 * main.js - the javascript entry point file. It creates the property model, creates the store, and renders the UI.
-* Counter.js - the react UI
-* CounterProperty.js - the counter data componet.
-* CounterLogProperty.js - implements a log using an array called 'actions'.
+* AddTodo.react.js - component for adding a new todo item
+* TodoCollection.js - specialized CollectionProperty for handling todos
+* TodoItem.react.js - component for display a single todo item
+* TodoProperty.js - specialized ObjectProperty for representing a todo item stored in the collection
+* TodoRootProperty.js - the root property for the store. You may find its use of the f.lux property life-cycle interesting.
+* Todos.react.js - the main UI component
 
 
 * * *
@@ -58,7 +42,15 @@ Setup instructions:
 	2. Point browser to: `http://localhost:8080/`
 
 
+Note: this app accesses css resources through CDN based resources. So if you are running without a network connection the
+styling will be bad.
+
 * * *
 
 
+The following libraries greatly sped the demo creation:
 
+* (Font Awesome)[http://fontawesome.io/]
+* (Moment)[http://momentjs.com/]
+* (Picnic CSS)[http://picnicss.com/]
+* (Pluralize)[https://github.com/blakeembrey/pluralize]

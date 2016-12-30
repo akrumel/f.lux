@@ -1,27 +1,34 @@
 import React, { Component } from "react";
 
 
+/*
+	Component for adding a TodoProperty to the collection.
+
+	Noteworthy:
+		* New TodoProperty instances added using a specialized TodoCollection method called
+			addTodo(string) that takes a description, creates an object with appriopriate
+			defaults and calls the CollectionProperty.create(model).
+*/
 export default class AddTodo extends Component {
 	addTodo() {
 		const { todos } = this.props;
 		const { todoInput } = this;
 		const desc = todoInput.value;
 
+		// description must be non-empty
 		if (!desc.trim()) {
 			return alert("Please enter a todo description");
 		}
 
+		// add todo using the TodoCollection.addTodo() function
 		todos.addTodo(desc)
 			.then( () => {
-					// clear spinning
-
+					// clear the input on successful addition
 					todoInput.value = "";
 				})
 			.catch( error => {
 					console.log(error.stack || error)
-					// clear spinning
-
-					alert(`Error adding todo.\n\n${error}`)
+					alert(`Error adding todo.\n\n${error}`);
 				})
 	}
 

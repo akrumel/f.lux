@@ -1,5 +1,6 @@
 const _impl = Symbol('impl');
 
+
 export default class PrimitiveShadow {
 	constructor(impl) {
 		this[_impl] = impl;
