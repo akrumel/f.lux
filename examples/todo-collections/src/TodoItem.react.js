@@ -2,6 +2,19 @@ import classnames from "classnames";
 import React, { Component } from "react";
 
 
+/*
+	Component for a single TodoProperty.
+
+	Noteworthy features:
+		* handleDestroy() - Uses the shadow accessor ('$()') to destroy the todo property. All shadow
+			properties have an accessor and properties contained in a collection have a superset of
+			capabilities, including isDirty(), isNew(), remove(), save().
+		* handleDescChange() - demonstrates updating a property value using assignment
+			'todo.desc = event.target.value;' (this will trigger a store update) and using
+			'store.updateNow()' to synchronously perform state updates. Updates normally happen on the
+			next javascript tick. This technique is usually used in network callbacks but is handy here
+			to prevent cursor jumping.
+*/
 export default class TodoItem extends Component {
 	handleDestroy() {
 		const { todo } = this.props;
@@ -10,7 +23,7 @@ export default class TodoItem extends Component {
 			.catch( error => alert(`Unable to destroy todo.\n\n${todo.desc}`))
 	}
 
-	updateDesc(event) {
+	handleDescChange(event) {
 		const { store, todo } = this.props;
 
 		todo.desc = event.target.value;
@@ -27,22 +40,23 @@ export default class TodoItem extends Component {
 
 	render() {
 		const { todo } = this.props;
+		const { completed, desc } = todo;
 		const descClasses = classnames("todoItem-desc", {
-			"todoItem-descCompleted": todo.completed
-		});
+				"todoItem-descCompleted": completed
+			});
 		const completedClasses = classnames("todoItem-completed fa", {
-			"fa-check-square-o todoItem-completedChecked": todo.completed,
-			"fa-square-o": !todo.completed,
-		})
+				"fa-check-square-o todoItem-completedChecked": todo.completed,
+				"fa-square-o": !completed,
+			});
 
 		return <div className="todoItem">
-				<i className={ completedClasses } onClick={ () => todo.completed = !todo.completed } />
+				<i className={ completedClasses } onClick={ () => todo.completed = !completed } />
 
 				<input
 					type="text"
 					className={ descClasses }
-					onChange={ event => this.updateDesc(event) }
-					value={ todo.desc }
+					onChange={ event => this.handleDescChange(event) }
+					value={ desc }
 				/>
 
 				<i className="todoItem-delete fa fa-times" onClick={ () => this.handleDestroy() }/>
