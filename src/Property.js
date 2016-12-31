@@ -87,9 +87,6 @@ function isPropertyPrototype(obj) {
 */
 export default class Property {
 	constructor(stateType) {
-		var proto = Object.getPrototypeOf(this);
-		var stateSpec = proto.constructor.stateSpec;
-
 		stateType = stateType || StateType.from(this);
 
 		this[_pid] = nextPid++;

@@ -179,7 +179,7 @@ export default class Shader {
 	}
 
 	/*
-		Creates the virtual state (shadow) for a state property.
+		Creates the proxy (shadow) for a state property.
 	*/
 	shadowProperty(time, name, parentState, parentImpl) {
 		const property = this[_property];

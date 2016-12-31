@@ -109,24 +109,28 @@ export default class Store {
 		return this._updateTime;
 	}
 
+	/*
+		Change the store's state. This will trigger totally replace the current state and trigger
+		a reshadowing. The root Property instance will be reused.
+	*/
 	changeState(state, newRoot=false, time=tick()) {
 		this._updateTime = time;
 
 		// all pending callbacks are obsolete now
 		this.clearCallbacks();
 
-		// Have each property invoke will shadow/update lifecycle methods
+		// invoke will shadow/update lifecycle methods
 		if (this._rootImpl && this._state) {
 			this._rootImpl.willShadow(newRoot);
 		}
 
-		// initialize state
+		// proxy/shadow the state
 		this._rootImpl = this._root.shader(state).shadowProperty(time, "/", state);
 
 		// get the final state after merging any property initial states
 		this._state = this._rootImpl.state();
 
-		// Have each property invoke did shadow/update lifecycle methods
+		// invoke did shadow/update lifecycle methods
 		this._rootImpl.didShadow(time, newRoot);
 
 		this._notifySubscribers();
@@ -170,16 +174,6 @@ export default class Store {
 
 			this._setupTransients();
 			this.changeState(state, root !== currRoot);
-		}
-	}
-
-	_setupTransients() {
-		const root = this._root;
-		const rootShader = root.shader();
-		const keyedApi = root._keyed ?root._keyed :root;
-
-		if (this._useTransients && !rootShader.has(_transients)) {
-			keyedApi.addProperty(_transients, new Transients());
 		}
 	}
 
@@ -255,7 +249,7 @@ export default class Store {
 
 
 	//******************************************************************************************************************
-	//  Dispatcher related methods
+	//  Store state update related methods
 	//******************************************************************************************************************
 
 	dispatchUpdate(action) {
@@ -278,10 +272,10 @@ export default class Store {
 		_setTimeout( () => this._exec() )
 	}
 
-	update(action) {
-		invariant(action, "Store.update() requires a callback function");
+	update(callback) {
+		invariant(callback, "Store.update() requires a callback function");
 
-		action();
+		callback();
 
 		this._exec();
 	}
@@ -433,6 +427,7 @@ export default class Store {
 			}
 		}
 	}
+
 	_exec() {
 		const updateAction = this._updateAction;
 		const waitFor = this._waitFor;
@@ -513,8 +508,18 @@ export default class Store {
 	_onError(msg, error) {
 		debug( d => d(`Store error: ${msg}`, error) );
 
-	debugger
+debugger
 		this.onError(msg, error);
+	}
+
+	_setupTransients() {
+		const root = this._root;
+		const rootShader = root.shader();
+		const keyedApi = root._keyed ?root._keyed :root;
+
+		if (this._useTransients && !rootShader.has(_transients)) {
+			keyedApi.addProperty(_transients, new Transients());
+		}
 	}
 
 	_sweepTransients() {

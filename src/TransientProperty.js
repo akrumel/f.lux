@@ -1,6 +1,5 @@
 import { assert } from "akutils";
 
-import createShadowClass from "./createShadowClass";
 import ObjectProperty from "./ObjectProperty";
 import PrimitiveProperty from "./PrimitiveProperty";
 import Shadow from "./Shadow";
@@ -128,14 +127,14 @@ export default class TransientProperty extends ObjectProperty {
 	}
 }
 
-TransientProperty.stateSpec = new StateType(TransientProperty)
-	.initialState({})
-	.properties({
-			[_id]: PrimitiveProperty.type,
-		})
-	.autoshadowOff
-	.readonly
-	.typeName("TransientProperty");
 
-
+StateType.defineType(TransientProperty, spec => {
+	spec.initialState({})
+		.properties({
+				[_id]: PrimitiveProperty.type,
+			})
+		.autoshadowOff
+		.readonly
+		.typeName("TransientProperty");
+});
 

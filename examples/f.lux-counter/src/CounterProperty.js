@@ -175,24 +175,16 @@ export default class CounterProperty extends ObjectProperty {
 
 
 /*
-	Set the stateSpec on the class. This defines the initial state and marks the property as readonly.
+	Set the 'type' on the class. This defines the initial state and marks the property as readonly.
 
 	Autoshadowing is enabled by default so f.lux will automatically shadow the 'count' and 'isRunning'
 	properties from the initial state using primitive property types.
 */
-CounterProperty.stateSpec = StateType.create(CounterProperty)
-	.initialState({ count: 0, isRunning: false })
-	.readonly
-	.typeName("CounterProperty");
+StateType.defineType(CounterProperty, spec => {
+	spec.initialState({ count: 0, isRunning: false })
+		.readonly
+		.typeName("CounterProperty");
+});
 
-StateType.defineType(CounterProperty);
-
-
-// this directive has the same affect as the '.initialState({...})' directive above
-// this form is handy when autoshadow is disabled or want to be very explicit
-	// .properties({
-	//      count: PrimitiveProperty.type.initialState(0),
-	//      isRunning: PrimitiveProperty.type.initialState(false)
-	// })
 
 

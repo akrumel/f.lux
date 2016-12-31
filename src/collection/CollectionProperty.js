@@ -149,9 +149,9 @@ export default class CollectionProperty extends ObjectProperty {
 		Parameters (all are optional):
 			shadowType: one of a pojo or class. This parameter defines the new property
 				shadow. If pojo specified, each property and function is mapped onto a Shadow subclass.
-			stateSpec: a StateType instance defining the Property
 			specCallback: a callback function that will be passed the StateType spec for additional
 				customization, such as setting autoshadow, initial state, or readonly.
+			initialState: the initial state for the new property. (default is {})
 	*/
 	static createClass(shadowType={}, specCallback, initialState={}) {
 		return createPropertyClass(shadowType, initialState, specCallback, CollectionProperty, CollectionShadow);

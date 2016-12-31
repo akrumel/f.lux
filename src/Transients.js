@@ -70,6 +70,7 @@ export class TransientsShadow extends Shadow {
 	[Symbol.iterator]() { return this.entries() }
 }
 
+
 export default class TransientsProperty extends ObjectProperty {
 	constructor(id, property) {
 		super();
@@ -79,9 +80,11 @@ export default class TransientsProperty extends ObjectProperty {
 }
 
 
-TransientsProperty.stateSpec = new StateType(TransientsProperty)
-	.initialState({})
-	.autoshadowOff
-	.readonly
-	.typeName("TransientsProperty");
+StateType.defineType(TransientsProperty, spec => {
+	spec.initialState({})
+		.autoshadowOff
+		.readonly
+		.typeName("TransientsProperty");
+});
+
 

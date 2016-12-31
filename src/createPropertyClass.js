@@ -56,17 +56,16 @@ export default function createPropertyClass(
 		}
 	}
 
-	// assign state spec if present to new Property subclass
-	CustomProperty.stateSpec = new StateType(CustomProperty);
-	StateType.defineType(CustomProperty);
+	// create the type class variable
+	StateType.defineType(CustomProperty, spec => {
+			if (initialState !== undefined) {
+				spec.initialState(initialState);
+			}
 
-	if (initialState !== undefined) {
-		CustomProperty.stateSpec.initialState(initialState);
-	}
-
-	if (specCallback) {
-		specCallback(CustomProperty.stateSpec, CustomProperty);
-	}
+			if (specCallback) {
+				specCallback(spec, CustomProperty);
+			}
+		});
 
 	return CustomProperty;
 }
