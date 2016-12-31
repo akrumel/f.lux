@@ -63,29 +63,23 @@ import ShadowImpl from "./ShadowImpl";
 	static function.
 */
 export default class StateType {
-	constructor(PropertyClass) {
-		var stateType;
+	constructor() {
+		assert( a => a.not(arguments.length, "StateType constructor takes no arguments") );
 
-		// check if call from StateType.defineType()
-		if (PropertyClass !== StateType) {
-			this._PropertyClass = PropertyClass;
-
-			// setup default values
-			stateType = PropertyClass.__typeSpec__ || PropertyClass.type;
-		}
-
-		this._autoshadow = stateType ?stateType._autoshadow :true;
-		this._defaults = stateType ?stateType._defaults :undefined;
-		this._elementType = stateType ?stateType._elementType :null;
-		this._implementationClass = stateType ?stateType._implementationClass :null;
-		this._initialState = stateType ?stateType._initialState :undefined;
-		this._managedType = stateType ?stateType._managedType :null;
-		this._properties = stateType ?stateType._properties :{};
-		this._shadowClass = stateType ?stateType._shadowClass :null;
+		this._PropertyClass = undefined
+		this._autoshadow = true;
+		this._defaults = undefined;
+		this._elementType = null;
+		this._implementationClass = null;
+		this._initialState = undefined;
+		this._managedType = null;
+		this._properties = {};
+		this._shadowClass = null;
+		this._typeName = null;
 
 		// readonly is different than other instance variables as readonly state cascades down
 		// to properties where not explicitly set to true or false
-		this._readonly = stateType && stateType._readonly;
+		this._readonly = undefined;
 	}
 
 	/*
@@ -122,20 +116,23 @@ export default class StateType {
 
 		if (PropertyClass.hasOwnProperty("type")) { return }
 
+		/*
+			Create the basis for the returned 'type'. The StateType constructor calls type in the default
+			setting process which will cause an infinite loop so we create the immutable base case before
+			defining the 'type' property on the class.
+		*/
+		const type = new StateType();
+
+		type.propertyClass(PropertyClass);
+
+		if (typeCallback) {
+			typeCallback(type);
+		}
+
 		Object.defineProperty(PropertyClass, "type", {
-				get: () => {
-						if (!PropertyClass.__typeSpec__) {
-							PropertyClass.__typeSpec__ = new StateType(StateType)
-
-							PropertyClass.__typeSpec__._PropertyClass = PropertyClass;
-
-							if (typeCallback) {
-								typeCallback(PropertyClass.__typeSpec__);
-							}
-						}
-
-						return PropertyClass.__typeSpec__.clone();
-					}
+				get() {
+					return type.clone();
+				}
 			});
 	}
 
@@ -242,6 +239,12 @@ export default class StateType {
 		return this;
 	}
 
+	propertyClass(PropertyClass) {
+		this._PropertyClass = PropertyClass;
+
+		return this;
+	}
+
 	properties(propTypes) {
 		assert( a => {
 				a.is(isKeyedPrototype(this._PropertyClass),
@@ -262,6 +265,7 @@ export default class StateType {
 	}
 
 	typeName(name) {
+		this._typeName = name;
 		this._PropertyClass.__fluxTypeName__ = name;
 
 		return this;
@@ -273,7 +277,22 @@ export default class StateType {
 	//---------------------------------------------------------------------------------------------
 
 	clone() {
-		return Object.assign(Object.create(this), this);
+		const type = new StateType();
+
+		type._PropertyClass = this._PropertyClass;
+
+		type._autoshadow = this._autoshadow;
+		type._defaults = this._defaults;
+		type._elementType = this._elementType;
+		type._implementationClass = this._implementationClass;
+		type._initialState = this._initialState;
+		type._managedType = this._managedType;
+		type._properties = this._properties;
+		type._shadowClass = this._shadowClass;
+		type._readonly = this._readonly;
+		type._typeName = this._typeName;
+
+		return type;
 	}
 
 	computeInitialState() {

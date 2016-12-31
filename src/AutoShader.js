@@ -31,7 +31,7 @@ export default class AutoShader {
 			PropertyClass = require("./PrimitiveProperty").default;
 		}
 
-		const stateType = new StateType(PropertyClass);
+		const stateType = new StateType().propertyClass(PropertyClass);
 
 		if (this.readonly) {
 			stateType.readonly;

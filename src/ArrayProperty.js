@@ -1,6 +1,7 @@
 import createPropertyClass from "./createPropertyClass";
 import ArrayShadow from "./ArrayShadow";
 import IndexedProperty from "./IndexedProperty";
+import MapProperty from "./MapProperty";
 import StateType from "./StateType";
 
 

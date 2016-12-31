@@ -508,7 +508,10 @@ export default class Store {
 	_onError(msg, error) {
 		debug( d => d(`Store error: ${msg}`, error) );
 
-debugger
+		if (process.env.NODE_ENV !== 'production') {
+			console.warn("f.lux Store Error", error.stack || error);
+		}
+
 		this.onError(msg, error);
 	}
 
