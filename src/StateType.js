@@ -117,9 +117,8 @@ export default class StateType {
 		if (PropertyClass.hasOwnProperty("type")) { return }
 
 		/*
-			Create the basis for the returned 'type'. The StateType constructor calls type in the default
-			setting process which will cause an infinite loop so we create the immutable base case before
-			defining the 'type' property on the class.
+			Create the basis for the returned 'type'. The type getter needs to return a copy to permit
+			modifying the shadowing behavior.
 		*/
 		const type = new StateType();
 
@@ -131,6 +130,7 @@ export default class StateType {
 
 		Object.defineProperty(PropertyClass, "type", {
 				get() {
+					// permit modifications with altering the default case
 					return type.clone();
 				}
 			});
