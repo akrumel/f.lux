@@ -277,22 +277,7 @@ export default class StateType {
 	//---------------------------------------------------------------------------------------------
 
 	clone() {
-		const type = new StateType();
-
-		type._PropertyClass = this._PropertyClass;
-
-		type._autoshadow = this._autoshadow;
-		type._defaults = this._defaults;
-		type._elementType = this._elementType;
-		type._implementationClass = this._implementationClass;
-		type._initialState = this._initialState;
-		type._managedType = this._managedType;
-		type._properties = this._properties;
-		type._shadowClass = this._shadowClass;
-		type._readonly = this._readonly;
-		type._typeName = this._typeName;
-
-		return type;
+		return Object.assign(new StateType(), this);
 	}
 
 	computeInitialState() {
