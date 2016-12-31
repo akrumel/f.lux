@@ -6,17 +6,23 @@ import React, { Component } from "react";
 	Component for a single TodoProperty.
 
 	Noteworthy features:
-		* handleDestroy() - Uses the shadow accessor ('$()') to destroy the todo property. All shadow
+		* destroyTodo() - Uses the shadow accessor ('$()') to destroy the todo property. All shadow
 			properties have an accessor and properties contained in a collection have a superset of
 			capabilities, including isDirty(), isNew(), remove(), save().
-		* handleDescChange() - demonstrates updating a property value using assignment
-			'todo.desc = event.target.value;' (this will trigger a store update) and using
-			'store.updateNow()' to synchronously perform state updates. Updates normally happen on the
-			next javascript tick. This technique is usually used in network callbacks but is handy here
-			to prevent cursor jumping.
+		* <input> onChange property - demonstrates updating a property value using assignment:
+
+				todo.desc = event.target.value
+
+			Assignment to a shadow property is implemented using a setter function that triggers an
+			action that will update the store's state and trigger an update notification.
+
+			Another example is shown in handleToggleCompleted().
+		* saveTodo() - Uses the shadow accessor, todo.$(), to save the todo state through to
+			the collection endpoint. The code 'todo.$().save()' invokes the collection to save
+			the model. The save will include any pending updates.
 */
 export default class TodoItem extends Component {
-	handleDestroy() {
+	destroyTodo() {
 		const { todo } = this.props;
 
 		// Use the accessor, $(), to destroy the object in the collection and at endpoint
@@ -26,27 +32,11 @@ export default class TodoItem extends Component {
 			.catch( error => alert(`Unable to destroy todo.\n\n${todo.desc}`))
 	}
 
-	handleDescBlur() {
+	saveTodo() {
 		const { todo } = this.props;
 
-		todo.$().save();
-	}
-
-	handleDescChange(event) {
-		const { store, todo } = this.props;
-
-		// set the <input> value on the todo 'desc' shadow property. This will create an update
-		// action to set the new value. Remember, 'todo' is an instance of TodoShadow.
-		todo.desc = event.target.value;
-
-		// Synchronously update the state otherwise react/dom will push cursor to the end if inserting text.
-		// There is performance overhead since all registered store listeners are notified but this app is
-		// small assuming not too many todos.
-		//
-		// Alternatively, you can track the cursor and manually set in componentDidUpdate() or just use the
-		// f.lux-react FluxInput component which performs cursor fixups (see todo example in f.lux-react
-		// module)
-//		store.updateNow();
+		todo.$().save()
+			.catch( error => alert(`Unable to save todo.\n\n${todo.desc}`))
 	}
 
 	handleToggleCompleted() {
@@ -55,8 +45,7 @@ export default class TodoItem extends Component {
 		// toggle the completed flag
 		todo.completed = !todo.completed;
 
-		// save on each toggle
-		todo.$().save();
+		this.saveTodo();
 	}
 
 	render() {
@@ -76,13 +65,12 @@ export default class TodoItem extends Component {
 				<input
 					type="text"
 					className={ descClasses }
-onChange={ event => todo.desc = event.target.value }
-//					onChange={ event => this.handleDescChange(event) }
-					onBlur={ () => this.handleDescBlur() }
+					onChange={ event => todo.desc = event.target.value }
+					onBlur={ () => this.saveTodo() }
 					defaultValue={ desc }
 				/>
 
-				<i className="todoItem-delete fa fa-times" onClick={ () => this.handleDestroy() }/>
+				<i className="todoItem-delete fa fa-times" onClick={ () => this.destroyTodo() }/>
 			</div>
 	}
 }
