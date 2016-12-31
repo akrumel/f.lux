@@ -28,20 +28,6 @@ export default class MapProperty extends ObjectProperty {
 	static createClass(shadowType={}, specCallback, initialState={}) {
 		return createPropertyClass(shadowType, initialState, specCallback, MapProperty);
 	}
-
-	/*
-		Creates a StateType defining a MapProperty where each property is a particular type.
-
-		Parameters:
-			elementStateType - StateType defining the child properties
-	*/
-	static mapTypeOf(elementStateType) {
-		const type = new StateType(MapProperty);
-
-		type.setElementClass(elementStateType);
-
-		return type;
-	}
 }
 
 

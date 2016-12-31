@@ -64,10 +64,15 @@ import ShadowImpl from "./ShadowImpl";
 */
 export default class StateType {
 	constructor(PropertyClass) {
-		this._PropertyClass = PropertyClass;
+		var stateType;
 
-		// setup default values
-		const stateType = PropertyClass.type;
+		// check if call from StateType.defineType()
+		if (PropertyClass !== StateType) {
+			this._PropertyClass = PropertyClass;
+
+			// setup default values
+			stateType = PropertyClass.__typeSpec__ || PropertyClass.type;
+		}
 
 		this._autoshadow = stateType ?stateType._autoshadow :true;
 		this._defaults = stateType ?stateType._defaults :undefined;
@@ -119,13 +124,17 @@ export default class StateType {
 
 		Object.defineProperty(PropertyClass, "type", {
 				get: () => {
-						const stateType = new StateType(PropertyClass);
+						if (!PropertyClass.__typeSpec__) {
+							PropertyClass.__typeSpec__ = new StateType(StateType)
 
-						if (typeCallback) {
-							typeCallback(stateType);
+							PropertyClass.__typeSpec__._PropertyClass = PropertyClass;
+
+							if (typeCallback) {
+								typeCallback(PropertyClass.__typeSpec__);
+							}
 						}
 
-						return stateType;
+						return PropertyClass.__typeSpec__.clone();
 					}
 			});
 	}
@@ -262,6 +271,10 @@ export default class StateType {
 	//---------------------------------------------------------------------------------------------
 	//  StateType runtime API used during the shadowing process
 	//---------------------------------------------------------------------------------------------
+
+	clone() {
+		return Object.assign(Object.create(this), this);
+	}
 
 	computeInitialState() {
 		const state = cloneDeep(this._initialState);

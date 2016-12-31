@@ -26,6 +26,12 @@ export default class TodoItem extends Component {
 			.catch( error => alert(`Unable to destroy todo.\n\n${todo.desc}`))
 	}
 
+	handleDescBlur() {
+		const { todo } = this.props;
+
+		todo.$().save();
+	}
+
 	handleDescChange(event) {
 		const { store, todo } = this.props;
 
@@ -40,7 +46,17 @@ export default class TodoItem extends Component {
 		// Alternatively, you can track the cursor and manually set in componentDidUpdate() or just use the
 		// f.lux-react FluxInput component which performs cursor fixups (see todo example in f.lux-react
 		// module)
-		store.updateNow();
+//		store.updateNow();
+	}
+
+	handleToggleCompleted() {
+		const { todo } = this.props;
+
+		// toggle the completed flag
+		todo.completed = !todo.completed;
+
+		// save on each toggle
+		todo.$().save();
 	}
 
 	render() {
@@ -55,13 +71,15 @@ export default class TodoItem extends Component {
 			});
 
 		return <div className="todoItem">
-				<i className={ completedClasses } onClick={ () => todo.completed = !completed } />
+				<i className={ completedClasses } onClick={ () => this.handleToggleCompleted() } />
 
 				<input
 					type="text"
 					className={ descClasses }
-					onChange={ event => this.handleDescChange(event) }
-					value={ desc }
+onChange={ event => todo.desc = event.target.value }
+//					onChange={ event => this.handleDescChange(event) }
+					onBlur={ () => this.handleDescBlur() }
+					defaultValue={ desc }
 				/>
 
 				<i className="todoItem-delete fa fa-times" onClick={ () => this.handleDestroy() }/>
