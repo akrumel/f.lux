@@ -36,5 +36,5 @@ export default class ObjectProperty extends Property {
 }
 
 
-StateType.defineType(ObjectProperty, spec => spec.initialState({}) );
+StateType.defineType(ObjectProperty, spec => spec.initialState({}).typeName("ObjectProperty") );
 

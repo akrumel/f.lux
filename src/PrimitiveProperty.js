@@ -54,4 +54,4 @@ export default class PrimitiveProperty extends Property {
 }
 
 
-StateType.defineType(PrimitiveProperty);
+StateType.defineType(PrimitiveProperty, spec => spec.typeName("PrimitiveProperty") );

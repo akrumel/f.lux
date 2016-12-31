@@ -124,5 +124,6 @@ export default class IndexedProperty extends Property {
 
 StateType.defineType(IndexedProperty, spec => {
 	spec.initialState([])
-		.elementType(MapProperty.type);
+		.elementType(MapProperty.type)
+		.typeName("IndexedProperty");
 });

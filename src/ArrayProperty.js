@@ -30,5 +30,6 @@ export default class ArrayProperty extends IndexedProperty {
 
 StateType.defineType(ArrayProperty, spec => {
 	spec.initialState([])
-		.elementType(MapProperty.type);
+		.elementType(MapProperty.type)
+		.typeName("ArrayProperty");
 });

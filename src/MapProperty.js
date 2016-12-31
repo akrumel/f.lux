@@ -31,4 +31,4 @@ export default class MapProperty extends ObjectProperty {
 }
 
 
-StateType.defineType(MapProperty, spec => spec.initialState({}) );
+StateType.defineType(MapProperty, spec => spec.initialState({}).typeName("MapProperty") );
