@@ -31,7 +31,7 @@ import ShadowImpl from "./ShadowImpl";
 	Shadowing behavior may be customized by setting the following StateType properties:
 		* autoshadow - shadow implicit state properties using default f.lux property types (default=true)
 		* defaults - specifies default values for an object's initial state. A default value is applied
-			only if there is an initial state value. (default=undefined)
+			when the initial state for this property is 'undefined'. (default=undefined)
 		* element type - StateType used for shadowing each sub-property, such as elements in an array or
 			properties of an object. (default=null)
 		* implementation class - ShadowImpl subclass used to back shadow state property (default=null)
@@ -46,18 +46,54 @@ import ShadowImpl from "./ShadowImpl";
 			classes set a default so only need to set when want to customize parent type default. (default=null)
 
 	Methods/properties used when setting up a StateType description:
-		* autoshadow
-		* autoshadowOff
-		* readonly
-		* readonlyOff
-		* addProperty(name, type)
-		* default(state)
-		* elementType(type)
-		* implementationClass(cls)
-		* initialState(state)
-		* managedType(type)
-		* properties(propTypes)
-		* typeName(name)
+		* addProperty(name, type) - add a single property type where 'name' is the sub-property name and
+			value is a StateType. Consider using StateType.properties() instead.
+		* autoshadow - turn on auto-shadowing (default)
+		* autoshadowOff - turn off auto-shadowing
+		* default(state) - used with ObjectProperty and MapProperty sub-properties to set defaults for
+			values. The default value is only applied if the initial state for this property is
+			undefined.
+
+			Example usage:
+				stateType.properties({
+					name: PrimitiveProperty.type.default(null),
+				})
+
+		* elementType(type) - StateType for shadowing each sub-property. Regularly used with IndexedProperty
+			and ArrayProperty. Used with ObjectProperty and MapProperty when each value is the same type such
+			as in a dictionary.
+		* implementationClass(cls) - sets the ShadowImpl subclass to be used for backing the shadow state
+			(should not be needed)
+		* initialState(state) - value suitable for the property type: boolean, array, object,...
+		* managedType(type) - StateType for shading managed properties (used with CollectionProperty)
+
+			Example usage:
+				stateType.managedType(TodoProperty.type)
+
+		* properties(propTypes) - add multiple properties using a literal object with property-name/StateType
+			key/value pairs
+
+			Example usage:
+				stateType.properties({
+						completed: PrimitiveProperty.type.initialState(false),
+						created: PrimitiveProperty.type.readonly,
+						desc: PrimitiveProperty.type,
+						id: PrimitiveProperty.type.readonly,
+					})
+
+		* readonly - set property to readonly
+		* readonlyOff - set property to read/write (default unless parent property has set readonly to true
+			since readonly property cascades through the state tree)
+		* typeName(name) - set a label for the type. Useful for debugging situations where shadowing is
+			not acting as expected.
+
+			Example usage:
+
+				const root = store.shadow;
+				const rootProperty = root.$$();
+
+				console.log(rootProperty.typeName())
+				console.log(rootProperty.stateType().getTypeName())
 
 	Instance of this class are rarely directly created and instead are created using the defineType()
 	static function.
