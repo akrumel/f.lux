@@ -87,7 +87,7 @@ export default class StateType {
 		newly created StateType easier to read.
 	*/
 	static create(PropertyClass) {
-		return new StateType(PropertyClass);
+		return new StateType().propertyClass(PropertyClass);
 	}
 
 	/*
