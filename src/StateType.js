@@ -28,7 +28,8 @@ import ShadowImpl from "./ShadowImpl";
 				.typeName("TodoRootProperty");          // useful for certain diagnostic situations
 		});
 
-	Shadowing behavior may be customized by setting the following StateType properties:
+	Shadowing behavior may be customized by setting the following StateType values:
+
 		* autoshadow - shadow implicit state properties using default f.lux property types (default=true)
 		* defaults - specifies default values for an object's initial state. A default value is applied
 			when the initial state for this property is 'undefined'. (default=undefined)
@@ -46,6 +47,7 @@ import ShadowImpl from "./ShadowImpl";
 			classes set a default so only need to set when want to customize parent type default. (default=null)
 
 	Methods/properties used when setting up a StateType description:
+
 		* addProperty(name, type) - add a single property type where 'name' is the sub-property name and
 			value is a StateType. Consider using StateType.properties() instead.
 		* autoshadow - turn on auto-shadowing (default)
