@@ -26,7 +26,7 @@ import {
 */
 export const CounterLog = {
 	addAction(action, time) {
-		this.$$().push({
+		this.$$()._indexed.push({
 				action: action,
 				time: time
 			});
