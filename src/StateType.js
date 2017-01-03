@@ -371,12 +371,11 @@ export default class StateType {
 	}
 
 	initialStateWithDefaults(state) {
-		var arrayType = isArray(state);
+		const arrayType = isArray(state);
+		const propSpecs = this._properties;
 		var defaultState, propType, propState;
 
 		if (!isPlainObject(state) && !arrayType) { return state; }
-
-		var propSpecs = this._properties;
 
 		if (isPlainObject(this._defaults)) {
 			state = defaults( (arrayType ?[] :{}), state, this._defaults);
