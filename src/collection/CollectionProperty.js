@@ -139,7 +139,7 @@ export default class CollectionProperty extends ObjectProperty {
 		modelsShader.setElementType(ModelProperty.type);
 
 		// set the type for each retrieved model by explicitly adding a type to the models element shader
-		const managedType = stateType.getManagedType() || MapProperty.type;
+		const managedType = this.stateType().getManagedType() || MapProperty.type;
 		modelsShader.elementShader.addProperty("data", managedType);
 	}
 
@@ -155,6 +155,20 @@ export default class CollectionProperty extends ObjectProperty {
 	*/
 	static createClass(shadowType={}, specCallback, initialState={}) {
 		return createPropertyClass(shadowType, initialState, specCallback, CollectionProperty, CollectionShadow);
+	}
+
+	static defineType(PropClass, ShadowType, specCallback, initialState={}) {
+		return StateType.defineType(PropClass, spec => {
+			spec.initialState(initialState);
+
+			if (ShadowType) {
+				spec.shadowClass(ShadowType)
+			}
+
+			if (specCallback) {
+				specCallback(spec);
+			}
+		})
 	}
 
 	onPropertyDidUpdate() {

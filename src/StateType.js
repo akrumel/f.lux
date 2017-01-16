@@ -139,7 +139,7 @@ export default class StateType {
 
 			...
 
-			ObjectProperty.createClass({}, null, spec => {
+			ObjectProperty.createClass({}, spec => {
 				spec.properties({
 						counter: CounterProperty.type.readonly,
 					})
