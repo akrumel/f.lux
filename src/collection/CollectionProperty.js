@@ -399,6 +399,7 @@ export default class CollectionProperty extends ObjectProperty {
 	}
 
 	setEndpoint(endPoint) {
+		this.setFetching(false);
 		this.resetPaging();
 		this.removeAllModels();
 		this._keyed.addProperty(_endpoint, endPoint);
@@ -507,6 +508,7 @@ export default class CollectionProperty extends ObjectProperty {
 
 		try {
 			const model = this._getModel(id);
+			const epId = this.endpointId;
 
 			if (!model) {
 				return Store.resolve(id);
@@ -524,12 +526,12 @@ export default class CollectionProperty extends ObjectProperty {
 						return this.endpoint.doDelete(model.id)
 					})
 				.then( () => {
+						// ensure endpoint did not change
+						if (epId !== this.endpointId) { return id }
+
 						this._()[_models].delete(model.cid);
 						this._()[_id2cid].delete(model.id);
 
-						return id;
-					})
-				.then( id => {
 						this.store().waitFor( () => this.emit(DeletedEvent, this._(), this) )
 
 						return id;
@@ -548,11 +550,11 @@ export default class CollectionProperty extends ObjectProperty {
 		}
 	}
 
-	// No reset option - always resets
 	fetch(filter=null, mergeOp=REPLACE_OPTION, replaceAll=true, callback) {
 		if (!this.isConnected()) { return Store.reject(`Collection ${this.slashPath()} is not connected`) }
 
 		const syncOp = !filter;
+		const epId = this.endpointId;
 
 		if (replaceAll) {
 			this.setFetching(true);
@@ -560,9 +562,19 @@ export default class CollectionProperty extends ObjectProperty {
 
 		try {
 			return this._on(FetchOp)
-				.then( () => this.endpoint.doFetch(filter) )
+				.then( () => {
+						// ensure endpoint did not change
+						if (epId !== this.endpointId) { return null }
+
+						return this.endpoint.doFetch(filter);
+					})
 				.then( models => {
 						try {
+							// bail on fetch if endpoint changed
+							if (epId !== this.endpointId) {
+								return models;
+							}
+
 							if (replaceAll) {
 								this.setFetching(false);
 							}
@@ -582,12 +594,16 @@ export default class CollectionProperty extends ObjectProperty {
 						}
 					})
 				.then( models => {
-						this.store().waitFor( () => this.emit(FetchedEvent, this._(), this) )
+						// fire event if endpoint same
+						if (epId === this.endpointId) {
+							this.store().waitFor( () => this.emit(FetchedEvent, this._(), this) );
+						}
 
 						return models;
 					})
 				.catch( error => {
-						if (replaceAll) {
+						// change fetching flag only if same endpoint
+						if (replaceAll && epId === this.endpointId) {
 							this.setFetching(false);
 						}
 
@@ -615,21 +631,26 @@ export default class CollectionProperty extends ObjectProperty {
 
 		try {
 			const model = this._getModel(id);
+			const epId = this.endpointId;
 
 			if (model) {
 				return Store.resolve(model.data);
 			} else {
 				return this._on(FindOp)
-					.then( () => this.endpoint.doFind(id) )
+					.then( () => {
+							// ensure endpoint did not change
+							if (epId !== this.endpointId) { return null }
+
+							return this.endpoint.doFind(id) ;
+						})
 					.then( state => {
+							// ensure endpoint did not change
+							if (epId !== this.endpointId) { return null }
+
 							this.addModel(state, NONE_OPTION);
+							this.store().waitFor( () => this.emit(FoundEvent, this._(), this) );
 
 							return this.getModel(id);
-						})
-					.then( model => {
-							this.store().waitFor( () => this.emit(FoundEvent, this._(), this) )
-
-							return model;
 						})
 					.catch( error => this.onError(error, `Find model ${id}`) );
 			}
@@ -766,9 +787,13 @@ export default class CollectionProperty extends ObjectProperty {
 		try {
 			const shadowState = shadow.__().nextState();
 			const opName = this.isNewModel(shadow) ?CreateOp :UpdateOp;
+			const epId = this.endpointId;
 
 			return this._on(opName)
 				.then( () => {
+						// ensure endpoint did not change
+						if (epId !== this.endpointId) { return null }
+
 						model.waiting = true;
 
 						if (this.isNewModel(shadow)) {
@@ -778,6 +803,9 @@ export default class CollectionProperty extends ObjectProperty {
 						}
 					})
 				.then( savedState => {
+						// ensure endpoint did not change
+						if (epId !== this.endpointId) { return model }
+
 						const currModel = model.$().latest();
 						const savedId = this.extractId(savedState);
 
@@ -810,12 +838,17 @@ export default class CollectionProperty extends ObjectProperty {
 
 						currModel.$$().clearDirty();
 
-						return this.store().waitThen().then( () => currModel.$().latest() );
+						return this.store()
+								.waitThen()
+								.then( () => currModel.$().latest() );
 					})
 				.then( model => {
-						this.store().waitFor( () => this.emit(SavedEvent, this._(), this) )
+						// ensure endpoint did not change
+						if (epId === this.endpointId) {
+							this.store().setTimeout( () => this.emit(SavedEvent, this._(), this) );
+						}
 
-						return model.data;
+						return model && model.data;
 					})
 				.catch( error => {
 						let currModel = model.$().latest();

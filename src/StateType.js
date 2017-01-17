@@ -241,7 +241,8 @@ export default class StateType {
 	addProperty(name, type) {
 		assert( a => {
 				a.is(isKeyedPrototype(this._PropertyClass),
-					"PropertyClass must be a subclass of KeyedProperty")
+					"PropertyClass must be a subclass of KeyedProperty");
+				a.is(type instanceof StateType, "'type' parameter not StateType")
 			});
 
 		this._properties[name] = type;
@@ -254,6 +255,8 @@ export default class StateType {
 	}
 
 	elementType(type) {
+		assert( a => a.is(type instanceof StateType, "'type' parameter not StateType") );
+
 		this._elementType = type;
 
 		return this;
@@ -272,6 +275,8 @@ export default class StateType {
 	}
 
 	managedType(type) {
+		assert( a => a.is(type instanceof StateType, "'type' parameter not StateType") );
+
 		this._managedType = type;
 
 		return this;

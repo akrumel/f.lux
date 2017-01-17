@@ -1,12 +1,12 @@
-
-import noParentStateErrorMsg from "./noParentStateErrorMsg";
-import Property from "./Property";
-import Shader from "./Shader";
-
 import {
 	assert,
 	isSomething,
 } from "akutils";
+
+import noParentStateErrorMsg from "./noParentStateErrorMsg";
+import Property from "./Property";
+import Shader from "./Shader";
+import StateType from "./StateType";
 
 
 export default class PropertyFactoryShader {
@@ -28,6 +28,8 @@ export default class PropertyFactoryShader {
 	}
 
 	addProperty(name, stateType) {
+		assert( a => a.is(stateType instanceof StateType, `stateType not a StateType`) );
+
 		if (!this.propertyShaderDefn) {
 			this.propertyShaderDefn = { };
 		}
