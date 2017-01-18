@@ -96,6 +96,11 @@ export default class Property {
 		this[_stateType] = stateType
 	}
 
+
+	//------------------------------------------------------------------------------------------------------
+	// Experimental checkpoint API
+	//------------------------------------------------------------------------------------------------------
+
 	checkpoint() {
 		assert( a => a.not(this[_checkpoint], `Checkpoint already set: ${ this.dotPath() }`) );
 
@@ -325,9 +330,6 @@ export default class Property {
 		const isActive = this.isActive();
 
 		this[_impl] = impl;
-
-// Functionality moved to store so didShadow() call occurs after store is setup with new state
-//		isActive ?this.onPropertyDidUpdate() :this.onPropertyDidShadow();
 	}
 
 	/*
