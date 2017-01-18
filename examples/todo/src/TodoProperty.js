@@ -8,9 +8,9 @@ import {
 
 
 /*
-	The TodoCollection uses the TodoProperty to present each contained model.
+	The TodoListProperty uses the TodoProperty to present each contained model.
 
-	Unlike defining the TodosCollectionShadow, the TodoShadow is defined using the subclassing technique.
+	Unlike defining the TodoListProperty, the TodoShadow is defined using the subclassing technique.
 	The technique is based solely on your preference. Personally, I prefer subclassing because the shadow
 	type is easier to determine when working in the javascript console.
 
@@ -41,8 +41,6 @@ class TodoShadow extends Shadow {
 	your own f.lux types.
 
 	Each todo item will have four shadow properties with specific characteristics:
-		 * id - the object id assigned by the server/endpoint on save. The shadowing description
-		 	marks this as readonly which prevents bad app code from changing it (would be bad)
 		 * completed - boolean flag indicating the todo is, well, completed. Notice it is provided
 		 	an initial value of 'false'.
 		 * created - another readonly value delaring the todo creation time. See the

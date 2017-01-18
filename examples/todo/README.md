@@ -1,4 +1,4 @@
-A simple, standalong f.lux example implementing the class todo list.
+A simple, standalone f.lux example implementing the class todo list.
 
 Each file is heavily commented to provide context and interesting CollectionProperty related features and techiques. I encourage you to run the app and then explore the files. The store contains a root state that contains a single property containing the todo items stored in a TodoList. Each todo is represented using the TodoProperty type.
 
@@ -12,7 +12,7 @@ The project consists of the following files:
 
 * main.js - the javascript entry point file. It creates the property model, creates the store, and renders the UI.
 * AddTodo.react.js - component for adding a new todo item
-* TodoList.js - specialized IndexedProperty for handling todos
+* TodoListProperty.js - specialized ArrayProperty for handling todos (acts like an Array)
 * TodoItem.react.js - component for display a single todo item
 * TodoProperty.js - specialized ObjectProperty for representing a todo item stored in the collection
 * TodoRootProperty.js - the root property for the store. You may find its use of the f.lux property life-cycle interesting.

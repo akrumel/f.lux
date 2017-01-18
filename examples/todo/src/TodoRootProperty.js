@@ -10,8 +10,8 @@ import TodoListProperty from "./TodoListProperty";
 
 /*
 	Root property for the store. In this simple app the root has a single sub-property of type
-	TodoCollection. In this case, the TodoCollection could serve as the root proper but this is
-	an unusually simple case so struturing it under the root for the sake of normalality.
+	TodoListProperty. In this case, the TodoListProperty could serve as the root proper but this is
+	an unusually simple case so struturing it under the root for illustrative purposes.
 
 	This is the one property in this app that implements an actual Property subclass. The ObjectProperty
 	provides a base class that models a simple literal object. It's default shadow type does not
@@ -37,9 +37,10 @@ import TodoListProperty from "./TodoListProperty";
 			TodoCollection.js file).
 		* collection.setEndpoint(ep) - attaches a data source to the collection for performing
 			CRUD operations
-		* StateType.defineType() - StateType is the basis for the shadowing process. The defineType()
-			static function assigns a 'type' static variable to a property class. The 'type' class
-			variables are used in multiple ways during system setup and shadowing.
+		* ObjectProperty.defineType() - StateType is the basis for the shadowing process.
+			The ObjectProperty.defineType() static function assigns a 'type' static variable
+			to a property class and is a StateType instance. The 'type' class variables are used in
+			multiple ways during system setup and shadowing.
 */
 export default class TodoRootProperty extends ObjectProperty {
 	/*
@@ -51,10 +52,13 @@ export default class TodoRootProperty extends ObjectProperty {
 	propertyDidShadow() {
 		// get the shadow representing the TodoCollection subproperty
 		const { todos } = this._();
-		const indexedApi = todos.$$()._indexed;
 
-		indexedApi.push({ desc: "Dream big!", completed: true, created: moment().subtract(1, 'days').toISOString() })
-		indexedApi.push({ desc: "Don't let your dreams be dreams", completed: false, created: moment().toISOString() })
+		/*
+			Using the Array push() method instead of TodoListProperty addTodo() method so can create
+			a mix of completed and incomplete todo items.
+		*/
+		todos.push({ desc: "Dream big!", completed: true, created: moment().subtract(1, 'days').toISOString() });
+		todos.push({ desc: "Don't let your dreams be dreams", completed: false, created: moment().toISOString() });
 	}
 }
 

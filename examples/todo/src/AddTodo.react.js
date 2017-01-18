@@ -2,12 +2,12 @@ import React, { Component } from "react";
 
 
 /*
-	Component for adding a TodoProperty to the collection.
+	Component for adding a TodoProperty to the list.
 
 	Noteworthy:
-		* New TodoProperty instances added using a specialized TodoCollection method called
+		* New TodoProperty instances added using a specialized TodoListProperty method called
 			addTodo(string) that takes a description, creates an object with appriopriate
-			defaults and calls the CollectionProperty.create(model).
+			defaults and appends to the array.
 */
 export default class AddTodo extends Component {
 	addTodo() {
@@ -20,7 +20,7 @@ export default class AddTodo extends Component {
 			return alert("Please enter a todo description");
 		}
 
-		// add todo using the TodoCollection.addTodo() function
+		// add todo using the TodoListProperty.addTodo() action function
 		todos.addTodo(desc)
 	}
 
