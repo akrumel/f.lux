@@ -43,8 +43,6 @@ export default function reshadow(time, parentState, prevImpl, parentImpl) {
 
 		return rootProperty.shader(parentState).shadowProperty(time, name, parentState);
 	} else {
-console.log(`reshadow() - name=${prevImpl.name()}, nextName=${prevImpl.nextName()}`)
-// if (prevImpl.nextName() === 0) debugger
 		return shader.shadowProperty(time, prevImpl.nextName(), parentState, parentImpl);
 	}
 }
