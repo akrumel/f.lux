@@ -5,11 +5,7 @@ import {
 	StateType,
 } from "f.lux";
 
-import {
-	PojoEndpointProperty
-} from "f.lux/lib/collection";
-
-import TodoCollection from "./TodoCollection";
+import TodoListProperty from "./TodoListProperty";
 
 
 /*
@@ -55,19 +51,10 @@ export default class TodoRootProperty extends ObjectProperty {
 	propertyDidShadow() {
 		// get the shadow representing the TodoCollection subproperty
 		const { todos } = this._();
+		const indexedApi = todos.$$()._indexed;
 
-		// setup the collection endpoint using a local object as the data source (good for demos
-		// and testing).
-		const todoEp = new PojoEndpointProperty({
-			1: { id: 1, desc: "Dream big!", completed: true, created: moment().subtract(1, 'days').toISOString() },
-			2: { id: 2, desc: "Don't let your dreams be dreams", completed: false, created: moment().toISOString() }
-		})
-
-		// Collection properties are generic and use endpoints to connect to data sources
-		// using various protocols. Data source in this case is a literal object but is
-		// normally a RestEndpointProperty. I have implemented endpoints for couchbase
-		// and graphql
-		todos.setEndpoint(todoEp);
+		indexedApi.push({ desc: "Dream big!", completed: true, created: moment().subtract(1, 'days').toISOString() })
+		indexedApi.push({ desc: "Don't let your dreams be dreams", completed: false, created: moment().toISOString() })
 	}
 }
 
@@ -82,7 +69,7 @@ export default class TodoRootProperty extends ObjectProperty {
 ObjectProperty.defineType(TodoRootProperty, null, spec => {
 	spec.autoshadowOff                          // do not shadow state values without explicit sub-property definitions
 		.properties({                           // define sub-properties (just one in this case)
-				todos: TodoCollection.type,     // 'todos' is a collection property
+				todos: TodoListProperty.type,   // 'todos' is a collection property
 			})
 		.readonly                               // prevent application code from reassigning the 'todos' collection (paranoia)
 		.typeName("TodoRootProperty");          // useful for certain diagnostic situations

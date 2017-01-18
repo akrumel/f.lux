@@ -191,7 +191,7 @@ export default class IndexedShadowImpl extends ShadowImpl {
 
 			this.removeChildren(idx, 1);
 
-			return { name: `remove(${idx})`, nextState: state }
+			return { name: `remove(${idx})`, nextState: result }
 		});
 
 		// value is no longer being managed so ok to return without cloning
@@ -411,6 +411,8 @@ export default class IndexedShadowImpl extends ShadowImpl {
 		var child;
 
 		if (prevChild) {
+			prevChild.switchName();
+
 			child = reshadow(this.time(), state, prevChild, this);
 		} else {
 			child = elementShader.shadowProperty(this.time(), idx, state, this, this.store());

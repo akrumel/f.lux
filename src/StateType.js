@@ -175,6 +175,30 @@ export default class StateType {
 	}
 
 	/*
+		Factory function for creating a StateType with an appropriately set intial state.
+
+		Parameters:
+			PropClass: Property subclass (required)
+			ShadowClass: Shadow subclass or will pick up default set by parent class
+			specCallback: a callback function that will be passed the StateType spec for additional
+				customization, such as setting autoshadow or readonly. (optional)
+			initialState: the initial state for the new property.
+	*/
+	static defineTypeEx(PropClass, ShadowType, specCallback, initialState) {
+		return StateType.defineType(PropClass, spec => {
+			spec.initialState(initialState);
+
+			if (ShadowType) {
+				spec.shadowClass(ShadowType)
+			}
+
+			if (specCallback) {
+				specCallback(spec);
+			}
+		})
+	}
+
+	/*
 		Walks the prototype chain and returns the first StateType returned by a 'type' class variable.
 
 		Parameters:

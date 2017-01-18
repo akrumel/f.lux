@@ -191,6 +191,7 @@ export default class Shader {
 		const currState = isRoot ?parentState :parentState[name];
 		const state = property.getInitialState(currState);
 
+// if (name === 0) debugger
 		if (!isRoot) {
 			parentState[name] = state;
 		}

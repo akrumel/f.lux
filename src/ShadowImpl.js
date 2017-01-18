@@ -526,6 +526,15 @@ export default class ShadowImpl {
 	}
 
 	/*
+		Transfers the nextName to the name attribute.
+	*/
+	switchName() {
+		if (this[_nextName] !== undefined) {
+			this[_name] = this[_nextName];
+		}
+	}
+
+	/*
 		Gets a compact version of this internal's state. It does NOT provide a JSON representation of the
 		model state. The actual Property.toJSON() method returns the model JSON representation.
 	*/
@@ -790,9 +799,10 @@ export default class ShadowImpl {
 	createCopy(time, newModel, parentImpl) {
 		const property = this[_property];
 		const ImplClass = property.implementationClass();
+		const name = this.nextName();
 		const shader = this.shader(newModel);
 
-		return new ImplClass(time, property, this[_name], newModel, parentImpl, shader, this);
+		return new ImplClass(time, property, name, newModel, parentImpl, shader, this);
 	}
 
 	/*

@@ -1,3 +1,12 @@
+import {
+	assert,
+	isObject,
+	uuid,
+	doneIterator,
+	iteratorFor,
+	iterateOver,
+} from "akutils";
+
 import Emitter from "component-emitter";
 import invariant from "invariant";
 
@@ -7,15 +16,6 @@ import ObjectProperty from "../ObjectProperty";
 import MapProperty from "../MapProperty";
 import PrimitiveProperty from "../PrimitiveProperty";
 import Store from "../Store";
-
-import {
-	assert,
-	isObject,
-	uuid,
-	doneIterator,
-	iteratorFor,
-	iterateOver,
-} from "akutils";
 
 import CollectionShadow from "./CollectionShadow";
 import ModelProperty from "./ModelProperty";
@@ -144,11 +144,12 @@ export default class CollectionProperty extends ObjectProperty {
 	}
 
 	/*
-		Factory function for creating an ObjectProperty subclass suitable for using with new.
+		Factory function for creating an CollectionProperty subclass suitable for using with new.
 
 		Parameters (all are optional):
 			shadowType: one of a pojo or class. This parameter defines the new property
-				shadow. If pojo specified, each property and function is mapped onto a Shadow subclass.
+				shadow. If pojo specified, each property and function is mapped onto a CollectionShadow
+				subclass.
 			specCallback: a callback function that will be passed the StateType spec for additional
 				customization, such as setting autoshadow, initial state, or readonly.
 			initialState: the initial state for the new property. (default is {})
@@ -157,18 +158,20 @@ export default class CollectionProperty extends ObjectProperty {
 		return createPropertyClass(shadowType, initialState, specCallback, CollectionProperty, CollectionShadow);
 	}
 
+	/*
+		Factory function for creating a StateType with an appropriately set intial state.
+
+		Parameters:
+			PropClass: CollectionProperty subclass (required)
+			ShadowClass: Shadow subclass (optional)
+			specCallback: a callback function that will be passed the StateType spec for additional
+				customization, such as setting autoshadow or readonly. (optional)
+			initialState: the initial state for the new property. (default is {})
+	*/
 	static defineType(PropClass, ShadowType, specCallback, initialState={}) {
-		return StateType.defineType(PropClass, spec => {
-			spec.initialState(initialState);
+		assert( a => a.is(CollectionProperty.isPrototypeOf(PropClass), "PropClass must subclass CollectionProperty") );
 
-			if (ShadowType) {
-				spec.shadowClass(ShadowType)
-			}
-
-			if (specCallback) {
-				specCallback(spec);
-			}
-		})
+		return StateType.defineTypeEx(PropClass, ShadowType, specCallback, initialState);
 	}
 
 	onPropertyDidUpdate() {
