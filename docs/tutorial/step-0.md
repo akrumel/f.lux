@@ -1,10 +1,10 @@
 # Step 0 - Boilerplate Review
 
-The code in the `examples/tutorial/step-0` directory contains a React based UI for the Todo application without any functionality.
+The code in the `examples/tutorial/step-0` directory contains a React based UI for the Todo application without any real functionality.
 
 ## Setup
 
-Each step will use the same setup and run instruction as listed in each directories README.md files. Here they are repeated here since we are just getting started:
+Each step will use the same setup and run instruction as listed in each directory's README.md files. Here are the steps:
 
 1. Install webpack globally:
 
@@ -18,7 +18,7 @@ Each step will use the same setup and run instruction as listed in each director
 
 	> webpack
 
-4. Open the public/index.html in a web browser
+4. Open the `public/index.html` in a web browser
 
 5. To run using webpack hot reloader (not React Hot Reloader module)
 	1. Start the webpack dev server: `npm start`
@@ -27,7 +27,7 @@ Each step will use the same setup and run instruction as listed in each director
 
 ## The User Interface
 
-Performing these step will display the starting point application:
+Performing these steps will display the starting point application:
 
 ![Step-0 Screenshot](assets/step-0-screenshot.png)
 
@@ -53,4 +53,4 @@ Implements the `<AddTodo>` component that will create new Todo items after the n
 
 The next step in the tutorial will create an f.lux store and implement adding, editing, and deleting todo items.
 
-[Step 1: Store and basic functionality](step-1.md)
+[Step 1: Create a f.lux store and basic todo item functionality](step-1.md)
