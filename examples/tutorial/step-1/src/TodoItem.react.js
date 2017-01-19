@@ -4,24 +4,15 @@ import React, { Component } from "react";
 
 /*
 	Component for a single TodoProperty.
-
-	Noteworthy features:
-		* removeTodo() - Calls the TodoListProperty removeTodo() action function to remove a Todo
-			shadow property from the list.
-		* <input> onChange property - demonstrates updating a property value using assignment:
-
-				todo.desc = event.target.value
-
-			Assignment to a shadow property is implemented using a setter function that triggers an
-			action that will update the store's state and trigger an update notification.
-
-			Another example is shown in handleToggleCompleted().
 */
 export default class TodoItem extends Component {
 	removeTodo() {
 		const { todo, todos } = this.props;
+		const idx = todos.indexOf(todo);
 
-		todos.removeTodo(todo);
+		if (idx !== -1) {
+			todos.remove(idx);
+		}
 	}
 
 	handleToggleCompleted() {

@@ -49,7 +49,7 @@ export default class IndexedShadow extends Shadow {
 
 		for (let i=0, len=this.length; i<len; i++) {
 			if (callback.call(context, this[i], i, this)) {
-				acc.push(v);
+				acc.push(this[i]);
 			}
 		}
 

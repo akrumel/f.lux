@@ -1,13 +1,9 @@
+import moment from "moment";
 import React, { Component } from "react";
 
 
 /*
 	Component for adding a TodoProperty to the list.
-
-	Noteworthy:
-		* New TodoProperty instances added using a specialized TodoListProperty method called
-			addTodo(string) that takes a description, creates an object with appriopriate
-			defaults and appends to the array.
 */
 export default class AddTodo extends Component {
 	addTodo() {
@@ -15,13 +11,15 @@ export default class AddTodo extends Component {
 		const { todoInput } = this;
 		const desc = todoInput.value;
 
-		// description must be non-empty
-		if (!desc.trim()) {
-			return alert("Please enter a todo description");
+		// Create a new Todo item
+		const todo = {
+			completed: false,
+			desc,
+			created: moment().toISOString()
 		}
 
-		// add todo using the TodoListProperty.addTodo() action function
-		todos.addTodo(desc);
+		// add the Todo item to the array
+		todos.push(todo);
 
 		// clear the input
 		todoInput.value = "";

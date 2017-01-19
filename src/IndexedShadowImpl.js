@@ -191,7 +191,7 @@ export default class IndexedShadowImpl extends ShadowImpl {
 
 			this.removeChildren(idx, 1);
 
-			return { name: `remove(${idx})`, nextState: result }
+			return { name: `remove(${idx})`, nextState: state }
 		});
 
 		// value is no longer being managed so ok to return without cloning

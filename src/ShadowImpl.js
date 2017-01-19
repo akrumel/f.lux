@@ -50,6 +50,15 @@ const _scheduleUpdate = Symbol('scheduleUpdate');
 const _changeRoot = Symbol('changeRoot');
 
 
+/*
+	Todo: reduce memory footprint:
+		1) derive information from property: parent, shader, store
+		2) lazy create cache
+		3) lazy create _changed, _previousUpdates
+		4) lazy create access ok?
+		5) investigate _time and _previousTime really needed
+		6) possible to refactor to get name from property?
+*/
 export default class ShadowImpl {
 	constructor(time, property, name, state, parent, shader, prev) {
 		this[_property] = property;
@@ -531,6 +540,7 @@ export default class ShadowImpl {
 	switchName() {
 		if (this[_nextName] !== undefined) {
 			this[_name] = this[_nextName];
+			delete this[_nextName];
 		}
 	}
 

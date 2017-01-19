@@ -55,7 +55,7 @@ export default class TodoItem extends Component {
 				"todoItem-descCompleted": completed
 			});
 		const completedClasses = classnames("todoItem-completed fa", {
-				"fa-check-square-o todoItem-completedChecked": todo.completed,
+				"fa-check-square-o todoItem-completedChecked": completed,
 				"fa-square-o": !completed,
 			});
 

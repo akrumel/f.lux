@@ -20,6 +20,9 @@ export default class AddTodo extends Component {
 			return alert("Please enter a todo description");
 		}
 
+		// clear the input
+		todoInput.value = "";
+
 		// add todo using the TodoCollection.addTodo() function
 		todos.addTodo(desc)
 			.then( () => {
