@@ -14,30 +14,44 @@ const root = new MapProperty();
 const state = { todos: [] }
 const store = new Store(root, state);
 
-const rootShadow = store._;
+const rootShadow = store._;  // or store.shadow;
 
 console.log("Todos length: ", rootShadow.todos.length);
 ```
+
 
 ## Explanation
 
 ### `const root = new MapProperty();`
 
+Creates a `MapProperty` that will serve as the root `Property` for the shadow state. This means the root shadow state will adher to the [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) api.
+
 
 ### `const state = { todos: [] }`
+
+The store's state will start out as a simple object with an array in the `todos` property.
 
 
 ### `const store = new Store(root, state);`
 
+The `Store` constructor is:
+
+> `constructor(root, state, useTransients=true)`
+
+The `useTransients` default value is fine as this recipe does not depend on that feature. The `root` parameter must be a `Property` subclass instance and the `state` must be an appropriate javascript structure for the `root` type.
+
 
 ### `const rootShadow = store._;`
+
+The store's shadow state is available through the `shadow` or `_` getters. You can then interact with the shadow state to affect update actions and manipulate the actual state.
 
 
 ### `console.log("Todos length: ", rootShadow.todos.length);`
 
+The `todos` shadow state implements the [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array) api so you can assign values to indices and call methods such as map(), push(), pop(), and remove(). There are some restrictions, as outlined in the upcoming Developer's Guide, but will not usually affect the way you write application logic.
 
 
 ---
 
-[Back](README.md)
-[TOC](../README.md)
+[TOC](../README.md) > [Store
+](README.md)
