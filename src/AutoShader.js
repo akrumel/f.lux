@@ -1,5 +1,5 @@
 import invariant from "invariant";
-import { isObject } from "akutils";
+import isPlainObject from "lodash.isplainobject";
 
 import StateType from "./StateType";
 import noParentStateErrorMsg from "./noParentStateErrorMsg";
@@ -25,7 +25,7 @@ export default class AutoShader {
 
 		if (Array.isArray(state)) {
 			PropertyClass = require("./ArrayProperty").default;
-		} else if (isObject(state)) {
+		} else if (isPlainObject(state)) {
 			PropertyClass = require("./MapProperty").default;
 		} else {
 			PropertyClass = require("./PrimitiveProperty").default;

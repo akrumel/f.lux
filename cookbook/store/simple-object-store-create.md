@@ -24,7 +24,7 @@ console.log("Todos length: ", rootShadow.todos.length);
 
 ### `const root = new MapProperty();`
 
-Creates a `MapProperty` that will serve as the root `Property` for the shadow state. This means the root shadow state will adher to the [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) api.
+Creates a `MapProperty` that will serve as the root `Property` for the shadow state. This means the root shadow state will adher to the [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) api. And you can access the root's properties using normal javascript 'dot' syntax as shown in the `console.log()` line.
 
 
 ### `const state = { todos: [] }`
@@ -38,12 +38,14 @@ The `Store` constructor is:
 
 > `constructor(root, state, useTransients=true)`
 
-The `useTransients` default value is fine as this recipe does not depend on that feature. The `root` parameter must be a `Property` subclass instance and the `state` must be an appropriate javascript structure for the `root` type.
+The `root` parameter must be a `Property` subclass instance and the `state` must be an appropriate javascript structure for the `root` type.
+
+The `useTransients` default value is fine as this recipe does not depend on that feature.
 
 
 ### `const rootShadow = store._;`
 
-The store's shadow state is available through the `shadow` or `_` getters. You can then interact with the shadow state to affect update actions and manipulate the actual state.
+The store's shadow state is available through the `shadow` or `_` getters. You can then interact with the shadow state to generate update actions and manipulate the actual state.
 
 
 ### `console.log("Todos length: ", rootShadow.todos.length);`

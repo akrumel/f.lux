@@ -3,12 +3,13 @@ import "babel-polyfill";
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import Todos from "./Todos.react";
+
 import {
 	Store,
 	ObjectProperty
 } from "f.lux";
 
-import Todos from "./Todos.react";
 
 // create the store and starting state
 const root = new ObjectProperty();
