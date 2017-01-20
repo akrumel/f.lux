@@ -30,9 +30,9 @@ const state = { todos: [] }
 const store = new Store(root, state);
 ```
 
-A f.lux based application uses a single store for managing all state. A `Store` instance is created by specifying a root property and the initial state. The property must be a `Property` subclass and the state a JSON compatible type. In this case, an `ObjectProperty` instance is used to shadow, or proxy, the JSON state object. `ObjectProperty` is used to represent javascript literal objects.
+A f.lux based application uses a single store for managing all state. A `Store` instance is created by specifying a root property and the initial state. The property must be a `Property` subclass and the state a JSON compatible value of appropriate type for the root `Property`. In this case, an `ObjectProperty` instance is used to shadow, or proxy, a javascript literal object representing the application state. `ObjectProperty` is used to represent javascript literal objects.
 
-Out of the box, f.lux will 'autoshadow' the state to automatically, recursively map `Property` types onto the state. Autoshadowing performs the following javascript type to f.lux type mapping:
+Out of the box, f.lux will recursively 'autoshadow' the state to automatically map `Property` types onto the application state. Autoshadowing performs the following javascript type to f.lux type mapping:
 
 | Javascript type              | f.lux `Property` subclass | API
 | ---------------------------- | ------------------------- | -------------------------------
@@ -40,7 +40,14 @@ Out of the box, f.lux will 'autoshadow' the state to automatically, recursively 
 | lodash.isPlainObject(type)   | 'MapProperty'             | [Map]
 | all others                   | `PrimitiveProperty`       | exposes the actual value
 
-Drilling down into the initial state: `{ todos: [] }`
+Drilling down into the initial state and adding an initial todo item:
+```js
+{
+	todos: [
+    	{ desc: "Just do it!", completed: false }
+	]
+}
+```
 
 * `todos`: `ArrayProperty`
 * `todos` elements: `MapProperty` since these will be objects with a `desc` and `completed` flag

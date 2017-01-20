@@ -9,6 +9,9 @@ This sections covers differences that could be common practice in application lo
 ### Synchronous side-effects
 
 
+### Unexpected property assignment
+
+
 ## Less common application logic idioms
 
 
