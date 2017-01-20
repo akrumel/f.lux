@@ -10,5 +10,6 @@
 	* [Step 3: Time travel debugger](tutorial/step-3.md)
 	* [Step 4: UI state](tutorial/step-4.md)
 	* [Step 5: f.lux-react](tutorial/step-5.md)
+* [F.lux Restrictions](f.lux-restrictions.md)
 * [Change Log](changeLog/README.md)
 	* [v1.0.0](changeLog/v1.0.0.md)
