@@ -1,7 +1,7 @@
 # f.lux Overview
 
 ## What is f.lux
-f.lux is a data management library inspired by the [React flux architecture](https://facebook.github.io/flux/docs/overview.html) and influenced by [Redux](http://redux.js.org/) and [immutable.js](https://facebook.github.io/immutable-js/). This is third version of the f.lux approach and the first to be published open source. This version is actively used in commercial projects on both web and react-native platforms and really shines when implementing complex "business rule" applications, such as enterprise applications or rules based systems.
+f.lux is a data management library inspired by the [React flux architecture](https://facebook.github.io/flux/docs/overview.html) and influenced by [Redux](http://redux.js.org/) and [immutable.js](https://facebook.github.io/immutable-js/). This is third version of the f.lux approach and the first to be published open source. This version is actively used in commercial projects on both web and react-native platforms and really shines when implementing complex data-rich applications, such as enterprise, form-heavy, and complex business logic applications.
 
 ## High-level feature list
 
@@ -63,8 +63,6 @@ import appDebug, { AppOrientationPropertyKey as DebugKey } from "./debug";
 const debug = appDebug(DebugKey);
 
 
-const _direction = "direction";
-
 export const LandscapeOrientation = "LANDSCAPE";
 export const PortraitOrientation = "PORTRAIT";
 export const UnknownOrientation = "UNKNOWN";
@@ -91,14 +89,14 @@ export default class OrientationProperty extends ObjectProperty {
 		}
 
 		// update the 'direction' property with the new orientation
-		this._keyed.set(_direction, orientation);
+		this._keyed.set("direction", orientation);
 
 		debug(`_onOrientationChange() orientation update: ${orientation}`);
 	}
 }
 ```
 
-The statement `this._keyed.set(_direction, orientation);` is inherited from the `ObjectProperty` class to create a property set action, in this case on the `direction` property. There are other ways of doing this as explained in the upcoming programmer's guide. Also note, this code looks very different from the application logic that interacts with shadow properties. The UI could access the direction property using
+The statement `this._keyed.set("direction", orientation)` demonstrates using the `ObjectProperty` class' method to set/update read-only virtualized properties (code not shown declaring `direction` as readonly). Most of the time, however, you will interact with the shadow model using standard javascript techniques, assignment and functions/methods. The UI could access the `direction` property using
 
 ```
 import { LandscapeOrientation } from "./OrientationProperty";
@@ -117,7 +115,7 @@ if (orientation.direction === LandscapeOrientation) {
 
 ```
 
-The `direction` sub-property would be an ideal candidate for being readonly so the application logic could not change it. The `OrientationProperty` could still change it using the line `this._keyed.set(_direction, orientation);`.
+The `direction` property would be an ideal candidate for being readonly so the application logic could not change it. The `OrientationProperty` could still change it using the line `this._keyed.set("direction", orientation);`. This is easy to accomplish though the mechanism is not shown here and is explored in the [tutorial](../tutorial/README.md).
 
 Implementing properties is one of the few cases where f.lux utilizes inheritance, which feels natural since this is defining a new type. The f.lux approach is to avoid defining Property class hierarchies. A facility is provided for sharing functionality through mixins when the shared code needs to tie into the property life-cycle; a rarely needed but useful capability to have when desired.
 
