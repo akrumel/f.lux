@@ -28,11 +28,8 @@ import TodoItem from "./TodoItem.react";
 	with collections and not on writing robust network applications (a different demo).
 */
 export default class Todos extends Component {
-	constructor(props) {
-		super(props);
-
+	componentWillMount() {
 		const { store } = this.props;
-		const { todos } = store._;
 
 		// bind onStateChange callback so can use it to register/unregister
 		this.onStateChangeCallback = this.onStateChange.bind(this);

@@ -9,11 +9,8 @@ import TodoItem from "./TodoItem.react";
 	The main application UI.
 */
 export default class Todos extends Component {
-	constructor(props) {
-		super(props);
-
+	componentWillMount() {
 		const { store } = this.props;
-		const { todos } = store.shadow;
 
 		// bind onStateChange callback so can use it to register/unregister
 		this.onStateChangeCallback = this.onStateChange.bind(this);
