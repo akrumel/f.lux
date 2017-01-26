@@ -92,7 +92,7 @@ export default class Access {
 	}
 
 	store() {
-		return this[_impl].store();
+		return this.property().store();
 	}
 
 	/*

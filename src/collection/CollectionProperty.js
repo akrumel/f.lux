@@ -174,8 +174,12 @@ export default class CollectionProperty extends ObjectProperty {
 		return StateType.defineTypeEx(PropClass, ShadowType, specCallback, initialState);
 	}
 
+	/*
+		Override the base functionality method, and not designed life-cycle method propertyWillUpdate(), so
+		subclasses can do the normal override without using super.propertyWillUpdate() to preserve functionality.
+	*/
 	onPropertyDidUpdate() {
-		super.onPropertyWillUpdate();
+		super.onPropertyDidUpdate();
 
 		this.emit(ChangeEvent, this._(), this);
 	}

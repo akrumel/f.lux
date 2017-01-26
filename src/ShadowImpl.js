@@ -20,16 +20,22 @@ const debug = appDebug(DebugKey);
 
 // instance variable names
 const _access = Symbol('access');
+// object to store expensive derived values
 const _cache = Symbol('cache');
+// flag indicating property has pending updates. Not safe to rely on this[_futureState] as it could be
+// undefined if that is the next value
 const _changed = Symbol('changed');
 const _date = Symbol('date');
 const _dead = Symbol('dead');
 const _didShadowCalled = Symbol('didShadowCalled');
 const _futureState = Symbol('futureState');
+const _invalid = Symbol('invalid');
 const _name = Symbol('name');
 const _nextName = Symbol('nextName');
 const _path = Symbol('path');
 const _parent = Symbol('parent');
+// flag marks this property as obsolete and thus no longer to effect updates on the
+// next data model
 const _preventUpdates = Symbol('preventUpdates');
 const _previousTime = Symbol('previousTime');
 const _property = Symbol('property');
@@ -37,10 +43,8 @@ const _readonly = Symbol('readonly');
 const _replaced = Symbol('replaced');
 const _root = Symbol('root');
 const _scheduled = Symbol('scheduled');
-const _shader = Symbol('shader');
 const _shadow = Symbol('shadow');
 const _state = Symbol('state');
-const _store = Symbol('store');
 const _time = Symbol('time');
 
 // private method symbols
@@ -52,23 +56,20 @@ const _changeRoot = Symbol('changeRoot');
 
 /*
 	Todo: reduce memory footprint:
-		1) derive information from property: parent, shader, store
-		2) lazy create cache
-		3) lazy create _changed, _previousUpdates
-		4) lazy create access ok?
-		5) investigate _time and _previousTime really needed
-		6) possible to refactor to get name from property?
+		1) investigate _time and _previousTime really needed
+		2) investigate getting access from property (reduce object creation and memory footprint)
 */
 export default class ShadowImpl {
 	constructor(time, property, name, state, parent, shader, prev) {
 		this[_property] = property;
 		this[_name] = name;
 		this[_parent] = parent;
-		this[_shader] = shader;   // access through shader() method
 		this[_state] = state;
-		this[_store] = property.store();
 		this[_time] = time;
-		this[_previousTime] = prev && prev[_time];
+
+		if (prev) {
+			this[_previousTime] = prev[_time];
+		}
 
 // TODO: quick hack till have unit tests and thought out life-cycle design
 		// didShadow() is being called multiple times which is causing a problem with property
@@ -76,28 +77,29 @@ export default class ShadowImpl {
 		this[_didShadowCalled] = false;
 
 		this[_root] = parent ?parent[_root] :this;
-
-		// flag marks this property as obsolete and thus no longer to effect updates on the
-		// next data model
-		this[_preventUpdates] = false;
-
-		// flag indicating property has pending updates. Not safe to rely on this[_futureState] as it could be
-		// undefined if that is the next value
-		this[_changed] = false;
-
-		if (parent && parent[_access].create$ForChild) {
-			// property does not know about this impl yet. So impl.property() will work but property.__() will not
-			this[_access] = parent[_access].create$ForChild(this);
-		} else {
-			this[_access] = property.create$(this);
-		}
-
-		// cache of values to avoid recalculations
-		this[_cache] = {};
 	}
 
 	access() {
+		const parent = this[_parent];
+
+		if (!this[_access]) {
+			if (parent && parent.access().create$ForChild) {
+				// property does not know about this impl yet. So impl.property() will work but property.__() will not
+				this[_access] = parent.access().create$ForChild(this);
+			} else {
+				this[_access] = this[_property].create$(this);
+			}
+		}
+
 		return this[_access];
+	}
+
+	cache() {
+		if (!this[_cache]) {
+			this[_cache] = {};
+		}
+
+		return this[_cache];
 	}
 
 	name() {
@@ -125,35 +127,12 @@ export default class ShadowImpl {
 	}
 
 	store() {
-		return this[_store];
+		return this[_property].store();
 	}
 
 	time() {
 		return this[_time];
 	}
-
-
-	//------------------------------------------------------------------------------------------------------
-	// State lifecycle methods
-	//------------------------------------------------------------------------------------------------------
-
-	// /* subscribe to websockets */
-	// propertyDidShadow() {}
-
-	// /* subscribe to websockets */
-	// propertyDidShadow() {}
-
-	// /* pre reshadow - chance to look at children states so do adapter type stuff */
-	// propertyWillUpdate() { }
-
-	// /* post reshadow - might want to do something */
-	// propertyDidUpdate() {}
-
-	// /* unsubscribe to websockets */
-	// propertyWillUnshadow() {}
-
-	// /* not sure what to do here */
-	// propertyDidUnshadow() {}
 
 
 	//------------------------------------------------------------------------------------------------------
@@ -219,7 +198,7 @@ export default class ShadowImpl {
 		this[_changeRoot](newParent[_root]);
 
 		// clear cache
-		this[_cache] = {};
+		delete this[_cache];
 
 		// setup access through shadows
 		this[_defineProperty]();
@@ -229,7 +208,7 @@ export default class ShadowImpl {
 	}
 
 	didShadow(time, newRoot) {
-		const storeRootImpl = this[_store].rootImpl;
+		const storeRootImpl = this.store().rootImpl;
 
 		if (this[_time] == time && !this[_didShadowCalled] && storeRootImpl === this[_root]) {
 			this[_didShadowCalled] = true;
@@ -269,7 +248,7 @@ export default class ShadowImpl {
 			// Sending to store first ensures:
 			// 1) nextState() returns value from before this udpate
 			// 2) middleware provided chance to make changes to action
-			this[_store].onPreStateUpdate(action, this);
+			this.store().onPreStateUpdate(action, this);
 
 			// replacing the current object prevents further next state changes for sub-properties
 			if (replace) {
@@ -294,7 +273,7 @@ export default class ShadowImpl {
 
 			this.invalidate(null, this);
 
-			this[_store].onPostStateUpdate(action, this);
+			this.store().onPostStateUpdate(action, this);
 			this[_root][_scheduleUpdate]();
 		}
 	}
@@ -304,19 +283,21 @@ export default class ShadowImpl {
 		word 'root' for the path.
 	*/
 	dotPath() {
-		if (!this[_cache].dotPath) {
+		const cache = this.cache();
+
+		if (!cache.dotPath) {
 			const path = this.path();
 
-			this[_cache].dotPath = path.length ?path.join('.') :'root';
+			cache.dotPath = path.length ?path.join('.') :'root';
 		}
 
-		return this[_cache].dotPath;
+		return cache.dotPath;
 	}
 
 	ensureMounted() {
 		if (this.isRoot() || this.__getCalled__) { return }
 
-		result(this[_store].shadow, this.dotPath())
+		result(this.store().shadow, this.dotPath())
 	}
 
 	findByPath(path) {
@@ -331,7 +312,7 @@ export default class ShadowImpl {
 		Gets if an update has occurred directly to this property.
 	*/
 	hasPendingChanges() {
-		return this[_changed];
+		return !!this[_changed];
 	}
 
 	/*
@@ -361,7 +342,7 @@ export default class ShadowImpl {
 		}
 
 		if (this.isValid() && this.isActive()) {
-			this.invalid = true;
+			this[_invalid] = true;
 
 			if (this[_parent]) {
 				this[_parent].invalidate(this, source);
@@ -378,11 +359,11 @@ export default class ShadowImpl {
 		pending updates.
 	*/
 	isValid() {
-		return !this.invalid;
+		return !this[_invalid];
 	}
 
 	latest() {
-		return this[_store].findByPath(this.path());
+		return this.store().findByPath(this.path());
 	}
 
 	/*
@@ -445,13 +426,15 @@ export default class ShadowImpl {
 		Gets an array with the property names/indices from the root to this property.
 	*/
 	path() {
+		const cache = this.cache();
+
 		if (this.isRoot()) {
 			return [];
-		} else if (!this[_cache].path) {
-			this[_cache].path = this[_parent].path().concat(this[_name]);
+		} else if (!cache.path) {
+			cache.path = this[_parent].path().concat(this[_name]);
 		}
 
-		return this[_cache].path;
+		return cache.path;
 	}
 
 	replaced() {
@@ -493,9 +476,6 @@ export default class ShadowImpl {
 	setupPropertyAccess(prev) {
 		const property = this[_property];
 
-		// Invoke property life-cycle method that starting an update
-		prev ?property.onPropertyWillUpdate() :property.onPropertyWillShadow();
-
 		if (this.isRoot()) {
 			this._setupShadow(prev);
 
@@ -525,13 +505,15 @@ export default class ShadowImpl {
 		word 'root' for the path.
 	*/
 	slashPath() {
-		if (!this[_cache].slashPath) {
+		const cache = this.cache();
+
+		if (!cache.slashPath) {
 			const path = this.path();
 
-			this[_cache].slashPath = path.length ?`/${path.join('/')}` :'/';
+			cache.slashPath = path.length ?`/${path.join('/')}` :'/';
 		}
 
-		return this[_cache].slashPath;
+		return cache.slashPath;
 	}
 
 	/*
@@ -656,7 +638,7 @@ export default class ShadowImpl {
 			// short circuit if no changes pending
 			callback(this.shadow());
 		} else {
-			this[_store].waitFor( () => {
+			this.store().waitFor( () => {
 					const latest = this.latest();
 
 					callback(latest && latest.shadow(), latest);
@@ -845,9 +827,7 @@ export default class ShadowImpl {
 
 
 	//------------------------------------------------------------------------------------------------------
-	//	Private functions - should not be called by code outside this file. Usually put outside class
-	//  and call using bind operator (::) but a lot slower and this class needs to be as efficient as
-	//  possible
+	//	Private functions - should not be called by code outside this file.
 	//------------------------------------------------------------------------------------------------------
 
 	/*
@@ -986,7 +966,7 @@ export default class ShadowImpl {
 			// flag never gets cleared
 			this[_scheduled] = true;
 
-			this[_store].dispatchUpdate( time => reshadow(time, this[_futureState], this) );
+			this.store().dispatchUpdate( time => reshadow(time, this[_futureState], this) );
 		}
 	}
 }

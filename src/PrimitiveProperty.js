@@ -10,6 +10,8 @@ import StateType from "./StateType";
 export default class PrimitiveProperty extends Property {
 	constructor(stateType) {
 		super(stateType);
+
+		this.setImplementationClass(PrimitiveShadowImpl);
 	}
 
 	//------------------------------------------------------------------------------------------------------
@@ -37,19 +39,6 @@ export default class PrimitiveProperty extends Property {
 
 	definePropertySetValue(newValue) {
 		this.__().assign(newValue);
-	}
-
-
-	//------------------------------------------------------------------------------------------------------
-	// Property subclasses may want to override success methods
-	//------------------------------------------------------------------------------------------------------
-
-	implementationClass() {
-		return PrimitiveShadowImpl;
-	}
-
-	shadowClass() {
-		return null;
 	}
 }
 

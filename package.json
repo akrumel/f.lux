@@ -1,7 +1,7 @@
 {
   "name": "f.lux",
-  "version": "1.1.0",
-  "description": "Shadow state for javascript applications",
+  "version": "2.0.0",
+  "description": "Flux Data components",
   "author": "Andy Krumel",
   "license": "MIT",
   "repository": {

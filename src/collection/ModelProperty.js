@@ -196,7 +196,7 @@ export default class ModelProperty extends ObjectProperty {
 		return new ModelAccess(impl, this);
 	}
 
-	onChildInvalidated(childProperty) {
+	propertyChildInvalidated(childProperty) {
 		if (childProperty.__().name() == "data" && !this._().dirty) {
 			this._().dirty = true;
 

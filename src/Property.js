@@ -46,42 +46,12 @@ function isPropertyPrototype(obj) {
 			variable will be undefined.
 		propertyDidShadow()
 
-		propertyWillUpdate()
-
+		propertyChildInvalidated(childProperty, sourceProperty)
 		propertyDidUpdate()
 
 		onPropertyWillUnshadow()
 			Invoked just before the shadow property is removed from the shadow state because the state
 			property being shadowed has been removed from the application state.
-
-	Developers of property components will often override one or more of the following methods:
-		getInitialState()
-			Get the initial state to populate for this property.
-		getPropertySpec()
-			Defines the sub properties structure used for creating state shadow.
-		shadow()
-			Generates the shadow property specialization. This will usually consist of methods to be
-			exposed on the shadow property to the app code. The methods and properties of the
-			returned object are mixed in with the state properties. Methods exposed in this way
-			define the API for the state properties and the implementations will often call
-			helper methods in your Property subclass.
-
-	Subclasses must implement the following methods
-		getInitialState()
-			Get the initial state to populate for this property.
-		getPropertySpec()
-			Defines the sub properties structure used for creating state shadow.
-		implementationClass()
-			The PropertyImpl subclass that matches support for this class
-		shaderFor(name, state)
-			Optional method. If present, called before checking getShaderSpec() to allow dynamic shader
-			creation based on state. (Feature not yet implemented)
-		shadow()
-			Generates the shadow property specialization. This will usually consist of methods to be
-			exposed on the shadow property to the app code.
-		shadowClass()
-			Returns the Shadow subclass to instantiate for the shadow. Called by
-			extendProperty() which in turn is called by ShadowImpl::shadow()
 	}
 
 */
@@ -184,6 +154,10 @@ export default class Property {
 		return !this[_parent];
 	}
 
+	name() {
+		return this[_impl] && this[_impl].name();
+	}
+
 	nextState() {
 		return this[_impl] && this[_impl].nextState();
 	}
@@ -224,18 +198,18 @@ export default class Property {
 		this.propertyDidShadow();
 	}
 
-	onPropertyWillUpdate() {
+	onChildInvalidated(childProperty, sourceProperty) {
 		if (this[_mixins]) {
 			let mixins = this[_mixins];
 
 			for (let i=0, mixin; mixin=mixins[i]; i++) {
-				if (mixin.propertyWillUpdate) {
-					mixin.propertyWillUpdate();
+				if (mixin.propertyChildInvalidated) {
+					mixin.ChildInvalidated(childProperty, sourceProperty);
 				}
 			}
 		}
 
-		this.propertyWillUpdate();
+		this.propertyChildInvalidated(childProperty, sourceProperty);
 	}
 
 	onPropertyDidUpdate() {
@@ -522,18 +496,18 @@ export default class Property {
 
 	propertyWillShadow() { /* subscribe to websockets */ }
 	propertyDidShadow() { /* subscribe to websockets */ }
-	propertyWillUpdate() { /* pre reshadow - chance to look at children states so do adapter type stuff */ }
-	propertyDidUpdate() { /* post reshadow - might want to do something */ }
+
+	/*
+		A child property or one of its descendents wil be changing state. Useful hook when a property needs
+		to perform some bookkeepng for child properties. Utilizing this hook provides a chance to make tracking
+		changes in shadow properties before the store updates its state.
+	*/
+	propertyChildInvalidated(childProperty, sourceProperty) { }
+
+	propertyDidUpdate() { /* post reshadow */ }
 	propertyWillUnshadow() { /* unsubscribe to websockets */ }
 	propertyDidUnshadow() { /* this is probably not needed */ }
 
-	/*
-		Invoked by ShadowImpl::invalidate() to notify that a child property or one of its descendents will
-		be changing state. Useful hook when a property needs to perform some bookkeepng for child properties.
-		Utilizing this hook provides a chance to make tracking changes in shadow properties before the
-		store updates its state.
-	*/
-	onChildInvalidated(childProperty, sourceProperty) { }
 
 
 	//------------------------------------------------------------------------------------------------------

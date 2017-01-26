@@ -29,7 +29,7 @@ const TodoListShadow = {
 	},
 
 	addTodo(desc) {
-		return this.push({ desc, created: moment().toISOString() });
+		return this.push(TodoProperty.create(desc));
 	},
 
 	removeTodo(todo) {
