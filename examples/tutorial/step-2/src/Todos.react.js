@@ -76,7 +76,7 @@ export default class Todos extends Component {
 
 		if (todos.length) {
 			return todos
-				.sortBy([ 'completed', t => -t.momentCreated().valueOf() ])
+				.sortBy([ 'completed', t => -t.momentCreated.valueOf() ])
 				.map( t => <TodoItem key={ t.$().pid() } todo={ t } todos={ todos } /> );
 		} else {
 			return <p className="noItems">What do you want to do today?</p>

@@ -55,17 +55,17 @@ const TodoCollectionShadow = {
 	This app does not need to tie into the property life-cycle for the TodoCollection so it is
 	defined using just a custom shadow. The CollectionProperty class defines a static helper
 	function for creating a custom CollectionProperty class with having to directly subclass. The
-	'spec' passed to the callback is a StateType instance that will be assigned to the new
+	'type' passed to the callback is a StateType instance that will be assigned to the new
 	property class 'type' class variable.
 
 	Noteworthy features:
-		* CollectionProperty.createClass(shadowDefnOrClass, specCallback)
+		* CollectionProperty.createClass(shadowDefnOrClass, typeCallback)
 			Each built-in property class provides a createClass() function for transforming a
 			shadow definition into a functional property class.
-		* spec.managedType(type) - the collection will use the StateType instance passed into
+		* type.managedType(type) - the collection will use the StateType instance passed into
 			the method for shadowing each model managed by the collection.
 */
-export default CollectionProperty.createClass(TodoCollectionShadow, spec => {
-	spec.managedType(TodoProperty.type)  // each model contained will be a TodoProperty type
+export default CollectionProperty.createClass(TodoCollectionShadow, type => {
+	type.managedType(TodoProperty.type)  // each model contained will be a TodoProperty type
 		.typeName("TodoCollection")      // useful for diagnostics
 });

@@ -1,6 +1,4 @@
-import moment from "moment";
-
-import { ArrayProperty } from "f.lux";
+import { IndexedProperty } from "f.lux";
 
 import TodoProperty from "./TodoProperty";
 
@@ -29,14 +27,17 @@ const TodoListShadow = {
 	},
 
 	addTodo(desc) {
-		return this.push(TodoProperty.create(desc));
+		const listProp = this.$$();
+
+		listProp._indexed.push(TodoProperty.create(desc));
 	},
 
 	removeTodo(todo) {
+		const listProp = this.$$();
 		const idx = this.indexOf(todo);
 
 		if (idx !== -1) {
-			this.remove(idx);
+			listProp._indexed.remove(idx);
 		}
 	}
 }
@@ -46,17 +47,17 @@ const TodoListShadow = {
 	This app does not need to tie into the property life-cycle for the TodoListProperty so it is
 	defined using just a custom shadow. The ArrayProperty class defines a static helper
 	function for creating a custom ArrayProperty class with having to directly subclass. The
-	'spec' passed to the callback is a StateType instance that will be assigned to the new
+	'type' passed to the callback is a StateType instance that will be assigned to the new
 	property class 'type' class variable.
 
 	Noteworthy features:
-		* ArrayProperty.createClass(shadowDefnOrClass, specCallback)
+		* IndexedProperty.createClass(shadowDefnOrClass, typeCallback)
 			Each built-in property class provides a createClass() function for transforming a
 			shadow definition into a functional property class.
-		* spec.elementType(type) - the array will use the StateType instance passed into
+		* type.elementType(type) - the array will use the StateType instance passed into
 			the method for shadowing each model contained in the array.
 */
-export default ArrayProperty.createClass(TodoListShadow, spec => {
-	spec.elementType(TodoProperty.type)    // each model contained will be a TodoProperty type
+export default IndexedProperty.createClass(TodoListShadow, type => {
+	type.elementType(TodoProperty.type)    // each model contained will be a TodoProperty type
 		.typeName("TodoListProperty")      // useful for diagnostics
 });

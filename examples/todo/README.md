@@ -15,7 +15,7 @@ The project consists of the following files:
 * TodoListProperty.js - specialized ArrayProperty for handling todos (acts like an Array)
 * TodoItem.react.js - component for display a single todo item
 * TodoProperty.js - specialized ObjectProperty for representing a todo item stored in the collection
-* TodoRootProperty.js - the root property for the store. You may find its use of the f.lux property life-cycle interesting.
+* TodoRootProperty.js - the root property for the store. 
 * Todos.react.js - the main UI component
 
 

@@ -1,5 +1,3 @@
-import moment from "moment";
-
 import { ObjectProperty } from "f.lux";
 
 import TodoListProperty from "./TodoListProperty";
@@ -12,8 +10,8 @@ import TodoListProperty from "./TodoListProperty";
 
 	This process is analogous to React's propTypes setup.
 */
-export default ObjectProperty.createClass({}, spec => {
-	spec.autoshadowOff                          // do not shadow state values without explicit sub-property definitions
+export default ObjectProperty.createClass({}, type => {
+	type.autoshadowOff                          // do not shadow state values without explicit sub-property definitions
 		.properties({                           // define sub-properties (just one in this case)
 				todos: TodoListProperty.type,   // 'todos' is a collection property
 			})

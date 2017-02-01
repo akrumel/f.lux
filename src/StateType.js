@@ -20,11 +20,11 @@ import ShadowImpl from "./ShadowImpl";
 
 		StateType.defineType(TodoRootProperty, spec => {
 			spec.initialState({})                       // empty object initial state
-				.autoshadowOff                          // do not shadow state values without explicit sub-property definitions
+				.autoshadowOff                          // do not shadow state values without explicit definitions
 				.properties({                           // define sub-properties (just one in this case)
 						todos: TodoCollection.type,     // 'todos' is a collection property
 					})
-				.readonly                               // prevent application code from reassigning the 'todos' collection (paranoia)
+				.readonly                               // prevent reassigning the 'todos' collection (paranoia)
 				.typeName("TodoRootProperty");          // useful for certain diagnostic situations
 		});
 
@@ -35,6 +35,8 @@ import ShadowImpl from "./ShadowImpl";
 			when the initial state for this property is 'undefined'. (default=undefined)
 		* element type - StateType used for shadowing each sub-property, such as elements in an array or
 			properties of an object. (default=null)
+		* jit properties - dynamically extends the 'properties' based on the property's state through a
+			callback function (experimental)
 		* implementation class - ShadowImpl subclass used to back shadow state property (default=null)
 		* initial state - the initial property value. The store's state will take precedence and this value
 			is used when the store's state is undefined for the specific property. (default=undefined)
@@ -64,6 +66,10 @@ import ShadowImpl from "./ShadowImpl";
 		* elementType(type) - StateType for shadowing each sub-property. Regularly used with IndexedProperty
 			and ArrayProperty. Used with ObjectProperty and MapProperty when each value is the same type such
 			as in a dictionary.
+		* jitProperties(callback) - Sets a callback used for dynamically extending properties definition. Callback
+			signature is 'callback(state, parentProperty)' and returns object with name/value pairs where name
+			is the sub-property name and the value is a StateType instance describing the property shadowing behavior.
+			(advanced feature)
 		* implementationClass(cls) - sets the ShadowImpl subclass to be used for backing the shadow state
 			(should not be needed)
 		* initialState(state) - value suitable for the property type: boolean, array, object,...
@@ -298,6 +304,24 @@ export default class StateType {
 		return this;
 	}
 
+	/*
+		Sets a callback used for dynamically extending properties definition. Callback signature is:
+
+			callback(state, parentProperty)
+
+		where:
+			state - the parent property state
+			parentProperty - the parent property
+
+		returns object with name/value pairs where name is the sub-property name and the
+			value is a StateType instance describing the property shadowing behavior.
+	*/
+	jitProperties(callback) {
+		assert( a => a.is(typeof callback === "function", "'callback' parameter not a function") );
+
+		this._jitProperties = callback;
+	}
+
 	managedType(type) {
 		assert( a => a.is(type instanceof StateType, "'type' parameter not StateType") );
 
@@ -426,8 +450,30 @@ export default class StateType {
 		return state;
 	}
 
+	hasJitProperties() {
+		return !!this._jitProperties;
+	}
+
 	isComplex() {
 		return Object.keys(this._properties).length || this._managedType || this._elementType;
+	}
+
+	/*
+		Gets a shader based on just-in-time configured shader. This mechanism is used when the type structure
+		is not static but based on the state contents. You could think of this as a type of polymorphism.
+
+		Shaders returned are configured through the 'jitProperties()' setup API.
+	*/
+	jitShaderFor(name, state, property) {
+		// cache types with an identity comparison (may need shallow comparison)
+		if (this._jitProperties && this._jitState !== state) {
+			this._jitState = state;
+			this._jitTypes = this._jitProperties(state, property);
+		}
+
+		const type = this._jitTypes && this._jitTypes[name];
+
+		return type && type.factory(property);
 	}
 
 	shader(property) {

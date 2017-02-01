@@ -21,7 +21,7 @@ export default class AddTodo extends Component {
 		}
 
 		// add todo using the TodoListProperty.addTodo() action function
-		todos.addTodo(desc)
+		todos.addTodo(desc);
 
 		// clear the input
 		todoInput.value = "";

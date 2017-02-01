@@ -56,8 +56,8 @@ class TodoShadow extends Shadow {
 	support specific values, such as boolean, string matching a regexp, some custom enum type,
 	a moment representation of a data string,...
 */
-export default ObjectProperty.createClass(TodoShadow, spec => {
-	spec.properties({
+export default ObjectProperty.createClass(TodoShadow, type => {
+	type.properties({
 				completed: PrimitiveProperty.type.initialState(false),
 				created: PrimitiveProperty.type.readonly,
 				desc: PrimitiveProperty.type,

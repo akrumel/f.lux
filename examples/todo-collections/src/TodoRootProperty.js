@@ -79,8 +79,8 @@ export default class TodoRootProperty extends ObjectProperty {
 
 	This process is analygous to React's propTypes setup.
 */
-ObjectProperty.defineType(TodoRootProperty, null, spec => {
-	spec.autoshadowOff                          // do not shadow state values without explicit sub-property definitions
+ObjectProperty.defineType(TodoRootProperty, null, type => {
+	type.autoshadowOff                          // do not shadow state values without explicit sub-property definitions
 		.properties({                           // define sub-properties (just one in this case)
 				todos: TodoCollection.type,     // 'todos' is a collection property
 			})

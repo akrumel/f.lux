@@ -1,5 +1,9 @@
 # Step 1: F.lux Store and Basic Todo Functionality
 
+## Overview
+
+This step adds state to the application using the **default f.lux `Store` behavior.** Minimal work is required to create an f.lux shadow state to have a data flow based application using immutable data structures without losing the simplicity of natural javascript idioms.
+
 ## Goals
 
 1. [Create a f.lux `Store` with initial state](#user-content-store)
@@ -30,7 +34,7 @@ The types of properties are shown in dark gray box titles. Out of the box, f.lux
 | Javascript type              | f.lux `Property` subclass | API
 | ---------------------------- | ------------------------- | -------------------------------
 | Array.isArray(type)          | `ArrayProperty`           | [Array]
-| lodash.isPlainObject(type)   | 'MapProperty'             | [Map]
+| lodash.isPlainObject(type)   | `MapProperty`             | [Map]
 | all others                   | `PrimitiveProperty`       | exposes the actual value
 
 F.lux enables normal Javascript coding syntax to access and manipulate the shadow state in a [Flux] compatible way. The shadow state is immutable so all mutations, whether through assignment or functions/methods will generate f.lux actions that will change the actual state and generate store change notifications to registered listeners. Some examples of code used and described in the following sections to get the concepts flowing:

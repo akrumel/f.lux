@@ -45,11 +45,12 @@ function isPropertyPrototype(obj) {
 			Invoked just before a state property is going to be shadowed using this instance. The 'state'
 			variable will be undefined.
 		propertyDidShadow()
-
+			Property was shadowed and fully functional.
 		propertyChildInvalidated(childProperty, sourceProperty)
+			A child property mutation action has occurred and it's value will change in store's next update.
 		propertyDidUpdate()
-
-		onPropertyWillUnshadow()
+			State managed by this property has changed.
+		propertyWillUnshadow()
 			Invoked just before the shadow property is removed from the shadow state because the state
 			property being shadowed has been removed from the application state.
 	}
