@@ -13,6 +13,11 @@ npm install --save f.lux
 This assumes you are using [npm](https://www.npmjs.com/) as your package manager.
 
 
-### Coming Soon
+### Documentation
 
-Documentation, examples, and test cases.
+See the [Documentation](https://github.com/akrumel/f.lux/tree/master/docs/README.md) for an introduction to f.lux features and a thorough tutorial.
+
+
+### Todo
+
+* Unit test
