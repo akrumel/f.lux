@@ -1,7 +1,6 @@
 import isEqual from "lodash.isequal";
 
 import ShadowImpl from "./ShadowImpl";
-import PrimitiveShadow from "./PrimitiveShadow";
 
 
 export default class PrimitiveShadowImpl extends ShadowImpl {
@@ -15,6 +14,17 @@ export default class PrimitiveShadowImpl extends ShadowImpl {
 		}
 	}
 
+	merge(state) {
+		if (!isEqual(state, this.state())) {
+			this.assign(state);
+		}
+	}
+
+
+	//------------------------------------------------------------------------------------------------------
+	//	Methods with base implementations that subclasses may need to override - no need to call super
+	//------------------------------------------------------------------------------------------------------
+
 	definePropertyGetValue(state) {
 		return this.property().definePropertyGetValue(state);
 	}
@@ -25,19 +35,5 @@ export default class PrimitiveShadowImpl extends ShadowImpl {
 
 	isPrimitive() {
 		return true;
-	}
-
-	merge(state) {
-		if (!isEqual(state, this.state())) {
-			this.assign(state);
-		}
-	}
-
-	shadow() {
-		if (!this._shadow) {
-			this._shadow = new PrimitiveShadow(this);
-		}
-
-		return this._shadow;
 	}
 }

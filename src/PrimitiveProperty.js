@@ -2,7 +2,6 @@ import { isPrimitive } from "akutils";
 import cloneDeep from "lodash.clonedeep";
 
 import PrimitiveShadowImpl from "./PrimitiveShadowImpl";
-import PrimitiveShadow from "./PrimitiveShadowImpl";
 import Property from "./Property";
 import StateType from "./StateType";
 

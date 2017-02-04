@@ -76,7 +76,7 @@ export default class Access {
 	}
 
 	rootShadow() {
-		return this[_impl].root().shadow();
+		return this.property().rootShadow();
 	}
 
 	slashPath() {

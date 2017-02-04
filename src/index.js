@@ -8,7 +8,6 @@ export { default as MapProperty } from "./MapProperty";
 export { default as MapShadow } from "./MapShadow";
 export { default as ObjectProperty } from "./ObjectProperty";
 export { default as PrimitiveProperty } from "./PrimitiveProperty";
-export { default as PrimitiveShadow } from "./PrimitiveShadow";
 export { default as Property } from "./Property";
 export { default as Shader } from "./Shader";
 export { default as Shadow } from "./Shadow";

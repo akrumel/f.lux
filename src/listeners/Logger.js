@@ -21,6 +21,7 @@ const HELP_MSG = `f.lux logger commands:
 \thelp          - f.lux logger commands
 \tindex         - active index of store state frames
 \tmaxFrames     - # of store updates to cache (default=50)
+\nnext          - alias for forward
 \tprint         - print logs to console
 \tprintNoState  - print logs to console without state objects
 \tsize          - # of store state frames available
@@ -29,7 +30,7 @@ const HELP_MSG = `f.lux logger commands:
 \tclearTrap(name)                    - clears a trap set by 'setTrap()'
 \tgoto(idx)                          - move to a specific store state frame
 \tsetMaxFrames(maxFrames)            - set the maximum number of store states to maintain (default=50)
-\tsetTrap(cond, value, name=uuid)    - sets a debugger trap and returns name. conditino argument may be
+\tsetTrap(cond, value, name=uuid)    - sets a debugger trap and returns name. condition argument may be
 \t                                     a function taking next state or a string path to get a value
 \ttail(count=10, printState=true)    - prints last 'count' store updates
 \n
@@ -59,11 +60,11 @@ export default class Logger {
 	}
 
 	clear() {
-		this.activeFrame = new LogFrame(store, this.nextFrameId++);
+		this.activeFrame = new LogFrame(this.store, this.nextFrameId++);
 		this.activeFrame.captureState();
 
 		this.frames = [ this.activeFrame ];
-		this.currFrame = new LogFrame(store, this.nextFrameId++);
+		this.currFrame = new LogFrame(this.store, this.nextFrameId++);
 	}
 
 	clearTrap(name) {
@@ -236,17 +237,16 @@ export default class Logger {
 	goto(idx) {
 		if (idx === this.idx) {
 			return
+		} else if (this.size <= 1) {
+			return console.log(`Time travel error - no log frames`);
 		} else if (idx < 0 || idx >= this.size) {
-			console.log(`Time travel error - invalid index: ${idx}`)
+			return console.log(`Time travel error - index=${idx}, expected index between 0 - ${this.size-1}`);
 		}
 
 		const currActiveFrame = this.activeFrame;
 		const nextActiveFrame = this.frames[idx];
 		const store = this.store;
-/*
-	Questions:
-		will this fire any listener methods and mess things up?
-*/
+
 		store.changeState(nextActiveFrame.state, true, nextActiveFrame.time);
 
 		currActiveFrame.active = false;
@@ -359,16 +359,32 @@ export class FrameAction {
 
 export function createConsoleLogger(logger) {
 	return {
+		get back() {
+			return logger.back();
+		},
+
 		get clear() {
 			logger.clear();
+		},
+
+		get forward() {
+			return logger.forward();
 		},
 
 		get help() {
 			console.log(HELP_MSG+logger.name+"\n\n");
 		},
 
+		get index() {
+			return logger.index;
+		},
+
 		get maxFrames() {
-			logger.maxFrames;
+			return logger.maxFrames;
+		},
+
+		get next() {
+			return this.forward();
 		},
 
 		get print() {
@@ -377,6 +393,10 @@ export function createConsoleLogger(logger) {
 
 		get printNoState() {
 			logger.print(false);
+		},
+
+		get size() {
+			return logger.size;
 		},
 
 		get store() {
@@ -401,22 +421,6 @@ export function createConsoleLogger(logger) {
 
 		tail(count, printState) {
 			logger.tail(count, printState);
-		},
-
-		get index() {
-			return logger.index;
-		},
-
-		get size() {
-			return logger.size;
-		},
-
-		get back() {
-			return logger.back();
-		},
-
-		get forward() {
-			return logger.forward();
 		},
 
 		goto(idx) {

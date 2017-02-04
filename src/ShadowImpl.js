@@ -115,7 +115,7 @@ export default class ShadowImpl {
 	}
 
 	readonly() {
-		return this[_readonly];
+		return this[_readonly] === undefined ?this[_property].isReadonly() :this[_readonly];
 	}
 
 	root() {
@@ -316,17 +316,6 @@ export default class ShadowImpl {
 	}
 
 	/*
-		Gets if the property represents live data.
-	*/
-	isActive() {
-		return !this[_dead];
-	}
-
-	isLeaf() {
-		return !this.hasChildren();
-	}
-
-	/*
 		Marks property and ancestors as invalid. This means this property or one of its children
 		has been updated. The invalid flag is set to the earliest timestamp when this property
 		or one of its children was changed.
@@ -348,6 +337,17 @@ export default class ShadowImpl {
 				this[_parent].invalidate(this, source);
 			}
 		}
+	}
+
+	/*
+		Gets if the property represents live data.
+	*/
+	isActive() {
+		return !this[_dead];
+	}
+
+	isLeaf() {
+		return !this.hasChildren();
 	}
 
 	isRoot() {
@@ -888,7 +888,7 @@ export default class ShadowImpl {
 		const enumerable = !(isString(this[_name]) && this[_name].startsWith('_'));
 		const parentShadow = this[_parent].shadow();
 		const state = this.state();
-		const set = this[_readonly]
+		const set = this.readonly()
 			?undefined
 			:newValue => {
 					if (!this.isActive())  {

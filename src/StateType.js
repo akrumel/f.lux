@@ -415,6 +415,10 @@ export default class StateType {
 		return shader;
 	}
 
+	isAutomount() {
+		return false;
+	}
+
 	getManagedType() {
 		return this._managedType;
 	}

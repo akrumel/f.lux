@@ -58,7 +58,11 @@ export default class Shader {
 	}
 
 	automountAll() {
-		return this[_automountAll];
+		// leaving implementation for now but automount (experimental feature) is no longer being
+		// supported. Keeping in place for a bit to see if needed. (2/2/2017)
+		return false;
+
+		//return this[_automountAll];
 	}
 
 	addProperty(name, stateType) {
@@ -93,15 +97,19 @@ export default class Shader {
 	}
 
 	isAutomount(name) {
-		if (this[_automountAll]) {
-			return true;
-		} else if (this[_shaders][name]) {
-			return this[_automount][name] || this[_shaders][name].shouldAutomount();
-		} else if (this[_elementShader]) {
-			return this[_elementShaderAutomount] || this[_elementShader].shouldAutomount();
-		} else {
-			return false;
-		}
+		// leaving implementation for now but automount (experimental feature) is no longer being
+		// supported. Keeping in place for a bit to see if needed. (2/2/2017)
+		return false;
+
+		// if (this[_automountAll]) {
+		// 	return true;
+		// } else if (this[_shaders][name]) {
+		// 	return this[_shaders][name].shouldAutomount() || this[_automount].indexOf(name) !== -1;
+		// } else if (this[_elementShader]) {
+		// 	return this[_elementShaderAutomount] || this[_elementShader].shouldAutomount();
+		// } else {
+		// 	return false;
+		// }
 	}
 
 	property() {
