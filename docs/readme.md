@@ -1,6 +1,6 @@
 # Table of Contents
 
-* [Read Me](/readme.md)
+* [Project Read Me](https://github.com/akrumel/f.lux)
 * [Introduction](./introduction/readme.md)
 	* [Overview](introduction/overview.md)
 * [Tutorial](tutorial/readme.md)
@@ -10,7 +10,7 @@
 	* [Step 3: UI State](tutorial/step-3.md)
 	* [Step 4: f.lux-react](tutorial/step-4.md)
 	* [Step 5: Time Travel Debugger](tutorial/step-5.md)
-* [Cookbook](cookbook/index.html)
+* [Cookbook](cookbook/readme.md)
 * [API](api/index.html)
 * [F.lux Restrictions](f.lux-restrictions.md)
 * [Change Log](changeLog/readme.md)

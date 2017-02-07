@@ -1,7 +1,7 @@
 # F.lux API
 
-* [Read Me](/README.md)
-* [Introduction](../introduction/README.md)
+* [Read Me](https://github.com/akrumel/f.lux)
+* [Introduction](../introduction/readme.md)
 	* [Overview](../introduction/overview.md)
 * [Tutorial](../tutorial/readme.md)
 	* [Step 0: Boilerplate review](../tutorial/step-0.md)
@@ -10,6 +10,7 @@
 	* [Step 3: UI State](../tutorial/step-3.md)
 	* [Step 4: f.lux-react](../tutorial/step-4.md)
 	* [Step 5: Time Travel Debugger](../tutorial/step-5.md)
+* [Cookbook](../cookbook/readme.md)
 * [F.lux Restrictions](../f.lux-restrictions.md)
-* [Change Log](../changeLog/README.md)
+* [Change Log](../changeLog/readme.md)
 	* [v1.0.0](../changeLog/v1.0.0.md)
