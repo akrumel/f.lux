@@ -49,8 +49,8 @@ todos.map( t => <TodoItem todo={ t } todos={ todos } /> )
 
 ```jsx
 <input type="text"
-	onChange={ event => todo.desc = event.target.value }
-	defaultValue={ todo.desc }
+    onChange={ event => todo.desc = event.target.value }
+    defaultValue={ todo.desc }
 />
 ```
 
@@ -58,19 +58,19 @@ todos.map( t => <TodoItem todo={ t } todos={ todos } /> )
 
 ```js
 export default class TodoItem extends Component {
-	removeTodo() {
-		const { todo, todos } = this.props;
-		const idx = todos.indexOf(todo);
+    removeTodo() {
+        const { todo, todos } = this.props;
+        const idx = todos.indexOf(todo);
 
-		if (idx !== -1) {
-			todos.remove(idx);
-		}
-	}
+        if (idx !== -1) {
+            todos.remove(idx);
+        }
+    }
 
 
-	render() {
-		...
-	}
+    render() {
+        ...
+    }
 }
 ```
 
@@ -81,8 +81,8 @@ Add the following lines to `main.js` to create the application's f.lux store:
 
 ```js
 import {
-	Store,
-	ObjectProperty
+    Store,
+    ObjectProperty
 } from "f.lux";
 
 
@@ -97,9 +97,9 @@ A f.lux based application uses a single store for managing all state. A `Store` 
 Drilling down into the initial state and adding an initial todo item:
 ```js
 {
-	todos: [
-    	{ desc: "Go skiing!", completed: false }
-	]
+    todos: [
+        { desc: "Go skiing!", completed: false }
+    ]
 }
 ```
 
@@ -115,8 +115,8 @@ The final change to `main.js` is to pass the `store` to the `<Todos>` component 
 
 ```jsx
 ReactDOM.render(
-	<Todos store={ store }/>,
-	document.getElementById('react-ui')
+    <Todos store={ store }/>,
+    document.getElementById('react-ui')
 );
 ```
 
@@ -138,43 +138,43 @@ The top level `<Todos>` React component will be used to subscribe to state chang
 
 ```js
 class Todos extends Component {
-	componentWillMount() {
-		const { store } = this.props;
+    componentWillMount() {
+        const { store } = this.props;
 
-		// bind onStateChange callback so can use it to register/unregister
-		this.onStateChangeCallback = this.onStateChange.bind(this);
+        // bind onStateChange callback so can use it to register/unregister
+        this.onStateChangeCallback = this.onStateChange.bind(this);
 
-		// register for store change notificiations
-		store.subscribe(this.onStateChangeCallback);
-	}
+        // register for store change notificiations
+        store.subscribe(this.onStateChangeCallback);
+    }
 
-	componentWillUnmount() {
-		const { store } = this.props;
+    componentWillUnmount() {
+        const { store } = this.props;
 
-		store.unsubscribe(this.onStateChangeCallback);
-	}
+        store.unsubscribe(this.onStateChangeCallback);
+    }
 
-	onStateChange() {
-		// brute force update entire UI on store change to keep demo app simple
-		this.forceUpdate();
-	}
+    onStateChange() {
+        // brute force update entire UI on store change to keep demo app simple
+        this.forceUpdate();
+    }
 ```
 
 The `<Todos>` component can now refresh the user interface each time the store's state changes. `<Todos>` has an `<h1>` header with the number of incomplete items and is implemented with this change:
 
 ```js
 render() {
-	const { todos } = this.props.store.shadow;
-	const numIncomplete = todos.filter( t => !t.completed ).length;
-	const remainingText = `${ numIncomplete } ${ pluralize("item", numIncomplete ) } remaining`;
+    const { todos } = this.props.store.shadow;
+    const numIncomplete = todos.filter( t => !t.completed ).length;
+    const remainingText = `${ numIncomplete } ${ pluralize("item", numIncomplete ) } remaining`;
 
-	return <div className="todoContainer">
-			<h1> F.lux Todos <small>{ remainingText }</small></h1>
+    return <div className="todoContainer">
+            <h1> F.lux Todos <small>{ remainingText }</small></h1>
 
-			<AddTodo todos={ todos } />
+            <AddTodo todos={ todos } />
 
-			{ this.renderTodos() }
-		</div>
+            { this.renderTodos() }
+        </div>
 }
 ```
 
@@ -182,28 +182,28 @@ Here are the important sections broken down:
 
 * `const { todos } = this.props.store.shadow;`
 
-	The shadow state is accessed using the `store.shadow` property. The `todos` variable is a shadow reference to the actual state array. Use `todos` just as you would a normal array and any mutations will be asynchronously applied through generated actions.
+    The shadow state is accessed using the `store.shadow` property. The `todos` variable is a shadow reference to the actual state array. Use `todos` just as you would a normal array and any mutations will be asynchronously applied through generated actions.
 
-	Remember, the initial state has the form: `{ todos: [] }`.
+    Remember, the initial state has the form: `{ todos: [] }`.
 
 
 * `const numIncomplete = todos.filter( t => !t.completed ).length;`
 
-	This statement uses the Array `filter(iter)` method to obtain an array of incomplete items, `!t.completed`, and then takes the filtered array's length.
-	
+    This statement uses the Array `filter(iter)` method to obtain an array of incomplete items, `!t.completed`, and then takes the filtered array's length.
+    
 
 * `const remainingText = ``${ numIncomplete } ${ pluralize("item", numIncomplete ) } remaining``;`
 
-	Format text to be placed in the application header for the number of items remaing. Uses the [pluralize](https://github.com/blakeembrey/pluralize) library to have the proper form of "items".
+    Format text to be placed in the application header for the number of items remaing. Uses the [pluralize](https://github.com/blakeembrey/pluralize) library to have the proper form of "items".
 
 * `<h1> F.lux Todos <small>{ remainingText }</small></h1>`
 
-	Render the header with the number of incomplete items.
+    Render the header with the number of incomplete items.
 
 * `<AddTodo todos={ todos } />`
 
-	The `<AddTodo>` component will need to `todos` shadow array to add a new item.
-	
+    The `<AddTodo>` component will need to `todos` shadow array to add a new item.
+    
 
 ## 3. Implement `<AddTodo>` `addTodo()` function<a name="addtodo" />
 
@@ -211,23 +211,23 @@ The `<AddTodo>` component is now receiving a property containing the `todos` sha
 
 ```js
 class AddTodo extends Component {
-	addTodo() {
-		const { todos } = this.props;
-		const desc = this.todoInput.value;
+    addTodo() {
+        const { todos } = this.props;
+        const desc = this.todoInput.value;
 
-		// Create a new Todo item
-		const todo = {
-			completed: false,
-			desc,
-			created: moment().toISOString()
-		}
+        // Create a new Todo item
+        const todo = {
+            completed: false,
+            desc,
+            created: moment().toISOString()
+        }
 
-		// add the Todo item to the array
-		todos.push(todo);
+        // add the Todo item to the array
+        todos.push(todo);
 
-		// clear the input
-		todoInput.value = "";
-	}
+        // clear the input
+        todoInput.value = "";
+    }
 ```
 
 [Step 2](step-2.md) in this tutorial will move this logic to a property but for now the logic is inlined in the component for ease or readability and allow the focus to remain on interacting with the shadow state. 
@@ -236,26 +236,26 @@ Here are the key points explained:
 
 * `const { todos } = this.props;`
 
-	Get the shadow array from the property set by `<Todos>` component. Remember, this is a shadow array that proxies the actual state array.
-	
-	
+    Get the shadow array from the property set by `<Todos>` component. Remember, this is a shadow array that proxies the actual state array.
+    
+    
 * `const desc = this.todoInput.value;`
 
-	This gets the value from the `<input ref={ ref => this.todoInput = ref } />` containing the descirption for the new todo item.
-	
+    This gets the value from the `<input ref={ ref => this.todoInput = ref } />` containing the descirption for the new todo item.
+    
 
 * `const todo = { completed: false, desc, created: moment().toISOString() }`
 
-	Creates the todo item state to be appended to the `todos` array. This will be encapsulated into a property function in [Step 2](step-2.md). Notice a Todo item has three properties: 
-	
-	- `completed` - boolean to indicate if item is done
-	- `desc` - the description
-	- `created` - ISO 8601 formatted string for time item created
-	
+    Creates the todo item state to be appended to the `todos` array. This will be encapsulated into a property function in [Step 2](step-2.md). Notice a Todo item has three properties: 
+    
+    - `completed` - boolean to indicate if item is done
+    - `desc` - the description
+    - `created` - ISO 8601 formatted string for time item created
+    
 
 * `todos.push(todo);`
 
-	Just like a normal array, the new Todo item is appended to the shadow array. This will result in a store change notification to the `<Todos>` component that will trigger a `render()` call.
+    Just like a normal array, the new Todo item is appended to the shadow array. This will result in a store change notification to the `<Todos>` component that will trigger a `render()` call.
 
 
 ## 4. Implement `<TodoItem>` to display, edit, and delete todo items<a name="items" />
@@ -270,46 +270,46 @@ Here is the full source for the component:
 
 ```js
 class TodoItem extends Component {
-	removeTodo() {
-		const { todo, todos } = this.props;
-		const idx = todos.indexOf(todo);
+    removeTodo() {
+        const { todo, todos } = this.props;
+        const idx = todos.indexOf(todo);
 
-		if (idx !== -1) {
-			todos.remove(idx);
-		}
-	}
+        if (idx !== -1) {
+            todos.remove(idx);
+        }
+    }
 
-	handleToggleCompleted() {
-		const { todo } = this.props;
+    handleToggleCompleted() {
+        const { todo } = this.props;
 
-		// toggle the completed flag
-		todo.completed = !todo.completed;
-	}
+        // toggle the completed flag
+        todo.completed = !todo.completed;
+    }
 
-	render() {
-		const { todo } = this.props;
-		const { completed, desc } = todo;
-		const descClasses = classnames("todoItem-desc", {
-				"todoItem-descCompleted": completed
-			});
-		const completedClasses = classnames("todoItem-completed fa", {
-				"fa-check-square-o todoItem-completedChecked": completed,
-				"fa-square-o": !completed,
-			});
+    render() {
+        const { todo } = this.props;
+        const { completed, desc } = todo;
+        const descClasses = classnames("todoItem-desc", {
+                "todoItem-descCompleted": completed
+            });
+        const completedClasses = classnames("todoItem-completed fa", {
+                "fa-check-square-o todoItem-completedChecked": completed,
+                "fa-square-o": !completed,
+            });
 
-		return <div className="todoItem">
-				<i className={ completedClasses } onClick={ () => this.handleToggleCompleted() } />
+        return <div className="todoItem">
+                <i className={ completedClasses } onClick={ () => this.handleToggleCompleted() } />
 
-				<input
-					type="text"
-					className={ descClasses }
-					onChange={ event => todo.desc = event.target.value }
-					defaultValue={ desc }
-				/>
+                <input
+                    type="text"
+                    className={ descClasses }
+                    onChange={ event => todo.desc = event.target.value }
+                    defaultValue={ desc }
+                />
 
-				<i className="todoItem-delete fa fa-times" onClick={ () => this.removeTodo() }/>
-			</div>
-	}
+                <i className="todoItem-delete fa fa-times" onClick={ () => this.removeTodo() }/>
+            </div>
+    }
 }
 ```
 
@@ -317,58 +317,58 @@ Let's start the discussion with the `render()` function:
 
 * `const { completed, desc } = todo` 
 
-	Gets the 'completed' and 'desc' properties from the 'todo' property. The next part of this step will show how this is set by doing a `todos.map( t => <Todo todo={ t } />)` on the `todos` array.
+    Gets the 'completed' and 'desc' properties from the 'todo' property. The next part of this step will show how this is set by doing a `todos.map( t => <Todo todo={ t } />)` on the `todos` array.
 
 * `<i className={ completedClasses } onClick={ () => this.handleToggleCompleted() } />` 
 
-	Icon displays a checked box if the item is completed and an unchecked box otherwise. Clicking on the icon will call the components `handleToggleCompleted()` function (described below).
+    Icon displays a checked box if the item is completed and an unchecked box otherwise. Clicking on the icon will call the components `handleToggleCompleted()` function (described below).
 
 * `<input defaultValue={ desc } onChange={ event => todo.desc = event.target.value }/>` 
 
-	Displays and allows the `desc` property to be edited. Notice this is not a bound `<input>` which is done to keep things simple. [Step 5: f.lux-react](step-5.md) will show an easy way to make this a bound component.
-	
-	The default value is the `desc` value.
-	
-	Each value change will cause the `onChange` event handler to be invoked. Now this is interesting:
-	
-	```js
-	todo.desc = event.target.value
-	```
+    Displays and allows the `desc` property to be edited. Notice this is not a bound `<input>` which is done to keep things simple. [Step 5: f.lux-react](step-5.md) will show an easy way to make this a bound component.
+    
+    The default value is the `desc` value.
+    
+    Each value change will cause the `onChange` event handler to be invoked. Now this is interesting:
+    
+    ```js
+    todo.desc = event.target.value
+    ```
 
-	This statement assigns the `<input>` value (`event.target.value`) to the `todo.desc` property. Since `todo` and `desc` are proxies for the actual state, **this statement will generate an update action to set the `desc` state value. And your code looks like regular javascript.**
-	
-	
+    This statement assigns the `<input>` value (`event.target.value`) to the `todo.desc` property. Since `todo` and `desc` are proxies for the actual state, **this statement will generate an update action to set the `desc` state value. And your code looks like regular javascript.**
+    
+    
 * `<i className="todoItem-delete fa fa-times" onClick={ () => this.removeTodo() }/>` 
 
-	This icon provides the ability to delete an item. Clicking on the icon will call the component's `removeTodo()` function (described below).
+    This icon provides the ability to delete an item. Clicking on the icon will call the component's `removeTodo()` function (described below).
 
 
 Now let's examine the simple `handleToggleCompleted()` function:
 
 * `const { todo } = this.props`
 
-	Start by getting the todo item being edited.
-	
+    Start by getting the todo item being edited.
+    
 
 * `todo.completed = !todo.completed`
 
-	Normal javascript code for toggling a boolean value. The difference is the f.lux library will generate an action to set the items 'completed' flag in the store's actual state followed by an update notification to the `<Todos>` component.
-	
+    Normal javascript code for toggling a boolean value. The difference is the f.lux library will generate an action to set the items 'completed' flag in the store's actual state followed by an update notification to the `<Todos>` component.
+    
 
 And finally, the `removeTodo()` function:
 
 * `const { todo, todos } = this.props`
 
-	The function will need to find the index of the `todo` item in the `todos` array to remove it.
-	
+    The function will need to find the index of the `todo` item in the `todos` array to remove it.
+    
 
 * `const idx = todos.indexOf(todo)`
 
-	Uses the array `indexOf(value)` function to get the item's index. Again, this standard array function is being called on a shadow property. A value of -1 is returned if the value is not found.
+    Uses the array `indexOf(value)` function to get the item's index. Again, this standard array function is being called on a shadow property. A value of -1 is returned if the value is not found.
 
 * `todos.remove(idx)`
 
-	The item is removed from the shadow array. This will generate an update action that will remove the corresponding todo item from the actual `todos` array in the store's state.
+    The item is removed from the shadow array. This will generate an update action that will remove the corresponding todo item from the actual `todos` array in the store's state.
 
 
 ## 5. Iterate all store todo items and create a `<TodoItem>` for each one<a name="iterate" />
@@ -377,15 +377,15 @@ And finally, let's update `<Todos>` component to render a `<Todo>` component for
 
 ```js
 renderTodos() {
-	const { todos } = this.props.store._;
+    const { todos } = this.props.store._;
 
-	if (todos.length) {
-		return todos
-			.sortBy('completed')
-			.map( t => <TodoItem key={ t.$().pid() } todo={ t } todos={ todos } /> );
-	} else {
-		return <p className="noItems">What do you want to do today?</p>
-	}
+    if (todos.length) {
+        return todos
+            .sortBy('completed')
+            .map( t => <TodoItem key={ t.$().pid() } todo={ t } todos={ todos } /> );
+    } else {
+        return <p className="noItems">What do you want to do today?</p>
+    }
 }
 ```
 
@@ -393,35 +393,35 @@ This function is called in `<Todos>` render function.
 
 * `const { todos } = this.props.store._`
 
-	`store._` is an alias for `store.shadow`. The variable name comes from the idea of a shadow on the ground, `_`, for an actual object.  
+    `store._` is an alias for `store.shadow`. The variable name comes from the idea of a shadow on the ground, `_`, for an actual object.  
 
 
 * `if (todos.length) {`
 
-	Yet another array-like access on an array shadow property. If function or property exists on a normal javascript array then it exists on the shadow.
+    Yet another array-like access on an array shadow property. If function or property exists on a normal javascript array then it exists on the shadow.
 
 * `todos.sortBy('completed')`
 
-	Oh, and there are a few extras. Array shadows have the regular [`sort(compareFunction)`][array-sort] function if that is your style. They have also been enhanced with the [lodash] inspired [`sortBy()`][lodash-sortby] function.
-	
+    Oh, and there are a few extras. Array shadows have the regular [`sort(compareFunction)`][array-sort] function if that is your style. They have also been enhanced with the [lodash] inspired [`sortBy()`][lodash-sortby] function.
+    
 
 * `todos.map( t => <TodoItem key={ t.$().pid() } todo={ t } todos={ todos } /> )`
 
-	Uses the array `map()` function to generate a `<Todo>` component for each value in the `todos` shadow array. This all pretty normal stuff by now except the `key` property:
-	
-	```js
-	key={ t.$().pid() }
-	```
-	
-	Each shadow property receives a `$()` function to get the **f.lux accessor**. The accessor provides context information for a property. In this case, `pid()` gets the unique *property ID* identifying this property, a monotomically increasing number. 
-	
-	Some other interesting accessor functions:
-	
-	* `dotPath()` - gets the path to the property. For example, a todo item's path might be `todos.0`. Handy for debugging and form validation error highlighting.
-	* `isReadonly()` - f.lux provides the ability to specify values should be readonly (assignment will have no affect)
-	* `nextState()` - the properties state following any pending actions
-	* `store()` - the store containing the property
-	
+    Uses the array `map()` function to generate a `<Todo>` component for each value in the `todos` shadow array. This all pretty normal stuff by now except the `key` property:
+    
+    ```js
+    key={ t.$().pid() }
+    ```
+    
+    Each shadow property receives a `$()` function to get the **f.lux accessor**. The accessor provides context information for a property. In this case, `pid()` gets the unique *property ID* identifying this property, a monotomically increasing number. 
+    
+    Some other interesting accessor functions:
+    
+    * `dotPath()` - gets the path to the property. For example, a todo item's path might be `todos.0`. Handy for debugging and form validation error highlighting.
+    * `isReadonly()` - f.lux provides the ability to specify values should be readonly (assignment will have no affect)
+    * `nextState()` - the properties state following any pending actions
+    * `store()` - the store containing the property
+    
 
 
 [Step 2: Properties](step-2.md)

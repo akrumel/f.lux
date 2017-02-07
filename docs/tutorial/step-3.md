@@ -94,15 +94,15 @@ The previous step's initial state was:
 The `UiProperty` requires the following properties and method:
 
 * `filter` - one of the following values where the values in parenthesis is the constant value defined in the `UiProperty.js` source file:
-	- `all` - shows all items (`AllFilter`) 
-	- `completed` - shows completed items only (`CompletedFilter`)
-	- `incomplete` - hides completed items (`IncompleteFilter`)
-	
+    - `all` - shows all items (`AllFilter`) 
+    - `completed` - shows completed items only (`CompletedFilter`)
+    - `incomplete` - hides completed items (`IncompleteFilter`)
+    
 * `sortBy` - one of the following values where the values in parenthesis is the constant value defined in the `UiProperty.js` source file:
-	- `created` - oldest messages at the top (`CreatedSort`)
-	- `desc` - sorted in ascending alphabetical order (`DescSort`)
-	- `updated` - most recently modified/created items first (`UpdatedSort`)
-	
+    - `created` - oldest messages at the top (`CreatedSort`)
+    - `desc` - sorted in ascending alphabetical order (`DescSort`)
+    - `updated` - most recently modified/created items first (`UpdatedSort`)
+    
 * `visibleTodos()` - returns the `todos` items that meet the chosen `filter` and sorted according to the `sortBy` algorithm.
 
 
@@ -122,22 +122,22 @@ export const UpdatedSort = "updated";
 const DefaultSort = CreatedSort;
 
 /*
-	Filter functions available for easy lookup.
+    Filter functions available for easy lookup.
 */
 const filters = {
-	[AllFilter]: t => true,
-	[CompletedFilter]: t => t.completed,
-	[IncompleteFilter]: t => !t.completed,
+    [AllFilter]: t => true,
+    [CompletedFilter]: t => t.completed,
+    [IncompleteFilter]: t => !t.completed,
 };
 
 /*
-	Sort functions available for easy lookup. Each function is setup to return incomplete items
-	before completed items.
+    Sort functions available for easy lookup. Each function is setup to return incomplete items
+    before completed items.
 */
 const sorters = {
-	[CreatedSort]: (t1, t2) => t1.completed == t2.completed ?t1.momentCreated - t2.momentCreated :t1.completed,
-	[DescSort]: (t1, t2) => t1.completed == t2.completed ?t1.desc.localeCompare(t2.desc) :t1.completed,
-	[UpdatedSort]: (t1, t2) => t1.completed == t2.completed ?t2.momentUpdated - t1.momentUpdated :t1.completed,
+    [CreatedSort]: (t1, t2) => t1.completed == t2.completed ?t1.momentCreated - t2.momentCreated :t1.completed,
+    [DescSort]: (t1, t2) => t1.completed == t2.completed ?t1.desc.localeCompare(t2.desc) :t1.completed,
+    [UpdatedSort]: (t1, t2) => t1.completed == t2.completed ?t2.momentUpdated - t1.momentUpdated :t1.completed,
 }
 
 ```
@@ -151,60 +151,60 @@ Notice how the sorting functions sort incomplete items first followed by the sel
 
 ```js
 class UiShadow extends Shadow {
-	visibleTodos() {
-		const { todos } = this.$().rootShadow();
-		const { filter, sortBy } = this;
-		const filterFn = filters[filter] || filters[DefaultFilter];
-		const sortFn = sorters[sortBy] || sorters[DefaultSort];
+    visibleTodos() {
+        const { todos } = this.$().rootShadow();
+        const { filter, sortBy } = this;
+        const filterFn = filters[filter] || filters[DefaultFilter];
+        const sortFn = sorters[sortBy] || sorters[DefaultSort];
 
-		return todos.filter(filterFn).sort(sortFn);
-	}
+        return todos.filter(filterFn).sort(sortFn);
+    }
 }
 
 
 export default ObjectProperty.createClass(UiShadow, type => {
-	type.properties({
-				filter: PrimitiveProperty.type.initialState(DefaultFilter),
-				sortBy: PrimitiveProperty.type.initialState(DefaultSort)
-			})
-		.readonlyOff
-		.typeName("UiProperty");
+    type.properties({
+                filter: PrimitiveProperty.type.initialState(DefaultFilter),
+                sortBy: PrimitiveProperty.type.initialState(DefaultSort)
+            })
+        .readonlyOff
+        .typeName("UiProperty");
 });
 ```
 
 * `this.$().rootShadow()`
 
-	The React UI uses the `UiShadow.visibleTodos()` method to retrieve the filtered and sorted todo items for rendering. The key f.lux related code is the `$().rootShadow()` call. This returns the `Store` managed shadow property of type `RootTodoProperty` defined in the [previous step](step-2.md). We then get the `todos` shadow state property and call the array methods `filter()` and `sort()`:
-	
-	```js
-	const { todos } = this.$().rootShadow();
+    The React UI uses the `UiShadow.visibleTodos()` method to retrieve the filtered and sorted todo items for rendering. The key f.lux related code is the `$().rootShadow()` call. This returns the `Store` managed shadow property of type `RootTodoProperty` defined in the [previous step](step-2.md). We then get the `todos` shadow state property and call the array methods `filter()` and `sort()`:
+    
+    ```js
+    const { todos } = this.$().rootShadow();
 
-	return todos.filter(filterFn).sort(sortFn);
-	```
+    return todos.filter(filterFn).sort(sortFn);
+    ```
 
 * `const { filter, sortBy } = this`
 
-	A `Shadow` method's `this` reference points to the shadow state. We use `this` to get the `filter` and `sortBy` shadow property values, which will be native javascript strings since they are both defined using `PrimitiveProperty.type` and are initialized using string values. The `filter` and `sortBy` string values are used to lookup the appropriate callback functions:
+    A `Shadow` method's `this` reference points to the shadow state. We use `this` to get the `filter` and `sortBy` shadow property values, which will be native javascript strings since they are both defined using `PrimitiveProperty.type` and are initialized using string values. The `filter` and `sortBy` string values are used to lookup the appropriate callback functions:
 
-	```js
-	const filterFn = filters[filter] || filters[DefaultFilter];
-	const sortFn = sorters[sortBy] || sorters[DefaultSort];
+    ```js
+    const filterFn = filters[filter] || filters[DefaultFilter];
+    const sortFn = sorters[sortBy] || sorters[DefaultSort];
 
-	return todos.filter(filterFn).sort(sortFn);
-	```
+    return todos.filter(filterFn).sort(sortFn);
+    ```
 
 * Property initial state
 
-	The `filter` and `sortBy` properties are assigned initial values using in the `type` setup callback:
+    The `filter` and `sortBy` properties are assigned initial values using in the `type` setup callback:
 
-	```js
-	type.properties({
-			filter: PrimitiveProperty.type.initialState(DefaultFilter),
-			sortBy: PrimitiveProperty.type.initialState(DefaultSort)
-		})
-	```
+    ```js
+    type.properties({
+            filter: PrimitiveProperty.type.initialState(DefaultFilter),
+            sortBy: PrimitiveProperty.type.initialState(DefaultSort)
+        })
+    ```
 
-	We will see how the initial values look in the next section.
+    We will see how the initial values look in the next section.
 
 
 ## 2. Update `ToodRootProperty` <a id="root" />
@@ -213,13 +213,13 @@ The `UiProperty` is accessed via the `ui` property off the root shadow state:
 
 ```js
 export default ObjectProperty.createClass({}, type => {
-	type.autoshadowOff                          
-		.properties({
-				todos: TodoListProperty.type,
-				ui: UiProperty.type,             // add UiProperty to state
-			})
-		.readonly                               
-		.typeName("TodoRootProperty");          
+    type.autoshadowOff                          
+        .properties({
+                todos: TodoListProperty.type,
+                ui: UiProperty.type,             // add UiProperty to state
+            })
+        .readonly                               
+        .typeName("TodoRootProperty");          
 });
 ```
 
@@ -227,11 +227,11 @@ And now the `Store` initial state is:
 
 ```js
 {
-	todos: [],
-	ui: {
-		filter: "all",
-		sortBy: "created"
-	}
+    todos: [],
+    ui: {
+        filter: "all",
+        sortBy: "created"
+    }
 }
 ```
 
@@ -245,17 +245,17 @@ import React from "react";
 import { AllFilter, CompletedFilter, IncompleteFilter } from "./UiProperty";
 
 export default function FilterSelector(props, context) {
-	const { ui } = props;
+    const { ui } = props;
 
-	return <div className="tools-selector">
-			<span>Filter:</span>
+    return <div className="tools-selector">
+            <span>Filter:</span>
 
-			<select onChange={ e => ui.filter = e.target.value }>
-				<option value={ AllFilter }>All</option>
-				<option value={ CompletedFilter }>Completed</option>
-				<option value={ IncompleteFilter }>Not Completed</option>
-			</select>
-		</div>
+            <select onChange={ e => ui.filter = e.target.value }>
+                <option value={ AllFilter }>All</option>
+                <option value={ CompletedFilter }>Completed</option>
+                <option value={ IncompleteFilter }>Not Completed</option>
+            </select>
+        </div>
 }
 ```
 
@@ -263,16 +263,16 @@ A few points worth calling out:
 
 * `import { AllFilter, CompletedFilter, IncompleteFilter } from "./UiProperty";`
 
-	This demonstrates how f.lux introduces a natural organization to an application's structure without explicitly imposing one. Defining and exporting the filter and sorting constants from the `UiProperty` module just feels right (to me at least).
+    This demonstrates how f.lux introduces a natural organization to an application's structure without explicitly imposing one. Defining and exporting the filter and sorting constants from the `UiProperty` module just feels right (to me at least).
 
 
 * `<select onChange={ e => ui.filter = e.target.value } >`
 
-	The `ui` property is the `UiProperty` shadow state property and we will see how this is obtained in the next section.
-	
-	Updating the `ui.filter` property uses a simple assignment in the `onChange()` event callback. The assignment will trigger an f.lux property update action followed by a store update notification to registered listeners, the `<Todos>` component in this application.
-	
-	That's it!
+    The `ui` property is the `UiProperty` shadow state property and we will see how this is obtained in the next section.
+    
+    Updating the `ui.filter` property uses a simple assignment in the `onChange()` event callback. The assignment will trigger an f.lux property update action followed by a store update notification to registered listeners, the `<Todos>` component in this application.
+    
+    That's it!
 
 
 ## 4. Update `<Todos>` <a id="todos" />
@@ -285,23 +285,23 @@ Here is the `render()` function:
 
 ```js
 render() {
-	const { todos, ui } = this.props.store._;
-	const remainingText = `${ todos.incompleteSize } ${ pluralize("item", todos.incompleteSize ) } remaining`;
+    const { todos, ui } = this.props.store._;
+    const remainingText = `${ todos.incompleteSize } ${ pluralize("item", todos.incompleteSize ) } remaining`;
 
-	return <div className="todoContainer">
-			<h1>
-				F.lux Todos <small>{ remainingText }</small>
-			</h1>
+    return <div className="todoContainer">
+            <h1>
+                F.lux Todos <small>{ remainingText }</small>
+            </h1>
 
-			<AddTodo todos={ todos } />
+            <AddTodo todos={ todos } />
 
-			{ this.renderTodos() }
+            { this.renderTodos() }
 
-			<div className="tools">
-				<FilterSelector ui={ ui } />
-				<SortSelector ui={ ui } />
-			</div>
-		</div>
+            <div className="tools">
+                <FilterSelector ui={ ui } />
+                <SortSelector ui={ ui } />
+            </div>
+        </div>
 }
 ```
 
@@ -309,18 +309,18 @@ And here are the interesting additions:
 
 * `const { todos, ui } = this.props.store._;`
 
-	The `ui` property is stored in the root shadow state.
-	
+    The `ui` property is stored in the root shadow state.
+    
 * The toolbar
 
-	Just a bit of JSX that passes the `ui` shadow state property to the `<FilterSelector>` and `<SortSelector>` components:
+    Just a bit of JSX that passes the `ui` shadow state property to the `<FilterSelector>` and `<SortSelector>` components:
 
-	```jsx
-	<div className="tools">
-		<FilterSelector ui={ ui } />
-		<SortSelector ui={ ui } />
-	</div>
-	```
+    ```jsx
+    <div className="tools">
+        <FilterSelector ui={ ui } />
+        <SortSelector ui={ ui } />
+    </div>
+    ```
 
 ### Update `renderTodos()`
 
@@ -333,16 +333,16 @@ And here is the updated `renderTodos()` function:
 
 ```jsx
 renderTodos() {
-	const { todos, ui } = this.props.store._;
-	const visibleTodos = ui.visibleTodos();
+    const { todos, ui } = this.props.store._;
+    const visibleTodos = ui.visibleTodos();
 
-	if (visibleTodos.length) {
-		return visibleTodos.map( t => <TodoItem key={ t.$().pid() } todo={ t } todos={ todos } /> );
-	} else if (todos.length === 0) {
-		return <p className="noItems">What do you want to do today?</p>
-	} else {
-		return <p className="noItems">No items are { ui.filter }</p>
-	}
+    if (visibleTodos.length) {
+        return visibleTodos.map( t => <TodoItem key={ t.$().pid() } todo={ t } todos={ todos } /> );
+    } else if (todos.length === 0) {
+        return <p className="noItems">What do you want to do today?</p>
+    } else {
+        return <p className="noItems">No items are { ui.filter }</p>
+    }
 }
 ```
 
@@ -350,19 +350,19 @@ And a few points explained:
 
 * `const visibleTodos = ui.visibleTodos();`
 
-	The previous step simply used the `todos` array shadow property directly and employed some inline sorting. The filtering and sorting is delegated to the `UiProperty` which maintains the filter and sorting criteria.
+    The previous step simply used the `todos` array shadow property directly and employed some inline sorting. The filtering and sorting is delegated to the `UiProperty` which maintains the filter and sorting criteria.
 
-* `visibleTodos.map( t => <TodoItem key={ t.$().pid() } todo={ t } todos={ todos } /> );`	
-	
- 	The `visibleTodos` is mapped but each `<TodoItem>`. But notice the component's `todos` property:
- 	
- 	```jsx
- 	<TodoItem ... todos={ todos } />
- 	```
+* `visibleTodos.map( t => <TodoItem key={ t.$().pid() } todo={ t } todos={ todos } /> );`   
+    
+    The `visibleTodos` is mapped but each `<TodoItem>`. But notice the component's `todos` property:
+    
+    ```jsx
+    <TodoItem ... todos={ todos } />
+    ```
 
- 	We still pass the `todos` array shadow property because the component needs access to the actual shadow state array for deleting the time when the 'x' icon is pressed. The `ui.visibleTodos()` return value is a native array so will be of no use for removing an item from the store's state. This trickiness will be banished by using the `f.lux-react` module in [next step](step-4.md).
- 	
- 	
+    We still pass the `todos` array shadow property because the component needs access to the actual shadow state array for deleting the time when the 'x' icon is pressed. The `ui.visibleTodos()` return value is a native array so will be of no use for removing an item from the store's state. This trickiness will be banished by using the `f.lux-react` module in [next step](step-4.md).
+    
+    
 ## Final Thoughts
 
 This tutorial step covered using the f.lux shadow state for maintaining user interface state. 

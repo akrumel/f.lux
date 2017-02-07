@@ -34,54 +34,54 @@ The f.lux `Store` 'shadows' the application state by recursively mapping the sta
 
 * `IndexedProperty` vs `ArrayProperty`
 
-	Both types represent arrays with the difference being the portion of the [`Array`][array-mdn] api exposed. `ArrayProperty` exposes the complete api while `IndexedProperty` limits the api to the non-mutating methods, such as `filter()`, `find()`, `indexOf()`, and `map()` to name a few. Both types allow for random access and assignment, such as `todos[1].desc`.
-	
-	Use `IndexedProperty` when you want to model an array state property without exposing mutating functions like `push()`, `remove()`, and `splice()`. You can then specify a custom shadow api to expose mutation methods that involve implementation logic. 
-	
-	`IndexedProperty` is used to implement the `TodoListProperty` in this step.
-	
+    Both types represent arrays with the difference being the portion of the [`Array`][array-mdn] api exposed. `ArrayProperty` exposes the complete api while `IndexedProperty` limits the api to the non-mutating methods, such as `filter()`, `find()`, `indexOf()`, and `map()` to name a few. Both types allow for random access and assignment, such as `todos[1].desc`.
+    
+    Use `IndexedProperty` when you want to model an array state property without exposing mutating functions like `push()`, `remove()`, and `splice()`. You can then specify a custom shadow api to expose mutation methods that involve implementation logic. 
+    
+    `IndexedProperty` is used to implement the `TodoListProperty` in this step.
+    
 * `ObjectProperty` vs `MapProperty`
 
-	Both types represent javascript objects with the difference being the exposed api. `MapProperty` exposes the full [`Map`][map-mdn] api for adding, inspecting, and removing properties. `ObjectProperty` is more like a literal javascript object and does not expose a mutation api. Both types allow for random access and assignment using property key names, such `todo.desc` or `todo['desc']`.
-	
-	Use `ObjectProperty` when you do not need the `Map` api or want to define your own, custom shadow api. For example, use `ObjectProperty` to implement a property exposing the current phone orientation. The orientation may be either landscape or portrait. Allowing the application add and remove properties to an `OrientationProperty` is non-sensical. Instead, base `OrientationProperty` on `ObjectProperty` and expose a shadow api with a function `isLandscape()`. As described in the next section, you would use the life-cycle methods `propertyWillShadow()` and `propertyWillUnshadow()` to register and unregister for phone OS orientation change events, set a state variable based on the events, and the React UI could render the appropriate display by inspecting `orientation.isLandscape()`.
+    Both types represent javascript objects with the difference being the exposed api. `MapProperty` exposes the full [`Map`][map-mdn] api for adding, inspecting, and removing properties. `ObjectProperty` is more like a literal javascript object and does not expose a mutation api. Both types allow for random access and assignment using property key names, such `todo.desc` or `todo['desc']`.
+    
+    Use `ObjectProperty` when you do not need the `Map` api or want to define your own, custom shadow api. For example, use `ObjectProperty` to implement a property exposing the current phone orientation. The orientation may be either landscape or portrait. Allowing the application add and remove properties to an `OrientationProperty` is non-sensical. Instead, base `OrientationProperty` on `ObjectProperty` and expose a shadow api with a function `isLandscape()`. As described in the next section, you would use the life-cycle methods `propertyWillShadow()` and `propertyWillUnshadow()` to register and unregister for phone OS orientation change events, set a state variable based on the events, and the React UI could render the appropriate display by inspecting `orientation.isLandscape()`.
 
-	`ObjectProperty` is used for implementing the `TodoProperty` in this step.
-	
-	
+    `ObjectProperty` is used for implementing the `TodoProperty` in this step.
+    
+    
 ### `Property` features
 
 This tutorial step will explore some interesting `Property` features:
 
 * **Life-cycle**
 
-	A `Property` instance exists for the life of the underlying state, spans state changes, and has life-cycle driven by the shadowing process. A `Property` can tie into the life-cycle to register for system events, manage web sockets, update persistent stores, or log information. 
+    A `Property` instance exists for the life of the underlying state, spans state changes, and has life-cycle driven by the shadowing process. A `Property` can tie into the life-cycle to register for system events, manage web sockets, update persistent stores, or log information. 
 
-	The life-cycle methods are:
-	
-	- `propertyWillShadow()` - invoked just before the shadow property is going to be added to the shadow state.
-	- `propertyDidShadow()` - state property was shadowed and the `Property` is fully functional.
-	- `propertyChildInvalidated(childProperty, sourceProperty)` - A child property mutation action has occurred and it's value will change in store's next update.
-	- `propertyDidUpdate()` - state managed by this property has changed.
-	- `propertyWillUnshadow()` - invoked prior to the `Property` being removed from the shadow state
-	
+    The life-cycle methods are:
+    
+    - `propertyWillShadow()` - invoked just before the shadow property is going to be added to the shadow state.
+    - `propertyDidShadow()` - state property was shadowed and the `Property` is fully functional.
+    - `propertyChildInvalidated(childProperty, sourceProperty)` - A child property mutation action has occurred and it's value will change in store's next update.
+    - `propertyDidUpdate()` - state managed by this property has changed.
+    - `propertyWillUnshadow()` - invoked prior to the `Property` being removed from the shadow state
+    
 * **Shadow api**
 
-	Colocating application state with application logic is a foundational f.lux goal to improve type safety and make an application easier to reason about. This is accomplished by developing a shadow api for a property or utilizing the default api provided by f.lux (as was done in the previous step). This is actually how the `todos.map()` array function from the previous chapter is implemented behind the scenes:
+    Colocating application state with application logic is a foundational f.lux goal to improve type safety and make an application easier to reason about. This is accomplished by developing a shadow api for a property or utilizing the default api provided by f.lux (as was done in the previous step). This is actually how the `todos.map()` array function from the previous chapter is implemented behind the scenes:
 
-	```js
-	todos.map( t => <TodoItem todo={ t } todos={ todos } /> )
-	```
+    ```js
+    todos.map( t => <TodoItem todo={ t } todos={ todos } /> )
+    ```
 
-	Writing a shadow api is just like writing a javascript class or defining a javascript object without the need to define and manage the data since that already exists in the f.lux `Store`. Ultimately, the shadow api will be instantiated as a `Shadow` subclass instance.
+    Writing a shadow api is just like writing a javascript class or defining a javascript object without the need to define and manage the data since that already exists in the f.lux `Store`. Ultimately, the shadow api will be instantiated as a `Shadow` subclass instance.
 
 * **`type` class variable**
 
-	Every `Property` class exposes a `type` class variable describing how the state data should be shadowed. The `type` variable provides a `StateType` instance and is primarily used to compose the application state structure. the `type` variables specify such information as the shadow api, default values, initital state values, readonly access, and whether to enable/disable auto-shadowing. 
-	
-	This step will define several custom f.lux property types: `TodoProperty` and `TodoListProperty`. The `type` class variable `TodoProperty.type` defines how f.lux should shadow each todo item and is setup when defining `TodoProperty`. The `TodoListProperty.type` describes how the todos array should be shadowed and will be configured to shadow each element using `TodoProperty`.
-	
-	`type` class variables provide the declarative mechanism for describing the shadowing process, are super easy to setup, and will be explored in detail during this step.
+    Every `Property` class exposes a `type` class variable describing how the state data should be shadowed. The `type` variable provides a `StateType` instance and is primarily used to compose the application state structure. the `type` variables specify such information as the shadow api, default values, initital state values, readonly access, and whether to enable/disable auto-shadowing. 
+    
+    This step will define several custom f.lux property types: `TodoProperty` and `TodoListProperty`. The `type` class variable `TodoProperty.type` defines how f.lux should shadow each todo item and is setup when defining `TodoProperty`. The `TodoListProperty.type` describes how the todos array should be shadowed and will be configured to shadow each element using `TodoProperty`.
+    
+    `type` class variables provide the declarative mechanism for describing the shadowing process, are super easy to setup, and will be explored in detail during this step.
 
 
 ### Creating a `Shadow`
@@ -90,50 +90,50 @@ Specifing a shadow api consists of two steps:
 
 1. **Define the api**
 
-	There are two ways to define shadow api:
-	
-	- **Subclassing**
-	
-		```js
-		class TodoShadow extends Shadow {
-			get momentCreated() {
-				return moment(this.created);
-			}
+    There are two ways to define shadow api:
+    
+    - **Subclassing**
+    
+        ```js
+        class TodoShadow extends Shadow {
+            get momentCreated() {
+                return moment(this.created);
+            }
 
-			isCompleted() {
-				return this.completed;
-			}
-		}
-		```
-	
-	- **Literal object**
-	
-		```js
-		const TodoListShadow = {
-			get incompleteSize() {
-				return this.reduce( (acc, t) => !t.completed ?acc+1 :acc, 0);
-			},
+            isCompleted() {
+                return this.completed;
+            }
+        }
+        ```
+    
+    - **Literal object**
+    
+        ```js
+        const TodoListShadow = {
+            get incompleteSize() {
+                return this.reduce( (acc, t) => !t.completed ?acc+1 :acc, 0);
+            },
 
-			addTodo(desc) {
-				return this.push(TodoProperty.create(desc));
-			},
-			
-			// other methods and properties here
-		}
-		```
-		
-	In both cases, the `this` reference is the shadow state for the property.
-	
-	
+            addTodo(desc) {
+                return this.push(TodoProperty.create(desc));
+            },
+            
+            // other methods and properties here
+        }
+        ```
+        
+    In both cases, the `this` reference is the shadow state for the property.
+    
+    
 2. **Attach the api using `Property.type`**
 
-	Each built-in `Property` class provides a static function for creating a specialized `Property` class called `createClasss()` that takes a shadow definition and returns a new `Property` subclass. For example,
-	
-	```js
-	export default IndexedProperty.createClass(TodoListShadow);
-	```
-	creates a new `IndexedProperty` subclass where the shadowing process will use the `TodoListShadow` as the shadow api. This tutorial step will explore additional capabilities of `createClass()` and how to utilize the generated class.
-	
+    Each built-in `Property` class provides a static function for creating a specialized `Property` class called `createClasss()` that takes a shadow definition and returns a new `Property` subclass. For example,
+    
+    ```js
+    export default IndexedProperty.createClass(TodoListShadow);
+    ```
+    creates a new `IndexedProperty` subclass where the shadowing process will use the `TodoListShadow` as the shadow api. This tutorial step will explore additional capabilities of `createClass()` and how to utilize the generated class.
+    
 
 ### Custom properties
 
@@ -145,21 +145,21 @@ Creating a custom `Property` class requires two steps:
 
 1. **Extend an existing `Property` class**
 
-	```js
-	export default class TodoProperty extends ObjectProperty {
-		// implementation here
-	}
-	```
+    ```js
+    export default class TodoProperty extends ObjectProperty {
+        // implementation here
+    }
+    ```
 
 2. **Define the `type` static variable**
 
-	Each built-in type has a `defineType()` static function that will create a `type` static veriable that can be used for configuring the shadowing process. Continuing the `TodoProperty` in step 1:
-	
-	```js
-	ObjectProperty.defineType(TodoProperty);
-	```
+    Each built-in type has a `defineType()` static function that will create a `type` static veriable that can be used for configuring the shadowing process. Continuing the `TodoProperty` in step 1:
+    
+    ```js
+    ObjectProperty.defineType(TodoProperty);
+    ```
 
-	This tutorial step will explore additional capabilities of `defineType()`.
+    This tutorial step will explore additional capabilities of `defineType()`.
 
 
 ### Configuring the `type` static variable
@@ -183,8 +183,8 @@ Extending the eariler `IndexedProperty.createClass()` example, here is an exampl
 
 ```js
 IndexedProperty.createClass(TodoListShadow, type => {
-	type.elementType(TodoProperty.type)    // each model contained will be a TodoProperty type
-		.typeName("TodoListProperty")      // useful for diagnostics
+    type.elementType(TodoProperty.type)    // each model contained will be a TodoProperty type
+        .typeName("TodoListProperty")      // useful for diagnostics
 })
 ```
 
@@ -196,7 +196,7 @@ The `Shadow` class is the base class for all f.lux shadow state properties. Its 
 * `$$()` - returns the backing `Property` instance
 
 Accessing a shadow's backing `Property` is most often used to access specific capaiblities the `Property` class posseses but are not shadowed. In this step we will access `Property` level apis in `IndexedProperty` and `ObjectProperty` for mutating the state, a capability not provided by the parent `Shadow` classes. This is more fully explained in the coding sections below.
-	
+    
 
 ## 1. Todo property<a id="todo" />
 
@@ -215,9 +215,9 @@ Dates will be manipulated using the excellent `moment` library.
 import moment from "moment";
 
 import {
-	ObjectProperty,
-	PrimitiveProperty,
-	Shadow,
+    ObjectProperty,
+    PrimitiveProperty,
+    Shadow,
 } from "f.lux";
 ```
 
@@ -230,16 +230,16 @@ The `TodoProperty` class does not need the `Map` api for mutations so let's exte
 
 ```js
 export default class TodoProperty extends ObjectProperty {
-	static create(desc) {
-		const now = moment().toISOString();
+    static create(desc) {
+        const now = moment().toISOString();
 
-		return {
-			completed: false,
-			created: now,
-			desc: desc,
-			updated: now,
-		}
-	}
+        return {
+            completed: false,
+            created: now,
+            desc: desc,
+            updated: now,
+        }
+    }
 }
 ```
 
@@ -247,13 +247,13 @@ A few things worth noting:
 
 * `class TodoProperty extends ObjectProperty { ... }`
 
-	Creating an `Property` class is as simple as subclassing an existing `Property` class. You can also subclass your own or third party `Property` subclasses though this is not generally a preferred style. The idea being that `Property` subclasses are **data components** and not general purpose business logic class hieararchies.
-	
-	We will tie into the property life-cycle in the last part of this tutorial step by adding a `propertyChildInvalidated()` method.
-	
+    Creating an `Property` class is as simple as subclassing an existing `Property` class. You can also subclass your own or third party `Property` subclasses though this is not generally a preferred style. The idea being that `Property` subclasses are **data components** and not general purpose business logic class hieararchies.
+    
+    We will tie into the property life-cycle in the last part of this tutorial step by adding a `propertyChildInvalidated()` method.
+    
 * `static create(desc) { ... }`
 
-	A static function for creating a new todo item state object. This has nothing to do with f.lux beyond demonstrating how `Property` classes provide single place, common sense location to put logic related to a state value. Should the expected structure of a todo item change then all changes can be made in a single file.
+    A static function for creating a new todo item state object. This has nothing to do with f.lux beyond demonstrating how `Property` classes provide single place, common sense location to put logic related to a state value. Should the expected structure of a todo item change then all changes can be made in a single file.
 
 
 ### Create the `TodoShadow` class
@@ -262,63 +262,63 @@ Let's stick with the subclassing theme for creating the shadow api:
 
 ```js
 class TodoShadow extends Shadow {
-	get momentCreated() {
-		return moment(this.created);
-	}
+    get momentCreated() {
+        return moment(this.created);
+    }
 
-	get momentUpdated() {
-		return moment(this.updated);
-	}
+    get momentUpdated() {
+        return moment(this.updated);
+    }
 }
 ```
 
 * `class TodoShadow extends Shadow { ... }`
 
-	`Shadow` is the base class for all shadow apis. Every built-in `Property` class has a default `Shadow` class. Extending from the property `Shadow` class is important or you risk losing expected functionality from the shadow state property. Here is a table listing the `Property` to `Shadow` class relationships:
-	
-	| `Property` class       | `Shadow` class
-	| ---------------------- | -------------------------
-	| `ArrayProperty`        |  `ArrayShadow`
-	| `IndexedProperty`      |  `IndexedShadow`
-	| `MapProperty`          |  `MapShadow`
-	| `ObjectProperty`       |  `Shadow`
-	| `PrimitiveProperty`    |  `Shadow`
+    `Shadow` is the base class for all shadow apis. Every built-in `Property` class has a default `Shadow` class. Extending from the property `Shadow` class is important or you risk losing expected functionality from the shadow state property. Here is a table listing the `Property` to `Shadow` class relationships:
+    
+    | `Property` class       | `Shadow` class
+    | ---------------------- | -------------------------
+    | `ArrayProperty`        |  `ArrayShadow`
+    | `IndexedProperty`      |  `IndexedShadow`
+    | `MapProperty`          |  `MapShadow`
+    | `ObjectProperty`       |  `Shadow`
+    | `PrimitiveProperty`    |  `Shadow`
 
-	
+    
 * `momentCreated` and `momentUpdated` virtual properties
 
-	The `created` and `updated` properties are strings yet the UI needs values suitable for sorting and filtering. To that end, we create two virtual properties that return `moment` objects created using the child shadow state properties. Notice how 
-	
-	```
-	return moment(this.created);
-	``` 
-	uses the `this` reference:
-	
-	- `this` - refers to the f.lux shadow state for the todo item
-	- `created` - the child f.lux shadow state property
-	
-	The UI can then access the virtual properties:
-	
-	```
-	sortBy(todos, t => -t.momentCreated.valueOf() )
-	```
-	
-	**Key F.lux Concept: Shadow api methods use the `this` reference to access the shadow state.** 
-	
+    The `created` and `updated` properties are strings yet the UI needs values suitable for sorting and filtering. To that end, we create two virtual properties that return `moment` objects created using the child shadow state properties. Notice how 
+    
+    ```
+    return moment(this.created);
+    ``` 
+    uses the `this` reference:
+    
+    - `this` - refers to the f.lux shadow state for the todo item
+    - `created` - the child f.lux shadow state property
+    
+    The UI can then access the virtual properties:
+    
+    ```
+    sortBy(todos, t => -t.momentCreated.valueOf() )
+    ```
+    
+    **Key F.lux Concept: Shadow api methods use the `this` reference to access the shadow state.** 
+    
 ### Define `TodoProperty.type` 
 
 The easiest way to define the `type` descriptor is to use the `defineType()` static function in your built-in `Property` parent class:
 
 ```js
 ObjectProperty.defineType(TodoProperty, TodoShadow, type => {
-	type.properties({
-				completed: PrimitiveProperty.type.initialState(false),
-				created: PrimitiveProperty.type.readonly,
-				desc: PrimitiveProperty.type,
-				updated: PrimitiveProperty.type.readonly,
-			})
-		.readonlyOff
-		.typeName("TodoProperty");
+    type.properties({
+                completed: PrimitiveProperty.type.initialState(false),
+                created: PrimitiveProperty.type.readonly,
+                desc: PrimitiveProperty.type,
+                updated: PrimitiveProperty.type.readonly,
+            })
+        .readonlyOff
+        .typeName("TodoProperty");
 });
 ```
 
@@ -334,23 +334,23 @@ Let's checkout some of the finer points:
 
 * `type.properties({ ... })`
 
-	`StateType` method used to configure the child properties. Auto-shadowing will shadow the current state but does not provide any control over the shadowing process. `properties({}) takes an object parameter where the key/value paris are the child property name and associated `StateType` value. 
-	
+    `StateType` method used to configure the child properties. Auto-shadowing will shadow the current state but does not provide any control over the shadowing process. `properties({}) takes an object parameter where the key/value paris are the child property name and associated `StateType` value. 
+    
 * `desc: PrimitiveProperty.type`
 
-	Our first glimpse at using the `type` descriptor. Each built-in `Property` class has a `type` static variable. In this case,  we are specifying the `desc` property as a Javascript primitive (`boolean`, `string`, or `number`). This mimics the auto-shadowing process. Just like React component `propTypes`, it never hurts to be explicit about data expectations.
-	
+    Our first glimpse at using the `type` descriptor. Each built-in `Property` class has a `type` static variable. In this case,  we are specifying the `desc` property as a Javascript primitive (`boolean`, `string`, or `number`). This mimics the auto-shadowing process. Just like React component `propTypes`, it never hurts to be explicit about data expectations.
+    
 * `completed: PrimitiveProperty.type.initialState(false)`
 
-	This specifies an initial value for the `completed` property using the `StateType.initialState(value)` method.
+    This specifies an initial value for the `completed` property using the `StateType.initialState(value)` method.
 
 * `created: PrimitiveProperty.type.readonly`
 
-	The `created` property is declared as readonly to prevent application code from assigning a new value. This is accomplished using the `StateType.readonly` property. Notice `readonly` is not a function yet is still chainable:
-	
-	```
-	PrimitiveProperty.type.readonly.initialState(null)
-	```
+    The `created` property is declared as readonly to prevent application code from assigning a new value. This is accomplished using the `StateType.readonly` property. Notice `readonly` is not a function yet is still chainable:
+    
+    ```
+    PrimitiveProperty.type.readonly.initialState(null)
+    ```
 
 ### The code
 
@@ -360,46 +360,46 @@ Here is the entire `TodoProperty.js` source:
 import moment from "moment";
 
 import {
-	ObjectProperty,
-	PrimitiveProperty,
-	Shadow,
+    ObjectProperty,
+    PrimitiveProperty,
+    Shadow,
 } from "f.lux";
 
 
 export default class TodoProperty extends ObjectProperty {
-	static create(desc) {
-		const now = moment().toISOString();
+    static create(desc) {
+        const now = moment().toISOString();
 
-		return {
-			completed: false,
-			created: now,
-			desc: desc,
-			updated: now,
-		}
-	}
+        return {
+            completed: false,
+            created: now,
+            desc: desc,
+            updated: now,
+        }
+    }
 }
 
 
 class TodoShadow extends Shadow {
-	get momentCreated() {
-		return moment(this.created);
-	}
+    get momentCreated() {
+        return moment(this.created);
+    }
 
-	get momentUpdated() {
-		return moment(this.updated);
-	}
+    get momentUpdated() {
+        return moment(this.updated);
+    }
 }
 
 
 ObjectProperty.defineType(TodoProperty, TodoShadow, type => {
-	type.properties({
-				completed: PrimitiveProperty.type.initialState(false),
-				created: PrimitiveProperty.type.readonly,
-				desc: PrimitiveProperty.type,
-				updated: PrimitiveProperty.type.readonly,
-			})
-		.readonlyOff                 // enable 'completed' and 'desc' assignment
-		.typeName("TodoProperty");
+    type.properties({
+                completed: PrimitiveProperty.type.initialState(false),
+                created: PrimitiveProperty.type.readonly,
+                desc: PrimitiveProperty.type,
+                updated: PrimitiveProperty.type.readonly,
+            })
+        .readonlyOff                 // enable 'completed' and 'desc' assignment
+        .typeName("TodoProperty");
 });
 ```
 
@@ -417,24 +417,24 @@ The `IndexedProperty` uses the `IndexedShadow` as its default shadow type. By de
 
 ```js
 const TodoListShadow = {
-	get incompleteSize() {
-		return this.reduce( (acc, t) => !t.completed ?acc+1 :acc, 0);
-	},
+    get incompleteSize() {
+        return this.reduce( (acc, t) => !t.completed ?acc+1 :acc, 0);
+    },
 
-	addTodo(desc) {
-		const listProp = this.$$();
+    addTodo(desc) {
+        const listProp = this.$$();
 
-		listProp._indexed.push(TodoProperty.create(desc));
-	},
+        listProp._indexed.push(TodoProperty.create(desc));
+    },
 
-	removeTodo(todo) {
-		const listProp = this.$$();
-		const idx = this.indexOf(todo);
+    removeTodo(todo) {
+        const listProp = this.$$();
+        const idx = this.indexOf(todo);
 
-		if (idx !== -1) {
-			listProp._indexed.remove(idx);
-		}
-	}
+        if (idx !== -1) {
+            listProp._indexed.remove(idx);
+        }
+    }
 }
 ```
 
@@ -442,28 +442,28 @@ A few points of interest:
 
 * `const listProp = this.$$();`
 
-	Occassionally, a shadow method requires access to the backing `Property` instance. This is accomplished using the `Shadow` method `$$()`. All shadow state property values have this method. 
+    Occassionally, a shadow method requires access to the backing `Property` instance. This is accomplished using the `Shadow` method `$$()`. All shadow state property values have this method. 
 
 * `listProp._indexed.push(TodoProperty.create(desc))`
 
-	`IndexedShadow` does not provide mutation methods but `IndexedProperty` does through the `_indexed` instance variable. `TodoListProperty` is defined as an `IndexedProperty` via the `IndexedProperty.createClass()` declaration.
+    `IndexedShadow` does not provide mutation methods but `IndexedProperty` does through the `_indexed` instance variable. `TodoListProperty` is defined as an `IndexedProperty` via the `IndexedProperty.createClass()` declaration.
 
 * `listProp._indexed.remove(idx)`
 
-	And this takes advantage of the `_indexed.remove()` function.
+    And this takes advantage of the `_indexed.remove()` function.
 
 * `incompleteSize` virtual property
 
-	`incompleteSize` is a virtual property defined using the es2015 `get` keyword like `momentCreated` in `TodoProperty`. The property body is interesting:
-	
-	```js
-	return this.reduce( (acc, t) => !t.completed ?acc+1 :acc, 0);
-	```
-	
-	- `this.reduce(callback)` uses the `Array.reduce()` function provided by the `IndexedShadow` class. When writing a shadow api method, `this` references the shadow state api you are implementing. The next section uses `IndexedProperty.createClass()` to set the `TodoListShadow` as the properties api. `IndexedProperty.createClass()` will create an `IndexShadow` subclass and assign the properties and methods of the `TodoListShadow` literal object to the subclass' prototype.
-	- each iteration passes a todo item along with the accumulator value: `(acc, t) => !t.completed ?acc+1 :acc`. This code adds one to the accumulator if the todo item's `completed` flag is false: `!t.completed`.
-	
-	**Key F.lux Concept: When working with f.lux shadow types the `this` reference always references the shadow state and not the actual state of the `Store`. This means any changes to the shadow state will be asynchronously reflected in the actual state followed by a `Store` change notification being sent to all registered callbacks.**
+    `incompleteSize` is a virtual property defined using the es2015 `get` keyword like `momentCreated` in `TodoProperty`. The property body is interesting:
+    
+    ```js
+    return this.reduce( (acc, t) => !t.completed ?acc+1 :acc, 0);
+    ```
+    
+    - `this.reduce(callback)` uses the `Array.reduce()` function provided by the `IndexedShadow` class. When writing a shadow api method, `this` references the shadow state api you are implementing. The next section uses `IndexedProperty.createClass()` to set the `TodoListShadow` as the properties api. `IndexedProperty.createClass()` will create an `IndexShadow` subclass and assign the properties and methods of the `TodoListShadow` literal object to the subclass' prototype.
+    - each iteration passes a todo item along with the accumulator value: `(acc, t) => !t.completed ?acc+1 :acc`. This code adds one to the accumulator if the todo item's `completed` flag is false: `!t.completed`.
+    
+    **Key F.lux Concept: When working with f.lux shadow types the `this` reference always references the shadow state and not the actual state of the `Store`. This means any changes to the shadow state will be asynchronously reflected in the actual state followed by a `Store` change notification being sent to all registered callbacks.**
 
 
 ### Create the `TodoListProperty`
@@ -472,15 +472,15 @@ A few points of interest:
 
 ```js
 export default IndexedProperty.createClass(TodoListShadow, type => {
-	type.elementType(TodoProperty.type)    
-		.typeName("TodoListProperty")      
+    type.elementType(TodoProperty.type)    
+        .typeName("TodoListProperty")      
 });
 ```
 
 Each built-in `Property` class has a static `createClass()` function for creating a `Property` subclass with a `type` descriptor attached.
 
 The parameters are:
-	
+    
 - `TodoListShadow` - the shadow type for the new property type. This parameter can also be an `IndexedShadow` subclass in this case.
 - `callback(type)` - configure the shadowing behavior.
 
@@ -504,29 +504,29 @@ import TodoProperty from "./TodoProperty";
 
 
 const TodoListShadow = {
-	get incompleteSize() {
-		return this.reduce( (acc, t) => !t.completed ?acc+1 :acc, 0);
-	},
+    get incompleteSize() {
+        return this.reduce( (acc, t) => !t.completed ?acc+1 :acc, 0);
+    },
 
-	addTodo(desc) {
-		const listProp = this.$$();
+    addTodo(desc) {
+        const listProp = this.$$();
 
-		listProp._indexed.push(TodoProperty.create(desc));
-	},
+        listProp._indexed.push(TodoProperty.create(desc));
+    },
 
-	removeTodo(todo) {
-		const listProp = this.$$();
-		const idx = this.indexOf(todo);
+    removeTodo(todo) {
+        const listProp = this.$$();
+        const idx = this.indexOf(todo);
 
-		if (idx !== -1) {
-			listProp._indexed.remove(idx);
-		}
-	}
+        if (idx !== -1) {
+            listProp._indexed.remove(idx);
+        }
+    }
 }
 
 export default IndexedProperty.createClass(TodoListShadow, type => {
-	type.elementType(TodoProperty.type)    // each model contained will be a TodoProperty type
-		.typeName("TodoListProperty")      // useful for diagnostics
+    type.elementType(TodoProperty.type)    // each model contained will be a TodoProperty type
+        .typeName("TodoListProperty")      // useful for diagnostics
 });
 ```
 
@@ -542,14 +542,14 @@ Like `TodoProperty`, the root property is an `ObjectProperty` yet it does not ti
 
 ```js
 export default ObjectProperty.createClass({}, type => {
-	type.autoshadowOff                          
-		.properties({                           
-				todos: TodoListProperty.type,   
-			})
-		.readonly                               
-		.typeName("TodoRootProperty");          
+    type.autoshadowOff                          
+        .properties({                           
+                todos: TodoListProperty.type,   
+            })
+        .readonly                               
+        .typeName("TodoRootProperty");          
 });
-```	
+``` 
 
 There are a few new wrinkles worth discussing:
 
@@ -596,16 +596,16 @@ Improve `todos` sorting for rendering the `<TodoItem>` components by sorting inc
 
 ```js
 return todos
-	.sortBy('completed')
-	.map( t => <TodoItem key={ t.$().pid() } todo={ t } todos={ todos } /> );
+    .sortBy('completed')
+    .map( t => <TodoItem key={ t.$().pid() } todo={ t } todos={ todos } /> );
 ```
 
 to the more advanced:
 
 ```js
 return todos
-	.sortBy([ 'completed', t => -t.momentCreated.valueOf() ])
-	.map( t => <TodoItem key={ t.$().pid() } todo={ t } todos={ todos } /> );
+    .sortBy([ 'completed', t => -t.momentCreated.valueOf() ])
+    .map( t => <TodoItem key={ t.$().pid() } todo={ t } todos={ todos } /> );
 ```
 
 This code uses the `TodoProperty` virtual property `momentCreated` for the secondary sorting criteria.
@@ -619,9 +619,9 @@ Change the `<AddTodo>` component method `addTodo()` from:
 
 ```js
 const todo = {
-	completed: false,
-	desc,
-	created: moment().toISOString()
+    completed: false,
+    desc,
+    created: moment().toISOString()
 }
 
 // add the Todo item to the array
@@ -646,7 +646,7 @@ Change `<TodoItem> component function removeTodo()` from:
 const idx = todos.indexOf(todo);
 
 if (idx !== -1) {
-	todos.remove(idx);
+    todos.remove(idx);
 }
 ```
 
@@ -660,28 +660,28 @@ We can simplify the code further by inlining the event handlers since the `TodoP
 
 ```js
 export default function TodoItem(props, context) {
-	const { todo, todos } = props;
-	const { completed, desc } = todo;
-	const descClasses = classnames("todoItem-desc", {
-			"todoItem-descCompleted": completed
-		});
-	const completedClasses = classnames("todoItem-completed fa", {
-			"fa-check-square-o todoItem-completedChecked": completed,
-			"fa-square-o": !completed,
-		});
+    const { todo, todos } = props;
+    const { completed, desc } = todo;
+    const descClasses = classnames("todoItem-desc", {
+            "todoItem-descCompleted": completed
+        });
+    const completedClasses = classnames("todoItem-completed fa", {
+            "fa-check-square-o todoItem-completedChecked": completed,
+            "fa-square-o": !completed,
+        });
 
-	return <div className="todoItem">
-			<i className={ completedClasses } onClick={ () => todo.completed = !todo.completed } />
+    return <div className="todoItem">
+            <i className={ completedClasses } onClick={ () => todo.completed = !todo.completed } />
 
-			<input
-				type="text"
-				className={ descClasses }
-				onChange={ event => todo.desc = event.target.value }
-				defaultValue={ desc }
-			/>
+            <input
+                type="text"
+                className={ descClasses }
+                onChange={ event => todo.desc = event.target.value }
+                defaultValue={ desc }
+            />
 
-			<i className="todoItem-delete fa fa-times" onClick={ () => todos.removeTodo(todo) }/>
-		</div>
+            <i className="todoItem-delete fa fa-times" onClick={ () => todos.removeTodo(todo) }/>
+        </div>
 }
 ```
 
@@ -706,13 +706,13 @@ Keep in mind, we are now working in the `Property` class and not a `Shadow` clas
 
 ```js
 propertyChildInvalidated(childProperty, sourceProperty) {
-	const childName = childProperty.name();
+    const childName = childProperty.name();
 
-	if (childName === "completed" || childName === "desc") {
-		// _keyed is defined in ObjectProperty and provides a non-shadowed api for working with
-		// child properties. We use the api to 'set' a readonly property value
-		this._keyed.set("updated", moment().toISOString());
-	}
+    if (childName === "completed" || childName === "desc") {
+        // _keyed is defined in ObjectProperty and provides a non-shadowed api for working with
+        // child properties. We use the api to 'set' a readonly property value
+        this._keyed.set("updated", moment().toISOString());
+    }
 }
 ```
 
@@ -720,21 +720,21 @@ Ok, there is some new stuff here:
 
 * `const childName = childProperty.name()`
 
-	`name()` is a `Property` base class method returning the shadowed property name. We use the `childProperty.name()` value to determine if the `desc` or `completed` properties changed. If so, then we set a new value on the `updated` child property.
+    `name()` is a `Property` base class method returning the shadowed property name. We use the `childProperty.name()` value to determine if the `desc` or `completed` properties changed. If so, then we set a new value on the `updated` child property.
 
 * `this._keyed.set("updated", moment().toISOString())`
 
-	It's been a while so here is the definition for `updated`:
-	
-	```
-	updated: PrimitiveProperty.type.readonly
-	```
-	
-	The `readonly` property means assignment (`=`) cannot be used to set a new value. `ObjectProperty` provides a non-shadowed (hidden) api for mutating a property's state. The api is available through the inherited `_keyed` instance variable and is of type `KeyedApi`. The `updated` property value can be set by:
-	
-	```
-	this._keyed.set("updated", moment().toISOString())
-	```
+    It's been a while so here is the definition for `updated`:
+    
+    ```
+    updated: PrimitiveProperty.type.readonly
+    ```
+    
+    The `readonly` property means assignment (`=`) cannot be used to set a new value. `ObjectProperty` provides a non-shadowed (hidden) api for mutating a property's state. The api is available through the inherited `_keyed` instance variable and is of type `KeyedApi`. The `updated` property value can be set by:
+    
+    ```
+    this._keyed.set("updated", moment().toISOString())
+    ```
 
 ### The code
 
@@ -742,37 +742,37 @@ Here is the updated `TodoProperty` class:
 
 ```js
 export default class TodoProperty extends ObjectProperty {
-	propertyChildInvalidated(childProperty, sourceProperty) {
-		const childName = childProperty.name();
+    propertyChildInvalidated(childProperty, sourceProperty) {
+        const childName = childProperty.name();
 
-		if (childName === "completed" || childName === "desc") {
-			// _keyed is defined in ObjectProperty and provides a non-shadowed api for working with
-			// child properties. We use the api to 'set' a readonly property value
-			this._keyed.set("updated", moment().toISOString());
-		}
-	}
+        if (childName === "completed" || childName === "desc") {
+            // _keyed is defined in ObjectProperty and provides a non-shadowed api for working with
+            // child properties. We use the api to 'set' a readonly property value
+            this._keyed.set("updated", moment().toISOString());
+        }
+    }
 
-	static create(desc) {
-		const now = moment().toISOString();
+    static create(desc) {
+        const now = moment().toISOString();
 
-		return {
-			completed: false,
-			created: now,
-			desc: desc,
-			updated: now,
-		}
-	}
+        return {
+            completed: false,
+            created: now,
+            desc: desc,
+            updated: now,
+        }
+    }
 }
 
 ObjectProperty.defineType(TodoProperty, TodoShadow, type => {
-	type.properties({
-				completed: PrimitiveProperty.type.initialState(false),
-				created: PrimitiveProperty.type.readonly,
-				desc: PrimitiveProperty.type,
-				updated: PrimitiveProperty.type.readonly,
-			})
-		.readonlyOff                 // enable 'completed' and 'desc' assignment
-		.typeName("TodoProperty");
+    type.properties({
+                completed: PrimitiveProperty.type.initialState(false),
+                created: PrimitiveProperty.type.readonly,
+                desc: PrimitiveProperty.type,
+                updated: PrimitiveProperty.type.readonly,
+            })
+        .readonlyOff                 // enable 'completed' and 'desc' assignment
+        .typeName("TodoProperty");
 });
 ```
 

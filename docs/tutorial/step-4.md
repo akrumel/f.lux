@@ -37,56 +37,56 @@ This tutorial step will utilize the following `f.lux-module` exports:
 
 * `<Provider>`
 
-	An application top-level component that places the `Store` on the React context. `<Provder>` expects a single property:
-	
-	- `store` - the application f.lux `Store`
-	
+    An application top-level component that places the `Store` on the React context. `<Provder>` expects a single property:
+    
+    - `store` - the application f.lux `Store`
+    
 
 * `storeContainer()`
 
-	Connects a React component to the f.lux `Store`. This method takes a number of parameters used to configure how the container component's sets up properties for your component. It actually returns a function that takes your component and returns the container component to use in your application. 
+    Connects a React component to the f.lux `Store`. This method takes a number of parameters used to configure how the container component's sets up properties for your component. It actually returns a function that takes your component and returns the container component to use in your application. 
 
-	`storeContainer()` is a complex function but we are going to use it in a simple manner and just pass it a single parameter:
-	
-	- `mapShadowToProps` 
-		
-		Extracts values from the f.lux store's shadow state and returns them as a javascript object. The object will be merged with the component's props and set on your component. `mapShadowToProps()` is a function of the form:
-		
-		```js
-		function callback(shadow, props, store) : stateProps
-		```
-	
-	Here is an example used in this tutorial step:
-		
-	```js
-	function mapShadowToProps(shadow) {
-		return {
-			todos: shadow.todos,
-		}
-	}
-	
-	export default storeContainer(mapShadowToProps)(AddTodo);
-	```
-	
-	Explanation:
-	
-	- `function mapShadowToProps(shadow) {...}
-		The `mapShadowToProps()` function is called when a store change notification is received to get the latest shadow state based props. This implementation returns an object with a single `todos` property.
-		
-	- `storeContainer(mapShadowToProps)`
-		Generates a factory function that takes your React component as its sole parameter to return the f.lux connected component
-		
-	- `(AddTodo)`
-		Uses the function returned by `storeContainer()` to create the f.lux connected component
-	
-	
-	This will be shortened in the application to:
-	
-	```js
-	export default storeContainer( shadow => ({ todos: shadow.todos }) )(AddTodo);
-	```
-	
-	
+    `storeContainer()` is a complex function but we are going to use it in a simple manner and just pass it a single parameter:
+    
+    - `mapShadowToProps` 
+        
+        Extracts values from the f.lux store's shadow state and returns them as a javascript object. The object will be merged with the component's props and set on your component. `mapShadowToProps()` is a function of the form:
+        
+        ```js
+        function callback(shadow, props, store) : stateProps
+        ```
+    
+    Here is an example used in this tutorial step:
+        
+    ```js
+    function mapShadowToProps(shadow) {
+        return {
+            todos: shadow.todos,
+        }
+    }
+    
+    export default storeContainer(mapShadowToProps)(AddTodo);
+    ```
+    
+    Explanation:
+    
+    - `function mapShadowToProps(shadow) {...}
+        The `mapShadowToProps()` function is called when a store change notification is received to get the latest shadow state based props. This implementation returns an object with a single `todos` property.
+        
+    - `storeContainer(mapShadowToProps)`
+        Generates a factory function that takes your React component as its sole parameter to return the f.lux connected component
+        
+    - `(AddTodo)`
+        Uses the function returned by `storeContainer()` to create the f.lux connected component
+    
+    
+    This will be shortened in the application to:
+    
+    ```js
+    export default storeContainer( shadow => ({ todos: shadow.todos }) )(AddTodo);
+    ```
+    
+    
 
 ## 1. `<Provider>` <a id="provider"/>
 
@@ -96,10 +96,10 @@ Using the `<Provider>` component to place your `Store` instance on the React con
 import { Provider } from "f.lux-react";
 
 ReactDOM.render(
-	<Provider store={ store }>
-		<Todos/>
-	</Provider>,
-	document.getElementById('react-ui')
+    <Provider store={ store }>
+        <Todos/>
+    </Provider>,
+    document.getElementById('react-ui')
 );
 ```
 
@@ -133,14 +133,14 @@ import Toolbar from "./Toolbar.react";
 
 
 export default function Todos(props, context) {
-	return <div className="todoContainer">
-			<Header />
+    return <div className="todoContainer">
+            <Header />
 
-			<AddTodo />
-			<TodoList />
+            <AddTodo />
+            <TodoList />
 
-			<Toolbar />
-		</div>
+            <Toolbar />
+        </div>
 }
 ```
 
@@ -159,12 +159,12 @@ import { storeContainer } from "f.lux-react";
 
 
 function Header(props, context) {
-	const { todos } = props;
-	const remainingText = `${ todos.incompleteSize } ${ pluralize("item", todos.incompleteSize ) } remaining`;
+    const { todos } = props;
+    const remainingText = `${ todos.incompleteSize } ${ pluralize("item", todos.incompleteSize ) } remaining`;
 
-	return <h1>
-			F.lux Todos <small>{ remainingText }</small>
-		</h1>
+    return <h1>
+            F.lux Todos <small>{ remainingText }</small>
+        </h1>
 }
 
 
@@ -185,20 +185,20 @@ import TodoItem from "./TodoItem.react";
 
 
 function TodoList(props, context) {
-	const { todos, ui } = props;
-	const visibleTodos = ui.visibleTodos();
+    const { todos, ui } = props;
+    const visibleTodos = ui.visibleTodos();
 
-	if (todos.length === 0) {
-		return <p className="noItems">What do you want to do today?</p>
-	} else if (visibleTodos.length === 0) {
-		return <p className="noItems">No items are { ui.filter }</p>
-	}
+    if (todos.length === 0) {
+        return <p className="noItems">What do you want to do today?</p>
+    } else if (visibleTodos.length === 0) {
+        return <p className="noItems">No items are { ui.filter }</p>
+    }
 
-	return <div>
-		{
-			visibleTodos.map( t => <TodoItem key={ t.$().pid() } todo={ t } todos={ todos } /> )
-		}
-		</div>
+    return <div>
+        {
+            visibleTodos.map( t => <TodoItem key={ t.$().pid() } todo={ t } todos={ todos } /> )
+        }
+        </div>
 }
 
 
@@ -231,12 +231,12 @@ import SortSelector from "./SortSelector.react";
 
 
 function Toolbar(props, context) {
-	const { ui } = props;
+    const { ui } = props;
 
-	return <div className="tools">
-			<FilterSelector ui={ ui } />
-			<SortSelector ui={ ui } />
-		</div>
+    return <div className="tools">
+            <FilterSelector ui={ ui } />
+            <SortSelector ui={ ui } />
+        </div>
 }
 
 
