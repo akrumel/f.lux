@@ -1,22 +1,10 @@
 {
 	"title": "F.lux",
 	"source": "./src",
-	"destination": "./build/docs",
+	"destination": "./docs/api",
+	"index": "./docs/api.md",
 	"experimentalProposal": {
-		"decorators": true
-	},
-	"manual": {
-		"overview": ["./manual/introduction/overview.md", "./manual/introduction/concepts.md"],
-		"tutorial": [
-			"./manual/tutorial/README.md",
-			"./manual/tutorial/step-0.md",
-			"./manual/tutorial/step-1.md",
-			"./manual/tutorial/step-2.md",
-			"./manual/tutorial/step-3.md",
-			"./manual/tutorial/step-4.md",
-			"./manual/tutorial/step-5.md"
-		],
-		"changelog": ["./manual/changeLog/v1.0.0.md"],
-		"asset": "./manual/tutorial/assets"
+		"decorators": true,
+		"objectRestSpread": true
 	}
 }

@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">src/Property.js | F.lux API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/akrumel/f.lux" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Access.js~Access.html">Access</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ArrayProperty.js~ArrayProperty.html">ArrayProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ArrayShadow.js~ArrayShadow.html">ArrayShadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/AutoShader.js~AutoShader.html">AutoShader</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IndexedApi.js~IndexedApi.html">IndexedApi</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IndexedProperty.js~IndexedProperty.html">IndexedProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IndexedShadow.js~IndexedShadow.html">IndexedShadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IndexedShadowImpl.js~IndexedShadowImpl.html">IndexedShadowImpl</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/KeyedApi.js~KeyedApi.html">KeyedApi</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/MapProperty.js~MapProperty.html">MapProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/MapShadow.js~MapShadow.html">MapShadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ObjectProperty.js~ObjectProperty.html">ObjectProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ObjectShadowImpl.js~ObjectShadowImpl.html">ObjectShadowImpl</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/PrimitiveProperty.js~PrimitiveProperty.html">PrimitiveProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/PrimitiveShadowImpl.js~PrimitiveShadowImpl.html">PrimitiveShadowImpl</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Property.js~Property.html">Property</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/PropertyFactoryShader.js~PropertyFactoryShader.html">PropertyFactoryShader</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Shader.js~Shader.html">Shader</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Shadow.js~Shadow.html">Shadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ShadowImpl.js~ShadowImpl.html">ShadowImpl</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/StateType.js~StateType.html">StateType</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Store.js~Store.html">Store</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/TransientProperty.js~TransientLock.html">TransientLock</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/TransientProperty.js~TransientProperty.html">TransientProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/TransientProperty.js~TransientShadow.html">TransientShadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Transients.js~TransientsProperty.html">TransientsProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Transients.js~TransientsShadow.html">TransientsShadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createObject">createObject</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createPropertyClass">createPropertyClass</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-devDebug">devDebug</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-extendProperty">extendProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isShadow">isShadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-modelize">modelize</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-noParentStateErrorMsg">noParentStateErrorMsg</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-reshadow">reshadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-shadowProperty">shadowProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-AllKey">AllKey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-CollectionAllKey">CollectionAllKey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-CollectionPojoEndpointPropertyKey">CollectionPojoEndpointPropertyKey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-CollectionPropertyKey">CollectionPropertyKey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-CollectionRestEndpointPropertyKey">CollectionRestEndpointPropertyKey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ShadowImplKey">ShadowImplKey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-StoreKey">StoreKey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-TransientKey">TransientKey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-error">error</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-info">info</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-warn">warn</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">collection</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html">CollectionProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html">CollectionShadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/ModelAccess.js~ModelAccess.html">ModelAccess</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/ModelProperty.js~ModelProperty.html">ModelProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/PojoEndpointProperty.js~PojoEndpointProperty.html">PojoEndpointProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/PojoQueryBuilder.js~PojoQueryBuilder.html">PojoQueryBuilder</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/RestEndpointProperty.js~RestEndpointProperty.html">RestEndpointProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/RestQueryBuilder.js~RestQueryBuilder.html">RestQueryBuilder</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/ShadowModelAccess.js~ShadowModelAccess.html">ShadowModelAccess</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-extendOptions">extendOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getOptions">getOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-setOptions">setOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-DEFAULTS_OPTION">DEFAULTS_OPTION</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-MERGE_OPTION">MERGE_OPTION</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-NONE_OPTION">NONE_OPTION</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-REPLACE_OPTION">REPLACE_OPTION</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-AllOp">AllOp</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ChangeEvent">ChangeEvent</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-CreateOp">CreateOp</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-DeletedEvent">DeletedEvent</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-DestroyOp">DestroyOp</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ErrorEvent">ErrorEvent</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FetchOp">FetchOp</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FetchedEvent">FetchedEvent</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FindOp">FindOp</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FoundEvent">FoundEvent</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-SavedEvent">SavedEvent</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-UpdateOp">UpdateOp</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">decorators</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-automount">automount</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-mixin">mixin</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-shadow">shadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-shadowBound">shadowBound</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-shadowPropertyHelper">shadowPropertyHelper</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">listeners</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listeners/Logger.js~FrameAction.html">FrameAction</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listeners/Logger.js~LogFrame.html">LogFrame</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listeners/Logger.js~Logger.html">Logger</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createConsoleLogger">createConsoleLogger</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/Property.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import { assert } from &quot;akutils&quot;;
+import invariant from &quot;invariant&quot;;
+import result from &quot;lodash.result&quot;;
+
+import Access from &quot;./Access&quot;;
+import Shader from &quot;./Shader&quot;;
+import Shadow from &quot;./Shadow&quot;;
+import ShadowImpl from &quot;./ShadowImpl&quot;;
+import StateType from &quot;./StateType&quot;;
+
+const _autoShadow = Symbol(&apos;autoShadow&apos;);
+const _checkpoint = Symbol(&apos;checkpoint&apos;);
+const _impl = Symbol(&apos;impl&apos;);
+const _initialState = Symbol(&apos;initialState&apos;);
+const _mixins = Symbol(&apos;mixins&apos;);
+const _parent = Symbol(&apos;parent&apos;);
+const _pid = Symbol(&apos;pid&apos;);
+const _readonly = Symbol(&apos;readonly&apos;);
+const _shader = Symbol(&apos;shader&apos;);
+const _shadowDescriptors = Symbol(&apos;shadowDescriptors&apos;);
+const _stateType = Symbol(&apos;stateType&apos;);
+const _store = Symbol(&apos;store&apos;);
+const _ImplementationClass = Symbol(&apos;ImplementationClass&apos;);
+const _ShadowClass = Symbol(&apos;ShadowClass&apos;);
+
+var stateDeprecatedWarningShown = false;
+var rootStateDeprecatedWarningShown = false;
+
+var nextPid = 1;
+
+function isPropertyPrototype(obj) {
+	return Property === obj || Property.isPrototypeOf(obj);
+}
+
+/**
+	Base class for custom f.lux properties. A Property has a lifetime from when the state property
+	is mapped until it is replaced/deleted. This differs from ShadowImpl/Shadow pairs as their
+	lifetime lasts from the time of mapping until the state property is replaced/deleted OR the
+	shadow property is invalidated due to a local change or a descendant property change.
+
+	A Property instance is managed by the current PropertyImpl shadowing a state property.
+
+	Life cycle methods:
+		propertyWillShadow()
+			Invoked just before a state property is going to be shadowed using this instance. The &apos;state&apos;
+			variable will be undefined.
+		propertyDidShadow()
+			Property was shadowed and fully functional.
+		propertyChildInvalidated(childProperty, sourceProperty)
+			A child property mutation action has occurred and it&apos;s value will change in store&apos;s next update.
+		propertyDidUpdate()
+			State managed by this property has changed.
+		propertyWillUnshadow()
+			Invoked just before the shadow property is removed from the shadow state because the state
+			property being shadowed has been removed from the application state.
+	}
+
+*/
+export default class Property {
+	constructor(stateType) {
+		stateType = stateType || StateType.from(this);
+
+		this[_pid] = nextPid++;
+		this[_autoShadow] = stateType._autoShadow;
+		this[_initialState] = stateType.computeInitialState();
+		this[_readonly] = stateType._readonly;
+		this[_stateType] = stateType
+	}
+
+
+	//------------------------------------------------------------------------------------------------------
+	// Experimental checkpoint API
+	//------------------------------------------------------------------------------------------------------
+
+	checkpoint() {
+		assert( a =&gt; a.not(this[_checkpoint], `Checkpoint already set: ${ this.dotPath() }`) );
+
+		if (!this[_checkpoint]) {
+			this[_checkpoint] = { data: this.state() };
+		}
+	}
+
+	clearCheckpoint() {
+		delete this[_checkpoint];
+	}
+
+	getCheckpoint() {
+		return this[_checkpoint] &amp;&amp; this[_checkpoint].data;
+	}
+
+	hasCheckpoint() {
+		return !!this[_checkpoint];
+	}
+
+	resetToCheckpoint() {
+		if (this[_impl] &amp;&amp; this[_checkpoint]) {
+			this[_impl].assign(this[_checkpoint].data);
+		}
+
+		this.clearCheckpoint();
+	}
+
+	/**
+		Gets the actual shadow property exposed to application code.
+	*/
+	_() {
+		const impl = this[_impl];
+
+		if (!this[_store]) { return undefined }
+
+		return this.isActive() &amp;&amp; impl.isMapped() ?impl.shadow() :result(this[_store].shadow, impl.dotPath());
+	}
+
+	/**
+		Anything is possible (almost) with the ShadowImpl reference.
+	*/
+	__() {
+		return this[_impl];
+	}
+
+	/**
+		Use this.$$() in shadow methods to get access to the property. Useful in Property subclass
+		@shadow methods since the method will be bound to the shadow. Exposing on the property
+		proper allows for the same code to work when called as a member function using &apos;this&apos; or
+		called through a shadow function.
+	*/
+	$$() {
+		return this;
+	}
+
+	autoShadow() {
+		return this[_autoShadow];
+	}
+
+	dotPath() {
+		return this[_impl] ?this[_impl].dotPath() :null;
+	}
+
+	initialState() {
+		return this[_stateType].computeInitialState();
+	}
+
+	isActive() {
+		return this[_impl] &amp;&amp; this[_impl].isActive();
+	}
+
+	isReadonly() {
+		// use readonly flag if explicitly set otherwise use value from parent
+		return this[_readonly] === undefined
+			? this[_parent] &amp;&amp; this[_parent].isReadonly()
+			: this[_readonly];
+	}
+
+	isRoot() {
+		return !this[_parent];
+	}
+
+	name() {
+		return this[_impl] &amp;&amp; this[_impl].name();
+	}
+
+	nextState() {
+		return this[_impl] &amp;&amp; this[_impl].nextState();
+	}
+
+	/**
+
+		Invoked by shadowProperty().
+	*/
+	onPropertyWillShadow() {
+		if (this[_mixins]) {
+			let mixins = this[_mixins];
+
+			for (let i=0, mixin; mixin=mixins[i]; i++) {
+				if (mixin.propertyWillShadow) {
+					mixin.propertyWillShadow();
+				}
+			}
+		}
+
+		this.propertyWillShadow();
+	}
+
+	/**
+
+		Invoked by shadowProperty().
+	*/
+	onPropertyDidShadow() {
+		if (this[_mixins]) {
+			let mixins = this[_mixins];
+
+			for (let i=0, mixin; mixin=mixins[i]; i++) {
+				if (mixin.propertyDidShadow) {
+					mixin.propertyDidShadow();
+				}
+			}
+		}
+
+		this.propertyDidShadow();
+	}
+
+	onChildInvalidated(childProperty, sourceProperty) {
+		if (this[_mixins]) {
+			let mixins = this[_mixins];
+
+			for (let i=0, mixin; mixin=mixins[i]; i++) {
+				if (mixin.propertyChildInvalidated) {
+					mixin.ChildInvalidated(childProperty, sourceProperty);
+				}
+			}
+		}
+
+		this.propertyChildInvalidated(childProperty, sourceProperty);
+	}
+
+	onPropertyDidUpdate() {
+		if (this[_mixins]) {
+			let mixins = this[_mixins];
+
+			for (let i=0, mixin; mixin=mixins[i]; i++) {
+				if (mixin.propertyDidUpdate) {
+					mixin.propertyDidUpdate();
+				}
+			}
+		}
+
+		this.propertyDidUpdate();
+	}
+
+	onPropertyWillUnshadow() {
+		if (this[_mixins]) {
+			let mixins = this[_mixins];
+
+			for (let i=0, mixin; mixin=mixins[i]; i++) {
+				if (mixin.propertyWillUnshadow) {
+					mixin.propertyWillUnshadow();
+				}
+			}
+		}
+
+		this.propertyWillUnshadow();
+	}
+
+	onPropertyDidUnshadow() {
+		if (this[_mixins]) {
+			let mixins = this[_mixins];
+
+			for (let i=0, mixin; mixin=mixins[i]; i++) {
+				if (mixin.propertyDidUnshadow) {
+					mixin.propertyDidUnshadow();
+				}
+			}
+		}
+
+		this.propertyDidUnshadow();
+	}
+
+	parent() {
+		return this[_parent];
+	}
+
+	path() {
+		return this[_impl] ?this[_impl].path :null;
+	}
+
+	/**
+		Gets the parent shadow property, a BaseProperty subclass.
+	*/
+	parentShadow() {
+		const parentImpl = this[_parent] &amp;&amp; this[_parent][_impl];
+
+		return parentImpl &amp;&amp; parentImpl.shadow();
+	}
+
+	pid() {
+		return this[_pid];
+	}
+
+	root() {
+		return this[_store].root;
+	}
+
+	rootShadow() {
+		return this[_store]._;
+	}
+
+	/**
+		Sets the auto shadow property flag.
+
+		Parameters:
+			auto - boolean where true means to auto map subproperties.
+
+		Returns - reference to this property object.
+	*/
+	setAutoshadow(auto) {
+		this[_autoShadow] = !!auto;
+
+		return this;
+	}
+
+	/**
+		Invoked everytime the property is shadowed to set the PropertyImpl instance backing this property.
+	*/
+	setImpl(impl) {
+		const isActive = this.isActive();
+
+		this[_impl] = impl;
+	}
+
+	/**
+		Sets the default value returned by getInitialState().
+
+		Returns - reference to this property object.
+	*/
+	setInitialState(state) {
+		this[_initialState] = state;
+
+		return this;
+	}
+
+	/**
+		Sets this properties parent Property instance.
+
+		Returns - reference to this property object.
+
+		Throws
+			Error - if parent already set.
+	*/
+	setParent(parent) {
+		if (this[_parent]) {
+			throw new Error(&quot;Parent already set&quot;);
+		}
+
+		this[_parent] = parent;
+
+		return this;
+	}
+
+	/**
+		Sets the readonly flag which will prevent a &apos;set&apos; function being set in the implementation&apos;s
+		defineProeprty().
+	*/
+	setReadonly(readonly) {
+		this[_readonly] = readonly;
+	}
+
+	/**
+		Sets the store containing the state represented by this property.
+
+		Returns - reference to this property object.
+
+		Throws
+			Error - if store already set.
+	*/
+	setStore(store) {
+		if (this[_store]) {
+			throw new Error(&quot;Store already set on property&quot;);
+		}
+
+		this[_store] = store;
+
+		return this;
+	}
+
+	slashPath() {
+		return this[_impl] ?this[_impl].slashPath() :null;
+	}
+
+	/**
+		Gets the underlying property state.
+	*/
+	state() {
+		return this[_impl] &amp;&amp; this[_impl].state();
+	}
+
+	/**
+		Gets the store containing the application state.
+	*/
+	store() {
+		if (!this[_store] &amp;&amp; this[_parent]) {
+			this[_store] = this[_parent][_store];
+		}
+
+		return this[_store];
+	}
+
+	/**
+		Triggers a reshadow of the properties shadow state. This is handy when a calculated state value changes
+		while concrete state values remain unchanged.
+	*/
+	touch() {
+		if (this.isActive()) {
+			this.__().update( state =&gt; ( { name: &quot;Property.touch()&quot;, nextState: state } ) );
+		}
+	}
+
+	typeName() {
+		return this.constructor.__fluxTypeName__ || this.constructor.name;
+	}
+
+	update(callback) {
+		if (this.isActive()) {
+			this.__().update(callback);
+		} else {
+			throw new Error(&quot;Property must be active to invoke update()&quot;);
+		}
+	}
+
+
+	//------------------------------------------------------------------------------------------------------
+	// Property subclasses may want to override these methods - no need to call super
+	//------------------------------------------------------------------------------------------------------
+
+	/**
+		Creates the object to be assigned to the shadow.$ property.
+	*/
+	create$(impl) {
+		return new Access(impl);
+	}
+
+	implementationClass() {
+		return StateType.implementationClassForProperty(this, this[_ImplementationClass]);
+	}
+
+	setImplementationClass(PropertyClass) {
+		this[_ImplementationClass] = PropertyClass
+	}
+
+	/**
+		Used by PropertyFactoryShader to set the shader used to create this property. External code should
+		not need to utilize this method.
+	*/
+	setShader(shader) {
+		invariant(!this[_shader], `Shader already set for property`);
+
+		this[_shader] = shader;
+	}
+
+	setShadowClass(ShadowClass) {
+		this[_ShadowClass] = ShadowClass
+	}
+
+	shader(state) {
+		if (!this[_shader]) {
+			this[_shader] = this[_stateType].shader(this);
+		}
+
+		return this[_shader];
+	}
+
+	/**
+		Generates the functional mixin to map onto the state property shadow. This method must be
+		overriden.
+
+		Returns - this implementation returns nothing.
+	*/
+	shadow() { }
+
+	/**
+		Returns the Shadow subclass used to virtualize the state property.
+
+		Returns - Shadow class
+	*/
+	shadowClass() {
+		return this[_stateType].shadowClassForProperty(this[_ShadowClass]);
+	}
+
+	/**
+		Gets the StateType used for creating this property.
+	*/
+	stateType() {
+		return this[_stateType];
+	}
+
+	//------------------------------------------------------------------------------------------------------
+	// State lifecycle methods
+	//------------------------------------------------------------------------------------------------------
+
+	/**
+		Gets the initial state for a property at the beginning of the property mounting process. This
+		implementation merges the &apos;initialState&apos; parameter passed to the constructor or set using the
+		initialState() method with the state passed in from the existing store state. The store&apos;s state
+		property values take precedence.
+
+		Parameters:
+			state - the store&apos;s property state at the time of mounting.
+
+		Returns - merged state with the state parameter taking precedence if the initial state is set
+			otherwise returns the state parameter. This base implementation simply returns the state
+			parameter
+	*/
+	getInitialState(state) {
+		const initialState = state === undefined ?this[_initialState] :state;
+
+		return this[_stateType].initialStateWithDefaults(initialState);
+	}
+
+	propertyWillShadow() { /* subscribe to websockets */ }
+	propertyDidShadow() { /* subscribe to websockets */ }
+
+	/**
+		A child property or one of its descendents wil be changing state. Useful hook when a property needs
+		to perform some bookkeepng for child properties. Utilizing this hook provides a chance to make tracking
+		changes in shadow properties before the store updates its state.
+	*/
+	propertyChildInvalidated(childProperty, sourceProperty) { }
+
+	propertyDidUpdate() { /* post reshadow */ }
+	propertyWillUnshadow() { /* unsubscribe to websockets */ }
+	propertyDidUnshadow() { /* this is probably not needed */ }
+
+
+
+	//------------------------------------------------------------------------------------------------------
+	// mixin framework internal methods
+	//------------------------------------------------------------------------------------------------------
+
+	__addMixin(mixin) {
+		// initialize only if needed to conserve space since likely not used often
+		if (!this[_mixins]) {
+			this[_mixins] = [];
+		}
+
+		this[_mixins].push(mixin);
+	}
+
+	__hasMixins() {
+		return !!this[_mixins];
+	}
+
+	__mixins() {
+		return this[_mixins];
+	}
+}
+
+
+
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.2)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

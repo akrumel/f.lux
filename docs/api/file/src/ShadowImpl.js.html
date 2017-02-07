@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">src/ShadowImpl.js | F.lux API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/akrumel/f.lux" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Access.js~Access.html">Access</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ArrayProperty.js~ArrayProperty.html">ArrayProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ArrayShadow.js~ArrayShadow.html">ArrayShadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/AutoShader.js~AutoShader.html">AutoShader</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IndexedApi.js~IndexedApi.html">IndexedApi</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IndexedProperty.js~IndexedProperty.html">IndexedProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IndexedShadow.js~IndexedShadow.html">IndexedShadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IndexedShadowImpl.js~IndexedShadowImpl.html">IndexedShadowImpl</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/KeyedApi.js~KeyedApi.html">KeyedApi</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/MapProperty.js~MapProperty.html">MapProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/MapShadow.js~MapShadow.html">MapShadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ObjectProperty.js~ObjectProperty.html">ObjectProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ObjectShadowImpl.js~ObjectShadowImpl.html">ObjectShadowImpl</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/PrimitiveProperty.js~PrimitiveProperty.html">PrimitiveProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/PrimitiveShadowImpl.js~PrimitiveShadowImpl.html">PrimitiveShadowImpl</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Property.js~Property.html">Property</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/PropertyFactoryShader.js~PropertyFactoryShader.html">PropertyFactoryShader</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Shader.js~Shader.html">Shader</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Shadow.js~Shadow.html">Shadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ShadowImpl.js~ShadowImpl.html">ShadowImpl</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/StateType.js~StateType.html">StateType</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Store.js~Store.html">Store</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/TransientProperty.js~TransientLock.html">TransientLock</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/TransientProperty.js~TransientProperty.html">TransientProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/TransientProperty.js~TransientShadow.html">TransientShadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Transients.js~TransientsProperty.html">TransientsProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Transients.js~TransientsShadow.html">TransientsShadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createObject">createObject</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createPropertyClass">createPropertyClass</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-devDebug">devDebug</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-extendProperty">extendProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isShadow">isShadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-modelize">modelize</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-noParentStateErrorMsg">noParentStateErrorMsg</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-reshadow">reshadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-shadowProperty">shadowProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-AllKey">AllKey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-CollectionAllKey">CollectionAllKey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-CollectionPojoEndpointPropertyKey">CollectionPojoEndpointPropertyKey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-CollectionPropertyKey">CollectionPropertyKey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-CollectionRestEndpointPropertyKey">CollectionRestEndpointPropertyKey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ShadowImplKey">ShadowImplKey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-StoreKey">StoreKey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-TransientKey">TransientKey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-error">error</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-info">info</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-warn">warn</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">collection</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html">CollectionProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html">CollectionShadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/ModelAccess.js~ModelAccess.html">ModelAccess</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/ModelProperty.js~ModelProperty.html">ModelProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/PojoEndpointProperty.js~PojoEndpointProperty.html">PojoEndpointProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/PojoQueryBuilder.js~PojoQueryBuilder.html">PojoQueryBuilder</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/RestEndpointProperty.js~RestEndpointProperty.html">RestEndpointProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/RestQueryBuilder.js~RestQueryBuilder.html">RestQueryBuilder</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/ShadowModelAccess.js~ShadowModelAccess.html">ShadowModelAccess</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-extendOptions">extendOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getOptions">getOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-setOptions">setOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-DEFAULTS_OPTION">DEFAULTS_OPTION</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-MERGE_OPTION">MERGE_OPTION</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-NONE_OPTION">NONE_OPTION</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-REPLACE_OPTION">REPLACE_OPTION</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-AllOp">AllOp</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ChangeEvent">ChangeEvent</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-CreateOp">CreateOp</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-DeletedEvent">DeletedEvent</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-DestroyOp">DestroyOp</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ErrorEvent">ErrorEvent</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FetchOp">FetchOp</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FetchedEvent">FetchedEvent</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FindOp">FindOp</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FoundEvent">FoundEvent</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-SavedEvent">SavedEvent</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-UpdateOp">UpdateOp</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">decorators</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-automount">automount</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-mixin">mixin</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-shadow">shadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-shadowBound">shadowBound</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-shadowPropertyHelper">shadowPropertyHelper</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">listeners</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listeners/Logger.js~FrameAction.html">FrameAction</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listeners/Logger.js~LogFrame.html">LogFrame</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listeners/Logger.js~Logger.html">Logger</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createConsoleLogger">createConsoleLogger</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/ShadowImpl.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import clone from &quot;lodash.clone&quot;;
+import cloneDeep from &quot;lodash.clonedeep&quot;;
+import isString from &quot;lodash.isstring&quot;;
+import result from &quot;lodash.result&quot;;
+
+import {
+	assert,
+	isPrimitive,
+	isSomething,
+} from &quot;akutils&quot;;
+
+import Access from &quot;./Access&quot;;
+import extendProperty from &quot;./extendProperty&quot;;
+import isShadow from &quot;./isShadow&quot;;
+import reshadow from &quot;./reshadow&quot;;
+
+import appDebug, { ShadowImplKey as DebugKey } from &quot;./debug&quot;;
+const debug = appDebug(DebugKey);
+
+
+// instance variable names
+const _access = Symbol(&apos;access&apos;);
+// object to store expensive derived values
+const _cache = Symbol(&apos;cache&apos;);
+// flag indicating property has pending updates. Not safe to rely on this[_futureState] as it could be
+// undefined if that is the next value
+const _changed = Symbol(&apos;changed&apos;);
+const _date = Symbol(&apos;date&apos;);
+const _dead = Symbol(&apos;dead&apos;);
+const _didShadowCalled = Symbol(&apos;didShadowCalled&apos;);
+const _futureState = Symbol(&apos;futureState&apos;);
+const _invalid = Symbol(&apos;invalid&apos;);
+const _name = Symbol(&apos;name&apos;);
+const _nextName = Symbol(&apos;nextName&apos;);
+const _path = Symbol(&apos;path&apos;);
+const _parent = Symbol(&apos;parent&apos;);
+// flag marks this property as obsolete and thus no longer to effect updates on the
+// next data model
+const _preventUpdates = Symbol(&apos;preventUpdates&apos;);
+const _previousTime = Symbol(&apos;previousTime&apos;);
+const _property = Symbol(&apos;property&apos;);
+const _readonly = Symbol(&apos;readonly&apos;);
+const _replaced = Symbol(&apos;replaced&apos;);
+const _root = Symbol(&apos;root&apos;);
+const _scheduled = Symbol(&apos;scheduled&apos;);
+const _shadow = Symbol(&apos;shadow&apos;);
+const _state = Symbol(&apos;state&apos;);
+const _time = Symbol(&apos;time&apos;);
+
+// private method symbols
+const _defineProperty = Symbol(&apos;defineProperty&apos;);
+const _modelForUpdate = Symbol(&apos;modelForUpdate&apos;);
+const _scheduleUpdate = Symbol(&apos;scheduleUpdate&apos;);
+const _changeRoot = Symbol(&apos;changeRoot&apos;);
+
+
+/**
+	Todo: reduce memory footprint:
+		1) investigate _time and _previousTime really needed
+		2) investigate getting access from property (reduce object creation and memory footprint)
+*/
+export default class ShadowImpl {
+	constructor(time, property, name, state, parent, shader, prev) {
+		this[_property] = property;
+		this[_name] = name;
+		this[_parent] = parent;
+		this[_state] = state;
+		this[_time] = time;
+
+		if (prev) {
+			this[_previousTime] = prev[_time];
+		}
+
+// TODO: quick hack till have unit tests and thought out life-cycle design
+		// didShadow() is being called multiple times which is causing a problem with property
+		// initialization that should only occur once.
+		this[_didShadowCalled] = false;
+
+		this[_root] = parent ?parent[_root] :this;
+	}
+
+	access() {
+		const parent = this[_parent];
+
+		if (!this[_access]) {
+			if (parent &amp;&amp; parent.access().create$ForChild) {
+				// property does not know about this impl yet. So impl.property() will work but property.__() will not
+				this[_access] = parent.access().create$ForChild(this);
+			} else {
+				this[_access] = this[_property].create$(this);
+			}
+		}
+
+		return this[_access];
+	}
+
+	cache() {
+		if (!this[_cache]) {
+			this[_cache] = {};
+		}
+
+		return this[_cache];
+	}
+
+	name() {
+		return this[_name];
+	}
+
+	parent() {
+		return this[_parent];
+	}
+
+	property() {
+		return this[_property];
+	}
+
+	readonly() {
+		return this[_readonly] === undefined ?this[_property].isReadonly() :this[_readonly];
+	}
+
+	root() {
+		return this[_root];
+	}
+
+	state() {
+		return this[_state];
+	}
+
+	store() {
+		return this[_property].store();
+	}
+
+	time() {
+		return this[_time];
+	}
+
+
+	//------------------------------------------------------------------------------------------------------
+	// Public API - should be no reason to override
+	//------------------------------------------------------------------------------------------------------
+
+	/**
+		Replace the value of this property. This will result in this property tree being recreated.
+
+		Note: This value will be used directly (not copied) so ensure the state is not altered.
+	*/
+	assign(nextState, name) {
+		nextState = isShadow(nextState) ?nextState.__().state() :nextState;
+
+		//create a deep copy so not shared with the passed in value
+		//this.deepcopy() will use current model if no value passed or value passed is null or undefined
+		//in case of assigned those are legal values so must check explicitly
+		return this.update( state =&gt; {
+				return { name: name || &quot;assign()&quot;, nextState, replace: true  };
+			});
+	}
+
+	/**
+		Prevents all children from being able to obtain model in update() callbacks. Update callbacks
+		should invoke this method when they perform wholesale
+	*/
+	blockFurtherChildUpdates() {
+		if (!this.hasChildren()) { return }
+
+		const children = this.children();
+
+		for (let i=0, child; child=children[i]; i++) {
+			child.blockFurtherUpdates(true);
+		}
+	}
+
+	/**
+		Prevents this property and descendents from providing a model to update() callbacks.
+
+		The update() method invokes this method when the callback returns a different object than the
+		one passed into the callback.
+	*/
+	blockFurtherUpdates(replaced) {
+		this[_preventUpdates] = true;
+		this.invalidate(null, this);
+
+		if (replaced) {
+			this[_replaced] = true;
+		}
+
+		this.blockFurtherChildUpdates();
+	}
+
+	changeParent(newParent) {
+		assert( a =&gt; a.is(this.isValid(), `Property must be valid to change parent: ${ this.dotPath() }`)
+			          .not(this.isRoot(), `Root properties do not have parents: ${ this.dotPath() }`) );
+
+		debug( d =&gt; d(`changeParent(): ${this.dotPath()}`) );
+
+		var prevParent = this[_parent];
+		this[_parent] = newParent;
+
+		this[_changeRoot](newParent[_root]);
+
+		// clear cache
+		delete this[_cache];
+
+		// setup access through shadows
+		this[_defineProperty]();
+
+		//give subclasses a chance to perform setup operations on the new parent/tree
+		this.onParentChange(newParent, prevParent);
+	}
+
+	didShadow(time, newRoot) {
+		const storeRootImpl = this.store().rootImpl;
+
+		if (this[_time] == time &amp;&amp; !this[_didShadowCalled] &amp;&amp; storeRootImpl === this[_root]) {
+			this[_didShadowCalled] = true;
+
+			if (this.isRoot()) {
+				if (this[_previousTime] || !newRoot) {
+					this[_property].onPropertyDidUpdate();
+				} else {
+					this[_property].onPropertyDidShadow();
+				}
+			} else {
+				this[_previousTime] ?this[_property].onPropertyDidUpdate() :this[_property].onPropertyDidShadow();
+			}
+
+			if (this.hasChildren()) {
+				const children = this.children();
+				var childImpl;
+
+				for (let i=0, len=children.length; i&lt;len; i++) {
+					let childImpl = children[i];
+
+					if (childImpl) {
+						childImpl.didShadow(time);
+					}
+				}
+			}
+		}
+	}
+
+	/**
+		Intended for use by update() and replaying actions.
+	*/
+	dispatchUpdate(action) {
+		if (!this[_preventUpdates] &amp;&amp; this.isUpdatable() &amp;&amp; this.isActive()) {
+			const { name, nextState, replace } = action;
+
+			// Sending to store first ensures:
+			// 1) nextState() returns value from before this udpate
+			// 2) middleware provided chance to make changes to action
+			this.store().onPreStateUpdate(action, this);
+
+			// replacing the current object prevents further next state changes for sub-properties
+			if (replace) {
+				this[_replaced] = true;
+				// block child updates because replacement makes them unreachable
+				this.blockFurtherChildUpdates();
+				this.onReplaced();
+			}
+
+			// set the next model data
+			this[_futureState] = nextState;
+
+			// update the parent&apos;s future state to reference the state returned by the action
+			if (!this.isRoot()) {
+				const parentNextData = this[_parent][_modelForUpdate]();
+
+				// do nothing if parentNextData is not assignable
+				if (parentNextData &amp;&amp; !isPrimitive(parentNextData)) {
+					parentNextData[this[_name]] = nextState;
+				}
+			}
+
+			this.invalidate(null, this);
+
+			this.store().onPostStateUpdate(action, this);
+			this[_root][_scheduleUpdate]();
+		}
+	}
+
+	/**
+		Helpful debugging utility that returns the path joined by &apos;.&apos;. The root node will return the
+		word &apos;root&apos; for the path.
+	*/
+	dotPath() {
+		const cache = this.cache();
+
+		if (!cache.dotPath) {
+			const path = this.path();
+
+			cache.dotPath = path.length ?path.join(&apos;.&apos;) :&apos;root&apos;;
+		}
+
+		return cache.dotPath;
+	}
+
+	ensureMounted() {
+		if (this.isRoot() || this.__getCalled__) { return }
+
+		result(this.store().shadow, this.dotPath())
+	}
+
+	findByPath(path) {
+		if (path.length === 0) { return this; }
+
+		const next = this.getChild(path[0]);
+
+		return next &amp;&amp; next.findByPath(path.slice(1));
+	}
+
+	/**
+		Gets if an update has occurred directly to this property.
+	*/
+	hasPendingChanges() {
+		return !!this[_changed];
+	}
+
+	/**
+		Marks property and ancestors as invalid. This means this property or one of its children
+		has been updated. The invalid flag is set to the earliest timestamp when this property
+		or one of its children was changed.
+
+		Parameters:
+			childImpl - the child implementation triggering this call or undefined if this implementation
+				started the invalidation process
+			source - the shadow implementation that triggered the invalidation
+	*/
+	invalidate(childImpl, source=this) {
+		if (childImpl) {
+			this[_property].onChildInvalidated(childImpl.property(), source.property());
+		}
+
+		if (this.isValid() &amp;&amp; this.isActive()) {
+			this[_invalid] = true;
+
+			if (this[_parent]) {
+				this[_parent].invalidate(this, source);
+			}
+		}
+	}
+
+	/**
+		Gets if the property represents live data.
+	*/
+	isActive() {
+		return !this[_dead];
+	}
+
+	isLeaf() {
+		return !this.hasChildren();
+	}
+
+	isRoot() {
+		return this[_root] === this;
+	}
+
+	/**
+		Gets if this property or one of its child properties has pending updates. Returns true if there are no
+		pending updates.
+	*/
+	isValid() {
+		return !this[_invalid];
+	}
+
+	latest() {
+		return this.store().findByPath(this.path());
+	}
+
+	/**
+		Gets the name after all model updates are performed.
+	*/
+	nextName() {
+		return this[_nextName] !== undefined ?this[_nextName] :this[_name];
+	}
+
+	/**
+		Gets the model as it will be once all pending changes are recorded with the store. This must
+		not be altered.
+	*/
+	nextState() {
+		return this.hasPendingChanges() || !this.isValid() ?this[_futureState] :this.state();
+	}
+
+	/**
+		Marks this property as obsolete. Once marked obsolete a property may not interact with the store.
+		A property becomes obsolete after it&apos;s value or ancestor&apos;s value has changed and the update process
+		has completed.
+
+		This method does not affect subproperties.
+	*/
+	obsolete(callback) {
+		if (callback) {
+			callback(this);
+		}
+
+		this[_dead] = true;
+
+		this[_property].onPropertyDidUnshadow();
+	}
+
+	obsoleteChildren() {
+		if (this.hasChildren()) {
+			const children = this.children();
+
+			for (let i=0, len=children.length; i&lt;len; i++) {
+				let pi = children[i];
+
+				if (pi) {
+					pi.obsoleteTree();
+				}
+			}
+		}
+	}
+
+	/**
+		Marks the entire subtree as inactive, aka dead.
+	*/
+	obsoleteTree(callback) {
+		if (!this[_dead]) {
+			this.obsolete(callback);
+			this.obsoleteChildren();
+		}
+	}
+
+	/**
+		Gets an array with the property names/indices from the root to this property.
+	*/
+	path() {
+		const cache = this.cache();
+
+		if (this.isRoot()) {
+			return [];
+		} else if (!cache.path) {
+			cache.path = this[_parent].path().concat(this[_name]);
+		}
+
+		return cache.path;
+	}
+
+	replaced() {
+		return !!this[_replaced];
+	}
+
+	/**
+		Invoked by reshadow() function for invalid parent property implementations when the directly
+		managed state did not change.
+
+		Calls the onReshadow(prev) method to provide subclasses an oppotunity to setup for futher
+		action after a parent change.
+	*/
+	reshadowed(prev) {
+		debug( d =&gt; d(`reshadowed(): ${this.dotPath()}, mapped=${prev.isMapped()}, time=${this[_time]}, prevTime=${prev[_time]}`) );
+
+		if (prev.__getCalled__) {
+			this._setupShadow(prev, true);
+		}
+
+		this.onReshadow(prev);
+	}
+
+	/**
+		Sets the readonly flag which will prevent a &apos;set&apos; function being set in defineProeprty().
+
+		Note: this method must be called before defineProperty() is invoked or it will have no affect.
+	*/
+	setReadonly(readonly) {
+		this[_readonly] = readonly;
+	}
+
+	/**
+		Creates shadow properties for root properties and sets this property on the parent property for
+		non-root properties.
+
+		Note: This method is called by shadowProperty() and reshadow() functions.
+	*/
+	setupPropertyAccess(prev) {
+		const property = this[_property];
+
+		if (this.isRoot()) {
+			this._setupShadow(prev);
+
+		} else {
+			this[_defineProperty](prev, !!prev);
+		}
+	}
+
+	/**
+		Gets the shader needed to recreate the shadow property for the state.
+	*/
+	shader(state) {
+		return this[_property].shader(state);
+	}
+
+	/**
+		Gets the user facing property represented by this implementation object.
+	*/
+	shadow() {
+		if (!this.isMapped()) { throw new Error(`Property implementation not mapped: ${this.dotPath()}`) }
+
+		return this[_shadow];
+	}
+
+	/**
+		Helpful debugging utility that returns the path joined by &apos;.&apos;. The root node will return the
+		word &apos;root&apos; for the path.
+	*/
+	slashPath() {
+		const cache = this.cache();
+
+		if (!cache.slashPath) {
+			const path = this.path();
+
+			cache.slashPath = path.length ?`/${path.join(&apos;/&apos;)}` :&apos;/&apos;;
+		}
+
+		return cache.slashPath;
+	}
+
+	/**
+		Transfers the nextName to the name attribute.
+	*/
+	switchName() {
+		if (this[_nextName] !== undefined) {
+			this[_name] = this[_nextName];
+			delete this[_nextName];
+		}
+	}
+
+	/**
+		Gets a compact version of this internal&apos;s state. It does NOT provide a JSON representation of the
+		model state. The actual Property.toJSON() method returns the model JSON representation.
+	*/
+	toJSON() {
+		return {
+			name: this[_name],
+			path: this.dotPath(),
+			active: !this[_dead],
+			valid: this.isValid(),
+			state: this.state(),
+		}
+	}
+
+	//Gets a stringified version of the toJSON() method.
+	toString() {
+		return JSON.stringify(this);
+	}
+
+	/**
+		Makes changes to the next property state. The callback should be pure (no side affects) but that
+		is not a requirement. The callback must be of the form:
+
+			(state) =&gt; return { nextState, replace }
+
+		where:
+			state - the next property state
+			nextState - the state following the callback
+			replace - boolean for whether nextState replaces the current value. The implication of true
+				is that this property and all of it&apos;s children will not be able to make future changes
+				to the model.
+
+		To understand the reasoning behind the replace flag consider the following example:
+
+			const model = { a: { b: { c: 1 } } }
+			const oldB = model.a.b
+
+			model.a.b = &quot;foo&quot;
+			oldB.c = 5
+
+			model.a.b.c === undefined
+
+		Thus, oldB.c may change oldB&apos;c property &apos;c&apos; to 5 but model.a.b is still &quot;foo&quot;.
+	*/
+	update(callback) {
+		assert( a =&gt; a.is(this.isActive(), `Property is not active: ${ this.dotPath() }`) );
+
+		if (!this[_preventUpdates] &amp;&amp; this.isUpdatable() &amp;&amp; this.isActive()) {
+			const next = this[_modelForUpdate]();
+
+			// invoke callback without bind context to reduce overhead
+			const action = callback(next);
+			const { nextState, replace } = action;
+
+			// mark property as having pending updates if the action callback returns a different
+			// object/value or requests a replacement be created. An example where neither would be
+			// true is a property touch() call because its shadow function signature changed.
+			if (nextState !== next || replace) {
+				this[_changed] = true;
+			}
+
+			this.dispatchUpdate(action);
+
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+		Marks this property as dead. Once marked obsolete a property may not accept further updates.
+		A property is updated when the state changes but not a wholesale replacement or a descendents&apos;s
+		value has changed and the update process has completed.
+
+		This method does not affect subproperties.
+	*/
+	updated() {
+		this[_dead] = true;
+
+		this.onUpdate();
+	}
+
+	/**
+		Changes the name this property will have after updates. This is used when moving properties
+		around in the model, such as when splice is used on an array. The nextName() method
+		will return the property name for after updates are applied.
+
+		Note: this method does not have any side effects beyond setting the _nextName instance
+			variable. Subclasss will need to perform any book keeping associated with sub-properties.
+	*/
+	updateName(name) {
+		this[_nextName] = name;
+	}
+
+	updatesAllowed() {
+		return !this[_preventUpdates] &amp;&amp; !this[_replaced];
+	}
+
+	/**
+		Invokes a callback once all pending changes have occurred. The callback should have the form:
+
+			callback(property, implementation)
+
+		where the property and implementation arguments are the latest version if they still exist.
+
+		This method is safe to call on a dead property.
+	*/
+	waitFor(callback) {
+		if (this.isValid() &amp;&amp; this.isActive()) {
+			// short circuit if no changes pending
+			callback(this.shadow());
+		} else {
+			this.store().waitFor( () =&gt; {
+					const latest = this.latest();
+
+					callback(latest &amp;&amp; latest.shadow(), latest);
+				});
+		}
+	}
+
+	willShadow(parentWillUnshadow) {
+		var willUnshadow = parentWillUnshadow || false;
+
+		if (parentWillUnshadow) {
+			// all properties under an unshadowed proeprty also get unshadowed
+			this[_property].onPropertyWillUnshadow();
+			willUnshadow = true;
+		} else if (this.isValid()) {
+			// nothing else to do since this property and all subproperties must be fine
+			return;
+		} else if (this[_replaced] || this[_preventUpdates]) {
+			this[_property].onPropertyWillUnshadow();
+			willUnshadow = true;
+		}
+
+		if (this.hasChildren()) {
+			const children = this.children();
+			var childImpl;
+
+			for (let i=0, len=children.length; i&lt;len; i++) {
+				let childImpl = children[i];
+
+				if (childImpl) {
+					childImpl.willShadow(willUnshadow);
+				}
+			}
+		}
+	}
+
+
+	//------------------------------------------------------------------------------------------------------
+	//	Methods with base implementations that subclasses may need to override - no need to call super
+	//------------------------------------------------------------------------------------------------------
+
+	copyState() {
+		return cloneDeep(this.state());
+	}
+
+	definePropertyGetValue(state) {
+		return this._createShadow();
+	}
+
+	definePropertySetValue(newValue) {
+		this.assign(newValue);
+	}
+
+	hasChildren() {
+		return this.childCount() != 0;
+	}
+
+	/**
+		Gets if this property type reprsents a primitive javascript type.
+	*/
+	isPrimitive() {
+		return false;
+	}
+
+	/**
+		Gets whether the property value supports calls to update().
+	*/
+	isUpdatable() {
+		return true;
+	}
+
+	/**
+		Provides subclasses a chance to perform setup operations when the parent changes.
+
+		Note: unlike other onXyz() methods, this one invokes defineProperty() so you may
+		      want to invoke this version if that is a desired behavior.
+	*/
+	onParentChange(parent, prevParent) {
+	}
+
+	/**
+		Map properties so can reuse valid properties. Reusing properties allows for React components
+		to do &apos;===&apos; to see if a property has changed.
+	*/
+	onReshadow(prev) { }
+
+	/**
+		Hook for when this property is no longer represented in the system state.
+	*/
+	onReplaced() { }
+
+	/**
+		Hook for when this property is no longer represented in the system state due to a state
+		update - not a replacement.
+	*/
+	onUpdate() { }
+
+
+	//------------------------------------------------------------------------------------------------------
+	//	Methods that ShadowImpl subclasses must be implemented by subclasses
+	//------------------------------------------------------------------------------------------------------
+
+	/**
+		Merges a new state into this property by using the &apos;state&apos; parameter to set default values, ie it
+		will not overwrite any existing values. Useful when model objects arrive from external sources,
+		such as an asyncrhonous save or a websocket based update.
+	*/
+	defaults(state) {
+		throw new Error(&quot;ShadowImpl subclasses must implement defaults()&quot;);
+	}
+
+	/**
+		Merges a new state into this property. Useful when model objects arrive from external
+		sources, such as an asyncrhonous save or a websocket based update.
+	*/
+	merge(state) {
+		throw new Error(&quot;ShadowImpl subclasses must implement merge()&quot;);
+	}
+
+
+	//------------------------------------------------------------------------------------------------------
+	//	Methods that ShadowImpl subclasses with children must implement
+	//------------------------------------------------------------------------------------------------------
+
+	/**
+		Invoked during defineProperty() to define children properties marked for automount
+	*/
+	automountChildren() {
+//		throw new Error(&quot;ShadowImpl subclasses with children must implement children()&quot;);
+	}
+
+	/**
+		Subclasses should implement this method in such a way as not to trigger a mapping.
+	*/
+	childCount() {
+		return 0;
+	}
+
+	/**
+		Gets the implementation objects managed by this property.
+	*/
+	children() {
+		throw new Error(&quot;ShadowImpl subclasses with children must implement children()&quot;);
+	}
+
+	/**
+		Create a copy of the internals during reshadowing when the property has not changed during the
+		update process but some descendant has been modified.
+	*/
+	createCopy(time, newModel, parentImpl) {
+		const property = this[_property];
+		const ImplClass = property.implementationClass();
+		const name = this.nextName();
+		const shader = this.shader(newModel);
+
+		return new ImplClass(time, property, name, newModel, parentImpl, shader, this);
+	}
+
+	/**
+		Gets a child implementation matching a property name or undefined if no such property exists.
+	*/
+	getChild(name) {
+		return undefined;
+	}
+
+	/**
+		Gets if defineChildProperties() has been invoked.
+	*/
+	isMapped() {
+		return true;
+	}
+
+	/**
+		Gets the keys/indices for this property.
+
+		Implementation note: Subclasses should implement this method in such a way as not to trigger a mapping.
+	*/
+	keys() {
+		throw new Error(&quot;ShadowImpl subclasses with children must implement keys()&quot;);
+	}
+
+	/**
+		Maps all child properties onto this property using Object.defineProperty().
+	*/
+	defineChildProperties() { }
+
+
+	//------------------------------------------------------------------------------------------------------
+	//	Private functions - should not be called by code outside this file.
+	//------------------------------------------------------------------------------------------------------
+
+	/**
+		Called during reshadowing when reusing a property. The function sets the root reference for this property
+		and its descendants
+	*/
+	[_changeRoot](newRoot) {
+		this[_root] = newRoot;
+
+		if (this.hasChildren()) {
+			const children = this.children();
+
+			for (let i=0, len=children.length; i&lt;len; i++) {
+				children[i][_changeRoot](newRoot);
+			}
+		}
+	}
+
+	_createShadow() {
+		if (!this[_shadow]) {
+			let ShadowClass = this[_property].shadowClass();
+
+			this[_shadow] = new ShadowClass(this);
+			extendProperty(this[_property], this, this[_shadow]);
+		}
+
+		return this[_shadow];
+	}
+
+	_setupShadow(prev, inCtor) {
+		if (!this.__getCalled__) {
+			let state = this.state();
+
+			debug( d =&gt; d(`_setupShadow(): ${this.dotPath()}, time=${this[_time]}`) );
+
+			this.__getCalled__ = true;
+			var shadow = this.__getResonse__ = this.definePropertyGetValue(state);
+
+			this.defineChildProperties(prev, inCtor);
+
+			// freeze shadows in dev mode to provide check not assigning to non-shadowed property
+			// this can have performance penalties so skip in production mode
+			if (process.env.NODE_ENV !== &apos;production&apos;) {
+				!Object.isFrozen(shadow) &amp;&amp; Object.freeze(shadow);
+			}
+		}
+
+		return this.__getResonse__;
+	}
+
+	/**
+		Maps the getter and setter (if appropriate) onto the parent property.
+	*/
+	[_defineProperty](prev) {
+		if (this.isRoot()) { return }
+
+		// names with a leading &apos;_&apos; are not enumerable (way of hiding them)
+		const enumerable = !(isString(this[_name]) &amp;&amp; this[_name].startsWith(&apos;_&apos;));
+		const parentShadow = this[_parent].shadow();
+		const state = this.state();
+		const set = this.readonly()
+			?undefined
+			:newValue =&gt; {
+					if (!this.isActive())  {
+						if (process.env.NODE_ENV !== &apos;production&apos;) {
+							console.error(`Attempting to set value on inactive property: ${this.dotPath()}`, newValue);
+						}
+
+						return
+					}
+
+					return this.definePropertySetValue(newValue);
+				}
+
+		try {
+			Object.defineProperty(parentShadow, this[_name], {
+					enumerable: enumerable,
+					get: () =&gt; {
+							if (isSomething(state)) {
+								return this._setupShadow();
+							} else {
+								return state;
+							}
+						},
+					set: set
+				});
+		} catch(error) {
+			console.warn(`_defineProperty() Error: name=${this[_name]}, parent=${this[_parent].dotPath()}`, error.stack);
+			debugger
+		}
+
+		this.automountChildren(prev);
+	}
+
+	/**
+		Gets the next model state for the property. This value is used for performing property updates through
+		the update() function.
+
+		Calls to update() trigger an update through the dispatcher upon which the new object will be mapped
+		and the store informed of the change.
+	*/
+	[_modelForUpdate]() {
+		if (!this[_futureState]) {
+			if (this.isRoot()) {
+				// next data will be a shallow copy of current model
+				this[_futureState] = clone(this.state());
+			} else {
+				const parentNextState = this[_parent][_modelForUpdate]();
+
+				// Primitive parent models do not support adding properties
+				if (isPrimitive(parentNextState)) {
+					return undefined;
+				}
+
+				// next data is a shallow copy of the parent&apos;s value of this property
+				this[_futureState] = clone(parentNextState[this[_name]]);
+
+				// place a shallow clone in place of current value
+				parentNextState[this.nextName()] = this[_futureState]
+			}
+		}
+
+		return this[_futureState];
+	}
+
+	/**
+		Schedules an UPDATE action with the dispatcher. On action execution, the new property will be generated
+		and returned to the store.
+	*/
+	[_scheduleUpdate]() {
+		if (!this.isRoot()) {
+			return this[_root][_scheduleUpdate]();
+		}
+
+		if (!this[_scheduled] &amp;&amp; !this.isValid() &amp;&amp; !this[_dead]) {
+			// flag never gets cleared
+			this[_scheduled] = true;
+
+			this.store().dispatchUpdate( time =&gt; reshadow(time, this[_futureState], this) );
+		}
+	}
+}
+
+
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.2)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
