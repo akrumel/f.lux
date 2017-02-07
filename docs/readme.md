@@ -10,6 +10,7 @@
 	* [Step 3: UI State](tutorial/step-3.md)
 	* [Step 4: f.lux-react](tutorial/step-4.md)
 	* [Step 5: Time Travel Debugger](tutorial/step-5.md)
+* [Cookbook](cookbook/index.html)
 * [API](api/index.html)
 * [F.lux Restrictions](f.lux-restrictions.md)
 * [Change Log](changeLog/readme.md)
