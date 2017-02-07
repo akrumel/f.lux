@@ -121,7 +121,7 @@ ReactDOM.render(
 ```
 
 
-## 2. Subscribe to store changes in `<Todos>`<a id="changes" />
+## 2. Subscribe to store changes in `<Todos>`<a name="changes" />
 
 A React component subscribes with the store to be notified when the state changes as a result of f.lux actions. The store exposes the following methods for this purpose:
 
@@ -205,7 +205,7 @@ Here are the important sections broken down:
 	The `<AddTodo>` component will need to `todos` shadow array to add a new item.
 	
 
-## 3. Implement `<AddTodo>` `addTodo()` function<a id="addtodo" />
+## 3. Implement `<AddTodo>` `addTodo()` function<a name="addtodo" />
 
 The `<AddTodo>` component is now receiving a property containing the `todos` shadow array. This is used to implement the `addTodo()` function:
 
@@ -258,7 +258,7 @@ Here are the key points explained:
 	Just like a normal array, the new Todo item is appended to the shadow array. This will result in a store change notification to the `<Todos>` component that will trigger a `render()` call.
 
 
-## 4. Implement `<TodoItem>` to display, edit, and delete todo items<a id="items" />
+## 4. Implement `<TodoItem>` to display, edit, and delete todo items<a name="items" />
 
 A `<TodoItem>` displays three components on a single line:
 
@@ -371,7 +371,7 @@ And finally, the `removeTodo()` function:
 	The item is removed from the shadow array. This will generate an update action that will remove the corresponding todo item from the actual `todos` array in the store's state.
 
 
-## 5. Iterate all store todo items and create a `<TodoItem>` for each one<a id="iterate" />
+## 5. Iterate all store todo items and create a `<TodoItem>` for each one<a name="iterate" />
 
 And finally, let's update `<Todos>` component to render a `<Todo>` component for each item in the `todos` array:
 

@@ -32,7 +32,7 @@ function isPropertyPrototype(obj) {
 	return Property === obj || Property.isPrototypeOf(obj);
 }
 
-/*
+/**
 	Base class for custom f.lux properties. A Property has a lifetime from when the state property
 	is mapped until it is replaced/deleted. This differs from ShadowImpl/Shadow pairs as their
 	lifetime lasts from the time of mapping until the state property is replaced/deleted OR the
@@ -100,7 +100,7 @@ export default class Property {
 		this.clearCheckpoint();
 	}
 
-	/*
+	/**
 		Gets the actual shadow property exposed to application code.
 	*/
 	_() {
@@ -111,14 +111,14 @@ export default class Property {
 		return this.isActive() && impl.isMapped() ?impl.shadow() :result(this[_store].shadow, impl.dotPath());
 	}
 
-	/*
+	/**
 		Anything is possible (almost) with the ShadowImpl reference.
 	*/
 	__() {
 		return this[_impl];
 	}
 
-	/*
+	/**
 		Use this.$$() in shadow methods to get access to the property. Useful in Property subclass
 		@shadow methods since the method will be bound to the shadow. Exposing on the property
 		proper allows for the same code to work when called as a member function using 'this' or
@@ -163,7 +163,7 @@ export default class Property {
 		return this[_impl] && this[_impl].nextState();
 	}
 
-	/*
+	/**
 
 		Invoked by shadowProperty().
 	*/
@@ -181,7 +181,7 @@ export default class Property {
 		this.propertyWillShadow();
 	}
 
-	/*
+	/**
 
 		Invoked by shadowProperty().
 	*/
@@ -263,7 +263,7 @@ export default class Property {
 		return this[_impl] ?this[_impl].path :null;
 	}
 
-	/*
+	/**
 		Gets the parent shadow property, a BaseProperty subclass.
 	*/
 	parentShadow() {
@@ -284,7 +284,7 @@ export default class Property {
 		return this[_store]._;
 	}
 
-	/*
+	/**
 		Sets the auto shadow property flag.
 
 		Parameters:
@@ -298,7 +298,7 @@ export default class Property {
 		return this;
 	}
 
-	/*
+	/**
 		Invoked everytime the property is shadowed to set the PropertyImpl instance backing this property.
 	*/
 	setImpl(impl) {
@@ -307,7 +307,7 @@ export default class Property {
 		this[_impl] = impl;
 	}
 
-	/*
+	/**
 		Sets the default value returned by getInitialState().
 
 		Returns - reference to this property object.
@@ -318,7 +318,7 @@ export default class Property {
 		return this;
 	}
 
-	/*
+	/**
 		Sets this properties parent Property instance.
 
 		Returns - reference to this property object.
@@ -336,7 +336,7 @@ export default class Property {
 		return this;
 	}
 
-	/*
+	/**
 		Sets the readonly flag which will prevent a 'set' function being set in the implementation's
 		defineProeprty().
 	*/
@@ -344,7 +344,7 @@ export default class Property {
 		this[_readonly] = readonly;
 	}
 
-	/*
+	/**
 		Sets the store containing the state represented by this property.
 
 		Returns - reference to this property object.
@@ -366,14 +366,14 @@ export default class Property {
 		return this[_impl] ?this[_impl].slashPath() :null;
 	}
 
-	/*
+	/**
 		Gets the underlying property state.
 	*/
 	state() {
 		return this[_impl] && this[_impl].state();
 	}
 
-	/*
+	/**
 		Gets the store containing the application state.
 	*/
 	store() {
@@ -384,7 +384,7 @@ export default class Property {
 		return this[_store];
 	}
 
-	/*
+	/**
 		Triggers a reshadow of the properties shadow state. This is handy when a calculated state value changes
 		while concrete state values remain unchanged.
 	*/
@@ -411,7 +411,7 @@ export default class Property {
 	// Property subclasses may want to override these methods - no need to call super
 	//------------------------------------------------------------------------------------------------------
 
-	/*
+	/**
 		Creates the object to be assigned to the shadow.$ property.
 	*/
 	create$(impl) {
@@ -426,7 +426,7 @@ export default class Property {
 		this[_ImplementationClass] = PropertyClass
 	}
 
-	/*
+	/**
 		Used by PropertyFactoryShader to set the shader used to create this property. External code should
 		not need to utilize this method.
 	*/
@@ -448,7 +448,7 @@ export default class Property {
 		return this[_shader];
 	}
 
-	/*
+	/**
 		Generates the functional mixin to map onto the state property shadow. This method must be
 		overriden.
 
@@ -456,7 +456,7 @@ export default class Property {
 	*/
 	shadow() { }
 
-	/*
+	/**
 		Returns the Shadow subclass used to virtualize the state property.
 
 		Returns - Shadow class
@@ -465,7 +465,7 @@ export default class Property {
 		return this[_stateType].shadowClassForProperty(this[_ShadowClass]);
 	}
 
-	/*
+	/**
 		Gets the StateType used for creating this property.
 	*/
 	stateType() {
@@ -476,7 +476,7 @@ export default class Property {
 	// State lifecycle methods
 	//------------------------------------------------------------------------------------------------------
 
-	/*
+	/**
 		Gets the initial state for a property at the beginning of the property mounting process. This
 		implementation merges the 'initialState' parameter passed to the constructor or set using the
 		initialState() method with the state passed in from the existing store state. The store's state
@@ -498,7 +498,7 @@ export default class Property {
 	propertyWillShadow() { /* subscribe to websockets */ }
 	propertyDidShadow() { /* subscribe to websockets */ }
 
-	/*
+	/**
 		A child property or one of its descendents wil be changing state. Useful hook when a property needs
 		to perform some bookkeepng for child properties. Utilizing this hook provides a chance to make tracking
 		changes in shadow properties before the store updates its state.

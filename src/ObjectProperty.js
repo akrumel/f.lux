@@ -8,9 +8,11 @@ import Shadow from "./Shadow";
 import StateType from "./StateType";
 
 
-/*
+/**
 	A generic object property type that supports keyed child properties. The default implementation class is
-	ObjectShadowImpl. The default shadow class is Shadow.
+	{@link ObjectShadowImpl}.
+
+	The default shadow class is {@link Shadow}.
 */
 export default class ObjectProperty extends Property {
 	constructor(stateType) {
@@ -22,34 +24,32 @@ export default class ObjectProperty extends Property {
 		this.setShadowClass(Shadow);
 	}
 
-	/*
-		Factory function for creating an ObjectProperty subclass suitable for using with new.
+	/**
+		Factory function for creating an {@link ObjectProperty} subclass suitable for using with new.
 
-		Parameters (all are optional):
-			shadowType: one of a pojo or class. This parameter defines the new property
+		@param {Object|Shadow} [shadowType={}] - one of a pojo or class. This parameter defines the new property
 				shadow. If pojo specified, each property and function is mapped onto a Shadow subclass.
-			specCallback: a callback function that will be passed the StateType spec for additional
-				customization, such as setting autoshadow, initial state, or readonly.
-			initialState: the initial state for the new property. (default is {})
+		@param {function(type: StateType)} [typeCallback] - a callback function that will be passed the {@link StateType}
+				spec for additional customization, such as setting autoshadow, initial state, or readonly.
+		@param {Object} [initialState]={} - the initial state for the new property. (default is {})
 	*/
-	static createClass(shadowType={}, specCallback, initialState={}) {
-		return createPropertyClass(shadowType, initialState, specCallback, ObjectProperty);
+	static createClass(shadowType={}, typeCallback, initialState={}) {
+		return createPropertyClass(shadowType, initialState, typeCallback, ObjectProperty);
 	}
 
-	/*
-		Factory function for creating a StateType with an appropriately set intial state.
+	/**
+		Factory function for creating a {@link StateType} with an appropriately set intial state.
 
-		Parameters:
-			PropClass: ObjectProperty subclass (required)
-			ShadowClass: Shadow subclass (optional)
-			specCallback: a callback function that will be passed the StateType spec for additional
-				customization, such as setting autoshadow or readonly. (optional)
-			initialState: the initial state for the new property. (default is {})
+		@param {ObjectProperty} PropClass - ObjectProperty subclass
+		@param {Object|Shadow} [ShadowType=Shadow] - Shadow subclass
+		@param {function(type: StateType)} [typeCallback] - a callback function that will be passed the {@link StateType}
+				spec for additional customization, such as setting autoshadow, initial state, or readonly.
+		@param {Object} [initialState={}] - the initial state for the new property.
 	*/
-	static defineType(PropClass, ShadowType, specCallback, initialState={}) {
+	static defineType(PropClass, ShadowType, typeCallback, initialState={}) {
 		assert( a => a.is(ObjectProperty.isPrototypeOf(PropClass), "PropClass must subclass ObjectProperty") );
 
-		return StateType.defineTypeEx(PropClass, ShadowType, specCallback, initialState);
+		return StateType.defineTypeEx(PropClass, ShadowType, typeCallback, initialState);
 	}
 }
 

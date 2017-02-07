@@ -54,7 +54,7 @@ const _scheduleUpdate = Symbol('scheduleUpdate');
 const _changeRoot = Symbol('changeRoot');
 
 
-/*
+/**
 	Todo: reduce memory footprint:
 		1) investigate _time and _previousTime really needed
 		2) investigate getting access from property (reduce object creation and memory footprint)
@@ -139,7 +139,7 @@ export default class ShadowImpl {
 	// Public API - should be no reason to override
 	//------------------------------------------------------------------------------------------------------
 
-	/*
+	/**
 		Replace the value of this property. This will result in this property tree being recreated.
 
 		Note: This value will be used directly (not copied) so ensure the state is not altered.
@@ -155,7 +155,7 @@ export default class ShadowImpl {
 			});
 	}
 
-	/*
+	/**
 		Prevents all children from being able to obtain model in update() callbacks. Update callbacks
 		should invoke this method when they perform wholesale
 	*/
@@ -169,7 +169,7 @@ export default class ShadowImpl {
 		}
 	}
 
-	/*
+	/**
 		Prevents this property and descendents from providing a model to update() callbacks.
 
 		The update() method invokes this method when the callback returns a different object than the
@@ -238,7 +238,7 @@ export default class ShadowImpl {
 		}
 	}
 
-	/*
+	/**
 		Intended for use by update() and replaying actions.
 	*/
 	dispatchUpdate(action) {
@@ -278,7 +278,7 @@ export default class ShadowImpl {
 		}
 	}
 
-	/*
+	/**
 		Helpful debugging utility that returns the path joined by '.'. The root node will return the
 		word 'root' for the path.
 	*/
@@ -308,14 +308,14 @@ export default class ShadowImpl {
 		return next && next.findByPath(path.slice(1));
 	}
 
-	/*
+	/**
 		Gets if an update has occurred directly to this property.
 	*/
 	hasPendingChanges() {
 		return !!this[_changed];
 	}
 
-	/*
+	/**
 		Marks property and ancestors as invalid. This means this property or one of its children
 		has been updated. The invalid flag is set to the earliest timestamp when this property
 		or one of its children was changed.
@@ -339,7 +339,7 @@ export default class ShadowImpl {
 		}
 	}
 
-	/*
+	/**
 		Gets if the property represents live data.
 	*/
 	isActive() {
@@ -354,7 +354,7 @@ export default class ShadowImpl {
 		return this[_root] === this;
 	}
 
-	/*
+	/**
 		Gets if this property or one of its child properties has pending updates. Returns true if there are no
 		pending updates.
 	*/
@@ -366,14 +366,14 @@ export default class ShadowImpl {
 		return this.store().findByPath(this.path());
 	}
 
-	/*
+	/**
 		Gets the name after all model updates are performed.
 	*/
 	nextName() {
 		return this[_nextName] !== undefined ?this[_nextName] :this[_name];
 	}
 
-	/*
+	/**
 		Gets the model as it will be once all pending changes are recorded with the store. This must
 		not be altered.
 	*/
@@ -381,7 +381,7 @@ export default class ShadowImpl {
 		return this.hasPendingChanges() || !this.isValid() ?this[_futureState] :this.state();
 	}
 
-	/*
+	/**
 		Marks this property as obsolete. Once marked obsolete a property may not interact with the store.
 		A property becomes obsolete after it's value or ancestor's value has changed and the update process
 		has completed.
@@ -412,7 +412,7 @@ export default class ShadowImpl {
 		}
 	}
 
-	/*
+	/**
 		Marks the entire subtree as inactive, aka dead.
 	*/
 	obsoleteTree(callback) {
@@ -422,7 +422,7 @@ export default class ShadowImpl {
 		}
 	}
 
-	/*
+	/**
 		Gets an array with the property names/indices from the root to this property.
 	*/
 	path() {
@@ -441,7 +441,7 @@ export default class ShadowImpl {
 		return !!this[_replaced];
 	}
 
-	/*
+	/**
 		Invoked by reshadow() function for invalid parent property implementations when the directly
 		managed state did not change.
 
@@ -458,7 +458,7 @@ export default class ShadowImpl {
 		this.onReshadow(prev);
 	}
 
-	/*
+	/**
 		Sets the readonly flag which will prevent a 'set' function being set in defineProeprty().
 
 		Note: this method must be called before defineProperty() is invoked or it will have no affect.
@@ -467,7 +467,7 @@ export default class ShadowImpl {
 		this[_readonly] = readonly;
 	}
 
-	/*
+	/**
 		Creates shadow properties for root properties and sets this property on the parent property for
 		non-root properties.
 
@@ -484,14 +484,14 @@ export default class ShadowImpl {
 		}
 	}
 
-	/*
+	/**
 		Gets the shader needed to recreate the shadow property for the state.
 	*/
 	shader(state) {
 		return this[_property].shader(state);
 	}
 
-	/*
+	/**
 		Gets the user facing property represented by this implementation object.
 	*/
 	shadow() {
@@ -500,7 +500,7 @@ export default class ShadowImpl {
 		return this[_shadow];
 	}
 
-	/*
+	/**
 		Helpful debugging utility that returns the path joined by '.'. The root node will return the
 		word 'root' for the path.
 	*/
@@ -516,7 +516,7 @@ export default class ShadowImpl {
 		return cache.slashPath;
 	}
 
-	/*
+	/**
 		Transfers the nextName to the name attribute.
 	*/
 	switchName() {
@@ -526,7 +526,7 @@ export default class ShadowImpl {
 		}
 	}
 
-	/*
+	/**
 		Gets a compact version of this internal's state. It does NOT provide a JSON representation of the
 		model state. The actual Property.toJSON() method returns the model JSON representation.
 	*/
@@ -545,7 +545,7 @@ export default class ShadowImpl {
 		return JSON.stringify(this);
 	}
 
-	/*
+	/**
 		Makes changes to the next property state. The callback should be pure (no side affects) but that
 		is not a requirement. The callback must be of the form:
 
@@ -595,7 +595,7 @@ export default class ShadowImpl {
 		return false;
 	}
 
-	/*
+	/**
 		Marks this property as dead. Once marked obsolete a property may not accept further updates.
 		A property is updated when the state changes but not a wholesale replacement or a descendents's
 		value has changed and the update process has completed.
@@ -608,7 +608,7 @@ export default class ShadowImpl {
 		this.onUpdate();
 	}
 
-	/*
+	/**
 		Changes the name this property will have after updates. This is used when moving properties
 		around in the model, such as when splice is used on an array. The nextName() method
 		will return the property name for after updates are applied.
@@ -624,7 +624,7 @@ export default class ShadowImpl {
 		return !this[_preventUpdates] && !this[_replaced];
 	}
 
-	/*
+	/**
 		Invokes a callback once all pending changes have occurred. The callback should have the form:
 
 			callback(property, implementation)
@@ -696,21 +696,21 @@ export default class ShadowImpl {
 		return this.childCount() != 0;
 	}
 
-	/*
+	/**
 		Gets if this property type reprsents a primitive javascript type.
 	*/
 	isPrimitive() {
 		return false;
 	}
 
-	/*
+	/**
 		Gets whether the property value supports calls to update().
 	*/
 	isUpdatable() {
 		return true;
 	}
 
-	/*
+	/**
 		Provides subclasses a chance to perform setup operations when the parent changes.
 
 		Note: unlike other onXyz() methods, this one invokes defineProperty() so you may
@@ -719,18 +719,18 @@ export default class ShadowImpl {
 	onParentChange(parent, prevParent) {
 	}
 
-	/*
+	/**
 		Map properties so can reuse valid properties. Reusing properties allows for React components
 		to do '===' to see if a property has changed.
 	*/
 	onReshadow(prev) { }
 
-	/*
+	/**
 		Hook for when this property is no longer represented in the system state.
 	*/
 	onReplaced() { }
 
-	/*
+	/**
 		Hook for when this property is no longer represented in the system state due to a state
 		update - not a replacement.
 	*/
@@ -741,7 +741,7 @@ export default class ShadowImpl {
 	//	Methods that ShadowImpl subclasses must be implemented by subclasses
 	//------------------------------------------------------------------------------------------------------
 
-	/*
+	/**
 		Merges a new state into this property by using the 'state' parameter to set default values, ie it
 		will not overwrite any existing values. Useful when model objects arrive from external sources,
 		such as an asyncrhonous save or a websocket based update.
@@ -750,7 +750,7 @@ export default class ShadowImpl {
 		throw new Error("ShadowImpl subclasses must implement defaults()");
 	}
 
-	/*
+	/**
 		Merges a new state into this property. Useful when model objects arrive from external
 		sources, such as an asyncrhonous save or a websocket based update.
 	*/
@@ -763,28 +763,28 @@ export default class ShadowImpl {
 	//	Methods that ShadowImpl subclasses with children must implement
 	//------------------------------------------------------------------------------------------------------
 
-	/*
+	/**
 		Invoked during defineProperty() to define children properties marked for automount
 	*/
 	automountChildren() {
 //		throw new Error("ShadowImpl subclasses with children must implement children()");
 	}
 
-	/*
+	/**
 		Subclasses should implement this method in such a way as not to trigger a mapping.
 	*/
 	childCount() {
 		return 0;
 	}
 
-	/*
+	/**
 		Gets the implementation objects managed by this property.
 	*/
 	children() {
 		throw new Error("ShadowImpl subclasses with children must implement children()");
 	}
 
-	/*
+	/**
 		Create a copy of the internals during reshadowing when the property has not changed during the
 		update process but some descendant has been modified.
 	*/
@@ -797,21 +797,21 @@ export default class ShadowImpl {
 		return new ImplClass(time, property, name, newModel, parentImpl, shader, this);
 	}
 
-	/*
+	/**
 		Gets a child implementation matching a property name or undefined if no such property exists.
 	*/
 	getChild(name) {
 		return undefined;
 	}
 
-	/*
+	/**
 		Gets if defineChildProperties() has been invoked.
 	*/
 	isMapped() {
 		return true;
 	}
 
-	/*
+	/**
 		Gets the keys/indices for this property.
 
 		Implementation note: Subclasses should implement this method in such a way as not to trigger a mapping.
@@ -820,7 +820,7 @@ export default class ShadowImpl {
 		throw new Error("ShadowImpl subclasses with children must implement keys()");
 	}
 
-	/*
+	/**
 		Maps all child properties onto this property using Object.defineProperty().
 	*/
 	defineChildProperties() { }
@@ -830,7 +830,7 @@ export default class ShadowImpl {
 	//	Private functions - should not be called by code outside this file.
 	//------------------------------------------------------------------------------------------------------
 
-	/*
+	/**
 		Called during reshadowing when reusing a property. The function sets the root reference for this property
 		and its descendants
 	*/
@@ -878,7 +878,7 @@ export default class ShadowImpl {
 		return this.__getResonse__;
 	}
 
-	/*
+	/**
 		Maps the getter and setter (if appropriate) onto the parent property.
 	*/
 	[_defineProperty](prev) {
@@ -922,7 +922,7 @@ export default class ShadowImpl {
 		this.automountChildren(prev);
 	}
 
-	/*
+	/**
 		Gets the next model state for the property. This value is used for performing property updates through
 		the update() function.
 
@@ -953,7 +953,7 @@ export default class ShadowImpl {
 		return this[_futureState];
 	}
 
-	/*
+	/**
 		Schedules an UPDATE action with the dispatcher. On action execution, the new property will be generated
 		and returned to the store.
 	*/

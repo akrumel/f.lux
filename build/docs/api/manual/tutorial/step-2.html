@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">Tutorial</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container manual-root" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  <a href="./manual/index.html" data-ice="manualHeaderLink">Manual</a>
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/akrumel/f.lux" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div class="manual-toc-root">
+  
+<div data-ice="manual" data-toc-name="overview">
+    <ul class="manual-toc">
+      
+    <li data-ice="manualNav" class="indent-h1 manual-color manual-color-overview" data-section-count="&#x25A0;&#x25A0;&#x25A0;" data-link="manual/overview/overview.html"><a href="manual/overview/overview.html" data-ice="link">f.lux Overview</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/overview/overview.html"><a href="manual/overview/overview.html#what-is-f-lux" data-ice="link">What is f.lux</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/overview/overview.html"><a href="manual/overview/overview.html#high-level-feature-list" data-ice="link">High-level feature list</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/overview/overview.html"><a href="manual/overview/overview.html#single-store" data-ice="link">Single store</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/overview/overview.html"><a href="manual/overview/overview.html#co-locate-state-and-action-functions" data-ice="link">Co-locate state and action functions</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/overview/overview.html"><a href="manual/overview/overview.html#immutable-state" data-ice="link">Immutable state</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/overview/overview.html"><a href="manual/overview/overview.html#property-life-cycle" data-ice="link">Property life-cycle</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/overview/overview.html"><a href="manual/overview/overview.html#collections-remote-data-" data-ice="link">Collections (remote data)</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/overview/overview.html"><a href="manual/overview/overview.html#logging-and-time-travel-debugger" data-ice="link">Logging and time travel debugger</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/overview/overview.html"><a href="manual/overview/overview.html#-react-ui-" data-ice="link">react-ui</a></li>
+<li data-ice="manualNav" class="indent-h1 manual-color manual-color-overview" data-section-count="&#x25A0;" data-link="manual/overview/concepts.html"><a href="manual/overview/concepts.html" data-ice="link">F.lux Concepts</a></li>
+</ul>
+  </div>
+<div data-ice="manual" data-toc-name="tutorial">
+    <ul class="manual-toc">
+      
+    <li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/README.html"><a href="manual/tutorial/README.html#tutorial" data-ice="link">Tutorial</a></li>
+<li data-ice="manualNav" class="indent-h1 manual-color manual-color-tutorial" data-section-count="&#x25A0;&#x25A0;" data-link="manual/tutorial/step-0.html"><a href="manual/tutorial/step-0.html" data-ice="link">Step 0 - Boilerplate Review</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-0.html"><a href="manual/tutorial/step-0.html#setup" data-ice="link">Setup</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-0.html"><a href="manual/tutorial/step-0.html#the-user-interface" data-ice="link">The User Interface</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-0.html"><a href="manual/tutorial/step-0.html#files" data-ice="link">Files</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/tutorial/step-0.html"><a href="manual/tutorial/step-0.html#-main-js-" data-ice="link">main.js</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/tutorial/step-0.html"><a href="manual/tutorial/step-0.html#-todos-react-js-" data-ice="link">Todos.react.js</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/tutorial/step-0.html"><a href="manual/tutorial/step-0.html#-addtodo-react-js-" data-ice="link">AddTodo.react.js</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-0.html"><a href="manual/tutorial/step-0.html#next-step" data-ice="link">Next Step</a></li>
+<li data-ice="manualNav" class="indent-h1 manual-color manual-color-tutorial" data-section-count="&#x25A0;&#x25A0;" data-link="manual/tutorial/step-1.html"><a href="manual/tutorial/step-1.html" data-ice="link">Step 1: F.lux Store and Basic Todo Functionality</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-1.html"><a href="manual/tutorial/step-1.html#overview" data-ice="link">Overview</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-1.html"><a href="manual/tutorial/step-1.html#goals" data-ice="link">Goals</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-1.html"><a href="manual/tutorial/step-1.html#technical-background" data-ice="link">Technical background</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-1.html"><a href="manual/tutorial/step-1.html#1-create-a-f-lux-store-with-initial-state-a-name-store-" data-ice="link">1. Create a f.lux Store with initial state</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-1.html"><a href="manual/tutorial/step-1.html#2-subscribe-to-store-changes-in-todos-a-name-changes-" data-ice="link">2. Subscribe to store changes in &lt;Todos&gt;</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-1.html"><a href="manual/tutorial/step-1.html#3-implement-addtodo-addtodo-function-a-name-addtodo-" data-ice="link">3. Implement &lt;AddTodo&gt; addTodo() function</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-1.html"><a href="manual/tutorial/step-1.html#4-implement-todoitem-to-display-edit-and-delete-todo-items-a-name-items-" data-ice="link">4. Implement &lt;TodoItem&gt; to display, edit, and delete todo items</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-1.html"><a href="manual/tutorial/step-1.html#5-iterate-all-store-todo-items-and-create-a-todoitem-for-each-one-a-name-iterate-" data-ice="link">5. Iterate all store todo items and create a &lt;TodoItem&gt; for each one</a></li>
+<li data-ice="manualNav" class="indent-h1 manual-color manual-color-tutorial" data-section-count="&#x25A0;&#x25A0;&#x25A0;&#x25A0;&#x25A0;" data-link="manual/tutorial/step-2.html"><a href="manual/tutorial/step-2.html" data-ice="link">Step 2: Properties</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-2.html"><a href="manual/tutorial/step-2.html#overview" data-ice="link">Overview</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-2.html"><a href="manual/tutorial/step-2.html#goals" data-ice="link">Goals</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-2.html"><a href="manual/tutorial/step-2.html#technical-background" data-ice="link">Technical background</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/tutorial/step-2.html"><a href="manual/tutorial/step-2.html#built-in-property-classes" data-ice="link">Built-in Property classes</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/tutorial/step-2.html"><a href="manual/tutorial/step-2.html#-property-features" data-ice="link">Property features</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/tutorial/step-2.html"><a href="manual/tutorial/step-2.html#creating-a-shadow-" data-ice="link">Creating a Shadow</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/tutorial/step-2.html"><a href="manual/tutorial/step-2.html#custom-properties" data-ice="link">Custom properties</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/tutorial/step-2.html"><a href="manual/tutorial/step-2.html#configuring-the-type-static-variable" data-ice="link">Configuring the type static variable</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/tutorial/step-2.html"><a href="manual/tutorial/step-2.html#accessing-the-property-from-the-shadow-" data-ice="link">Accessing the Property from the Shadow</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-2.html"><a href="manual/tutorial/step-2.html#1-todo-property-a-id-todo-" data-ice="link">1. Todo property</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/tutorial/step-2.html"><a href="manual/tutorial/step-2.html#import-f-lux-types-and-moment-" data-ice="link">Import f.lux types and moment</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/tutorial/step-2.html"><a href="manual/tutorial/step-2.html#create-the-todoproperty-class" data-ice="link">Create the TodoProperty class</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/tutorial/step-2.html"><a href="manual/tutorial/step-2.html#create-the-todoshadow-class" data-ice="link">Create the TodoShadow class</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/tutorial/step-2.html"><a href="manual/tutorial/step-2.html#define-todoproperty-type-" data-ice="link">Define TodoProperty.type</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/tutorial/step-2.html"><a href="manual/tutorial/step-2.html#the-code" data-ice="link">The code</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-2.html"><a href="manual/tutorial/step-2.html#2-todo-list-property-a-id-todos-" data-ice="link">2. Todo list property</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/tutorial/step-2.html"><a href="manual/tutorial/step-2.html#create-the-todolistshadow-" data-ice="link">Create the TodoListShadow</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/tutorial/step-2.html"><a href="manual/tutorial/step-2.html#create-the-todolistproperty-" data-ice="link">Create the TodoListProperty</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/tutorial/step-2.html"><a href="manual/tutorial/step-2.html#the-code" data-ice="link">The code</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-2.html"><a href="manual/tutorial/step-2.html#3-create-root-property-a-id-root-" data-ice="link">3. Create root property</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/tutorial/step-2.html"><a href="manual/tutorial/step-2.html#create-todorootproperty-" data-ice="link">Create TodoRootProperty</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/tutorial/step-2.html"><a href="manual/tutorial/step-2.html#create-the-store-using-todorootproperty-" data-ice="link">Create the Store using TodoRootProperty</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-2.html"><a href="manual/tutorial/step-2.html#4-update-ui-to-use-todolistproperty-and-todoproperty-a-id-ui-" data-ice="link">4. Update UI to use TodoListProperty and TodoProperty</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/tutorial/step-2.html"><a href="manual/tutorial/step-2.html#-todos-react-js-" data-ice="link">Todos.react.js</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/tutorial/step-2.html"><a href="manual/tutorial/step-2.html#-addtodo-react-js-" data-ice="link">AddTodo.react.js</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/tutorial/step-2.html"><a href="manual/tutorial/step-2.html#-todoitem-react-js-" data-ice="link">TodoItem.react.js</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-2.html"><a href="manual/tutorial/step-2.html#5-track-todo-item-update-time-a-id-update-" data-ice="link">5. Track todo item update time</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/tutorial/step-2.html"><a href="manual/tutorial/step-2.html#the-code" data-ice="link">The code</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-2.html"><a href="manual/tutorial/step-2.html#final-thoughts" data-ice="link">Final Thoughts</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-2.html"><a href="manual/tutorial/step-2.html#next-step" data-ice="link">Next Step</a></li>
+<li data-ice="manualNav" class="indent-h1 manual-color manual-color-tutorial" data-section-count="&#x25A0;&#x25A0;&#x25A0;&#x25A0;" data-link="manual/tutorial/step-3.html"><a href="manual/tutorial/step-3.html" data-ice="link">Step 3: UI State</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-3.html"><a href="manual/tutorial/step-3.html#overview" data-ice="link">Overview</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-3.html"><a href="manual/tutorial/step-3.html#goals" data-ice="link">Goals</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-3.html"><a href="manual/tutorial/step-3.html#technical-background" data-ice="link">Technical background</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/tutorial/step-3.html"><a href="manual/tutorial/step-3.html#property-accessor-" data-ice="link">Property accessor ($())</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/tutorial/step-3.html"><a href="manual/tutorial/step-3.html#property-initial-state" data-ice="link">Property initial state</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-3.html"><a href="manual/tutorial/step-3.html#1-uiproperty-a-id-uiproperty-" data-ice="link">1. UiProperty </a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/tutorial/step-3.html"><a href="manual/tutorial/step-3.html#filters-and-sorters" data-ice="link">Filters and sorters</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/tutorial/step-3.html"><a href="manual/tutorial/step-3.html#-uiproperty-definition" data-ice="link">UiProperty definition</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-3.html"><a href="manual/tutorial/step-3.html#2-update-toodrootproperty-a-id-root-" data-ice="link">2. Update ToodRootProperty </a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-3.html"><a href="manual/tutorial/step-3.html#3-filterselector-and-sortselector-a-id-selectors-" data-ice="link">3. &lt;FilterSelector&gt; and &lt;SortSelector&gt; </a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-3.html"><a href="manual/tutorial/step-3.html#4-update-todos-a-id-todos-" data-ice="link">4. Update &lt;Todos&gt; </a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/tutorial/step-3.html"><a href="manual/tutorial/step-3.html#render-the-toolbar" data-ice="link">Render the toolbar</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/tutorial/step-3.html"><a href="manual/tutorial/step-3.html#update-rendertodos-" data-ice="link">Update renderTodos()</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-3.html"><a href="manual/tutorial/step-3.html#final-thoughts" data-ice="link">Final Thoughts</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-3.html"><a href="manual/tutorial/step-3.html#next-step" data-ice="link">Next Step</a></li>
+<li data-ice="manualNav" class="indent-h1 manual-color manual-color-tutorial" data-section-count="&#x25A0;&#x25A0;&#x25A0;" data-link="manual/tutorial/step-4.html"><a href="manual/tutorial/step-4.html" data-ice="link">Step 4: f.lux-react</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-4.html"><a href="manual/tutorial/step-4.html#overview" data-ice="link">Overview</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-4.html"><a href="manual/tutorial/step-4.html#goals" data-ice="link">Goals</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-4.html"><a href="manual/tutorial/step-4.html#technical-background" data-ice="link">Technical background</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/tutorial/step-4.html"><a href="manual/tutorial/step-4.html#-f-lux-react-" data-ice="link">f.lux-react</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-4.html"><a href="manual/tutorial/step-4.html#1-provider-a-id-provider-" data-ice="link">1. &lt;Provider&gt; </a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-4.html"><a href="manual/tutorial/step-4.html#2-addtodo-a-id-addtodo-" data-ice="link">2. &lt;AddTodo&gt; </a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-4.html"><a href="manual/tutorial/step-4.html#3-simplify-todos-top-level-component-a-id-todos-" data-ice="link">3. Simplify &lt;Todos&gt; Top-Level Component </a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-4.html"><a href="manual/tutorial/step-4.html#4-header-a-id-header-" data-ice="link">4. &lt;Header&gt; </a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-4.html"><a href="manual/tutorial/step-4.html#5-todoslist-a-id-todolist-" data-ice="link">5. &lt;TodosList&gt; </a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-4.html"><a href="manual/tutorial/step-4.html#6-toolbar-a-id-toolbar-" data-ice="link">6. &lt;Toolbar&gt; </a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-4.html"><a href="manual/tutorial/step-4.html#final-thoughts" data-ice="link">Final Thoughts</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-4.html"><a href="manual/tutorial/step-4.html#next-step" data-ice="link">Next Step</a></li>
+<li data-ice="manualNav" class="indent-h1 manual-color manual-color-tutorial" data-section-count="&#x25A0;&#x25A0;" data-link="manual/tutorial/step-5.html"><a href="manual/tutorial/step-5.html" data-ice="link">Step 5: Time Travel Debugger</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-5.html"><a href="manual/tutorial/step-5.html#overview" data-ice="link">Overview</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-5.html"><a href="manual/tutorial/step-5.html#goals" data-ice="link">Goals</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-5.html"><a href="manual/tutorial/step-5.html#1-setting-up-the-f-lux-logger-a-id-logger-" data-ice="link">1. Setting up the f.lux Logger </a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-5.html"><a href="manual/tutorial/step-5.html#2-logging-a-id-logging-" data-ice="link">2. Logging </a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-5.html"><a href="manual/tutorial/step-5.html#3-time-travel-a-id-timetravel-" data-ice="link">3. Time travel </a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-5.html"><a href="manual/tutorial/step-5.html#4-fun-with-shadow-properties-a-id-fun-" data-ice="link">4. Fun with shadow properties </a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/tutorial/step-5.html"><a href="manual/tutorial/step-5.html#final-thoughts" data-ice="link">Final Thoughts</a></li>
+</ul>
+  </div>
+<div data-ice="manual" data-toc-name="reference">
+    <ul class="manual-toc">
+      
+    <li data-ice="manualNav" class="indent-h1 manual-color manual-color-reference" data-section-count="&#x25A0;&#x25A0;&#x25A0;&#x25A0;&#x25A0;" data-link="identifiers.html"><a href="identifiers.html" data-ice="link">Reference</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="identifiers.html"><a href="identifiers.html#class" data-ice="link">Class</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="identifiers.html"><a href="identifiers.html#function" data-ice="link">Function</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="identifiers.html"><a href="identifiers.html#variable" data-ice="link">Variable</a></li>
+</ul>
+  </div>
+<div data-ice="manual" data-toc-name="changelog">
+    <ul class="manual-toc">
+      
+    <li data-ice="manualNav" class="indent-h1 manual-color manual-color-changelog" data-section-count="&#x25A0;&#x25A0;&#x25A0;&#x25A0;" data-link="manual/changelog/v1.0.0.html"><a href="manual/changelog/v1.0.0.html" data-ice="link">v1.0.0 Change Log</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/changelog/v1.0.0.html"><a href="manual/changelog/v1.0.0.html#goals" data-ice="link">Goals</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/changelog/v1.0.0.html"><a href="manual/changelog/v1.0.0.html#documentation" data-ice="link">Documentation</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/changelog/v1.0.0.html"><a href="manual/changelog/v1.0.0.html#changes" data-ice="link">Changes</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/changelog/v1.0.0.html"><a href="manual/changelog/v1.0.0.html#libraries" data-ice="link">Libraries</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/changelog/v1.0.0.html"><a href="manual/changelog/v1.0.0.html#arrayproperty" data-ice="link">ArrayProperty</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/changelog/v1.0.0.html"><a href="manual/changelog/v1.0.0.html#indexedproperty" data-ice="link">IndexedProperty</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/changelog/v1.0.0.html"><a href="manual/changelog/v1.0.0.html#indexedshadowimpl" data-ice="link">IndexedShadowImpl</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/changelog/v1.0.0.html"><a href="manual/changelog/v1.0.0.html#mapproperty" data-ice="link">MapProperty</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/changelog/v1.0.0.html"><a href="manual/changelog/v1.0.0.html#objectproperty" data-ice="link">ObjectProperty</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/changelog/v1.0.0.html"><a href="manual/changelog/v1.0.0.html#property" data-ice="link">Property</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/changelog/v1.0.0.html"><a href="manual/changelog/v1.0.0.html#propertyfactoryshader" data-ice="link">PropertyFactoryShader</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/changelog/v1.0.0.html"><a href="manual/changelog/v1.0.0.html#shader" data-ice="link">Shader</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/changelog/v1.0.0.html"><a href="manual/changelog/v1.0.0.html#statetype" data-ice="link">StateType</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/changelog/v1.0.0.html"><a href="manual/changelog/v1.0.0.html#shadowimpl" data-ice="link">ShadowImpl</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/changelog/v1.0.0.html"><a href="manual/changelog/v1.0.0.html#createpropertyclass-" data-ice="link">createPropertyClass()</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/changelog/v1.0.0.html"><a href="manual/changelog/v1.0.0.html#examples" data-ice="link">Examples</a></li>
+</ul>
+  </div>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><div class="github-markdown">
+  <div class="manual-breadcrumb-list">
+    <a href="./manual/./index.html">Manual</a>
+    <span>&#xBB;</span>
+    <span data-ice="title">Tutorial</span>
+  </div>
+  <div data-ice="content"><h1 id="step-2-properties">Step 2: Properties</h1>
+<h2 id="overview">Overview</h2>
+<p>This step creates f.lux <code>Property</code> classes for the root shadow state object, todos list, and todo items. Defining and using custom <code>Property</code> classes is the mechanism for colocating application logic with the application state and customizing the shadowing process. This feature is the root motivation for developing the f.lux library and key to making your application logic easier to reason about and maintain. </p>
+<h2 id="goals">Goals</h2>
+<ol>
+<li><a href="#user-content-todo">Todo property</a></li>
+<li><a href="#user-content-todos">Todo list property</a></li>
+<li><a href="#user-content-root">Define the root property</a></li>
+<li><a href="#user-content-ui">Update UI to use <code>TodoListProperty</code> and <code>TodoProperty</code></a></li>
+<li><a href="#user-content-update">Track todo item update time</a></li>
+</ol>
+<p>The <a href="https://github.com/akrumel/f.lux/tree/master/examples/tutorial/step-2"><code>examples/tutorial/step-2</code></a> directory contains the completed code for this step.</p>
+<h2 id="technical-background">Technical background</h2>
+<p>The <a href="./manual/step-1.md">previous step</a> discussed the default shadowing capability known as &apos;auto-shadowing&apos;. Now let&apos;s learn how to customize the shadowing process using a declarative and composable approach.</p>
+<h3 id="built-in-property-classes">Built-in <code>Property</code> classes</h3>
+<p>The f.lux <code>Store</code> &apos;shadows&apos; the application state by recursively mapping the state&apos;s values using various <code>Property</code> classes. The f.lux library provides the following building block types:</p>
+<table>
+<thead>
+<tr>
+<th>Property class</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ArrayProperty</code></td>
+<td>Full <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> api and subscript random access, i.e. <code>arr[1]</code></td>
+</tr>
+<tr>
+<td><code>IndexedProperty</code></td>
+<td>Non-mutable <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array"><code>Array</code></a> api (<code>find(),</code>map()<code>,</code>reduce()`,...) and subscript random access</td>
+</tr>
+<tr>
+<td><code>MapProperty</code></td>
+<td><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map"><code>Map</code></a> api plus &apos;dot&apos; access, i.e. <code>person.name</code> or `person[&apos;name&apos;]</td>
+</tr>
+<tr>
+<td><code>ObjectProperty</code></td>
+<td>&apos;dot&apos; access to values with no api beyond <code>toJSON()</code></td>
+</tr>
+<tr>
+<td><code>PrimitiveProperty</code></td>
+<td>exposes the actual value, i.e. <code>person.name</code> returns the string value</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p><code>IndexedProperty</code> vs <code>ArrayProperty</code></p>
+<p>  Both types represent arrays with the difference being the portion of the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array"><code>Array</code></a> api exposed. <code>ArrayProperty</code> exposes the complete api while <code>IndexedProperty</code> limits the api to the non-mutating methods, such as <code>filter()</code>, <code>find()</code>, <code>indexOf()</code>, and <code>map()</code> to name a few. Both types allow for random access and assignment, such as <code>todos[1].desc</code>.</p>
+<p>  Use <code>IndexedProperty</code> when you want to model an array state property without exposing mutating functions like <code>push()</code>, <code>remove()</code>, and <code>splice()</code>. You can then specify a custom shadow api to expose mutation methods that involve implementation logic. </p>
+<p>  <code>IndexedProperty</code> is used to implement the <code>TodoListProperty</code> in this step.</p>
+</li>
+<li><p><code>ObjectProperty</code> vs <code>MapProperty</code></p>
+<p>  Both types represent javascript objects with the difference being the exposed api. <code>MapProperty</code> exposes the full <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map"><code>Map</code></a> api for adding, inspecting, and removing properties. <code>ObjectProperty</code> is more like a literal javascript object and does not expose a mutation api. Both types allow for random access and assignment using property key names, such <code>todo.desc</code> or <code>todo[&apos;desc&apos;]</code>.</p>
+<p>  Use <code>ObjectProperty</code> when you do not need the <code>Map</code> api or want to define your own, custom shadow api. For example, use <code>ObjectProperty</code> to implement a property exposing the current phone orientation. The orientation may be either landscape or portrait. Allowing the application add and remove properties to an <code>OrientationProperty</code> is non-sensical. Instead, base <code>OrientationProperty</code> on <code>ObjectProperty</code> and expose a shadow api with a function <code>isLandscape()</code>. As described in the next section, you would use the life-cycle methods <code>propertyWillShadow()</code> and <code>propertyWillUnshadow()</code> to register and unregister for phone OS orientation change events, set a state variable based on the events, and the React UI could render the appropriate display by inspecting <code>orientation.isLandscape()</code>.</p>
+<p>  <code>ObjectProperty</code> is used for implementing the <code>TodoProperty</code> in this step.</p>
+</li>
+</ul>
+<h3 id="-property-features"><code>Property</code> features</h3>
+<p>This tutorial step will explore some interesting <code>Property</code> features:</p>
+<ul>
+<li><p><strong>Life-cycle</strong></p>
+<p>  A <code>Property</code> instance exists for the life of the underlying state, spans state changes, and has life-cycle driven by the shadowing process. A <code>Property</code> can tie into the life-cycle to register for system events, manage web sockets, update persistent stores, or log information. </p>
+<p>  The life-cycle methods are:</p>
+<ul>
+<li><code>propertyWillShadow()</code> - invoked just before the shadow property is going to be added to the shadow state.</li>
+<li><code>propertyDidShadow()</code> - state property was shadowed and the <code>Property</code> is fully functional.</li>
+<li><code>propertyChildInvalidated(childProperty, sourceProperty)</code> - A child property mutation action has occurred and it&apos;s value will change in store&apos;s next update.</li>
+<li><code>propertyDidUpdate()</code> - state managed by this property has changed.</li>
+<li><code>propertyWillUnshadow()</code> - invoked prior to the <code>Property</code> being removed from the shadow state</li>
+</ul>
+</li>
+<li><p><strong>Shadow api</strong></p>
+<p>  Colocating application state with application logic is a foundational f.lux goal to improve type safety and make an application easier to reason about. This is accomplished by developing a shadow api for a property or utilizing the default api provided by f.lux (as was done in the previous step). This is actually how the <code>todos.map()</code> array function from the previous chapter is implemented behind the scenes:</p>
+<pre><code class="lang-js"><code class="source-code prettyprint">  todos.map( t =&gt; &lt;TodoItem todo={ t } todos={ todos } /&gt; )</code>
+</code></pre>
+<p>  Writing a shadow api is just like writing a javascript class or defining a javascript object without the need to define and manage the data since that already exists in the f.lux <code>Store</code>. Ultimately, the shadow api will be instantiated as a <code>Shadow</code> subclass instance.</p>
+</li>
+<li><p><strong><code>type</code> class variable</strong></p>
+<p>  Every <code>Property</code> class exposes a <code>type</code> class variable describing how the state data should be shadowed. The <code>type</code> variable provides a <code>StateType</code> instance and is primarily used to compose the application state structure. the <code>type</code> variables specify such information as the shadow api, default values, initital state values, readonly access, and whether to enable/disable auto-shadowing. </p>
+<p>  This step will define several custom f.lux property types: <code>TodoProperty</code> and <code>TodoListProperty</code>. The <code>type</code> class variable <code>TodoProperty.type</code> defines how f.lux should shadow each todo item and is setup when defining <code>TodoProperty</code>. The <code>TodoListProperty.type</code> describes how the todos array should be shadowed and will be configured to shadow each element using <code>TodoProperty</code>.</p>
+<p>  <code>type</code> class variables provide the declarative mechanism for describing the shadowing process, are super easy to setup, and will be explored in detail during this step.</p>
+</li>
+</ul>
+<h3 id="creating-a-shadow-">Creating a <code>Shadow</code></h3>
+<p>Specifing a shadow api consists of two steps:</p>
+<ol>
+<li><p><strong>Define the api</strong></p>
+<p> There are two ways to define shadow api:</p>
+<ul>
+<li><p><strong>Subclassing</strong></p>
+<pre><code class="lang-js"><code class="source-code prettyprint">  class TodoShadow extends Shadow {
+      get momentCreated() {
+          return moment(this.created);
+      }
+
+      isCompleted() {
+          return this.completed;
+      }
+  }</code>
+</code></pre>
+</li>
+<li><p><strong>Literal object</strong></p>
+<pre><code class="lang-js"><code class="source-code prettyprint">  const TodoListShadow = {
+      get incompleteSize() {
+          return this.reduce( (acc, t) =&gt; !t.completed ?acc+1 :acc, 0);
+      },
+
+      addTodo(desc) {
+          return this.push(TodoProperty.create(desc));
+      },
+
+      // other methods and properties here
+  }</code>
+</code></pre>
+<p>In both cases, the <code>this</code> reference is the shadow state for the property.</p>
+</li>
+</ul>
+</li>
+</ol>
+<ol>
+<li><p><strong>Attach the api using <code>Property.type</code></strong></p>
+<p> Each built-in <code>Property</code> class provides a static function for creating a specialized <code>Property</code> class called <code>createClasss()</code> that takes a shadow definition and returns a new <code>Property</code> subclass. For example,</p>
+<pre><code class="lang-js"><code class="source-code prettyprint"> export default IndexedProperty.createClass(TodoListShadow);</code>
+</code></pre>
+<p> creates a new <code>IndexedProperty</code> subclass where the shadowing process will use the <code>TodoListShadow</code> as the shadow api. This tutorial step will explore additional capabilities of <code>createClass()</code> and how to utilize the generated class.</p>
+</li>
+</ol>
+<h3 id="custom-properties">Custom properties</h3>
+<p>A custom <code>Property</code> class can be created through subclassing in addition to the <code>createClass()</code> approach mentioned in the previous section. </p>
+<p><strong>F.lux Design Point: The subclassing approach is used when you want to tie into the <code>Property</code> life-cycle.</strong></p>
+<p>Creating a custom <code>Property</code> class requires two steps:</p>
+<ol>
+<li><p><strong>Extend an existing <code>Property</code> class</strong></p>
+<pre><code class="lang-js"><code class="source-code prettyprint"> export default class TodoProperty extends ObjectProperty {
+     // implementation here
+ }</code>
+</code></pre>
+</li>
+<li><p><strong>Define the <code>type</code> static variable</strong></p>
+<p> Each built-in type has a <code>defineType()</code> static function that will create a <code>type</code> static veriable that can be used for configuring the shadowing process. Continuing the <code>TodoProperty</code> in step 1:</p>
+<pre><code class="lang-js"><code class="source-code prettyprint"> ObjectProperty.defineType(TodoProperty);</code>
+</code></pre>
+<p> This tutorial step will explore additional capabilities of <code>defineType()</code>.</p>
+</li>
+</ol>
+<h3 id="configuring-the-type-static-variable">Configuring the <code>type</code> static variable</h3>
+<p>Both <code>createClass()</code> and <code>defineType()</code> static functions take callback as the second parameter. The callback has the form:</p>
+<pre><code class="lang-js"><code class="source-code prettyprint">function callback(type)</code>
+</code></pre>
+<p>where <code>type</code> is a <code>StateType</code> instance.</p>
+<p><code>StateType</code> defines the shadowing process for an f.lux property:</p>
+<ul>
+<li><strong>shadow type</strong> - the shadow class or javascript literal object definition as described aboe</li>
+<li><strong>child property types</strong> - specify child property names and shadow <code>type</code></li>
+<li><strong>element type</strong> - specify a <code>type</code> for each contained child property or array value</li>
+<li><strong>readonly</strong> - shadow state properties may be marked as readonly so assignments will not cause mutations. Handy for readonly properties like object IDs or system defined values like orientation or location.</li>
+</ul>
+<p>Extending the eariler <code>IndexedProperty.createClass()</code> example, here is an example with a <code>type</code> configuration callback without comment as it will be covered in detail in the following sections:</p>
+<pre><code class="lang-js"><code class="source-code prettyprint">IndexedProperty.createClass(TodoListShadow, type =&gt; {
+    type.elementType(TodoProperty.type)    // each model contained will be a TodoProperty type
+        .typeName(&quot;TodoListProperty&quot;)      // useful for diagnostics
+})</code>
+</code></pre>
+<h3 id="accessing-the-property-from-the-shadow-">Accessing the <code>Property</code> from the <code>Shadow</code></h3>
+<p>The <code>Shadow</code> class is the base class for all f.lux shadow state properties. Its api is quite spartan yet it provides access to wealth of information and capabilities. <code>Shadow</code> defines the useful, standard Javascript functions <code>toJSON()</code> and <code>toString()</code>. Several additional f.lux specific methods are:</p>
+<ul>
+<li><code>$()</code> - returns the &apos;accessor&apos; used in the previous step to get the unique <code>Property</code> instance id: <code>todo.$().pid()</code></li>
+<li><code>$$()</code> - returns the backing <code>Property</code> instance</li>
+</ul>
+<p>Accessing a shadow&apos;s backing <code>Property</code> is most often used to access specific capaiblities the <code>Property</code> class posseses but are not shadowed. In this step we will access <code>Property</code> level apis in <code>IndexedProperty</code> and <code>ObjectProperty</code> for mutating the state, a capability not provided by the parent <code>Shadow</code> classes. This is more fully explained in the coding sections below.</p>
+<h2 id="1-todo-property-a-id-todo-">1. Todo property<a id="todo"></a></h2>
+<p>A todo item will have the following properties:</p>
+<ul>
+<li><code>desc</code> - string describing the task</li>
+<li><code>completed</code> - boolean describing if the task has been completed</li>
+<li><code>created</code> - an ISO 8601 formatted date string for when the item was created</li>
+<li><code>updated</code> - an ISO 8601 formatted date string for when the item was last modified</li>
+</ul>
+<p>Dates will be manipulated using the excellent <code>moment</code> library.</p>
+<h3 id="import-f-lux-types-and-moment-">Import f.lux types and <code>moment</code></h3>
+<pre><code class="lang-js"><code class="source-code prettyprint">import moment from &quot;moment&quot;;
+
+import {
+    ObjectProperty,
+    PrimitiveProperty,
+    Shadow,
+} from &quot;f.lux&quot;;</code>
+</code></pre>
+<h3 id="create-the-todoproperty-class">Create the <code>TodoProperty</code> class</h3>
+<p>The last portion of this tutorial step will use the <code>Property</code> life-cycle methods to set the <code>updated</code> child property whenever <code>desc</code> or <code>completed</code> change. Utilizing the life-cycle requires the subclassing approach. </p>
+<p>The <code>TodoProperty</code> class does not need the <code>Map</code> api for mutations so let&apos;s extend <code>ObjectProperty</code>:</p>
+<pre><code class="lang-js"><code class="source-code prettyprint">export default class TodoProperty extends ObjectProperty {
+    static create(desc) {
+        const now = moment().toISOString();
+
+        return {
+            completed: false,
+            created: now,
+            desc: desc,
+            updated: now,
+        }
+    }
+}</code>
+</code></pre>
+<p>A few things worth noting:</p>
+<ul>
+<li><p><code>class TodoProperty extends ObjectProperty { ... }</code></p>
+<p>  Creating an <code>Property</code> class is as simple as subclassing an existing <code>Property</code> class. You can also subclass your own or third party <code>Property</code> subclasses though this is not generally a preferred style. The idea being that <code>Property</code> subclasses are <strong>data components</strong> and not general purpose business logic class hieararchies.</p>
+<p>  We will tie into the property life-cycle in the last part of this tutorial step by adding a <code>propertyChildInvalidated()</code> method.</p>
+</li>
+<li><p><code>static create(desc) { ... }</code></p>
+<p>  A static function for creating a new todo item state object. This has nothing to do with f.lux beyond demonstrating how <code>Property</code> classes provide single place, common sense location to put logic related to a state value. Should the expected structure of a todo item change then all changes can be made in a single file.</p>
+</li>
+</ul>
+<h3 id="create-the-todoshadow-class">Create the <code>TodoShadow</code> class</h3>
+<p>Let&apos;s stick with the subclassing theme for creating the shadow api:</p>
+<pre><code class="lang-js"><code class="source-code prettyprint">class TodoShadow extends Shadow {
+    get momentCreated() {
+        return moment(this.created);
+    }
+
+    get momentUpdated() {
+        return moment(this.updated);
+    }
+}</code>
+</code></pre>
+<ul>
+<li><p><code>class TodoShadow extends Shadow { ... }</code></p>
+<p>  <code>Shadow</code> is the base class for all shadow apis. Every built-in <code>Property</code> class has a default <code>Shadow</code> class. Extending from the property <code>Shadow</code> class is important or you risk losing expected functionality from the shadow state property. Here is a table listing the <code>Property</code> to <code>Shadow</code> class relationships:</p>
+<p>  | <code>Property</code> class       | <code>Shadow</code> class
+  | ---------------------- | -------------------------
+  | <code>ArrayProperty</code>        |  <code>ArrayShadow</code>
+  | <code>IndexedProperty</code>      |  <code>IndexedShadow</code>
+  | <code>MapProperty</code>          |  <code>MapShadow</code>
+  | <code>ObjectProperty</code>       |  <code>Shadow</code>
+  | <code>PrimitiveProperty</code>    |  <code>Shadow</code></p>
+</li>
+</ul>
+<ul>
+<li><p><code>momentCreated</code> and <code>momentUpdated</code> virtual properties</p>
+<p>  The <code>created</code> and <code>updated</code> properties are strings yet the UI needs values suitable for sorting and filtering. To that end, we create two virtual properties that return <code>moment</code> objects created using the child shadow state properties. Notice how </p>
+<pre><code><code class="source-code prettyprint">  return moment(this.created);</code>
+</code></pre><p>  uses the <code>this</code> reference:</p>
+<ul>
+<li><code>this</code> - refers to the f.lux shadow state for the todo item</li>
+<li><p><code>created</code> - the child f.lux shadow state property</p>
+<p>The UI can then access the virtual properties:</p>
+<pre><code><code class="source-code prettyprint">sortBy(todos, t =&gt; -t.momentCreated.valueOf() )</code>
+</code></pre><p><strong>Key F.lux Concept: Shadow api methods use the <code>this</code> reference to access the shadow state.</strong> </p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="define-todoproperty-type-">Define <code>TodoProperty.type</code></h3>
+<p>The easiest way to define the <code>type</code> descriptor is to use the <code>defineType()</code> static function in your built-in <code>Property</code> parent class:</p>
+<pre><code class="lang-js"><code class="source-code prettyprint">ObjectProperty.defineType(TodoProperty, TodoShadow, type =&gt; {
+    type.properties({
+                completed: PrimitiveProperty.type.initialState(false),
+                created: PrimitiveProperty.type.readonly,
+                desc: PrimitiveProperty.type,
+                updated: PrimitiveProperty.type.readonly,
+            })
+        .readonlyOff
+        .typeName(&quot;TodoProperty&quot;);
+});</code>
+</code></pre>
+<p>where <code>defineType()</code> parameters are:</p>
+<ul>
+<li><code>TodoProperty</code> - the <code>ObjectProperty</code> subclass (not an instance)</li>
+<li><code>TodoShadow</code> - a <code>Shadow</code> subclass or object literal</li>
+<li><code>callback(type)</code> - callback for specializing the <code>StateType</code> instance to be used for the <code>type</code> descriptor</li>
+</ul>
+<p>Notice the callback does not return a value since the <code>type</code> parameter is a <code>StateType</code> instance that is mutated by configuration methods and properties. Not very functional but it allows for chaining calls as demonstrated above. </p>
+<p>Let&apos;s checkout some of the finer points:</p>
+<ul>
+<li><p><code>type.properties({ ... })</code></p>
+<p>  <code>StateType</code> method used to configure the child properties. Auto-shadowing will shadow the current state but does not provide any control over the shadowing process. <code>properties({}) takes an object parameter where the key/value paris are the child property name and associated</code>StateType` value. </p>
+</li>
+<li><p><code>desc: PrimitiveProperty.type</code></p>
+<p>  Our first glimpse at using the <code>type</code> descriptor. Each built-in <code>Property</code> class has a <code>type</code> static variable. In this case,  we are specifying the <code>desc</code> property as a Javascript primitive (<code>boolean</code>, <code>string</code>, or <code>number</code>). This mimics the auto-shadowing process. Just like React component <code>propTypes</code>, it never hurts to be explicit about data expectations.</p>
+</li>
+<li><p><code>completed: PrimitiveProperty.type.initialState(false)</code></p>
+<p>  This specifies an initial value for the <code>completed</code> property using the <code>StateType.initialState(value)</code> method.</p>
+</li>
+<li><p><code>created: PrimitiveProperty.type.readonly</code></p>
+<p>  The <code>created</code> property is declared as readonly to prevent application code from assigning a new value. This is accomplished using the <code>StateType.readonly</code> property. Notice <code>readonly</code> is not a function yet is still chainable:</p>
+<pre><code><code class="source-code prettyprint">  PrimitiveProperty.type.readonly.initialState(null)</code>
+</code></pre></li>
+</ul>
+<h3 id="the-code">The code</h3>
+<p>Here is the entire <code>TodoProperty.js</code> source:</p>
+<pre><code class="lang-js"><code class="source-code prettyprint">import moment from &quot;moment&quot;;
+
+import {
+    ObjectProperty,
+    PrimitiveProperty,
+    Shadow,
+} from &quot;f.lux&quot;;
+
+
+export default class TodoProperty extends ObjectProperty {
+    static create(desc) {
+        const now = moment().toISOString();
+
+        return {
+            completed: false,
+            created: now,
+            desc: desc,
+            updated: now,
+        }
+    }
+}
+
+
+class TodoShadow extends Shadow {
+    get momentCreated() {
+        return moment(this.created);
+    }
+
+    get momentUpdated() {
+        return moment(this.updated);
+    }
+}
+
+
+ObjectProperty.defineType(TodoProperty, TodoShadow, type =&gt; {
+    type.properties({
+                completed: PrimitiveProperty.type.initialState(false),
+                created: PrimitiveProperty.type.readonly,
+                desc: PrimitiveProperty.type,
+                updated: PrimitiveProperty.type.readonly,
+            })
+        .readonlyOff                 // enable &apos;completed&apos; and &apos;desc&apos; assignment
+        .typeName(&quot;TodoProperty&quot;);
+});</code>
+</code></pre>
+<h2 id="2-todo-list-property-a-id-todos-">2. Todo list property<a id="todos"></a></h2>
+<p>The <code>TodoListProperty</code> will be an <code>IndexedProperty</code>. Remember, <code>IndexedProperty</code> shadows an array and exposes the <code>Array</code> api <strong>minus</strong> the mutation methods, such as <code>push()</code>, <code>pop()</code>, and <code>splice()</code>. We are going to add additional shadow methods and properties the React UI will find useful:</p>
+<ul>
+<li><code>incompleteSize</code> property - a virtual property providing the number of incomplete todo items</li>
+<li><code>addTodo(desc)</code> - takes a todo description and appends a new todo item to the array</li>
+<li><code>removeTodo(todo)</code> - takes a <code>TodoProperty</code> and removes it from the array</li>
+</ul>
+<h3 id="create-the-todolistshadow-">Create the <code>TodoListShadow</code></h3>
+<p>The <code>IndexedProperty</code> uses the <code>IndexedShadow</code> as its default shadow type. By defining the <code>TodoListShadow</code> using an object literal approach, we do not have to worry extending the correct <code>Shadow</code> subclass.</p>
+<pre><code class="lang-js"><code class="source-code prettyprint">const TodoListShadow = {
+    get incompleteSize() {
+        return this.reduce( (acc, t) =&gt; !t.completed ?acc+1 :acc, 0);
+    },
+
+    addTodo(desc) {
+        const listProp = this.$$();
+
+        listProp._indexed.push(TodoProperty.create(desc));
+    },
+
+    removeTodo(todo) {
+        const listProp = this.$$();
+        const idx = this.indexOf(todo);
+
+        if (idx !== -1) {
+            listProp._indexed.remove(idx);
+        }
+    }
+}</code>
+</code></pre>
+<p>A few points of interest:</p>
+<ul>
+<li><p><code>const listProp = this.$$();</code></p>
+<p>  Occassionally, a shadow method requires access to the backing <code>Property</code> instance. This is accomplished using the <code>Shadow</code> method <code>$$()</code>. All shadow state property values have this method. </p>
+</li>
+<li><p><code>listProp._indexed.push(TodoProperty.create(desc))</code></p>
+<p>  <code>IndexedShadow</code> does not provide mutation methods but <code>IndexedProperty</code> does through the <code>_indexed</code> instance variable. <code>TodoListProperty</code> is defined as an <code>IndexedProperty</code> via the <code>IndexedProperty.createClass()</code> declaration.</p>
+</li>
+<li><p><code>listProp._indexed.remove(idx)</code></p>
+<p>  And this takes advantage of the <code>_indexed.remove()</code> function.</p>
+</li>
+<li><p><code>incompleteSize</code> virtual property</p>
+<p>  <code>incompleteSize</code> is a virtual property defined using the es2015 <code>get</code> keyword like <code>momentCreated</code> in <code>TodoProperty</code>. The property body is interesting:</p>
+<pre><code class="lang-js"><code class="source-code prettyprint">  return this.reduce( (acc, t) =&gt; !t.completed ?acc+1 :acc, 0);</code>
+</code></pre>
+<ul>
+<li><code>this.reduce(callback)</code> uses the <code>Array.reduce()</code> function provided by the <code>IndexedShadow</code> class. When writing a shadow api method, <code>this</code> references the shadow state api you are implementing. The next section uses <code>IndexedProperty.createClass()</code> to set the <code>TodoListShadow</code> as the properties api. <code>IndexedProperty.createClass()</code> will create an <code>IndexShadow</code> subclass and assign the properties and methods of the <code>TodoListShadow</code> literal object to the subclass&apos; prototype.</li>
+<li><p>each iteration passes a todo item along with the accumulator value: <code>(acc, t) =&gt; !t.completed ?acc+1 :acc</code>. This code adds one to the accumulator if the todo item&apos;s <code>completed</code> flag is false: <code>!t.completed</code>.</p>
+<p><strong>Key F.lux Concept: When working with f.lux shadow types the <code>this</code> reference always references the shadow state and not the actual state of the <code>Store</code>. This means any changes to the shadow state will be asynchronously reflected in the actual state followed by a <code>Store</code> change notification being sent to all registered callbacks.</strong></p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="create-the-todolistproperty-">Create the <code>TodoListProperty</code></h3>
+<p><code>TodoListProperty</code> is created without resorting to subclassing as there is no need to access the property life-cycle. This is accomplished with:</p>
+<pre><code class="lang-js"><code class="source-code prettyprint">export default IndexedProperty.createClass(TodoListShadow, type =&gt; {
+    type.elementType(TodoProperty.type)    
+        .typeName(&quot;TodoListProperty&quot;)      
+});</code>
+</code></pre>
+<p>Each built-in <code>Property</code> class has a static <code>createClass()</code> function for creating a <code>Property</code> subclass with a <code>type</code> descriptor attached.</p>
+<p>The parameters are:</p>
+<ul>
+<li><code>TodoListShadow</code> - the shadow type for the new property type. This parameter can also be an <code>IndexedShadow</code> subclass in this case.</li>
+<li><code>callback(type)</code> - configure the shadowing behavior.</li>
+</ul>
+<p>The new twist here is:</p>
+<pre><code class="lang-js"><code class="source-code prettyprint">type.elementType(TodoProperty.type)</code>
+</code></pre>
+<p><code>StateType.elementType(type)</code> specifies the f.lux type used to shadow each element. Thus, <code>type.elementType(TodoProperty.type)</code> instructs f.lux to use the <code>TodoProperty</code> for shadowing each element.</p>
+<h3 id="the-code">The code</h3>
+<p>Here is the entire <code>TodoListProperty.js</code> source:</p>
+<pre><code class="lang-js"><code class="source-code prettyprint">import { IndexedProperty } from &quot;f.lux&quot;;
+
+import TodoProperty from &quot;./TodoProperty&quot;;
+
+
+const TodoListShadow = {
+    get incompleteSize() {
+        return this.reduce( (acc, t) =&gt; !t.completed ?acc+1 :acc, 0);
+    },
+
+    addTodo(desc) {
+        const listProp = this.$$();
+
+        listProp._indexed.push(TodoProperty.create(desc));
+    },
+
+    removeTodo(todo) {
+        const listProp = this.$$();
+        const idx = this.indexOf(todo);
+
+        if (idx !== -1) {
+            listProp._indexed.remove(idx);
+        }
+    }
+}
+
+export default IndexedProperty.createClass(TodoListShadow, type =&gt; {
+    type.elementType(TodoProperty.type)    // each model contained will be a TodoProperty type
+        .typeName(&quot;TodoListProperty&quot;)      // useful for diagnostics
+});</code>
+</code></pre>
+<h2 id="3-create-root-property-a-id-root-">3. Create root property<a id="root"></a></h2>
+<p>The f.lux <code>Property</code> class for the root state is the simplest property. </p>
+<h3 id="create-todorootproperty-">Create <code>TodoRootProperty</code></h3>
+<p>Like <code>TodoProperty</code>, the root property is an <code>ObjectProperty</code> yet it does not tie into the <code>Property</code> life-cycle so does not use subclassing and does not provide a customized api.</p>
+<pre><code class="lang-js"><code class="source-code prettyprint">export default ObjectProperty.createClass({}, type =&gt; {
+    type.autoshadowOff                          
+        .properties({                           
+                todos: TodoListProperty.type,   
+            })
+        .readonly                               
+        .typeName(&quot;TodoRootProperty&quot;);          
+});</code>
+</code></pre>
+<p>There are a few new wrinkles worth discussing:</p>
+<ul>
+<li><code>type.autoshadowOff</code> - the f.lux shadowing process will only process explicitly defined properties</li>
+<li><code>type.readonly</code> - recursively marks all descendent properties as readonly unless a property <code>type</code> descriptor marks the property using <code>readonlyOff</code>. This is why <code>TodoProperty.type</code> has is defined using <code>readonlyOff</code>. Take a quick look if you did not notice above. Marking the property as readonly ensure the <code>todos</code> array is not reassigned:</li>
+</ul>
+<pre><code class="lang-js"><code class="source-code prettyprint">root.todos = [];       // this will have no affect</code>
+</code></pre>
+<h3 id="create-the-store-using-todorootproperty-">Create the <code>Store</code> using <code>TodoRootProperty</code></h3>
+<p>Using <code>TodoRootProperty</code> as the basis for the shadow state requires a small change to <code>main.js</code>:</p>
+<p>Change the lines:</p>
+<pre><code class="lang-js"><code class="source-code prettyprint">const root = new ObjectProperty();
+const state = { todos: [] }
+const store = new Store(root, state);</code>
+</code></pre>
+<p>to </p>
+<pre><code class="lang-js"><code class="source-code prettyprint">const root = new TodoRootProperty();
+const store = new Store(root);</code>
+</code></pre>
+<p>As an interesting aside, notice the new code does not require specifying an initital state. The <code>Store</code> obtains it from the <code>TodoRootProperty</code> instance passed into the constructor with the line:</p>
+<pre><code class="lang-js"><code class="source-code prettyprint">state = root.initialState();</code>
+</code></pre>
+<p><code>initialState()</code> is a <code>Property</code> method and it uses <code>TodoRootProperty.type</code> to calculate it.</p>
+<h2 id="4-update-ui-to-use-todolistproperty-and-todoproperty-a-id-ui-">4. Update UI to use <code>TodoListProperty</code> and <code>TodoProperty</code><a id="ui"></a></h2>
+<h3 id="-todos-react-js-"><code>Todos.react.js</code></h3>
+<p>Improve <code>todos</code> sorting for rendering the <code>&lt;TodoItem&gt;</code> components by sorting incomplete items first and a secondary sorting on the <code>todo.created</code> date. Change the following portion of <code>renderTodos()</code> from:</p>
+<pre><code class="lang-js"><code class="source-code prettyprint">return todos
+    .sortBy(&apos;completed&apos;)
+    .map( t =&gt; &lt;TodoItem key={ t.$().pid() } todo={ t } todos={ todos } /&gt; );</code>
+</code></pre>
+<p>to the more advanced:</p>
+<pre><code class="lang-js"><code class="source-code prettyprint">return todos
+    .sortBy([ &apos;completed&apos;, t =&gt; -t.momentCreated.valueOf() ])
+    .map( t =&gt; &lt;TodoItem key={ t.$().pid() } todo={ t } todos={ todos } /&gt; );</code>
+</code></pre>
+<p>This code uses the <code>TodoProperty</code> virtual property <code>momentCreated</code> for the secondary sorting criteria.</p>
+<h3 id="-addtodo-react-js-"><code>AddTodo.react.js</code></h3>
+<p>Utilize the <code>TodoListShadow.addTodo(desc)</code> function to append a new todo item. Remember, <code>TodoListProperty</code> is an <code>IndexedProperty</code> and so the array does not have <code>push()</code> or <code>unshift()</code> mutation functions. The only way to add a new todo item is through <code>addTodo()</code>.</p>
+<p>Change the <code>&lt;AddTodo&gt;</code> component method <code>addTodo()</code> from:</p>
+<pre><code class="lang-js"><code class="source-code prettyprint">const todo = {
+    completed: false,
+    desc,
+    created: moment().toISOString()
+}
+
+// add the Todo item to the array
+todos.push(todo);</code>
+</code></pre>
+<p>to the much simpler</p>
+<pre><code class="lang-js"><code class="source-code prettyprint">todos.addTodo(desc);</code>
+</code></pre>
+<p>Notice how using custom <code>Property</code> classes with specialized apis remove &apos;business logic&apos; from the user interface code in a very natural way.</p>
+<h3 id="-todoitem-react-js-"><code>TodoItem.react.js</code></h3>
+<p>Utilize the <code>TodoListShadow.removeTodo(todo)</code> function to remove a todo item. The <code>todos</code> shadow state array does not have a <code>remove()</code> function since <code>IndexedProperty</code> does not provide <code>Array</code> mutation methods.</p>
+<p>Change <code>&lt;TodoItem&gt; component function removeTodo()</code> from:</p>
+<pre><code class="lang-js"><code class="source-code prettyprint">const idx = todos.indexOf(todo);
+
+if (idx !== -1) {
+    todos.remove(idx);
+}</code>
+</code></pre>
+<p>to the much nicer:</p>
+<pre><code class="lang-js"><code class="source-code prettyprint">todos.removeTodo(todo);</code>
+</code></pre>
+<p>We can simplify the code further by inlining the event handlers since the <code>TodoProperty</code> contains the logic. The <code>&lt;TodoItem&gt;</code> can now be a functional component:</p>
+<pre><code class="lang-js"><code class="source-code prettyprint">export default function TodoItem(props, context) {
+    const { todo, todos } = props;
+    const { completed, desc } = todo;
+    const descClasses = classnames(&quot;todoItem-desc&quot;, {
+            &quot;todoItem-descCompleted&quot;: completed
+        });
+    const completedClasses = classnames(&quot;todoItem-completed fa&quot;, {
+            &quot;fa-check-square-o todoItem-completedChecked&quot;: completed,
+            &quot;fa-square-o&quot;: !completed,
+        });
+
+    return &lt;div className=&quot;todoItem&quot;&gt;
+            &lt;i className={ completedClasses } onClick={ () =&gt; todo.completed = !todo.completed } /&gt;
+
+            &lt;input
+                type=&quot;text&quot;
+                className={ descClasses }
+                onChange={ event =&gt; todo.desc = event.target.value }
+                defaultValue={ desc }
+            /&gt;
+
+            &lt;i className=&quot;todoItem-delete fa fa-times&quot; onClick={ () =&gt; todos.removeTodo(todo) }/&gt;
+        &lt;/div&gt;
+}</code>
+</code></pre>
+<h2 id="5-track-todo-item-update-time-a-id-update-">5. Track todo item update time<a id="update"></a></h2>
+<p>Let&apos;s conclude this step by returning to the <code>TodoProperty</code> class. Our goal is to utilize the f.lux property life-cycle to set a new timestamp on the <code>updated</code> property whenever the <code>desc</code> or <code>completed</code> properties change. The <code>updated</code> property will be used in the next tutorial step as a sorting criteria. The most commmon use for the f.lux property life-cycle is to perform some activity when a property is shadowed and unshadowed. A property can use the shadowing life-cycle callbacks to register/unregister for interesting events, manage timers, or setup/teardown network connections. </p>
+<p>In this case, we want to set the <code>updated</code> property each time a <code>TodoProperty</code> <code>desc</code> or <code>completed</code> property changes. Implement the </p>
+<pre><code><code class="source-code prettyprint">propertyChildInvalidated(childProperty, sourceProperty)</code>
+</code></pre><p>method in your <code>Property</code> class to be notified each time a descendent property value <strong>is going to change</strong>. The parameters are:</p>
+<ul>
+<li><code>childProperty</code> - the immediate child property from where the change is coming</li>
+<li><code>sourceProperty</code> - the property that is actually changing</li>
+</ul>
+<p>The <code>TodoProperty</code> child properties are all primitive so we are not concerned about &apos;bubbling&apos; property change notifications and will deal with the <code>childProperty</code> parameter.</p>
+<p>Keep in mind, we are now working in the <code>Property</code> class and not a <code>Shadow</code> class. The <code>this</code> reference now points to the <code>Property</code> and not the shadow state. Here is the <code>TodoProperty</code> implementation:</p>
+<pre><code class="lang-js"><code class="source-code prettyprint">propertyChildInvalidated(childProperty, sourceProperty) {
+    const childName = childProperty.name();
+
+    if (childName === &quot;completed&quot; || childName === &quot;desc&quot;) {
+        // _keyed is defined in ObjectProperty and provides a non-shadowed api for working with
+        // child properties. We use the api to &apos;set&apos; a readonly property value
+        this._keyed.set(&quot;updated&quot;, moment().toISOString());
+    }
+}</code>
+</code></pre>
+<p>Ok, there is some new stuff here:</p>
+<ul>
+<li><p><code>const childName = childProperty.name()</code></p>
+<p>  <code>name()</code> is a <code>Property</code> base class method returning the shadowed property name. We use the <code>childProperty.name()</code> value to determine if the <code>desc</code> or <code>completed</code> properties changed. If so, then we set a new value on the <code>updated</code> child property.</p>
+</li>
+<li><p><code>this._keyed.set(&quot;updated&quot;, moment().toISOString())</code></p>
+<p>  It&apos;s been a while so here is the definition for <code>updated</code>:</p>
+<pre><code><code class="source-code prettyprint">  updated: PrimitiveProperty.type.readonly</code>
+</code></pre><p>  The <code>readonly</code> property means assignment (<code>=</code>) cannot be used to set a new value. <code>ObjectProperty</code> provides a non-shadowed (hidden) api for mutating a property&apos;s state. The api is available through the inherited <code>_keyed</code> instance variable and is of type <code>KeyedApi</code>. The <code>updated</code> property value can be set by:</p>
+<pre><code><code class="source-code prettyprint">  this._keyed.set(&quot;updated&quot;, moment().toISOString())</code>
+</code></pre></li>
+</ul>
+<h3 id="the-code">The code</h3>
+<p>Here is the updated <code>TodoProperty</code> class:</p>
+<pre><code class="lang-js"><code class="source-code prettyprint">export default class TodoProperty extends ObjectProperty {
+    propertyChildInvalidated(childProperty, sourceProperty) {
+        const childName = childProperty.name();
+
+        if (childName === &quot;completed&quot; || childName === &quot;desc&quot;) {
+            // _keyed is defined in ObjectProperty and provides a non-shadowed api for working with
+            // child properties. We use the api to &apos;set&apos; a readonly property value
+            this._keyed.set(&quot;updated&quot;, moment().toISOString());
+        }
+    }
+
+    static create(desc) {
+        const now = moment().toISOString();
+
+        return {
+            completed: false,
+            created: now,
+            desc: desc,
+            updated: now,
+        }
+    }
+}
+
+ObjectProperty.defineType(TodoProperty, TodoShadow, type =&gt; {
+    type.properties({
+                completed: PrimitiveProperty.type.initialState(false),
+                created: PrimitiveProperty.type.readonly,
+                desc: PrimitiveProperty.type,
+                updated: PrimitiveProperty.type.readonly,
+            })
+        .readonlyOff                 // enable &apos;completed&apos; and &apos;desc&apos; assignment
+        .typeName(&quot;TodoProperty&quot;);
+});</code>
+</code></pre>
+<h2 id="final-thoughts">Final Thoughts</h2>
+<p>This tutorial step covered how to define custom <code>Property</code> classes and customizing the f.lux shadowing process. </p>
+<p>Important concepts covered include:</p>
+<ul>
+<li><code>IndexedProperty</code> vs <code>ArrayProperty</code></li>
+<li><code>ObjectProperty</code> vs <code>MapProperty</code></li>
+<li>Subclass an existing <code>Property</code> class when your property needs to utilize the <code>Property</code> life-cycle.</li>
+<li>Use <code>type.readonly</code> to mark shadow properties as read access only. </li>
+<li><code>IndexedProperty._indexed</code> and <code>ObjectProperty._keyed</code> instance variable provide state mutation methods that work for updating readonly shadow state properties.</li>
+<li>A shadow method can use the <code>$$()</code> method to access the backing property.</li>
+</ul>
+<h2 id="next-step">Next Step</h2>
+<p><a href="./manual/step-3.md">Step 3: UI State</a></p>
+</div>
+</div>
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.2)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">src/Store.js | F.lux API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  <a href="./manual/index.html" data-ice="manualHeaderLink">Manual</a>
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/akrumel/f.lux" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Access.js~Access.html">Access</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ArrayProperty.js~ArrayProperty.html">ArrayProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ArrayShadow.js~ArrayShadow.html">ArrayShadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/AutoShader.js~AutoShader.html">AutoShader</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IndexedApi.js~IndexedApi.html">IndexedApi</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IndexedProperty.js~IndexedProperty.html">IndexedProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IndexedShadow.js~IndexedShadow.html">IndexedShadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/KeyedApi.js~KeyedApi.html">KeyedApi</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/MapProperty.js~MapProperty.html">MapProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/MapShadow.js~MapShadow.html">MapShadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ObjectProperty.js~ObjectProperty.html">ObjectProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/PrimitiveProperty.js~PrimitiveProperty.html">PrimitiveProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/PrimitiveShadowImpl.js~PrimitiveShadowImpl.html">PrimitiveShadowImpl</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Property.js~Property.html">Property</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/PropertyFactoryShader.js~PropertyFactoryShader.html">PropertyFactoryShader</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Shader.js~Shader.html">Shader</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Shadow.js~Shadow.html">Shadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ShadowImpl.js~ShadowImpl.html">ShadowImpl</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/StateType.js~StateType.html">StateType</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Store.js~Store.html">Store</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/TransientProperty.js~TransientLock.html">TransientLock</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/TransientProperty.js~TransientProperty.html">TransientProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/TransientProperty.js~TransientShadow.html">TransientShadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Transients.js~TransientsProperty.html">TransientsProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Transients.js~TransientsShadow.html">TransientsShadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createObject">createObject</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createPropertyClass">createPropertyClass</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-devDebug">devDebug</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-extendProperty">extendProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isShadow">isShadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-modelize">modelize</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-noParentStateErrorMsg">noParentStateErrorMsg</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-reshadow">reshadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-shadowProperty">shadowProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-AllKey">AllKey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-CollectionAllKey">CollectionAllKey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-CollectionPojoEndpointPropertyKey">CollectionPojoEndpointPropertyKey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-CollectionPropertyKey">CollectionPropertyKey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-CollectionRestEndpointPropertyKey">CollectionRestEndpointPropertyKey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ShadowImplKey">ShadowImplKey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-StoreKey">StoreKey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-TransientKey">TransientKey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-error">error</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-info">info</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-warn">warn</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">collection</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html">CollectionProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html">CollectionShadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/ModelAccess.js~ModelAccess.html">ModelAccess</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/ModelProperty.js~ModelProperty.html">ModelProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/PojoEndpointProperty.js~PojoEndpointProperty.html">PojoEndpointProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/PojoQueryBuilder.js~PojoQueryBuilder.html">PojoQueryBuilder</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/RestEndpointProperty.js~RestEndpointProperty.html">RestEndpointProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/RestQueryBuilder.js~RestQueryBuilder.html">RestQueryBuilder</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/ShadowModelAccess.js~ShadowModelAccess.html">ShadowModelAccess</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-extendOptions">extendOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getOptions">getOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-setOptions">setOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-DEFAULTS_OPTION">DEFAULTS_OPTION</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-MERGE_OPTION">MERGE_OPTION</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-NONE_OPTION">NONE_OPTION</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-REPLACE_OPTION">REPLACE_OPTION</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-AllOp">AllOp</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ChangeEvent">ChangeEvent</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-CreateOp">CreateOp</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-DeletedEvent">DeletedEvent</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-DestroyOp">DestroyOp</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ErrorEvent">ErrorEvent</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FetchOp">FetchOp</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FetchedEvent">FetchedEvent</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FindOp">FindOp</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FoundEvent">FoundEvent</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-SavedEvent">SavedEvent</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-UpdateOp">UpdateOp</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">decorators</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-automount">automount</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-mixin">mixin</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-shadow">shadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-shadowBound">shadowBound</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-shadowPropertyHelper">shadowPropertyHelper</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">listeners</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listeners/Logger.js~FrameAction.html">FrameAction</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listeners/Logger.js~LogFrame.html">LogFrame</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listeners/Logger.js~Logger.html">Logger</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createConsoleLogger">createConsoleLogger</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/Store.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import invariant from &quot;invariant&quot;;
+
+import { assert, isObject } from &quot;akutils&quot;;
+
+
+import ArrayProperty from &quot;./MapProperty&quot;;
+import MapProperty from &quot;./MapProperty&quot;;
+import Property from &quot;./Property&quot;;
+import ShadowImpl from &quot;./ShadowImpl&quot;;
+import Shader from &quot;./Shader&quot;;
+import tick from &quot;./tick&quot;;
+import Transients from &quot;./Transients&quot;;
+
+import appDebug, { StoreKey as DebugKey } from &quot;./debug&quot;;
+const debug = appDebug(DebugKey);
+
+
+var _Promise = Promise;
+var _clearInterval = clearInterval;
+var _clearTimeout = clearTimeout;
+var _setInterval = setInterval;
+var _setTimeout = setTimeout;
+
+
+const _transients = &quot;__trans__&quot;;
+
+
+/**
+
+*/
+export default class Store {
+	constructor(root, state, useTransients=true) {
+		invariant(root instanceof Property || Array.isArray(root) || isObject(root),
+			&quot;Store root must be one of: Property subclass, object, or array&quot;);
+
+		// ensure root
+		if (!(root instanceof Property)) {
+			state = root;
+
+			root = Array.isArray() ?new ArrayProperty() :new MapProperty();
+		} else if (state === undefined) {
+			state = root.initialState();
+		}
+
+		this._useTransients = useTransients;
+		this._subscribers = [];
+		this._listeners = [];
+
+		// dispatcher queues for pending actions and waitFor() requests
+		this._updateAction = null;
+		this._waitFor = [];
+
+		if (root) {
+			this.setRootProperty(root, state);
+		}
+	}
+
+	subscribe(callback) {
+		assert( a =&gt; a.is(typeof callback === &apos;function&apos;, &quot;Callback must be a function&quot;) );
+
+		if (typeof callback === &apos;function&apos;) {
+			this._subscribers.push(callback);
+		}
+	}
+
+	unsubscribe(callback) {
+		this._subscribers = this._subscribers.filter( s =&gt; s != callback );
+	}
+
+	//******************************************************************************************************************
+	//  Properties and methods dealing with state
+	//******************************************************************************************************************
+
+	/**
+		Alias for shadow property.
+	*/
+	get _() {
+		return this._root._();
+	}
+
+	/**
+		Alias for rootImpl property.
+	*/
+	get __() {
+		return this._rootImpl;
+	}
+
+	get root() {
+		return this._root;
+	}
+
+	get rootImpl() {
+		return this._rootImpl;
+	}
+
+	get shadow() {
+		return this._root._();
+	}
+
+	get state() {
+		return this._state;
+	}
+
+	get transients() {
+		return this.shadow[_transients];
+	}
+
+	get updateTime() {
+		return this._updateTime;
+	}
+
+	/**
+		Change the store&apos;s state. This will trigger totally replace the current state and trigger
+		a reshadowing. The root Property instance will be reused.
+	*/
+	changeState(state, newRoot=false, time=tick()) {
+		this._updateTime = time;
+
+		// all pending callbacks are obsolete now
+		this.clearCallbacks();
+
+		// invoke will shadow/update lifecycle methods
+		if (this._rootImpl &amp;&amp; this._state) {
+			this._rootImpl.willShadow(newRoot);
+		}
+
+		// proxy/shadow the state
+		this._rootImpl = this._root.shader(state).shadowProperty(time, &quot;/&quot;, state);
+
+		// get the final state after merging any property initial states
+		this._state = this._rootImpl.state();
+
+		// invoke did shadow/update lifecycle methods
+		this._rootImpl.didShadow(time, newRoot);
+
+		this._notifySubscribers();
+	}
+
+	clearCallbacks() {
+		// clear callback data structures
+		this._updateAction = null;
+		this._waitFor = [];
+	}
+
+	findByPath(path) {
+		const rootImpl = this._root.__();
+
+		return rootImpl.findByPath(path);
+	}
+
+	setRootProperty(root, state=null) {
+		if (!(root instanceof Property)) {
+			throw new Error(&quot;Root property must be a Property instance&quot;);
+		}
+
+		const currRoot = this._root;
+		const currRootActive = currRoot &amp;&amp; currRoot.isActive();
+
+		// inform property it is being replaced
+		if (currRoot &amp;&amp; root !== currRoot &amp;&amp; currRootActive) {
+			currRoot.__().obsoleteTree( impl =&gt; {
+				// set the root property and set it&apos;s store to this object
+				root.setStore(this);
+				this._root = root;
+
+				this.changeState(state, true);
+			});
+		} else {
+			// set the root property and set it&apos;s store to this object
+			if (root !== currRoot) {
+				root.setStore(this);
+				this._root = root;
+			}
+
+			this._setupTransients();
+			this.changeState(state, root !== currRoot);
+		}
+	}
+
+	//******************************************************************************************************************
+	//  Listeners methods
+	//******************************************************************************************************************
+
+	onError(msg, error) {
+		const listeners = this._listeners;
+
+		for (let i=0, l; l = listeners[i]; i++) {
+			if (l.onError) {
+				l.onError(this, msg, error);
+			}
+		}
+	}
+
+	onPreStateUpdate(action, impl) {
+		const listeners = this._listeners;
+
+		for (let i=0, l; l = listeners[i]; i++) {
+			if (l.onPreStateUpdate) {
+				l.onPreStateUpdate(this, action, impl);
+			}
+		}
+	}
+
+	onPostStateUpdate(action, impl) {
+		const listeners = this._listeners;
+
+		for (let i=0, l; l = listeners[i]; i++) {
+			if (l.onPostStateUpdate) {
+				l.onPostStateUpdate(this, action, impl);
+			}
+		}
+	}
+
+	onPreUpdate(currState, time) {
+		const listeners = this._listeners;
+
+		for (let i=0, l; l = listeners[i]; i++) {
+			if (l.onPreUpdate) {
+				l.onPreUpdate(this, currState, time);
+			}
+		}
+	}
+
+	onPostUpdate(time, currState, prevState) {
+		const listeners = this._listeners;
+
+		for (let i=0, l; l = listeners[i]; i++) {
+			if (l.onPostUpdate) {
+				l.onPostUpdate(this, time, currState, prevState);
+			}
+		}
+	}
+
+	addListener(callback) {
+		this._listeners.push(callback);
+	}
+
+	removeListener(callback) {
+		var idx;
+
+		while((idx = this._listeners.indexOf(callback)) != -1) {
+			this._listeners.splice(idx, 1);
+		}
+	}
+
+
+	//******************************************************************************************************************
+	//  Store state update related methods
+	//******************************************************************************************************************
+
+	dispatchUpdate(action) {
+		if (this._updateAction) {
+			throw new Error(&quot;Pending action already waiting for dispatch&quot;);
+		}
+
+		this._updateAction = action;
+
+		this.schedule();
+	}
+
+	/**
+		Schedules pending tasks to execute. This method should not need to be called by code external to the class.
+	*/
+	schedule() {
+		// Nothing to do if no registered pendingActions
+		if (!this._updateAction &amp;&amp; !this._waitFor.length) { return; }
+
+		_setTimeout( () =&gt; this._exec() )
+	}
+
+	update(callback) {
+		invariant(callback, &quot;Store.update() requires a callback function&quot;);
+
+		callback();
+
+		this._exec();
+	}
+
+	/**
+		Executes all pending updates and waitFor() requests synchronously.
+	*/
+	updateNow(syncExec) {
+		this._exec();
+
+		if (syncExec &amp;&amp; syncExec()) {
+			this._exec();
+		}
+	}
+
+	waitFor(callback) {
+		assert( a =&gt; a.is(typeof callback === &apos;function&apos;, &quot;Callback must be a function&quot;) );
+
+		if (typeof callback === &apos;function&apos;) {
+			this._waitFor.push(callback);
+
+			this.schedule();
+		}
+	}
+
+	waitThen() {
+		return new Promise( (resolve, reject) =&gt; {
+			this.waitFor(resolve);
+		})
+	}
+
+
+	//******************************************************************************************************************
+	//  Promise and timer setup methods
+	//******************************************************************************************************************
+
+	static getPromise() {
+		return _Promise;
+	}
+
+	static setPromise(promise) {
+		_Promise = promise
+	}
+
+	static setTick(ticker) {
+		_clearInterval = ticker.clearInterval;
+		_clearTimeout = ticker.clearTimeou;
+		_setInterval = ticker.setInterval;
+		_setTimeout = ticker.setTimeout;
+	}
+
+	//******************************************************************************************************************
+	//  Promise and timer convenience methods
+	//******************************************************************************************************************
+
+	static clearInterval(intervalId) {
+		return _clearInterval(intervalId);
+	}
+
+	static clearTimeout(timerId) {
+		return _clearTimeout(timerId);
+	}
+
+	static setInterval(callback, time, ...params) {
+		return _setInterval(callback, time, ...params);
+	}
+
+	static setTimeout(callback, time, ...params) {
+		return _setTimeout(callback, time, ...params);
+	}
+
+	static all(promises) {
+		return _Promise.all(promises);
+	}
+
+	static promise(callback) {
+		return new _Promise(callback)
+	}
+
+	static reject(error) {
+		return _Promise.reject(error);
+	}
+
+	static resolve(...params) {
+		return _Promise.resolve.call(_Promise, ...params);
+	}
+
+	_exec() {
+		const updateAction = this._updateAction;
+		const waitFor = this._waitFor;
+		const prevShadow = this.shadow;
+
+		// Reset the pending actions
+		this._updateAction = null;
+		this._waitFor = [];
+
+		if (updateAction) {
+			if (this._updating) {
+				debugger
+				throw new Error(&quot;Already updating state - use store.waitFor()&quot;);
+			}
+
+			try {
+				this._updating = true;
+
+				const currState = this._state;
+				const time = this._updateTime = tick();
+
+				// inform middleware going to perform an update
+				this.onPreUpdate(currState, time);
+
+				this._rootImpl.willShadow(false);
+
+				// perform the update action
+				const impl = updateAction(time);
+
+				if (!(impl instanceof ShadowImpl)) {
+					this._onError(&quot;Property update action did not return a ShadowImpl type&quot;);
+				} else if (impl.property() != this._root) {
+					this._onError(&quot;Property update action cannot replace the root state&quot;);
+				} else {
+					this._rootImpl = impl;
+					this._state = impl.state();
+
+					// Have each property invoke did shadow/update lifecycle methods now that store is coherent with new stat
+					this._rootImpl.didShadow(time, false);
+				}
+
+				// inform middleware update completed
+				this.onPostUpdate(time, this._state, currState);
+			} catch(error) {
+				this._onError(`State dispatch UPDATE action exception: ${error}`, error);
+			} finally {
+				this._updating = false;
+			}
+		}
+
+		this._notifyWaitFors(waitFor);
+		this._notifySubscribers(prevShadow);
+	}
+
+	_notifySubscribers(prevShadow) {
+		// Iterate each subscriber
+		for (let i=0, subscriber; subscriber = this._subscribers[i]; i++) {
+			try {
+				subscriber(this, shadow, prevShadow);
+			} catch(error) {
+				this._onError(`Store subscriber notification caused an exception: ${error}`, error);
+			}
+		}
+	}
+
+	_exec() {
+		const updateAction = this._updateAction;
+		const waitFor = this._waitFor;
+		const prevShadow = this.shadow;
+
+		// Reset the pending actions
+		this._updateAction = null;
+		this._waitFor = [];
+
+		if (updateAction) {
+			if (this._updating) {
+				debugger
+				throw new Error(&quot;Already updating state - use store.waitFor()&quot;);
+			}
+
+			try {
+				this._updating = true;
+
+				const currState = this._state;
+				const time = this._updateTime = tick();
+
+				// inform middleware going to perform an update
+				this.onPreUpdate(currState, time);
+
+				this._rootImpl.willShadow(false);
+
+				// perform the update action
+				const impl = updateAction(time);
+
+				if (!(impl instanceof ShadowImpl)) {
+					this._onError(&quot;Property update action did not return a ShadowImpl type&quot;);
+				} else if (impl.property() != this._root) {
+					this._onError(&quot;Property update action cannot replace the root state&quot;);
+				} else {
+					this._rootImpl = impl;
+					this._state = impl.state();
+
+					// Have each property invoke did shadow/update lifecycle methods now that store is coherent with new stat
+					this._rootImpl.didShadow(time, false);
+				}
+
+				// inform middleware update completed
+				this.onPostUpdate(time, this._state, currState);
+			} catch(error) {
+				this._onError(`State dispatch UPDATE action exception: ${error}`, error);
+			} finally {
+				this._updating = false;
+			}
+		}
+
+		this._notifyWaitFors(waitFor);
+		this._notifySubscribers(prevShadow);
+		this._sweepTransients();
+	}
+
+	_notifySubscribers(prevShadow) {
+		// Iterate each subscriber
+		for (let i=0, subscriber; subscriber = this._subscribers[i]; i++) {
+			try {
+				subscriber(this, this.shadow, prevShadow);
+			} catch(error) {
+				this._onError(`Store subscriber notification caused an exception: ${error}`, error);
+			}
+		}
+	}
+
+	_notifyWaitFors(waitFor) {
+		// Iterate each waitFor request
+		for (let i=0, waiting; waiting = waitFor[i]; i++) {
+			try {
+				waiting();
+			} catch(error) {
+				this._onError(`Store dispatch waitFor() request exception: ${error}`, error);
+			}
+		}
+	}
+
+	_onError(msg, error) {
+		debug( d =&gt; d(`Store error: ${msg}`, error) );
+
+		if (process.env.NODE_ENV !== &apos;production&apos;) {
+			console.warn(&quot;f.lux Store Error&quot;, error.stack || error);
+		}
+
+		this.onError(msg, error);
+	}
+
+	_setupTransients() {
+		const root = this._root;
+		const rootShader = root.shader();
+		const keyedApi = root._keyed ?root._keyed :root;
+
+		if (this._useTransients &amp;&amp; !rootShader.has(_transients)) {
+			keyedApi.addProperty(_transients, new Transients());
+		}
+	}
+
+	_sweepTransients() {
+		const trans = this.shadow[_transients];
+
+		if (trans) {
+			trans.sweep();
+		}
+	}
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.2)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

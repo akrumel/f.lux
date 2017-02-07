@@ -25,7 +25,7 @@ var _setTimeout = setTimeout;
 const _transients = "__trans__";
 
 
-/*
+/**
 
 */
 export default class Store {
@@ -71,14 +71,14 @@ export default class Store {
 	//  Properties and methods dealing with state
 	//******************************************************************************************************************
 
-	/*
+	/**
 		Alias for shadow property.
 	*/
 	get _() {
 		return this._root._();
 	}
 
-	/*
+	/**
 		Alias for rootImpl property.
 	*/
 	get __() {
@@ -109,7 +109,7 @@ export default class Store {
 		return this._updateTime;
 	}
 
-	/*
+	/**
 		Change the store's state. This will trigger totally replace the current state and trigger
 		a reshadowing. The root Property instance will be reused.
 	*/
@@ -258,7 +258,7 @@ export default class Store {
 		this.schedule();
 	}
 
-	/*
+	/**
 		Schedules pending tasks to execute. This method should not need to be called by code external to the class.
 	*/
 	schedule() {
@@ -276,7 +276,7 @@ export default class Store {
 		this._exec();
 	}
 
-	/*
+	/**
 		Executes all pending updates and waitFor() requests synchronously.
 	*/
 	updateNow(syncExec) {
