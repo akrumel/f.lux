@@ -120,8 +120,8 @@ ReactDOM.render(
 );
 ```
 
-
-## 2. Subscribe to store changes in `<Todos>`<a name="changes" />
+<a name="changes" />
+## 2. Subscribe to store changes in `<Todos>`
 
 A React component subscribes with the store to be notified when the state changes as a result of f.lux actions. The store exposes the following methods for this purpose:
 
