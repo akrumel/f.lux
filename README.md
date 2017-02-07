@@ -15,7 +15,7 @@ This assumes you are using [npm](https://www.npmjs.com/) as your package manager
 
 ### Documentation
 
-See the [Documentation](https://github.com/akrumel/f.lux/tree/master/docs/README.md) for an introduction to f.lux features, a thorough tutorial, and api.
+See the [Documentation](https://akrumel.github.io/f.lux/readme.md) for an introduction to f.lux features, a thorough tutorial, and api.
 
 
 ### Todo

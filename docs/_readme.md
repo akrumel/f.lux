@@ -1,9 +1,9 @@
 # Table of Contents
 
-* [Read Me](/README.md)
-* [Introduction](introduction/README.md)
+* [Read Me](/readme.md)
+* [Introduction](./introduction/readme.md)
 	* [Overview](introduction/overview.md)
-* [Tutorial](tutorial/README.md)
+* [Tutorial](tutorial/readme.md)
 	* [Step 0: Boilerplate review](tutorial/step-0.md)
 	* [Step 1: Store and basic functionality](tutorial/step-1.md)
 	* [Step 2: Properties](tutorial/step-2.md)
@@ -12,5 +12,5 @@
 	* [Step 5: Time Travel Debugger](tutorial/step-5.md)
 * [API](api/index.html)
 * [F.lux Restrictions](f.lux-restrictions.md)
-* [Change Log](changeLog/README.md)
+* [Change Log](changeLog/readme.md)
 	* [v1.0.0](changeLog/v1.0.0.md)
