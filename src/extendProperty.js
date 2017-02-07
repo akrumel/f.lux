@@ -6,6 +6,8 @@ import isFunction from "lodash.isfunction";
 	marked using the @shadow and @shadowBound decorators.
 
 	NOTE: function must be called after subclasses are created.
+
+	@ignore
 */
 export default function extendProperty(property, impl, shadow) {
 	const proto = Object.getPrototypeOf(property);

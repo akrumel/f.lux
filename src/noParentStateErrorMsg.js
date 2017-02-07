@@ -1,4 +1,5 @@
-	
+
+/** @ignore */
 export default function noParentStateErrorMsg(name, parentImpl) {
 	const path = parentImpl ?parentImpl.dotPath() :"undefined";
 

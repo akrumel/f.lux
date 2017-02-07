@@ -1,8 +1,6 @@
 var time = 1
 
-/**
-	@ignore
-*/
+/** @ignore */
 export default function tick() {
 	return time++;
 }

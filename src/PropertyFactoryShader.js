@@ -9,6 +9,7 @@ import Shader from "./Shader";
 import StateType from "./StateType";
 
 
+/** @ignore */
 export default class PropertyFactoryShader {
 	/*
 		Creates a factory that will create a shader for instantiating shadow properties for a property type.

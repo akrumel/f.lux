@@ -6,12 +6,6 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
-    "f.lux/src/debug.js~allkey",
-    "variable/index.html#static-variable-AllKey",
-    "<span>AllKey</span> <span class=\"search-result-import-path\">f.lux/src/debug.js</span>",
-    "variable"
-  ],
-  [
     "f.lux/src/collection/collectionproperty.js~allop",
     "variable/index.html#static-variable-AllOp",
     "<span>AllOp</span> <span class=\"search-result-import-path\">f.lux/src/collection/CollectionProperty.js</span>",
@@ -30,27 +24,9 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
-    "f.lux/src/autoshader.js~autoshader",
-    "class/src/AutoShader.js~AutoShader.html",
-    "<span>AutoShader</span> <span class=\"search-result-import-path\">f.lux/src/AutoShader.js</span>",
-    "class"
-  ],
-  [
     "f.lux/src/collection/collectionproperty.js~changeevent",
     "variable/index.html#static-variable-ChangeEvent",
     "<span>ChangeEvent</span> <span class=\"search-result-import-path\">f.lux/src/collection/CollectionProperty.js</span>",
-    "variable"
-  ],
-  [
-    "f.lux/src/debug.js~collectionallkey",
-    "variable/index.html#static-variable-CollectionAllKey",
-    "<span>CollectionAllKey</span> <span class=\"search-result-import-path\">f.lux/src/debug.js</span>",
-    "variable"
-  ],
-  [
-    "f.lux/src/debug.js~collectionpojoendpointpropertykey",
-    "variable/index.html#static-variable-CollectionPojoEndpointPropertyKey",
-    "<span>CollectionPojoEndpointPropertyKey</span> <span class=\"search-result-import-path\">f.lux/src/debug.js</span>",
     "variable"
   ],
   [
@@ -58,18 +34,6 @@ window.esdocSearchIndex = [
     "class/src/collection/CollectionProperty.js~CollectionProperty.html",
     "<span>CollectionProperty</span> <span class=\"search-result-import-path\">f.lux/src/collection/CollectionProperty.js</span>",
     "class"
-  ],
-  [
-    "f.lux/src/debug.js~collectionpropertykey",
-    "variable/index.html#static-variable-CollectionPropertyKey",
-    "<span>CollectionPropertyKey</span> <span class=\"search-result-import-path\">f.lux/src/debug.js</span>",
-    "variable"
-  ],
-  [
-    "f.lux/src/debug.js~collectionrestendpointpropertykey",
-    "variable/index.html#static-variable-CollectionRestEndpointPropertyKey",
-    "<span>CollectionRestEndpointPropertyKey</span> <span class=\"search-result-import-path\">f.lux/src/debug.js</span>",
-    "variable"
   ],
   [
     "f.lux/src/collection/collectionshadow.js~collectionshadow",
@@ -258,12 +222,6 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
-    "f.lux/src/propertyfactoryshader.js~propertyfactoryshader",
-    "class/src/PropertyFactoryShader.js~PropertyFactoryShader.html",
-    "<span>PropertyFactoryShader</span> <span class=\"search-result-import-path\">f.lux/src/PropertyFactoryShader.js</span>",
-    "class"
-  ],
-  [
     "f.lux/src/collection/collectionoptions.js~replace_option",
     "variable/index.html#static-variable-REPLACE_OPTION",
     "<span>REPLACE_OPTION</span> <span class=\"search-result-import-path\">f.lux/src/collection/CollectionOptions.js</span>",
@@ -306,12 +264,6 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
-    "f.lux/src/debug.js~shadowimplkey",
-    "variable/index.html#static-variable-ShadowImplKey",
-    "<span>ShadowImplKey</span> <span class=\"search-result-import-path\">f.lux/src/debug.js</span>",
-    "variable"
-  ],
-  [
     "f.lux/src/collection/shadowmodelaccess.js~shadowmodelaccess",
     "class/src/collection/ShadowModelAccess.js~ShadowModelAccess.html",
     "<span>ShadowModelAccess</span> <span class=\"search-result-import-path\">f.lux/src/collection/ShadowModelAccess.js</span>",
@@ -328,18 +280,6 @@ window.esdocSearchIndex = [
     "class/src/Store.js~Store.html",
     "<span>Store</span> <span class=\"search-result-import-path\">f.lux/src/Store.js</span>",
     "class"
-  ],
-  [
-    "f.lux/src/debug.js~storekey",
-    "variable/index.html#static-variable-StoreKey",
-    "<span>StoreKey</span> <span class=\"search-result-import-path\">f.lux/src/debug.js</span>",
-    "variable"
-  ],
-  [
-    "f.lux/src/debug.js~transientkey",
-    "variable/index.html#static-variable-TransientKey",
-    "<span>TransientKey</span> <span class=\"search-result-import-path\">f.lux/src/debug.js</span>",
-    "variable"
   ],
   [
     "f.lux/src/transientproperty.js~transientlock",
@@ -390,12 +330,6 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
-    "f.lux/src/createobject.js~createobject",
-    "function/index.html#static-function-createObject",
-    "<span>createObject</span> <span class=\"search-result-import-path\">f.lux/src/createObject.js</span>",
-    "function"
-  ],
-  [
     "f.lux/src/createpropertyclass.js~createpropertyclass",
     "function/index.html#static-function-createPropertyClass",
     "<span>createPropertyClass</span> <span class=\"search-result-import-path\">f.lux/src/createPropertyClass.js</span>",
@@ -406,12 +340,6 @@ window.esdocSearchIndex = [
     "function/index.html#static-function-devDebug",
     "<span>devDebug</span> <span class=\"search-result-import-path\">f.lux/src/debug.js</span>",
     "function"
-  ],
-  [
-    "f.lux/src/debug.js~error",
-    "variable/index.html#static-variable-error",
-    "<span>error</span> <span class=\"search-result-import-path\">f.lux/src/debug.js</span>",
-    "variable"
   ],
   [
     "f.lux/src/collection/fetchoptions.js~extendoptions",
@@ -432,39 +360,9 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
-    "f.lux/src/debug.js~info",
-    "variable/index.html#static-variable-info",
-    "<span>info</span> <span class=\"search-result-import-path\">f.lux/src/debug.js</span>",
-    "variable"
-  ],
-  [
-    "f.lux/src/isshadow.js~isshadow",
-    "function/index.html#static-function-isShadow",
-    "<span>isShadow</span> <span class=\"search-result-import-path\">f.lux/src/isShadow.js</span>",
-    "function"
-  ],
-  [
     "f.lux/src/decorators/mixin.js~mixin",
     "function/index.html#static-function-mixin",
     "<span>mixin</span> <span class=\"search-result-import-path\">f.lux/src/decorators/mixin.js</span>",
-    "function"
-  ],
-  [
-    "f.lux/src/modelizearray.js~modelize",
-    "function/index.html#static-function-modelize",
-    "<span>modelize</span> <span class=\"search-result-import-path\">f.lux/src/modelizeArray.js</span>",
-    "function"
-  ],
-  [
-    "f.lux/src/noparentstateerrormsg.js~noparentstateerrormsg",
-    "function/index.html#static-function-noParentStateErrorMsg",
-    "<span>noParentStateErrorMsg</span> <span class=\"search-result-import-path\">f.lux/src/noParentStateErrorMsg.js</span>",
-    "function"
-  ],
-  [
-    "f.lux/src/reshadow.js~reshadow",
-    "function/index.html#static-function-reshadow",
-    "<span>reshadow</span> <span class=\"search-result-import-path\">f.lux/src/reshadow.js</span>",
     "function"
   ],
   [
@@ -486,22 +384,10 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
-    "f.lux/src/shadowproperty.js~shadowproperty",
-    "function/index.html#static-function-shadowProperty",
-    "<span>shadowProperty</span> <span class=\"search-result-import-path\">f.lux/src/shadowProperty.js</span>",
-    "function"
-  ],
-  [
     "f.lux/src/decorators/shadowpropertyhelper.js~shadowpropertyhelper",
     "function/index.html#static-function-shadowPropertyHelper",
     "<span>shadowPropertyHelper</span> <span class=\"search-result-import-path\">f.lux/src/decorators/shadowPropertyHelper.js</span>",
     "function"
-  ],
-  [
-    "f.lux/src/debug.js~warn",
-    "variable/index.html#static-variable-warn",
-    "<span>warn</span> <span class=\"search-result-import-path\">f.lux/src/debug.js</span>",
-    "variable"
   ],
   [
     "builtinexternal/ecmascriptexternal.js~array",
@@ -1066,36 +952,6 @@ window.esdocSearchIndex = [
     "file/src/AutoShader.js.html",
     "src/AutoShader.js",
     "file"
-  ],
-  [
-    "src/autoshader.js~autoshader#constructor",
-    "class/src/AutoShader.js~AutoShader.html#instance-constructor-constructor",
-    "src/AutoShader.js~AutoShader#constructor",
-    "method"
-  ],
-  [
-    "src/autoshader.js~autoshader#readonly",
-    "class/src/AutoShader.js~AutoShader.html#instance-member-readonly",
-    "src/AutoShader.js~AutoShader#readonly",
-    "member"
-  ],
-  [
-    "src/autoshader.js~autoshader#shaderfor",
-    "class/src/AutoShader.js~AutoShader.html#instance-method-shaderFor",
-    "src/AutoShader.js~AutoShader#shaderFor",
-    "method"
-  ],
-  [
-    "src/autoshader.js~autoshader#shadowproperty",
-    "class/src/AutoShader.js~AutoShader.html#instance-method-shadowProperty",
-    "src/AutoShader.js~AutoShader#shadowProperty",
-    "method"
-  ],
-  [
-    "src/autoshader.js~autoshader#shouldautomount",
-    "class/src/AutoShader.js~AutoShader.html#instance-method-shouldAutomount",
-    "src/AutoShader.js~AutoShader#shouldAutomount",
-    "method"
   ],
   [
     "src/indexedapi.js",
@@ -2482,60 +2338,6 @@ window.esdocSearchIndex = [
     "file/src/PropertyFactoryShader.js.html",
     "src/PropertyFactoryShader.js",
     "file"
-  ],
-  [
-    "src/propertyfactoryshader.js~propertyfactoryshader#addproperty",
-    "class/src/PropertyFactoryShader.js~PropertyFactoryShader.html#instance-method-addProperty",
-    "src/PropertyFactoryShader.js~PropertyFactoryShader#addProperty",
-    "method"
-  ],
-  [
-    "src/propertyfactoryshader.js~propertyfactoryshader#constructor",
-    "class/src/PropertyFactoryShader.js~PropertyFactoryShader.html#instance-constructor-constructor",
-    "src/PropertyFactoryShader.js~PropertyFactoryShader#constructor",
-    "method"
-  ],
-  [
-    "src/propertyfactoryshader.js~propertyfactoryshader#elementtype",
-    "class/src/PropertyFactoryShader.js~PropertyFactoryShader.html#instance-member-elementType",
-    "src/PropertyFactoryShader.js~PropertyFactoryShader#elementType",
-    "member"
-  ],
-  [
-    "src/propertyfactoryshader.js~propertyfactoryshader#parent",
-    "class/src/PropertyFactoryShader.js~PropertyFactoryShader.html#instance-member-parent",
-    "src/PropertyFactoryShader.js~PropertyFactoryShader#parent",
-    "member"
-  ],
-  [
-    "src/propertyfactoryshader.js~propertyfactoryshader#propertyshaderdefn",
-    "class/src/PropertyFactoryShader.js~PropertyFactoryShader.html#instance-member-propertyShaderDefn",
-    "src/PropertyFactoryShader.js~PropertyFactoryShader#propertyShaderDefn",
-    "member"
-  ],
-  [
-    "src/propertyfactoryshader.js~propertyfactoryshader#setelementtype",
-    "class/src/PropertyFactoryShader.js~PropertyFactoryShader.html#instance-method-setElementType",
-    "src/PropertyFactoryShader.js~PropertyFactoryShader#setElementType",
-    "method"
-  ],
-  [
-    "src/propertyfactoryshader.js~propertyfactoryshader#shadowproperty",
-    "class/src/PropertyFactoryShader.js~PropertyFactoryShader.html#instance-method-shadowProperty",
-    "src/PropertyFactoryShader.js~PropertyFactoryShader#shadowProperty",
-    "method"
-  ],
-  [
-    "src/propertyfactoryshader.js~propertyfactoryshader#shouldautomount",
-    "class/src/PropertyFactoryShader.js~PropertyFactoryShader.html#instance-method-shouldAutomount",
-    "src/PropertyFactoryShader.js~PropertyFactoryShader#shouldAutomount",
-    "method"
-  ],
-  [
-    "src/propertyfactoryshader.js~propertyfactoryshader#statetype",
-    "class/src/PropertyFactoryShader.js~PropertyFactoryShader.html#instance-member-stateType",
-    "src/PropertyFactoryShader.js~PropertyFactoryShader#stateType",
-    "member"
   ],
   [
     "src/shader.js",

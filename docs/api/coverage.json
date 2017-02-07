@@ -1,7 +1,7 @@
 {
-  "coverage": "9.6%",
-  "expectCount": 802,
-  "actualCount": 77,
+  "coverage": "9.88%",
+  "expectCount": 769,
+  "actualCount": 76,
   "files": {
     "src/Shadow.js": {
       "expectCount": 7,
@@ -122,24 +122,6 @@
         135
       ]
     },
-    "src/debug.js": {
-      "expectCount": 12,
-      "actualCount": 0,
-      "undocumentLines": [
-        30,
-        32,
-        35,
-        33,
-        34,
-        37,
-        38,
-        39,
-        48,
-        21,
-        22,
-        23
-      ]
-    },
     "src/collection/CollectionProperty.js": {
       "expectCount": 66,
       "actualCount": 0,
@@ -237,18 +219,6 @@
         42
       ]
     },
-    "src/AutoShader.js": {
-      "expectCount": 6,
-      "actualCount": 0,
-      "undocumentLines": [
-        9,
-        10,
-        11,
-        14,
-        18,
-        45
-      ]
-    },
     "src/collection/CollectionShadow.js": {
       "expectCount": 48,
       "actualCount": 0,
@@ -332,9 +302,9 @@
         62,
         70,
         285,
-        260,
         342,
         40,
+        260,
         360,
         54,
         300,
@@ -354,16 +324,16 @@
         143,
         159,
         181,
+        304,
         347,
         80,
-        304,
         97,
         105,
         111,
         221,
         279,
-        41,
         262,
+        41,
         125,
         281,
         47,
@@ -538,29 +508,29 @@
       "expectCount": 23,
       "actualCount": 0,
       "undocumentLines": [
-        16,
-        166,
-        60,
-        39,
-        66,
-        75,
-        43,
-        17,
-        195,
-        47,
-        94,
-        114,
-        55,
-        123,
-        132,
-        119,
-        139,
-        25,
-        199,
-        83,
-        159,
-        163,
-        171
+        18,
+        168,
+        62,
+        41,
+        68,
+        77,
+        45,
+        19,
+        197,
+        49,
+        96,
+        116,
+        57,
+        125,
+        134,
+        121,
+        141,
+        27,
+        201,
+        85,
+        161,
+        165,
+        173
       ]
     },
     "src/ObjectProperty.js": {
@@ -596,8 +566,8 @@
         292,
         156,
         296,
-        163,
         305,
+        163,
         225,
         51,
         33,
@@ -656,22 +626,6 @@
         32,
         36,
         17
-      ]
-    },
-    "src/PropertyFactoryShader.js": {
-      "expectCount": 10,
-      "actualCount": 0,
-      "undocumentLines": [
-        12,
-        30,
-        20,
-        27,
-        22,
-        34,
-        25,
-        40,
-        61,
-        21
       ]
     },
     "src/collection/RestEndpointProperty.js": {
@@ -901,10 +855,10 @@
         36,
         93,
         40,
-        103,
         61,
-        107,
+        103,
         65,
+        107,
         87,
         44,
         48
@@ -936,18 +890,18 @@
         14
       ]
     },
-    "src/createObject.js": {
-      "expectCount": 1,
-      "actualCount": 0,
-      "undocumentLines": [
-        3
-      ]
-    },
     "src/createPropertyClass.js": {
       "expectCount": 1,
       "actualCount": 0,
       "undocumentLines": [
         20
+      ]
+    },
+    "src/debug.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        59
       ]
     },
     "src/collection/fetchOptions.js": {
@@ -963,14 +917,7 @@
       "expectCount": 1,
       "actualCount": 0,
       "undocumentLines": [
-        10
-      ]
-    },
-    "src/isShadow.js": {
-      "expectCount": 1,
-      "actualCount": 0,
-      "undocumentLines": [
-        2
+        12
       ]
     },
     "src/decorators/mixin.js": {
@@ -978,27 +925,6 @@
       "actualCount": 0,
       "undocumentLines": [
         48
-      ]
-    },
-    "src/modelizeArray.js": {
-      "expectCount": 1,
-      "actualCount": 0,
-      "undocumentLines": [
-        7
-      ]
-    },
-    "src/noParentStateErrorMsg.js": {
-      "expectCount": 1,
-      "actualCount": 0,
-      "undocumentLines": [
-        2
-      ]
-    },
-    "src/reshadow.js": {
-      "expectCount": 1,
-      "actualCount": 0,
-      "undocumentLines": [
-        3
       ]
     },
     "src/decorators/shadow.js": {
@@ -1014,11 +940,6 @@
       "undocumentLines": [
         21
       ]
-    },
-    "src/shadowProperty.js": {
-      "expectCount": 1,
-      "actualCount": 1,
-      "undocumentLines": []
     },
     "src/decorators/shadowPropertyHelper.js": {
       "expectCount": 1,

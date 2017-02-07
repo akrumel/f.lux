@@ -11,6 +11,8 @@ import ModelAccess from "./ModelAccess";
 /*
 	Todo:
 		* define shadow class and remove decorators
+
+	@ignore
 */
 
 export default class ModelProperty extends ObjectProperty {

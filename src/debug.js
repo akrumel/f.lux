@@ -18,8 +18,11 @@ if (process.env.NODE_ENV !== 'production') {
 	debug.enable(WarningKey);
 }
 
+/** @ignore */
 export const error = debug(ErrorKey);
+/** @ignore */
 export const info = debug(InfoKey);
+/** @ignore */
 export const warn = debug(WarningKey);
 
 
@@ -27,15 +30,23 @@ export const warn = debug(WarningKey);
 // Functional flags
 //-----------------------------------------------------------------------------------------------------------
 
+/** @ignore */
 export const AllKey = 'f.lux:*';
 
+/** @ignore */
 export const CollectionAllKey = 'f.lux:collection:*';
+/** @ignore */
 export const CollectionPropertyKey = 'f.lux:collection:property';
+/** @ignore */
 export const CollectionRestEndpointPropertyKey = 'f.lux:collection:restEnpointProperty';
+/** @ignore */
 export const CollectionPojoEndpointPropertyKey = 'f.lux:collection:pojoEnpointProperty';
 
+/** @ignore */
 export const ShadowImplKey = 'f.lux:shadowImpl';
+/** @ignore */
 export const StoreKey = 'f.lux:store';
+/** @ignore */
 export const TransientKey = 'f.lux:transient';
 
 

@@ -1155,7 +1155,7 @@
     "__docId__": 43,
     "kind": "file",
     "name": "src/AutoShader.js",
-    "content": "import invariant from \"invariant\";\nimport isPlainObject from \"lodash.isplainobject\";\n\nimport StateType from \"./StateType\";\nimport noParentStateErrorMsg from \"./noParentStateErrorMsg\";\nimport PropertyFactoryShader from \"./PropertyFactoryShader\";\n\n\nexport default class AutoShader {\n\tconstructor(readonly) {\n\t\tthis.readonly = readonly;\n\t}\n\n\tshaderFor(name, state) {\n\t\treturn this;\n\t}\n\n\tshadowProperty(time, name, parentState, parentImpl, store) {\n\t\tinvariant(parentState, noParentStateErrorMsg(name, parentImpl));\n\t\tinvariant(parentImpl, \"Auto shader properties must have a parent property\");\n\n\t\tconst state = parentState[name];\n\t\tconst parentProperty = parentImpl.property();\n\t\tvar PropertyClass;\n\n\t\tif (Array.isArray(state)) {\n\t\t\tPropertyClass = require(\"./ArrayProperty\").default;\n\t\t} else if (isPlainObject(state)) {\n\t\t\tPropertyClass = require(\"./MapProperty\").default;\n\t\t} else {\n\t\t\tPropertyClass = require(\"./PrimitiveProperty\").default;\n\t\t}\n\n\t\tconst stateType = new StateType().propertyClass(PropertyClass);\n\n\t\tif (this.readonly) {\n\t\t\tstateType.readonly;\n\t\t}\n\n\t\tconst shader = new PropertyFactoryShader(stateType, parentProperty);\n\n\t\treturn shader.shadowProperty(time, name, parentState, parentImpl);\n\t}\n\n\tshouldAutomount() {\n\t\treturn this.automount;\n\t}\n}",
+    "content": "import invariant from \"invariant\";\nimport isPlainObject from \"lodash.isplainobject\";\n\nimport StateType from \"./StateType\";\nimport noParentStateErrorMsg from \"./noParentStateErrorMsg\";\nimport PropertyFactoryShader from \"./PropertyFactoryShader\";\n\n\n/** @ignore */\nexport default class AutoShader {\n\tconstructor(readonly) {\n\t\tthis.readonly = readonly;\n\t}\n\n\tshaderFor(name, state) {\n\t\treturn this;\n\t}\n\n\tshadowProperty(time, name, parentState, parentImpl, store) {\n\t\tinvariant(parentState, noParentStateErrorMsg(name, parentImpl));\n\t\tinvariant(parentImpl, \"Auto shader properties must have a parent property\");\n\n\t\tconst state = parentState[name];\n\t\tconst parentProperty = parentImpl.property();\n\t\tvar PropertyClass;\n\n\t\tif (Array.isArray(state)) {\n\t\t\tPropertyClass = require(\"./ArrayProperty\").default;\n\t\t} else if (isPlainObject(state)) {\n\t\t\tPropertyClass = require(\"./MapProperty\").default;\n\t\t} else {\n\t\t\tPropertyClass = require(\"./PrimitiveProperty\").default;\n\t\t}\n\n\t\tconst stateType = new StateType().propertyClass(PropertyClass);\n\n\t\tif (this.readonly) {\n\t\t\tstateType.readonly;\n\t\t}\n\n\t\tconst shader = new PropertyFactoryShader(stateType, parentProperty);\n\n\t\treturn shader.shadowProperty(time, name, parentState, parentImpl);\n\t}\n\n\tshouldAutomount() {\n\t\treturn this.automount;\n\t}\n}",
     "static": true,
     "longname": "src/AutoShader.js",
     "access": null,
@@ -1174,14 +1174,8 @@
     "importPath": "f.lux/src/AutoShader.js",
     "importStyle": "AutoShader",
     "description": null,
-    "lineNumber": 9,
-    "undocument": true,
-    "unknown": [
-      {
-        "tagName": "@_undocument",
-        "tagValue": ""
-      }
-    ],
+    "lineNumber": 10,
+    "ignore": true,
     "interface": false
   },
   {
@@ -1195,7 +1189,7 @@
     "longname": "src/AutoShader.js~AutoShader#constructor",
     "access": null,
     "description": null,
-    "lineNumber": 10,
+    "lineNumber": 11,
     "undocument": true,
     "unknown": [
       {
@@ -1221,7 +1215,7 @@
     "longname": "src/AutoShader.js~AutoShader#readonly",
     "access": null,
     "description": null,
-    "lineNumber": 11,
+    "lineNumber": 12,
     "undocument": true,
     "unknown": [
       {
@@ -1246,7 +1240,7 @@
     "longname": "src/AutoShader.js~AutoShader#shaderFor",
     "access": null,
     "description": null,
-    "lineNumber": 14,
+    "lineNumber": 15,
     "undocument": true,
     "unknown": [
       {
@@ -1285,7 +1279,7 @@
     "longname": "src/AutoShader.js~AutoShader#shadowProperty",
     "access": null,
     "description": null,
-    "lineNumber": 18,
+    "lineNumber": 19,
     "undocument": true,
     "unknown": [
       {
@@ -1342,7 +1336,7 @@
     "longname": "src/AutoShader.js~AutoShader#shouldAutomount",
     "access": null,
     "description": null,
-    "lineNumber": 45,
+    "lineNumber": 46,
     "undocument": true,
     "unknown": [
       {
@@ -9420,7 +9414,7 @@
     "__docId__": 344,
     "kind": "file",
     "name": "src/PropertyFactoryShader.js",
-    "content": "import {\n\tassert,\n\tisSomething,\n} from \"akutils\";\n\nimport noParentStateErrorMsg from \"./noParentStateErrorMsg\";\nimport Property from \"./Property\";\nimport Shader from \"./Shader\";\nimport StateType from \"./StateType\";\n\n\nexport default class PropertyFactoryShader {\n\t/*\n\t\tCreates a factory that will create a shader for instantiating shadow properties for a property type.\n\n\t\tParameters:\n\t\t\tstateType - StateType instance describing the property\n\t\t\tparent - the parent Property instance\n\t*/\n\tconstructor(stateType, parent) {\n\t\tthis.stateType = stateType;\n\t\tthis.parent = parent;\n\t}\n\n\tsetElementType(stateType) {\n\t\t// ignoring since assuming set in StateType._setupShader() and also contained in the stateType var\n\t\tthis.elementType = stateType;\n\t}\n\n\taddProperty(name, stateType) {\n\t\tassert( a => a.is(stateType instanceof StateType, `stateType not a StateType`) );\n\n\t\tif (!this.propertyShaderDefn) {\n\t\t\tthis.propertyShaderDefn = { };\n\t\t}\n\n\t\tthis.propertyShaderDefn[name] = stateType;\n\t}\n\n\tshadowProperty(time, name, parentState, parentImpl) {\n\t\tassert( a => a.is(parentState || !this.parent, noParentStateErrorMsg(name, parentImpl)) );\n\n\t\t// this should never happen but lets be safe\n\t\tif (!isSomething(parentState)) {\n\t\t\tconsole.warn(this.noParentStateErrorMsg(name, parentImpl));\n\n\t\t\treturn null;\n\t\t}\n\n\t\tconst property = this.stateType.createProperty();\n\t\tconst shader = property.shader();\n\n\t\t// set the proprety's parent property\n\t\tproperty.setParent(this.parent);\n\n\t\tthis._configureShader(shader);\n\n\t\treturn shader.shadowProperty(time, name, parentState, parentImpl);\n\t}\n\n\tshouldAutomount() {\n\t\tconst PropertyClass = this.stateType._PropertyClass;\n\n\t\treturn PropertyClass.constructor.shouldAutomount && PropertyClass.constructor.shouldAutomount();\n\t}\n\n\t_configureShader(shader) {\n\t\tconst propertyShaderDefn = this.propertyShaderDefn;\n\n\t\tif (!propertyShaderDefn) { return }\n\n\t\tconst keys = Object.keys(propertyShaderDefn);\n\t\tvar key, type;\n\n\t\tfor (let i=0, len=keys.length; i<len; i++) {\n\t\t\tkey = keys[i];\n\t\t\ttype = propertyShaderDefn[key];\n\n\t\t\tshader.addProperty(key, type);\n\t\t}\n\t}\n}\n\n",
+    "content": "import {\n\tassert,\n\tisSomething,\n} from \"akutils\";\n\nimport noParentStateErrorMsg from \"./noParentStateErrorMsg\";\nimport Property from \"./Property\";\nimport Shader from \"./Shader\";\nimport StateType from \"./StateType\";\n\n\n/** @ignore */\nexport default class PropertyFactoryShader {\n\t/*\n\t\tCreates a factory that will create a shader for instantiating shadow properties for a property type.\n\n\t\tParameters:\n\t\t\tstateType - StateType instance describing the property\n\t\t\tparent - the parent Property instance\n\t*/\n\tconstructor(stateType, parent) {\n\t\tthis.stateType = stateType;\n\t\tthis.parent = parent;\n\t}\n\n\tsetElementType(stateType) {\n\t\t// ignoring since assuming set in StateType._setupShader() and also contained in the stateType var\n\t\tthis.elementType = stateType;\n\t}\n\n\taddProperty(name, stateType) {\n\t\tassert( a => a.is(stateType instanceof StateType, `stateType not a StateType`) );\n\n\t\tif (!this.propertyShaderDefn) {\n\t\t\tthis.propertyShaderDefn = { };\n\t\t}\n\n\t\tthis.propertyShaderDefn[name] = stateType;\n\t}\n\n\tshadowProperty(time, name, parentState, parentImpl) {\n\t\tassert( a => a.is(parentState || !this.parent, noParentStateErrorMsg(name, parentImpl)) );\n\n\t\t// this should never happen but lets be safe\n\t\tif (!isSomething(parentState)) {\n\t\t\tconsole.warn(this.noParentStateErrorMsg(name, parentImpl));\n\n\t\t\treturn null;\n\t\t}\n\n\t\tconst property = this.stateType.createProperty();\n\t\tconst shader = property.shader();\n\n\t\t// set the proprety's parent property\n\t\tproperty.setParent(this.parent);\n\n\t\tthis._configureShader(shader);\n\n\t\treturn shader.shadowProperty(time, name, parentState, parentImpl);\n\t}\n\n\tshouldAutomount() {\n\t\tconst PropertyClass = this.stateType._PropertyClass;\n\n\t\treturn PropertyClass.constructor.shouldAutomount && PropertyClass.constructor.shouldAutomount();\n\t}\n\n\t_configureShader(shader) {\n\t\tconst propertyShaderDefn = this.propertyShaderDefn;\n\n\t\tif (!propertyShaderDefn) { return }\n\n\t\tconst keys = Object.keys(propertyShaderDefn);\n\t\tvar key, type;\n\n\t\tfor (let i=0, len=keys.length; i<len; i++) {\n\t\t\tkey = keys[i];\n\t\t\ttype = propertyShaderDefn[key];\n\n\t\t\tshader.addProperty(key, type);\n\t\t}\n\t}\n}\n\n",
     "static": true,
     "longname": "src/PropertyFactoryShader.js",
     "access": null,
@@ -9439,14 +9433,8 @@
     "importPath": "f.lux/src/PropertyFactoryShader.js",
     "importStyle": "PropertyFactoryShader",
     "description": null,
-    "lineNumber": 12,
-    "undocument": true,
-    "unknown": [
-      {
-        "tagName": "@_undocument",
-        "tagValue": ""
-      }
-    ],
+    "lineNumber": 13,
+    "ignore": true,
     "interface": false
   },
   {
@@ -9460,7 +9448,7 @@
     "longname": "src/PropertyFactoryShader.js~PropertyFactoryShader#constructor",
     "access": null,
     "description": null,
-    "lineNumber": 20,
+    "lineNumber": 21,
     "undocument": true,
     "unknown": [
       {
@@ -9492,7 +9480,7 @@
     "longname": "src/PropertyFactoryShader.js~PropertyFactoryShader#stateType",
     "access": null,
     "description": null,
-    "lineNumber": 21,
+    "lineNumber": 22,
     "undocument": true,
     "unknown": [
       {
@@ -9515,7 +9503,7 @@
     "longname": "src/PropertyFactoryShader.js~PropertyFactoryShader#parent",
     "access": null,
     "description": null,
-    "lineNumber": 22,
+    "lineNumber": 23,
     "undocument": true,
     "unknown": [
       {
@@ -9540,7 +9528,7 @@
     "longname": "src/PropertyFactoryShader.js~PropertyFactoryShader#setElementType",
     "access": null,
     "description": null,
-    "lineNumber": 25,
+    "lineNumber": 26,
     "undocument": true,
     "unknown": [
       {
@@ -9566,7 +9554,7 @@
     "longname": "src/PropertyFactoryShader.js~PropertyFactoryShader#elementType",
     "access": null,
     "description": null,
-    "lineNumber": 27,
+    "lineNumber": 28,
     "undocument": true,
     "unknown": [
       {
@@ -9591,7 +9579,7 @@
     "longname": "src/PropertyFactoryShader.js~PropertyFactoryShader#addProperty",
     "access": null,
     "description": null,
-    "lineNumber": 30,
+    "lineNumber": 31,
     "undocument": true,
     "unknown": [
       {
@@ -9623,7 +9611,7 @@
     "longname": "src/PropertyFactoryShader.js~PropertyFactoryShader#propertyShaderDefn",
     "access": null,
     "description": null,
-    "lineNumber": 34,
+    "lineNumber": 35,
     "undocument": true,
     "unknown": [
       {
@@ -9648,7 +9636,7 @@
     "longname": "src/PropertyFactoryShader.js~PropertyFactoryShader#shadowProperty",
     "access": null,
     "description": null,
-    "lineNumber": 40,
+    "lineNumber": 41,
     "undocument": true,
     "unknown": [
       {
@@ -9699,7 +9687,7 @@
     "longname": "src/PropertyFactoryShader.js~PropertyFactoryShader#shouldAutomount",
     "access": null,
     "description": null,
-    "lineNumber": 61,
+    "lineNumber": 62,
     "undocument": true,
     "unknown": [
       {
@@ -9725,7 +9713,7 @@
     "longname": "src/PropertyFactoryShader.js~PropertyFactoryShader#_configureShader",
     "access": null,
     "description": null,
-    "lineNumber": 67,
+    "lineNumber": 68,
     "undocument": true,
     "unknown": [
       {
@@ -24108,7 +24096,7 @@
     "__docId__": 894,
     "kind": "file",
     "name": "src/collection/ModelProperty.js",
-    "content": "\nimport ObjectProperty from \"../ObjectProperty\";\nimport PrimitiveProperty from \"../PrimitiveProperty\";\nimport shadow from \"../decorators/shadow\";\nimport shadowBound from \"../decorators/shadowBound\";\nimport StateType from \"../StateType\";\n\nimport ModelAccess from \"./ModelAccess\";\n\n\n/*\n\tTodo:\n\t\t* define shadow class and remove decorators\n*/\n\nexport default class ModelProperty extends ObjectProperty {\n\tconstructor(stateType=ModelProperty.type) {\n\t\tsuper(stateType);\n\t}\n\n\t/*\n\t\tUsed by CollectionProperty to obtain the a model definition suitable for creating a\n\t\tModelProperty instance.\n\t*/\n\tstatic modelDefinitionFor(state, collection) {\n\t\tconst id = collection.extractId(state);\n\t\tconst cid = id || collection.makeId();\n\n\t\treturn {\n\t\t\tid: id || cid,\n\t\t\tcid: cid,\n\t\t\tdata: state,\n\t\t\tdirty: false,\n\t\t\tlastReqId: -1,\n\t\t\twaiting: false,\n\t\t}\n\t}\n\n\tget cid() {\n\t\treturn this._() && this._().cid;\n\t}\n\n\tget collection() {\n\t\treturn this.parent().parent();\n\t}\n\n\tget data() {\n\t\treturn this._() && this._().data;\n\t}\n\n\t/*\n\t\tGets the ID by which the collection is tracking the model. This will be the persistent storage\n\t\tID or an ID created by the collection\n\t*/\n\tget id() {\n\t\treturn this._() && this._().id;\n\t}\n\n\t@shadow\n\tchangeId(id) {\n\t\tif (this._() && this._().id !== id) {\n\t\t\tthis._().id = id;\n\t\t}\n\t}\n\n\tclearCheckpoint() {\n\t\tconst { collection, data } = this;\n\t\tconst dataProp = data && data.$$();\n\n\t\tif (collection.isAutocheckpoint() && dataProp) {\n\t\t\tdataProp.clearCheckpoint();\n\t\t}\n\t}\n\n\tclearDirty() {\n\t\tif (this._()) {\n\t\t\tthis._().dirty = false;\n\t\t}\n\n\t\tthis.clearCheckpoint();\n\t}\n\n\tresetDataToCheckpoint() {\n\t\tconst dataProp = this.data && this.data.$$();\n\n\t\tdataProp && dataProp.resetToCheckpoint();\n\n\t\tif (this._()) {\n\t\t\tthis._().dirty = false;\n\t\t}\n\t}\n\n\t@shadowBound\n\tdefaults(data) {\n\t\tconst id = this.collection.extractId(data);\n\t\tconst state = this._();\n\t\tconst currDirty = state.$().nextState().dirty;\n\n\t\t// update the ID if it has changed\n\t\tif (this._().id !== id) {\n\t\t\tthis._().id = id;\n\t\t}\n\n\t\tthis._().data.__().defaults(data);\n\n\t\t// reset to not dirty if was not dirty before the merge since assuming data being merged\n\t\t// is coming from a source of truth, such as data returned from a save\n\t\tif (!currDirty) {\n\t\t\tthis.clearDirty();\n\t\t}\n\t}\n\n\t@shadowBound\n\tdestroy() {\n\t\treturn this.collection.destroy(this.cid);\n\t}\n\n\t@shadowBound\n\tisWaiting() {\n\t\treturn this._() && this._().waiting;\n\t}\n\n\tisDirty() {\n\t\treturn this._() && this._().dirty;\n\t}\n\n\t/*\n\t\tGets if this model has not yet been saved to persistent storage. Assignment of an ID property\n\t\tis used to determine if an object has been saved.\n\t*/\n\t@shadowBound\n\tisNew() {\n\t\tconst id = this.collection.extractId(this.data);\n\n\t\treturn !id;\n\t}\n\n\t@shadowBound\n\tmerge(data) {\n\t\tconst id = this.collection.extractId(data);\n\t\tconst state = this._();\n\t\tconst currDirty = state.$().nextState().dirty;\n\n\t\t// update the ID if it has changed\n\t\tif (state.id !== id) {\n\t\t\tstate.id = id;\n\t\t}\n\n\t\tstate.data.__().merge(data);\n\n\t\t// reset to not dirty if was not dirty before the merge since assuming data being merged\n\t\t// is coming from a source of truth, such as data returned from a save\n\t\tif (!currDirty) {\n\t\t\tthis.clearDirty();\n\t\t}\n\t}\n\n\t@shadowBound\n\tsave() {\n\t\treturn this.collection.save(this.cid);\n\t}\n\n\tsetBusy(busy) {\n\t\tif (busy === this[_busy]) { return }\n\n\t\tthis[_busy] = busy;\n\t\tthis.touch();\n\t}\n\n\t@shadowBound\n\tsetData(data) {\n\t\tconst id = this.collection.extractId(state);\n\t\tconst state = this._();\n\n\t\t// set state first since we trap the invalidate() call and set the dirty flag\n\t\tstate.data = data;\n\n\t\t// now we can explicitly set the dirty flag\n\t\tthis.clearDirty();\n\n\t\t// update the id if it has changed\n\t\tif (state.id !== id) {\n\t\t\tstate.id = id;\n\t\t}\n\t}\n\n\t//------------------------------------------------------------------------------------------------------\n\t// Property subclasses may want to override success methods\n\t//------------------------------------------------------------------------------------------------------\n\n\t/*\n\t\tCreates a ModelAccess for this property's implementations. ModelAccess will generate a ShadowModelAccess\n\t\tfor its 'data' child which will in turn generate a ShadowModelAccess for each of its children.\n\t*/\n\tcreate$(impl) {\n\t\treturn new ModelAccess(impl, this);\n\t}\n\n\tpropertyChildInvalidated(childProperty) {\n\t\tif (childProperty.__().name() == \"data\" && !this._().dirty) {\n\t\t\tthis._().dirty = true;\n\n\t\t\tif (this.collection.isAutocheckpoint && !childProperty.hasCheckpoint()) {\n\t\t\t\tchildProperty.checkpoint();\n\t\t\t}\n\t\t}\n\t}\n}\n\n\nStateType.defineType(ModelProperty, spec => {\n\t\tspec.initialState({})\n\t\t\t.readonlyOff\n\t\t\t.typeName(\"ModelProperty\")\n\t});\n\n",
+    "content": "\nimport ObjectProperty from \"../ObjectProperty\";\nimport PrimitiveProperty from \"../PrimitiveProperty\";\nimport shadow from \"../decorators/shadow\";\nimport shadowBound from \"../decorators/shadowBound\";\nimport StateType from \"../StateType\";\n\nimport ModelAccess from \"./ModelAccess\";\n\n\n/*\n\tTodo:\n\t\t* define shadow class and remove decorators\n\n\t@ignore\n*/\n\nexport default class ModelProperty extends ObjectProperty {\n\tconstructor(stateType=ModelProperty.type) {\n\t\tsuper(stateType);\n\t}\n\n\t/*\n\t\tUsed by CollectionProperty to obtain the a model definition suitable for creating a\n\t\tModelProperty instance.\n\t*/\n\tstatic modelDefinitionFor(state, collection) {\n\t\tconst id = collection.extractId(state);\n\t\tconst cid = id || collection.makeId();\n\n\t\treturn {\n\t\t\tid: id || cid,\n\t\t\tcid: cid,\n\t\t\tdata: state,\n\t\t\tdirty: false,\n\t\t\tlastReqId: -1,\n\t\t\twaiting: false,\n\t\t}\n\t}\n\n\tget cid() {\n\t\treturn this._() && this._().cid;\n\t}\n\n\tget collection() {\n\t\treturn this.parent().parent();\n\t}\n\n\tget data() {\n\t\treturn this._() && this._().data;\n\t}\n\n\t/*\n\t\tGets the ID by which the collection is tracking the model. This will be the persistent storage\n\t\tID or an ID created by the collection\n\t*/\n\tget id() {\n\t\treturn this._() && this._().id;\n\t}\n\n\t@shadow\n\tchangeId(id) {\n\t\tif (this._() && this._().id !== id) {\n\t\t\tthis._().id = id;\n\t\t}\n\t}\n\n\tclearCheckpoint() {\n\t\tconst { collection, data } = this;\n\t\tconst dataProp = data && data.$$();\n\n\t\tif (collection.isAutocheckpoint() && dataProp) {\n\t\t\tdataProp.clearCheckpoint();\n\t\t}\n\t}\n\n\tclearDirty() {\n\t\tif (this._()) {\n\t\t\tthis._().dirty = false;\n\t\t}\n\n\t\tthis.clearCheckpoint();\n\t}\n\n\tresetDataToCheckpoint() {\n\t\tconst dataProp = this.data && this.data.$$();\n\n\t\tdataProp && dataProp.resetToCheckpoint();\n\n\t\tif (this._()) {\n\t\t\tthis._().dirty = false;\n\t\t}\n\t}\n\n\t@shadowBound\n\tdefaults(data) {\n\t\tconst id = this.collection.extractId(data);\n\t\tconst state = this._();\n\t\tconst currDirty = state.$().nextState().dirty;\n\n\t\t// update the ID if it has changed\n\t\tif (this._().id !== id) {\n\t\t\tthis._().id = id;\n\t\t}\n\n\t\tthis._().data.__().defaults(data);\n\n\t\t// reset to not dirty if was not dirty before the merge since assuming data being merged\n\t\t// is coming from a source of truth, such as data returned from a save\n\t\tif (!currDirty) {\n\t\t\tthis.clearDirty();\n\t\t}\n\t}\n\n\t@shadowBound\n\tdestroy() {\n\t\treturn this.collection.destroy(this.cid);\n\t}\n\n\t@shadowBound\n\tisWaiting() {\n\t\treturn this._() && this._().waiting;\n\t}\n\n\tisDirty() {\n\t\treturn this._() && this._().dirty;\n\t}\n\n\t/*\n\t\tGets if this model has not yet been saved to persistent storage. Assignment of an ID property\n\t\tis used to determine if an object has been saved.\n\t*/\n\t@shadowBound\n\tisNew() {\n\t\tconst id = this.collection.extractId(this.data);\n\n\t\treturn !id;\n\t}\n\n\t@shadowBound\n\tmerge(data) {\n\t\tconst id = this.collection.extractId(data);\n\t\tconst state = this._();\n\t\tconst currDirty = state.$().nextState().dirty;\n\n\t\t// update the ID if it has changed\n\t\tif (state.id !== id) {\n\t\t\tstate.id = id;\n\t\t}\n\n\t\tstate.data.__().merge(data);\n\n\t\t// reset to not dirty if was not dirty before the merge since assuming data being merged\n\t\t// is coming from a source of truth, such as data returned from a save\n\t\tif (!currDirty) {\n\t\t\tthis.clearDirty();\n\t\t}\n\t}\n\n\t@shadowBound\n\tsave() {\n\t\treturn this.collection.save(this.cid);\n\t}\n\n\tsetBusy(busy) {\n\t\tif (busy === this[_busy]) { return }\n\n\t\tthis[_busy] = busy;\n\t\tthis.touch();\n\t}\n\n\t@shadowBound\n\tsetData(data) {\n\t\tconst id = this.collection.extractId(state);\n\t\tconst state = this._();\n\n\t\t// set state first since we trap the invalidate() call and set the dirty flag\n\t\tstate.data = data;\n\n\t\t// now we can explicitly set the dirty flag\n\t\tthis.clearDirty();\n\n\t\t// update the id if it has changed\n\t\tif (state.id !== id) {\n\t\t\tstate.id = id;\n\t\t}\n\t}\n\n\t//------------------------------------------------------------------------------------------------------\n\t// Property subclasses may want to override success methods\n\t//------------------------------------------------------------------------------------------------------\n\n\t/*\n\t\tCreates a ModelAccess for this property's implementations. ModelAccess will generate a ShadowModelAccess\n\t\tfor its 'data' child which will in turn generate a ShadowModelAccess for each of its children.\n\t*/\n\tcreate$(impl) {\n\t\treturn new ModelAccess(impl, this);\n\t}\n\n\tpropertyChildInvalidated(childProperty) {\n\t\tif (childProperty.__().name() == \"data\" && !this._().dirty) {\n\t\t\tthis._().dirty = true;\n\n\t\t\tif (this.collection.isAutocheckpoint && !childProperty.hasCheckpoint()) {\n\t\t\t\tchildProperty.checkpoint();\n\t\t\t}\n\t\t}\n\t}\n}\n\n\nStateType.defineType(ModelProperty, spec => {\n\t\tspec.initialState({})\n\t\t\t.readonlyOff\n\t\t\t.typeName(\"ModelProperty\")\n\t});\n\n",
     "static": true,
     "longname": "src/collection/ModelProperty.js",
     "access": null,
@@ -24127,7 +24115,7 @@
     "importPath": "f.lux/src/collection/ModelProperty.js",
     "importStyle": "ModelProperty",
     "description": null,
-    "lineNumber": 16,
+    "lineNumber": 18,
     "undocument": true,
     "unknown": [
       {
@@ -24151,7 +24139,7 @@
     "longname": "src/collection/ModelProperty.js~ModelProperty#constructor",
     "access": null,
     "description": null,
-    "lineNumber": 17,
+    "lineNumber": 19,
     "undocument": true,
     "unknown": [
       {
@@ -24180,7 +24168,7 @@
     "longname": "src/collection/ModelProperty.js~ModelProperty.modelDefinitionFor",
     "access": null,
     "description": null,
-    "lineNumber": 25,
+    "lineNumber": 27,
     "undocument": true,
     "unknown": [
       {
@@ -24219,7 +24207,7 @@
     "longname": "src/collection/ModelProperty.js~ModelProperty#cid",
     "access": null,
     "description": null,
-    "lineNumber": 39,
+    "lineNumber": 41,
     "undocument": true,
     "unknown": [
       {
@@ -24244,7 +24232,7 @@
     "longname": "src/collection/ModelProperty.js~ModelProperty#collection",
     "access": null,
     "description": null,
-    "lineNumber": 43,
+    "lineNumber": 45,
     "undocument": true,
     "unknown": [
       {
@@ -24269,7 +24257,7 @@
     "longname": "src/collection/ModelProperty.js~ModelProperty#data",
     "access": null,
     "description": null,
-    "lineNumber": 47,
+    "lineNumber": 49,
     "undocument": true,
     "unknown": [
       {
@@ -24294,7 +24282,7 @@
     "longname": "src/collection/ModelProperty.js~ModelProperty#id",
     "access": null,
     "description": null,
-    "lineNumber": 55,
+    "lineNumber": 57,
     "undocument": true,
     "unknown": [
       {
@@ -24319,7 +24307,7 @@
     "longname": "src/collection/ModelProperty.js~ModelProperty#changeId",
     "access": null,
     "description": null,
-    "lineNumber": 60,
+    "lineNumber": 62,
     "undocument": true,
     "unknown": [
       {
@@ -24353,7 +24341,7 @@
     "longname": "src/collection/ModelProperty.js~ModelProperty#clearCheckpoint",
     "access": null,
     "description": null,
-    "lineNumber": 66,
+    "lineNumber": 68,
     "undocument": true,
     "unknown": [
       {
@@ -24374,7 +24362,7 @@
     "longname": "src/collection/ModelProperty.js~ModelProperty#clearDirty",
     "access": null,
     "description": null,
-    "lineNumber": 75,
+    "lineNumber": 77,
     "undocument": true,
     "unknown": [
       {
@@ -24395,7 +24383,7 @@
     "longname": "src/collection/ModelProperty.js~ModelProperty#resetDataToCheckpoint",
     "access": null,
     "description": null,
-    "lineNumber": 83,
+    "lineNumber": 85,
     "undocument": true,
     "unknown": [
       {
@@ -24416,7 +24404,7 @@
     "longname": "src/collection/ModelProperty.js~ModelProperty#defaults",
     "access": null,
     "description": null,
-    "lineNumber": 94,
+    "lineNumber": 96,
     "undocument": true,
     "unknown": [
       {
@@ -24450,7 +24438,7 @@
     "longname": "src/collection/ModelProperty.js~ModelProperty#destroy",
     "access": null,
     "description": null,
-    "lineNumber": 114,
+    "lineNumber": 116,
     "undocument": true,
     "unknown": [
       {
@@ -24482,7 +24470,7 @@
     "longname": "src/collection/ModelProperty.js~ModelProperty#isWaiting",
     "access": null,
     "description": null,
-    "lineNumber": 119,
+    "lineNumber": 121,
     "undocument": true,
     "unknown": [
       {
@@ -24514,7 +24502,7 @@
     "longname": "src/collection/ModelProperty.js~ModelProperty#isDirty",
     "access": null,
     "description": null,
-    "lineNumber": 123,
+    "lineNumber": 125,
     "undocument": true,
     "unknown": [
       {
@@ -24540,7 +24528,7 @@
     "longname": "src/collection/ModelProperty.js~ModelProperty#isNew",
     "access": null,
     "description": null,
-    "lineNumber": 132,
+    "lineNumber": 134,
     "undocument": true,
     "unknown": [
       {
@@ -24572,7 +24560,7 @@
     "longname": "src/collection/ModelProperty.js~ModelProperty#merge",
     "access": null,
     "description": null,
-    "lineNumber": 139,
+    "lineNumber": 141,
     "undocument": true,
     "unknown": [
       {
@@ -24606,7 +24594,7 @@
     "longname": "src/collection/ModelProperty.js~ModelProperty#save",
     "access": null,
     "description": null,
-    "lineNumber": 159,
+    "lineNumber": 161,
     "undocument": true,
     "unknown": [
       {
@@ -24638,7 +24626,7 @@
     "longname": "src/collection/ModelProperty.js~ModelProperty#setBusy",
     "access": null,
     "description": null,
-    "lineNumber": 163,
+    "lineNumber": 165,
     "undocument": true,
     "unknown": [
       {
@@ -24664,7 +24652,7 @@
     "longname": "src/collection/ModelProperty.js~ModelProperty#[_busy]",
     "access": null,
     "description": null,
-    "lineNumber": 166,
+    "lineNumber": 168,
     "undocument": true,
     "unknown": [
       {
@@ -24689,7 +24677,7 @@
     "longname": "src/collection/ModelProperty.js~ModelProperty#setData",
     "access": null,
     "description": null,
-    "lineNumber": 171,
+    "lineNumber": 173,
     "undocument": true,
     "unknown": [
       {
@@ -24723,7 +24711,7 @@
     "longname": "src/collection/ModelProperty.js~ModelProperty#create$",
     "access": null,
     "description": null,
-    "lineNumber": 195,
+    "lineNumber": 197,
     "undocument": true,
     "unknown": [
       {
@@ -24756,7 +24744,7 @@
     "longname": "src/collection/ModelProperty.js~ModelProperty#propertyChildInvalidated",
     "access": null,
     "description": null,
-    "lineNumber": 199,
+    "lineNumber": 201,
     "undocument": true,
     "unknown": [
       {
@@ -27068,7 +27056,7 @@
     "__docId__": 996,
     "kind": "file",
     "name": "src/createObject.js",
-    "content": "\n\nexport default function createObject(ctor) {\n\tvar factoryFunction = ctor.bind.apply(ctor, arguments);\n\n\treturn new factoryFunction();\n}\n",
+    "content": "\n/** @ignore */\nexport default function createObject(ctor) {\n\tvar factoryFunction = ctor.bind.apply(ctor, arguments);\n\n\treturn new factoryFunction();\n}\n",
     "static": true,
     "longname": "src/createObject.js",
     "access": null,
@@ -27090,13 +27078,7 @@
     "importStyle": "createObject",
     "description": null,
     "lineNumber": 3,
-    "undocument": true,
-    "unknown": [
-      {
-        "tagName": "@_undocument",
-        "tagValue": ""
-      }
-    ],
+    "ignore": true,
     "params": [
       {
         "name": "ctor",
@@ -27189,7 +27171,7 @@
     "__docId__": 1000,
     "kind": "file",
     "name": "src/debug.js",
-    "content": "import { isNative } from \"akutils\";\n\n\nvar debug = isNative() ?require(\"react-native-debug\") :require(\"debug\");\n\n//-----------------------------------------------------------------------------------------------------------\n// Debug level functions\n//-----------------------------------------------------------------------------------------------------------\n\nconst ErrorKey = 'f.lux:error';\nconst InfoKey = 'f.lux:info';\nconst WarningKey = 'f.lux:warn';\n\nif (process.env.NODE_ENV !== 'production') {\n\t// comment out one or more of following line to disable error/warning reporting\n\tdebug.enable(ErrorKey);\n\tdebug.enable(InfoKey);\n\tdebug.enable(WarningKey);\n}\n\nexport const error = debug(ErrorKey);\nexport const info = debug(InfoKey);\nexport const warn = debug(WarningKey);\n\n\n//-----------------------------------------------------------------------------------------------------------\n// Functional flags\n//-----------------------------------------------------------------------------------------------------------\n\nexport const AllKey = 'f.lux:*';\n\nexport const CollectionAllKey = 'f.lux:collection:*';\nexport const CollectionPropertyKey = 'f.lux:collection:property';\nexport const CollectionRestEndpointPropertyKey = 'f.lux:collection:restEnpointProperty';\nexport const CollectionPojoEndpointPropertyKey = 'f.lux:collection:pojoEnpointProperty';\n\nexport const ShadowImplKey = 'f.lux:shadowImpl';\nexport const StoreKey = 'f.lux:store';\nexport const TransientKey = 'f.lux:transient';\n\n\n// uncomment to turn on all postop-stores logging (or selectively using one of keys above)\n//debug.enable(AllKey);\n\n\nfunction debugoff() { }\n\nexport default function devDebug(modname) {\n\tif (process.env.NODE_ENV !== 'production') {\n\t\tlet appDebug = debug(modname);\n\n\t\treturn function appDebugFn(cb) {\n\t\t\tcb(appDebug);\n\t\t}\n\t} else {\n\t\treturn debugoff;\n\t}\n}",
+    "content": "import { isNative } from \"akutils\";\n\n\nvar debug = isNative() ?require(\"react-native-debug\") :require(\"debug\");\n\n//-----------------------------------------------------------------------------------------------------------\n// Debug level functions\n//-----------------------------------------------------------------------------------------------------------\n\nconst ErrorKey = 'f.lux:error';\nconst InfoKey = 'f.lux:info';\nconst WarningKey = 'f.lux:warn';\n\nif (process.env.NODE_ENV !== 'production') {\n\t// comment out one or more of following line to disable error/warning reporting\n\tdebug.enable(ErrorKey);\n\tdebug.enable(InfoKey);\n\tdebug.enable(WarningKey);\n}\n\n/** @ignore */\nexport const error = debug(ErrorKey);\n/** @ignore */\nexport const info = debug(InfoKey);\n/** @ignore */\nexport const warn = debug(WarningKey);\n\n\n//-----------------------------------------------------------------------------------------------------------\n// Functional flags\n//-----------------------------------------------------------------------------------------------------------\n\n/** @ignore */\nexport const AllKey = 'f.lux:*';\n\n/** @ignore */\nexport const CollectionAllKey = 'f.lux:collection:*';\n/** @ignore */\nexport const CollectionPropertyKey = 'f.lux:collection:property';\n/** @ignore */\nexport const CollectionRestEndpointPropertyKey = 'f.lux:collection:restEnpointProperty';\n/** @ignore */\nexport const CollectionPojoEndpointPropertyKey = 'f.lux:collection:pojoEnpointProperty';\n\n/** @ignore */\nexport const ShadowImplKey = 'f.lux:shadowImpl';\n/** @ignore */\nexport const StoreKey = 'f.lux:store';\n/** @ignore */\nexport const TransientKey = 'f.lux:transient';\n\n\n// uncomment to turn on all postop-stores logging (or selectively using one of keys above)\n//debug.enable(AllKey);\n\n\nfunction debugoff() { }\n\nexport default function devDebug(modname) {\n\tif (process.env.NODE_ENV !== 'production') {\n\t\tlet appDebug = debug(modname);\n\n\t\treturn function appDebugFn(cb) {\n\t\t\tcb(appDebug);\n\t\t}\n\t} else {\n\t\treturn debugoff;\n\t}\n}",
     "static": true,
     "longname": "src/debug.js",
     "access": null,
@@ -27312,14 +27294,8 @@
     "importPath": "f.lux/src/debug.js",
     "importStyle": "{error}",
     "description": null,
-    "lineNumber": 21,
-    "undocument": true,
-    "unknown": [
-      {
-        "tagName": "@_undocument",
-        "tagValue": ""
-      }
-    ],
+    "lineNumber": 22,
+    "ignore": true,
     "type": {
       "types": [
         "*"
@@ -27338,14 +27314,8 @@
     "importPath": "f.lux/src/debug.js",
     "importStyle": "{info}",
     "description": null,
-    "lineNumber": 22,
-    "undocument": true,
-    "unknown": [
-      {
-        "tagName": "@_undocument",
-        "tagValue": ""
-      }
-    ],
+    "lineNumber": 24,
+    "ignore": true,
     "type": {
       "types": [
         "*"
@@ -27364,14 +27334,8 @@
     "importPath": "f.lux/src/debug.js",
     "importStyle": "{warn}",
     "description": null,
-    "lineNumber": 23,
-    "undocument": true,
-    "unknown": [
-      {
-        "tagName": "@_undocument",
-        "tagValue": ""
-      }
-    ],
+    "lineNumber": 26,
+    "ignore": true,
     "type": {
       "types": [
         "*"
@@ -27390,14 +27354,8 @@
     "importPath": "f.lux/src/debug.js",
     "importStyle": "{AllKey}",
     "description": null,
-    "lineNumber": 30,
-    "undocument": true,
-    "unknown": [
-      {
-        "tagName": "@_undocument",
-        "tagValue": ""
-      }
-    ],
+    "lineNumber": 34,
+    "ignore": true,
     "type": {
       "types": [
         "string"
@@ -27416,14 +27374,8 @@
     "importPath": "f.lux/src/debug.js",
     "importStyle": "{CollectionAllKey}",
     "description": null,
-    "lineNumber": 32,
-    "undocument": true,
-    "unknown": [
-      {
-        "tagName": "@_undocument",
-        "tagValue": ""
-      }
-    ],
+    "lineNumber": 37,
+    "ignore": true,
     "type": {
       "types": [
         "string"
@@ -27442,14 +27394,8 @@
     "importPath": "f.lux/src/debug.js",
     "importStyle": "{CollectionPropertyKey}",
     "description": null,
-    "lineNumber": 33,
-    "undocument": true,
-    "unknown": [
-      {
-        "tagName": "@_undocument",
-        "tagValue": ""
-      }
-    ],
+    "lineNumber": 39,
+    "ignore": true,
     "type": {
       "types": [
         "string"
@@ -27468,14 +27414,8 @@
     "importPath": "f.lux/src/debug.js",
     "importStyle": "{CollectionRestEndpointPropertyKey}",
     "description": null,
-    "lineNumber": 34,
-    "undocument": true,
-    "unknown": [
-      {
-        "tagName": "@_undocument",
-        "tagValue": ""
-      }
-    ],
+    "lineNumber": 41,
+    "ignore": true,
     "type": {
       "types": [
         "string"
@@ -27494,14 +27434,8 @@
     "importPath": "f.lux/src/debug.js",
     "importStyle": "{CollectionPojoEndpointPropertyKey}",
     "description": null,
-    "lineNumber": 35,
-    "undocument": true,
-    "unknown": [
-      {
-        "tagName": "@_undocument",
-        "tagValue": ""
-      }
-    ],
+    "lineNumber": 43,
+    "ignore": true,
     "type": {
       "types": [
         "string"
@@ -27520,14 +27454,8 @@
     "importPath": "f.lux/src/debug.js",
     "importStyle": "{ShadowImplKey}",
     "description": null,
-    "lineNumber": 37,
-    "undocument": true,
-    "unknown": [
-      {
-        "tagName": "@_undocument",
-        "tagValue": ""
-      }
-    ],
+    "lineNumber": 46,
+    "ignore": true,
     "type": {
       "types": [
         "string"
@@ -27546,14 +27474,8 @@
     "importPath": "f.lux/src/debug.js",
     "importStyle": "{StoreKey}",
     "description": null,
-    "lineNumber": 38,
-    "undocument": true,
-    "unknown": [
-      {
-        "tagName": "@_undocument",
-        "tagValue": ""
-      }
-    ],
+    "lineNumber": 48,
+    "ignore": true,
     "type": {
       "types": [
         "string"
@@ -27572,14 +27494,8 @@
     "importPath": "f.lux/src/debug.js",
     "importStyle": "{TransientKey}",
     "description": null,
-    "lineNumber": 39,
-    "undocument": true,
-    "unknown": [
-      {
-        "tagName": "@_undocument",
-        "tagValue": ""
-      }
-    ],
+    "lineNumber": 50,
+    "ignore": true,
     "type": {
       "types": [
         "string"
@@ -27600,7 +27516,7 @@
     "importPath": "f.lux/src/debug.js",
     "importStyle": null,
     "description": null,
-    "lineNumber": 46,
+    "lineNumber": 57,
     "undocument": true,
     "unknown": [
       {
@@ -27624,7 +27540,7 @@
     "importPath": "f.lux/src/debug.js",
     "importStyle": "devDebug",
     "description": null,
-    "lineNumber": 48,
+    "lineNumber": 59,
     "undocument": true,
     "unknown": [
       {
@@ -27970,7 +27886,7 @@
     "__docId__": 1030,
     "kind": "file",
     "name": "src/extendProperty.js",
-    "content": "import has from \"lodash.has\";\nimport isFunction from \"lodash.isfunction\";\n\n/*\n\tExtends a shadow property with the definition returned by the assoicated Property methods\n\tmarked using the @shadow and @shadowBound decorators.\n\n\tNOTE: function must be called after subclasses are created.\n*/\nexport default function extendProperty(property, impl, shadow) {\n\tconst proto = Object.getPrototypeOf(property);\n\tconst shadowDescriptors = proto.constructor.shadowDescriptors;\n\n\tif (shadowDescriptors) {\n\t\tdefineProperties(shadowDescriptors, shadow, property, impl);\n\t}\n\n\t// define mixin shadow properties\n\tvar mixins, mixinDescriptors, mixinDesc;\n\n\tif (property.__hasMixins()) {\n\t\tlet mixins = property.__mixins();\n\n\t\tfor (let i=0, len=mixins.length; i<len; i++) {\n\t\t\tmixinDescriptors = mixins[i].__shadowDescriptors__;\n\n\t\t\tif (mixinDescriptors) {\n\t\t\t\tdefineProperties(mixinDescriptors, shadow, property, impl, true);\n\t\t\t}\n\t\t}\n\t}\n}\n\nfunction defineProperties(shadowDescriptors, shadow, property, impl, mixin) {\n\tfor (let name in shadowDescriptors) {\n\t\tif (has(shadow, name) || shadow[name]) {\n\t\t\tconsole.warn(`Property name conflict: name=${name}, path=${impl.slashPath()}, mixin-source=${!!mixin}`);\n\n\t\t\tcontinue;\n\t\t}\n\n\t\tconst { descriptor, bindProperty } = shadowDescriptors[name];\n\n\t\tif (isFunction(descriptor.value)) {\n\t\t\tconst value = bindProperty ?descriptor.value.bind(property) :descriptor.value;\n\n\t\t\t// Functions are not enumerable in javascript classes so adher to convention\n\t\t\tObject.defineProperty(shadow, name, {\n\t\t\t\t\tenumerable: false,\n\t\t\t\t\tvalue: value\n\t\t\t\t});\n\t\t} else {\n\t\t\tconst enumerable = descriptor.enumerable && !name.startsWith('_');\n\t\t\tconst get = bindProperty && descriptor.get ?descriptor.get.bind(property) :descriptor.get\n\t\t\tconst set = bindProperty && descriptor.set ?descriptor.set.bind(property) :descriptor.set\n\n\t\t\tif (descriptor.get) {\n\t\t\t\tObject.defineProperty(shadow, name, {\n\t\t\t\t\t\tenumerable: enumerable,\n\t\t\t\t\t\tget: get, // && descriptor.get.bind(property),\n\t\t\t\t\t\tset: set, // && descriptor.set.bind(property),\n\t\t\t\t\t});\n\t\t\t} else {\n\t\t\t\tObject.defineProperty(shadow, name, {\n\t\t\t\t\t\tenumerable: enumerable,\n\t\t\t\t\t\tvalue: descriptor.value,\n\t\t\t\t\t\twritable: false,\n\t\t\t\t\t});\n\t\t\t}\n\t\t}\n\t}\n}\n",
+    "content": "import has from \"lodash.has\";\nimport isFunction from \"lodash.isfunction\";\n\n/*\n\tExtends a shadow property with the definition returned by the assoicated Property methods\n\tmarked using the @shadow and @shadowBound decorators.\n\n\tNOTE: function must be called after subclasses are created.\n\n\t@ignore\n*/\nexport default function extendProperty(property, impl, shadow) {\n\tconst proto = Object.getPrototypeOf(property);\n\tconst shadowDescriptors = proto.constructor.shadowDescriptors;\n\n\tif (shadowDescriptors) {\n\t\tdefineProperties(shadowDescriptors, shadow, property, impl);\n\t}\n\n\t// define mixin shadow properties\n\tvar mixins, mixinDescriptors, mixinDesc;\n\n\tif (property.__hasMixins()) {\n\t\tlet mixins = property.__mixins();\n\n\t\tfor (let i=0, len=mixins.length; i<len; i++) {\n\t\t\tmixinDescriptors = mixins[i].__shadowDescriptors__;\n\n\t\t\tif (mixinDescriptors) {\n\t\t\t\tdefineProperties(mixinDescriptors, shadow, property, impl, true);\n\t\t\t}\n\t\t}\n\t}\n}\n\nfunction defineProperties(shadowDescriptors, shadow, property, impl, mixin) {\n\tfor (let name in shadowDescriptors) {\n\t\tif (has(shadow, name) || shadow[name]) {\n\t\t\tconsole.warn(`Property name conflict: name=${name}, path=${impl.slashPath()}, mixin-source=${!!mixin}`);\n\n\t\t\tcontinue;\n\t\t}\n\n\t\tconst { descriptor, bindProperty } = shadowDescriptors[name];\n\n\t\tif (isFunction(descriptor.value)) {\n\t\t\tconst value = bindProperty ?descriptor.value.bind(property) :descriptor.value;\n\n\t\t\t// Functions are not enumerable in javascript classes so adher to convention\n\t\t\tObject.defineProperty(shadow, name, {\n\t\t\t\t\tenumerable: false,\n\t\t\t\t\tvalue: value\n\t\t\t\t});\n\t\t} else {\n\t\t\tconst enumerable = descriptor.enumerable && !name.startsWith('_');\n\t\t\tconst get = bindProperty && descriptor.get ?descriptor.get.bind(property) :descriptor.get\n\t\t\tconst set = bindProperty && descriptor.set ?descriptor.set.bind(property) :descriptor.set\n\n\t\t\tif (descriptor.get) {\n\t\t\t\tObject.defineProperty(shadow, name, {\n\t\t\t\t\t\tenumerable: enumerable,\n\t\t\t\t\t\tget: get, // && descriptor.get.bind(property),\n\t\t\t\t\t\tset: set, // && descriptor.set.bind(property),\n\t\t\t\t\t});\n\t\t\t} else {\n\t\t\t\tObject.defineProperty(shadow, name, {\n\t\t\t\t\t\tenumerable: enumerable,\n\t\t\t\t\t\tvalue: descriptor.value,\n\t\t\t\t\t\twritable: false,\n\t\t\t\t\t});\n\t\t\t}\n\t\t}\n\t}\n}\n",
     "static": true,
     "longname": "src/extendProperty.js",
     "access": null,
@@ -27991,7 +27907,7 @@
     "importPath": "f.lux/src/extendProperty.js",
     "importStyle": "extendProperty",
     "description": null,
-    "lineNumber": 10,
+    "lineNumber": 12,
     "undocument": true,
     "unknown": [
       {
@@ -28034,7 +27950,7 @@
     "importPath": "f.lux/src/extendProperty.js",
     "importStyle": null,
     "description": null,
-    "lineNumber": 34,
+    "lineNumber": 36,
     "undocument": true,
     "unknown": [
       {
@@ -28090,7 +28006,7 @@
     "__docId__": 1034,
     "kind": "file",
     "name": "src/isShadow.js",
-    "content": "\nexport default function isShadow(obj) {\n\treturn obj && obj.__ && obj.$ && obj.$$;\n}",
+    "content": "\n/** @ignore */\nexport default function isShadow(obj) {\n\treturn obj && obj.__ && obj.$ && obj.$$;\n}",
     "static": true,
     "longname": "src/isShadow.js",
     "access": null,
@@ -28111,14 +28027,8 @@
     "importPath": "f.lux/src/isShadow.js",
     "importStyle": "isShadow",
     "description": null,
-    "lineNumber": 2,
-    "undocument": true,
-    "unknown": [
-      {
-        "tagName": "@_undocument",
-        "tagValue": ""
-      }
-    ],
+    "lineNumber": 3,
+    "ignore": true,
     "params": [
       {
         "name": "obj",
@@ -30169,7 +30079,7 @@
     "__docId__": 1114,
     "kind": "file",
     "name": "src/modelizeArray.js",
-    "content": "import isShadow from \"./isShadow\";\n\n/*\n\tIterates over the values and replaces all shadow models with it's model state. This function\n\tworks in place.\n*/\nexport default function modelize(values) {\n\tvar value;\n\n\tfor (let i=0, len=values.length; i<len; i++) {\n\t\tvar value = values[i];\n\n\t\tif (isShadow(value)) {\n\t\t\tvalue = value.__().state();\n\t\t}\n\t}\n}",
+    "content": "import isShadow from \"./isShadow\";\n\n/**\n\tIterates over the values and replaces all shadow models with it's model state. This function\n\tworks in place.\n\n\t@ignore\n*/\nexport default function modelize(values) {\n\tvar value;\n\n\tfor (let i=0, len=values.length; i<len; i++) {\n\t\tvar value = values[i];\n\n\t\tif (isShadow(value)) {\n\t\t\tvalue = value.__().state();\n\t\t}\n\t}\n}",
     "static": true,
     "longname": "src/modelizeArray.js",
     "access": null,
@@ -30189,15 +30099,9 @@
     "export": true,
     "importPath": "f.lux/src/modelizeArray.js",
     "importStyle": "modelize",
-    "description": null,
-    "lineNumber": 7,
-    "undocument": true,
-    "unknown": [
-      {
-        "tagName": "@_undocument",
-        "tagValue": ""
-      }
-    ],
+    "description": "Iterates over the values and replaces all shadow models with it's model state. This function\nworks in place.",
+    "lineNumber": 9,
+    "ignore": true,
     "params": [
       {
         "name": "values",
@@ -30211,7 +30115,7 @@
     "__docId__": 1116,
     "kind": "file",
     "name": "src/noParentStateErrorMsg.js",
-    "content": "\t\nexport default function noParentStateErrorMsg(name, parentImpl) {\n\tconst path = parentImpl ?parentImpl.dotPath() :\"undefined\";\n\n\treturn `No parent state for non-root shadow property: name=${name}, parent=${path}`;\n}\n",
+    "content": "\n/** @ignore */\nexport default function noParentStateErrorMsg(name, parentImpl) {\n\tconst path = parentImpl ?parentImpl.dotPath() :\"undefined\";\n\n\treturn `No parent state for non-root shadow property: name=${name}, parent=${path}`;\n}\n",
     "static": true,
     "longname": "src/noParentStateErrorMsg.js",
     "access": null,
@@ -30232,14 +30136,8 @@
     "importPath": "f.lux/src/noParentStateErrorMsg.js",
     "importStyle": "noParentStateErrorMsg",
     "description": null,
-    "lineNumber": 2,
-    "undocument": true,
-    "unknown": [
-      {
-        "tagName": "@_undocument",
-        "tagValue": ""
-      }
-    ],
+    "lineNumber": 3,
+    "ignore": true,
     "params": [
       {
         "name": "name",
@@ -30264,7 +30162,7 @@
     "__docId__": 1118,
     "kind": "file",
     "name": "src/reshadow.js",
-    "content": "\n\nexport default function reshadow(time, parentState, prevImpl, parentImpl) {\n\tconst state = prevImpl.isRoot() ?parentState :parentState[prevImpl.name()];\n\tconst prevProperty = prevImpl.property() && prevImpl.property();\n\n\t// handle cases where node did not actually change\n\tif (prevImpl.isValid()) {\n\t\t// No values changed in prevImpl tree so just change parent and roots of decendants\n\t\t// This case should only occur for non-root properties but no harm if so\n\t\tif (parentImpl) {\n\t\t\tprevImpl.changeParent(parentImpl);\n\t\t}\n\n\t\treturn prevImpl;\n\t} else if (!prevImpl.replaced()) {\n\t\t// Invalid because a descendant property changed or a partial change property. Create a\n\t\t// copy so can keep valid properties while shadowing invalid/new properties\n\t\tconst impl = prevImpl.createCopy(time, state, parentImpl);\n\n\t\t// Attach the new property to its parents and invoke property end update life-cycle method\n\t\timpl.setupPropertyAccess(prevImpl);\n\n\t\t// Set the properties implmentation after attaching the implementation to the shadow state\n\t\tprevImpl.property().setImpl(impl);\n\n\t\timpl.reshadowed(prevImpl);\n\n\t\t// mark previous implementation dead after new implementation in place so property can query\n\t\t// the previous implementation during the life-cycle change and it will read active (not dead).\n\t\tprevImpl.updated();\n\n\t\treturn impl;\n\t}\n\n\tconst shader = prevImpl.shader(state);\n\n\t// make an all new shadow model\n\tprevImpl.obsoleteTree();\n\n\tif (prevImpl.isRoot()) {\n\t\tconst rootProperty = prevImpl.property();\n\n\t\treturn rootProperty.shader(parentState).shadowProperty(time, name, parentState);\n\t} else {\n\t\treturn shader.shadowProperty(time, prevImpl.nextName(), parentState, parentImpl);\n\t}\n}\n",
+    "content": "\n\n/** @ignore */\nexport default function reshadow(time, parentState, prevImpl, parentImpl) {\n\tconst state = prevImpl.isRoot() ?parentState :parentState[prevImpl.name()];\n\tconst prevProperty = prevImpl.property() && prevImpl.property();\n\n\t// handle cases where node did not actually change\n\tif (prevImpl.isValid()) {\n\t\t// No values changed in prevImpl tree so just change parent and roots of decendants\n\t\t// This case should only occur for non-root properties but no harm if so\n\t\tif (parentImpl) {\n\t\t\tprevImpl.changeParent(parentImpl);\n\t\t}\n\n\t\treturn prevImpl;\n\t} else if (!prevImpl.replaced()) {\n\t\t// Invalid because a descendant property changed or a partial change property. Create a\n\t\t// copy so can keep valid properties while shadowing invalid/new properties\n\t\tconst impl = prevImpl.createCopy(time, state, parentImpl);\n\n\t\t// Attach the new property to its parents and invoke property end update life-cycle method\n\t\timpl.setupPropertyAccess(prevImpl);\n\n\t\t// Set the properties implmentation after attaching the implementation to the shadow state\n\t\tprevImpl.property().setImpl(impl);\n\n\t\timpl.reshadowed(prevImpl);\n\n\t\t// mark previous implementation dead after new implementation in place so property can query\n\t\t// the previous implementation during the life-cycle change and it will read active (not dead).\n\t\tprevImpl.updated();\n\n\t\treturn impl;\n\t}\n\n\tconst shader = prevImpl.shader(state);\n\n\t// make an all new shadow model\n\tprevImpl.obsoleteTree();\n\n\tif (prevImpl.isRoot()) {\n\t\tconst rootProperty = prevImpl.property();\n\n\t\treturn rootProperty.shader(parentState).shadowProperty(time, name, parentState);\n\t} else {\n\t\treturn shader.shadowProperty(time, prevImpl.nextName(), parentState, parentImpl);\n\t}\n}\n",
     "static": true,
     "longname": "src/reshadow.js",
     "access": null,
@@ -30285,14 +30183,8 @@
     "importPath": "f.lux/src/reshadow.js",
     "importStyle": "reshadow",
     "description": null,
-    "lineNumber": 3,
-    "undocument": true,
-    "unknown": [
-      {
-        "tagName": "@_undocument",
-        "tagValue": ""
-      }
-    ],
+    "lineNumber": 4,
+    "ignore": true,
     "params": [
       {
         "name": "time",
@@ -30329,7 +30221,7 @@
     "__docId__": 1120,
     "kind": "file",
     "name": "src/shadowProperty.js",
-    "content": "import { isObject } from \"akutils\";\n\n/**\n\tFunction used by shaders to instantiate shadow implementation classes, subclasses of ShadowImpl.\n*/\nexport default function shadowProperty(time, ImplClass, property, name, state, parent, shader) {\n\tconst impl = new ImplClass(time, property, name, state, parent, shader);\n\n\t// set the current implementation\n\tproperty.setImpl(impl);\n\n\t// invoke will shadow life-cycle method\n\tproperty.onPropertyWillShadow();\n\n\timpl.setupPropertyAccess();\n\n\treturn impl;\n}\n",
+    "content": "import { isObject } from \"akutils\";\n\n/**\n\tFunction used by shaders to instantiate shadow implementation classes, subclasses of ShadowImpl.\n\n\t@ignore\n*/\nexport default function shadowProperty(time, ImplClass, property, name, state, parent, shader) {\n\tconst impl = new ImplClass(time, property, name, state, parent, shader);\n\n\t// set the current implementation\n\tproperty.setImpl(impl);\n\n\t// invoke will shadow life-cycle method\n\tproperty.onPropertyWillShadow();\n\n\timpl.setupPropertyAccess();\n\n\treturn impl;\n}\n",
     "static": true,
     "longname": "src/shadowProperty.js",
     "access": null,
@@ -30350,7 +30242,8 @@
     "importPath": "f.lux/src/shadowProperty.js",
     "importStyle": "shadowProperty",
     "description": "Function used by shaders to instantiate shadow implementation classes, subclasses of ShadowImpl.",
-    "lineNumber": 6,
+    "lineNumber": 8,
+    "ignore": true,
     "params": [
       {
         "name": "time",
@@ -30405,7 +30298,7 @@
     "__docId__": 1122,
     "kind": "file",
     "name": "src/tick.js",
-    "content": "var time = 1\n\n/**\n\t@ignore\n*/\nexport default function tick() {\n\treturn time++;\n}\n",
+    "content": "var time = 1\n\n/** @ignore */\nexport default function tick() {\n\treturn time++;\n}\n",
     "static": true,
     "longname": "src/tick.js",
     "access": null,
@@ -30451,8 +30344,8 @@
     "export": true,
     "importPath": "f.lux/src/tick.js",
     "importStyle": "tick",
-    "description": "",
-    "lineNumber": 6,
+    "description": null,
+    "lineNumber": 4,
     "ignore": true,
     "params": [],
     "return": {

@@ -6,6 +6,7 @@ import noParentStateErrorMsg from "./noParentStateErrorMsg";
 import PropertyFactoryShader from "./PropertyFactoryShader";
 
 
+/** @ignore */
 export default class AutoShader {
 	constructor(readonly) {
 		this.readonly = readonly;
