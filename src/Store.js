@@ -29,7 +29,7 @@ const _transients = "__trans__";
 	F.lux uses the `Store` class for representing stores. The following image shows how the store exposes the
 	root state and the root property. Inside the root property is its shadow, which contains a reference to the actual state.
 
-	![F.lux Architecture](/assets/f.lux-architecture.png)
+	![F.lux Architecture](/f.lux/assets/f.lux-architecture.png)
 
 */
 export default class Store {
