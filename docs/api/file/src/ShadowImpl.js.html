@@ -58,8 +58,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Transients.js~TransientsProperty.html">TransientsProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Transients.js~TransientsShadow.html">TransientsShadow</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createPropertyClass">createPropertyClass</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-devDebug">devDebug</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-extendProperty">extendProperty</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">collection</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html">CollectionProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html">CollectionShadow</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/ModelAccess.js~ModelAccess.html">ModelAccess</a></span></span></li>
@@ -93,9 +91,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-shadow">shadow</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-shadowBound">shadowBound</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-shadowPropertyHelper">shadowPropertyHelper</a></span></span></li>
-<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">listeners</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listeners/Logger.js~FrameAction.html">FrameAction</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listeners/Logger.js~LogFrame.html">LogFrame</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listeners/Logger.js~Logger.html">Logger</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">listeners</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listeners/Logger.js~Logger.html">Logger</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createConsoleLogger">createConsoleLogger</a></span></span></li>
 </ul>
 </div>
@@ -152,9 +148,11 @@ const _state = Symbol(&apos;state&apos;);
 const _time = Symbol(&apos;time&apos;);
 
 // private method symbols
+const _createShadow = Symbol(&apos;createShadow&apos;);
 const _defineProperty = Symbol(&apos;defineProperty&apos;);
 const _modelForUpdate = Symbol(&apos;modelForUpdate&apos;);
 const _scheduleUpdate = Symbol(&apos;scheduleUpdate&apos;);
+const _setupShadow = Symbol(&apos;setupShadow&apos;);
 const _changeRoot = Symbol(&apos;changeRoot&apos;);
 
 
@@ -498,8 +496,6 @@ export default class ShadowImpl {
 		}
 
 		this[_dead] = true;
-
-		this[_property].onPropertyDidUnshadow();
 	}
 
 	obsoleteChildren() {
@@ -556,7 +552,7 @@ export default class ShadowImpl {
 		debug( d =&gt; d(`reshadowed(): ${this.dotPath()}, mapped=${prev.isMapped()}, time=${this[_time]}, prevTime=${prev[_time]}`) );
 
 		if (prev.__getCalled__) {
-			this._setupShadow(prev, true);
+			this[_setupShadow](prev, true);
 		}
 
 		this.onReshadow(prev);
@@ -581,7 +577,7 @@ export default class ShadowImpl {
 		const property = this[_property];
 
 		if (this.isRoot()) {
-			this._setupShadow(prev);
+			this[_setupShadow](prev);
 
 		} else {
 			this[_defineProperty](prev, !!prev);
@@ -789,7 +785,7 @@ export default class ShadowImpl {
 	}
 
 	definePropertyGetValue(state) {
-		return this._createShadow();
+		return this[_createShadow]();
 	}
 
 	definePropertySetValue(newValue) {
@@ -950,7 +946,7 @@ export default class ShadowImpl {
 		}
 	}
 
-	_createShadow() {
+	[_createShadow]() {
 		if (!this[_shadow]) {
 			let ShadowClass = this[_property].shadowClass();
 
@@ -961,7 +957,7 @@ export default class ShadowImpl {
 		return this[_shadow];
 	}
 
-	_setupShadow(prev, inCtor) {
+	[_setupShadow](prev, inCtor) {
 		if (!this.__getCalled__) {
 			let state = this.state();
 
@@ -1011,7 +1007,7 @@ export default class ShadowImpl {
 					enumerable: enumerable,
 					get: () =&gt; {
 							if (isSomething(state)) {
-								return this._setupShadow();
+								return this[_setupShadow]();
 							} else {
 								return state;
 							}

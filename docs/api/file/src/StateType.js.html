@@ -58,8 +58,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Transients.js~TransientsProperty.html">TransientsProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Transients.js~TransientsShadow.html">TransientsShadow</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createPropertyClass">createPropertyClass</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-devDebug">devDebug</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-extendProperty">extendProperty</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">collection</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html">CollectionProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html">CollectionShadow</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/ModelAccess.js~ModelAccess.html">ModelAccess</a></span></span></li>
@@ -93,9 +91,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-shadow">shadow</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-shadowBound">shadowBound</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-shadowPropertyHelper">shadowPropertyHelper</a></span></span></li>
-<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">listeners</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listeners/Logger.js~FrameAction.html">FrameAction</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listeners/Logger.js~LogFrame.html">LogFrame</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listeners/Logger.js~Logger.html">Logger</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">listeners</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listeners/Logger.js~Logger.html">Logger</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createConsoleLogger">createConsoleLogger</a></span></span></li>
 </ul>
 </div>
@@ -112,103 +108,127 @@ import Shadow from &quot;./Shadow&quot;;
 import ShadowImpl from &quot;./ShadowImpl&quot;;
 
 
-/*
-	Defines the shadowing behavior for a property. f.lux uses StateType instances to configure Shader
+// private method symbols
+const _setupShader = Symbol(&apos;setupShader&apos;);
+
+
+/**
+	Defines the shadowing behavior for a property. f.lux uses StateType instances to configure {@link Shader}
 	instances that are then used to proxy the store&apos;s state using shadow properties.
 
-	Property subclasses usually expose a &apos;type&apos; class variable to specify their default shadowing behavior.
-	The &apos;type&apos; class variable should be a getter property and is typically attached to the class using the
-	StateType.defineType() function.
+	Property subclasses usually expose a `type`&apos;` class variable to specify their default shadowing behavior.
+	The `type` class variable should be a getter property and is typically attached to the class using the
+	`StateType.defineType()`` function.
 
-	Example of defining a &apos;type&apos; class variable:
+	Example of defining a `type` class variable:
 
-		StateType.defineType(TodoRootProperty, spec =&gt; {
-			spec.initialState({})                       // empty object initial state
-				.autoshadowOff                          // do not shadow state values without explicit definitions
-				.properties({                           // define sub-properties (just one in this case)
-						todos: TodoCollection.type,     // &apos;todos&apos; is a collection property
-					})
-				.readonly                               // prevent reassigning the &apos;todos&apos; collection (paranoia)
-				.typeName(&quot;TodoRootProperty&quot;);          // useful for certain diagnostic situations
+	&lt;pre class=&quot;prettyprint&quot;&gt;
+		StateType.defineType(TodoRootProperty, type =&gt; {
+		&amp;zwnj;	type.initialState({})                           // empty object initial state
+		&amp;zwnj;		.autoshadowOff                          // do not shadow state values without explicit definitions
+		&amp;zwnj;		.properties({                           // define sub-properties (just one in this case)
+		&amp;zwnj;			todos: TodoCollection.type,     // &apos;todos&apos; is a collection property
+		&amp;zwnj;		})
+		&amp;zwnj;		.readonly                               // prevent reassigning the &apos;todos&apos; collection (paranoia)
+		&amp;zwnj;		.typeName(&quot;TodoRootProperty&quot;);          // useful for certain diagnostic situations
 		});
+	&lt;/pre&gt;
 
 	Shadowing behavior may be customized by setting the following StateType values:
-
-		* autoshadow - shadow implicit state properties using default f.lux property types (default=true)
-		* defaults - specifies default values for an object&apos;s initial state. A default value is applied
-			when the initial state for this property is &apos;undefined&apos;. (default=undefined)
-		* element type - StateType used for shadowing each sub-property, such as elements in an array or
-			properties of an object. (default=null)
-		* jit properties - dynamically extends the &apos;properties&apos; based on the property&apos;s state through a
-			callback function (experimental)
-		* implementation class - ShadowImpl subclass used to back shadow state property (default=null)
-		* initial state - the initial property value. The store&apos;s state will take precedence and this value
-			is used when the store&apos;s state is undefined for the specific property. (default=undefined)
-		* managed type - StateType instance used by CollectionProperty to specify the property type for
+	&lt;ul&gt;
+		&lt;li&gt;autoshadow - shadow implicit state properties using default f.lux property types (default=true)&lt;/li&gt;
+		&lt;li&gt;defaults - specifies default values for an object&apos;s initial state. A default value is applied
+			when the initial state for this property is &apos;undefined&apos;. (default=undefined)&lt;/li&gt;
+		&lt;li&gt;element type - StateType used for shadowing each sub-property, such as elements in an array or
+			properties of an object. (default=null)&lt;/li&gt;
+		&lt;li&gt;jit properties - dynamically extends the &apos;properties&apos; based on the property&apos;s state through a
+			callback function (experimental)&lt;/li&gt;
+		&lt;li&gt;implementation class - ShadowImpl subclass used to back shadow state property (default=null)
+		&lt;li&gt;initial state - the initial property value. The store&apos;s state will take precedence and this value
+			is used when the store&apos;s state is undefined for the specific property. (default=undefined)&lt;/li&gt;
+		&lt;li&gt;managed type - StateType instance used by CollectionProperty to specify the property type for
 			each model contained in the collection. Other collection types could utilize the same
-			mechanism. (default=null)
-		* properties - literal object with name/value pairs where name is the sub-property name and the
-			value is a StateType instance describing the property shadowing behavior (default={})
-		* shadow class - Shadow subclass used to represent a shadow state property. Built-in implementation
-			classes set a default so only need to set when want to customize parent type default. (default=null)
+			mechanism. (default=null)&lt;/li&gt;
+		&lt;li&gt;properties - literal object with name/value pairs where name is the sub-property name and the
+			value is a StateType instance describing the property shadowing behavior (default={})&lt;/li&gt;
+		&lt;li&gt;shadow class - Shadow subclass used to represent a shadow state property. Built-in implementation
+			classes set a default so only need to set when want to customize parent type default.
+			(default=null)&lt;/li&gt;
+	&lt;/ul&gt;
 
-	Methods/properties used when setting up a StateType description:
-
-		* addProperty(name, type) - add a single property type where &apos;name&apos; is the sub-property name and
-			value is a StateType. Consider using StateType.properties() instead.
-		* autoshadow - turn on auto-shadowing (default)
-		* autoshadowOff - turn off auto-shadowing
-		* default(state) - used with ObjectProperty and MapProperty sub-properties to set defaults for
+	Methods/properties used when setting up a `StateType` description:
+	&lt;ul&gt;
+		&lt;li&gt;`addProperty(name, type)` - add a single property type where &apos;name&apos; is the sub-property name and
+			value is a StateType. Consider using StateType.properties() instead.&lt;/li&gt;
+		&lt;li&gt;`autoshadow` - turn on auto-shadowing (default)&lt;/li&gt;
+		&lt;li&gt;`autoshadowOff` - turn off auto-shadowing&lt;/li&gt;
+		&lt;li&gt;`default(state)` - used with ObjectProperty and MapProperty sub-properties to set defaults for
 			values. The default value is only applied if the initial state for this property is
 			undefined.
 
 			Example usage:
+			&lt;pre class=&quot;prettyprint&quot;&gt;
 				stateType.properties({
-					name: PrimitiveProperty.type.default(null),
+				&amp;zwnj;	name: PrimitiveProperty.type.default(null),
 				})
-
-		* elementType(type) - StateType for shadowing each sub-property. Regularly used with IndexedProperty
+			&lt;/pre&gt;
+		&lt;/li&gt;
+		&lt;li&gt;`elementType(type)` - StateType for shadowing each sub-property. Regularly used with IndexedProperty
 			and ArrayProperty. Used with ObjectProperty and MapProperty when each value is the same type such
-			as in a dictionary.
-		* jitProperties(callback) - Sets a callback used for dynamically extending properties definition. Callback
+			as in a dictionary.&lt;/li&gt;
+		&lt;li&gt;`jitProperties(callback)` - Sets a callback used for dynamically extending properties definition. Callback
 			signature is &apos;callback(state, parentProperty)&apos; and returns object with name/value pairs where name
 			is the sub-property name and the value is a StateType instance describing the property shadowing behavior.
-			(advanced feature)
-		* implementationClass(cls) - sets the ShadowImpl subclass to be used for backing the shadow state
-			(should not be needed)
-		* initialState(state) - value suitable for the property type: boolean, array, object,...
-		* managedType(type) - StateType for shading managed properties (used with CollectionProperty)
+			(advanced feature)&lt;/li&gt;
+		&lt;li&gt;`implementationClass(cls)` - sets the ShadowImpl subclass to be used for backing the shadow state
+			(should not be needed)&lt;/li&gt;
+		&lt;li&gt;`initialState(state)` - value suitable for the property type: boolean, array, object,...&lt;/li&gt;
+		&lt;li&gt;`managedType(type)` - StateType for shading managed properties (used with CollectionProperty)
 
 			Example usage:
-				stateType.managedType(TodoProperty.type)
-
-		* properties(propTypes) - add multiple properties using a literal object with property-name/StateType
+			&lt;pre class=&quot;prettyprint&quot;&gt;
+			stateType.managedType(TodoProperty.type)
+			&lt;/pre&gt;
+		&lt;/li&gt;
+		&lt;li&gt;`properties(propTypes)` - add multiple properties using a literal object with property-name/StateType
 			key/value pairs
 
 			Example usage:
+			&lt;pre class=&quot;prettyprint&quot;&gt;
 				stateType.properties({
-						completed: PrimitiveProperty.type.initialState(false),
-						created: PrimitiveProperty.type.readonly,
-						desc: PrimitiveProperty.type,
-						id: PrimitiveProperty.type.readonly,
-					})
-
-		* readonly - set property to readonly
-		* readonlyOff - set property to read/write (default unless parent property has set readonly to true
+				&amp;zwnj;	completed: PrimitiveProperty.type.initialState(false),
+				&amp;zwnj;	created: PrimitiveProperty.type.readonly,
+				&amp;zwnj;	desc: PrimitiveProperty.type,
+				&amp;zwnj;	id: PrimitiveProperty.type.readonly,
+				})
+			&lt;/pre&gt;
+		&lt;/li&gt;
+		&lt;li&gt;`readonly` - set property to readonly
+		&lt;li&gt;`readonlyOff` - set property to read/write (default unless parent property has set readonly to true
 			since readonly property cascades through the state tree)
-		* typeName(name) - set a label for the type. Useful for debugging situations where shadowing is
+		&lt;li&gt;`typeName(name)` - set a label for the type. Useful for debugging situations where shadowing is
 			not acting as expected.
 
 			Example usage:
 
+			&lt;pre class=&quot;prettyprint&quot;&gt;
 				const root = store.shadow;
 				const rootProperty = root.$$();
 
-				console.log(rootProperty.typeName())
-				console.log(rootProperty.stateType().getTypeName())
+				console.log(rootProperty.typeName());
+				console.log(rootProperty.stateType().getTypeName());
+			&lt;/pre&gt;
+		&lt;/li&gt;
+	&lt;/ul&gt;
 
-	Instance of this class are rarely directly created and instead are created using the defineType()
-	static function.
+	Instances of this class are rarely directly created and instead are created using the `defineType`
+	static functions of each built-in property class.
+
+	@see {@link ArrayProperty}
+	@see {@link CollectionProperty}
+	@see {@link IndexedProperty}
+	@see {@link MapProperty}
+	@see {@link ObjectProperty}
 */
 export default class StateType {
 	constructor() {
@@ -230,34 +250,38 @@ export default class StateType {
 		this._readonly = undefined;
 	}
 
-	/*
+	/**
 		Convenience class method to avoid using &apos;new StateType(...)&apos; making chaining on the
 		newly created StateType easier to read.
+
+		@param {Property} PropertyClass - a {@link Property} class (not object) that shadowing
+			behavior is being defined.
 	*/
 	static create(PropertyClass) {
 		return new StateType().propertyClass(PropertyClass);
 	}
 
-	/*
-		Sets a &apos;type&apos; getter on the PropertyClass. The &apos;type&apos; getter is used to define properties
-		in the StateType.properties() method. The &apos;type&apos; getter may be set once per class and all
+	/**
+		Sets a `type` getter on a {@link Property} class. The `type` getter is used to define properties
+		in the {@link StateType#properties} method. The `type` getter may be set once per class and all
 		further requests are ignored.
 
 		Example usage:
-
+		&lt;pre class=&quot;prettyprint&quot;&gt;
 			StateType.defineType(CounterProperty);
-
-			...
-
-			ObjectProperty.createClass({}, spec =&gt; {
-				spec.properties({
-						counter: CounterProperty.type.readonly,
-					})
+			&amp;zwnj;
+			// and the use it
+			&amp;zwnj;
+			ObjectProperty.createClass({}, type =&gt; {
+			&amp;zwnj;	type.properties({
+			&amp;zwnj;		counter: CounterProperty.type.readonly,
+			&amp;zwnj;	})
 			});
+		&lt;/pre&gt;
 
-		Parameters:
-			PropertyClass - the Property subclass on which to define the &apos;type&apos; getter
-			typeCallback - callback of form cb(spec) that allows the StateType to be customized
+		@param {Property} PropertyClass - the {@link Property} subclass on which to define the `type` getter
+		@param {function} typeCallback - callback of form `cb(type)` that allows the {@link StateType} to be
+			customized
 	*/
 	static defineType(PropertyClass, typeCallback) {
 		assert( a =&gt; a.not(PropertyClass.hasOwnProperty(&quot;type&quot;), `&apos;type&apos; variable already defined`) );
@@ -284,37 +308,38 @@ export default class StateType {
 			});
 	}
 
-	/*
-		Factory function for creating a StateType with an appropriately set intial state.
+	/**
+		Sets a `type` getter on a {@link Property} class with the ability to set the initial state. The
+		`type` getter is used to define properties in the {@link StateType#properties} method. The `type`
+		getter may be set once per class and all further requests are ignored.
 
-		Parameters:
-			PropClass: Property subclass (required)
-			ShadowClass: Shadow subclass or will pick up default set by parent class
-			specCallback: a callback function that will be passed the StateType spec for additional
-				customization, such as setting autoshadow or readonly. (optional)
-			initialState: the initial state for the new property.
+		@param {Property} PropClass - Property subclass (required)
+		@param {Shadow} [ShadowType] - Shadow subclass or will pick up default set by parent class
+		@param {function} typeCallback - callback of form `cb(type)` that allows the {@link StateType} to be
+			customized
+		@param [initialState] - the initial state for the new property.
 	*/
-	static defineTypeEx(PropClass, ShadowType, specCallback, initialState) {
-		return StateType.defineType(PropClass, spec =&gt; {
-			spec.initialState(initialState);
+	static defineTypeEx(PropClass, ShadowType, typeCallback, initialState) {
+		StateType.defineType(PropClass, type =&gt; {
+			type.initialState(initialState);
 
 			if (ShadowType) {
-				spec.shadowClass(ShadowType)
+				type.shadowClass(ShadowType)
 			}
 
-			if (specCallback) {
-				specCallback(spec);
+			if (typeCallback) {
+				typeCallback(type);
 			}
 		})
 	}
 
-	/*
-		Walks the prototype chain and returns the first StateType returned by a &apos;type&apos; class variable.
+	/**
+		Walks the prototype chain and returns the first {@link StateType} returned by a `type` class
+		variable.
 
-		Parameters:
-			prop - one of a Property instance or a Property class prototype
+		@param {Property} prop - one of a {@link Property} instance or class `p`rototype`
 
-		Returns the StateType describing the property
+		@return the {@link StateType} describing the property
 	*/
 	static from(prop) {
 		const ctor = prop.constructor;
@@ -330,8 +355,12 @@ export default class StateType {
 			StateType.from(ctor === proto.constructor ?Object.getPrototypeOf(proto) :proto);
 	}
 
-	/*
-		Determines the ShadowImpl subclass to use for the property.
+	/**
+		Determines the {@link ShadowImpl} subclass to use for the property.
+
+		@param {Property} property - the `Property` instance to check
+		@param {ShadowImpl} [defaultClass]=ShadowImpl - the `ShadowImpl` subclass to use if one is not
+			specified in the `type` {@link StateType} class variable for the `property` parameter.
 	*/
 	static implementationClassForProperty(property, defaultClass=ShadowImpl) {
 		var stateType = StateType.from(property);
@@ -348,30 +377,69 @@ export default class StateType {
 	//  StateType setup API
 	//---------------------------------------------------------------------------------------------
 
+	/**
+		Shadowing configuration getter to enable auto-shadowing. Auto-shadowing is enabled by
+		default and the shadowing attribute does not cascade through the state hieararchy.
+
+		@return {StateType} this instance for use in chaining configuration calls
+	*/
 	get autoshadow() {
 		this._autoshadow = true;
 
 		return this;
 	}
 
+	/**
+		Shadowing configuration getter to disable auto-shadowing. Auto-shadowing is enabled by
+		default and the shadowing attribute does not cascade through the state hieararchy.
+
+		@return {StateType} this instance for use in chaining configuration calls
+	*/
 	get autoshadowOff() {
 		this._autoshadow = false;
 
 		return this
 	}
 
+	/**
+		Shadowing configuration getter to set the readonly attribute. Readonly is disabled by
+		default and the attribute cascades through the state hieararchy. This means all child
+		properties will be readonly once an upper level property&apos;s `readonly` attribute is enabled
+		until explicitly disabled using {@link StateType#readonlyOff}.
+
+		@return {StateType} this instance for use in chaining configuration calls
+	*/
 	get readonly() {
 		this._readonly = true;
 
 		return this;
 	}
 
+	/**
+		Shadowing configuration getter to disable the readonly attribute. Readonly is disabled by
+		default and the attribute cascades through the state hieararchy. This means all child
+		properties will be readonly once an upper level property&apos;s `readonly` attribute is enabled
+		until explicitly disabled using {@link StateType#readonlyOff}.
+
+		@return {StateType} this instance for use in chaining configuration calls
+	*/
 	get readonlyOff() {
 		this._readonly = false;
 
 		return this;
 	}
 
+	/**
+		Shadowing configuration method to add a child property. The current implementation support
+		&apos;keyed&apos; properties only, such as {@link ObjectProperty} and {@link MapProperty}.
+
+		Consider using {@link StateType#properties} for adding multiple properties.
+
+		@param {string} name - the property key
+		@param {StateType} type - the property `StateType` descriptor
+
+		@return {StateType} this instance for use in chaining configuration calls
+	*/
 	addProperty(name, type) {
 		assert( a =&gt; {
 				a.is(isKeyedPrototype(this._PropertyClass),
@@ -380,14 +448,31 @@ export default class StateType {
 			});
 
 		this._properties[name] = type;
+
+		return this;
 	}
 
+	/**
+		Sets the default property values for child properties. A default value is used when the
+		{@link Store} state and the property `type` descriptor&apos;s initial state are not defined.
+
+		@param state - the default state value
+
+		@return {StateType} this instance for use in chaining configuration calls
+	*/
 	default(state) {
 		this._defaults = state;
 
 		return this;
 	}
 
+	/**
+		Sets the `StateType` to use for shadowing each immediate child property.
+
+		@param {StateType} type - `StateType` instance
+
+		@return {StateType} this instance for use in chaining configuration calls
+	*/
 	elementType(type) {
 		assert( a =&gt; a.is(type instanceof StateType, &quot;&apos;type&apos; parameter not StateType&quot;) );
 
@@ -396,29 +481,49 @@ export default class StateType {
 		return this;
 	}
 
+	/**
+		The {@link ShadowImpl} class to use for backing the properties {@link Shadow}. This
+		rarely required.
+
+		@return {StateType} this instance for use in chaining configuration calls
+	*/
 	implementationClass(cls) {
 		this._implementationClass = cls;
 
 		return this;
 	}
 
+	/**
+		Sets the initial state for the property if the f.lux store&apos;s state does not have a
+		value for this property.
+
+		@param state - the initial value
+		@return {StateType} this instance for use in chaining configuration calls
+	*/
 	initialState(state) {
 		this._initialState = state;
 
 		return this;
 	}
 
-	/*
-		Sets a callback used for dynamically extending properties definition. Callback signature is:
+	/**
+		Sets a callback used for dynamically extending the child property definitions. Callback signature is:
 
+		```
 			callback(state, parentProperty)
+		```
 
 		where:
-			state - the parent property state
-			parentProperty - the parent property
+		&lt;ul&gt;
+			&lt;li&gt;`state` - the parent property state&lt;/li&gt;
+			&lt;li&gt;`parentProperty` - the parent property&lt;/li&gt;
+		&lt;/ul&gt;
 
-		returns object with name/value pairs where name is the sub-property name and the
-			value is a StateType instance describing the property shadowing behavior.
+		@param {function} callback - the function to call during the shadowing process to obtain any
+			additional property definitions beyond those statically configured.
+
+		@return `object` with name/value pairs where name is the sub-property name and the
+			value is a `StateType` instance describing the property shadowing behavior.
 	*/
 	jitProperties(callback) {
 		assert( a =&gt; a.is(typeof callback === &quot;function&quot;, &quot;&apos;callback&apos; parameter not a function&quot;) );
@@ -426,6 +531,17 @@ export default class StateType {
 		this._jitProperties = callback;
 	}
 
+	/**
+		Sets the `StateType` for the &apos;managed type&apos;. Complex {@link Property} subclasses use the
+		managed type for determining how to shadow contained data. More common is the use of
+		{@link StateType#elementType} to specify a `StateType` for each immediate child property.
+
+		See {@link CollectionProperty} for an example of a property employing managed types.
+
+		@param {StateType} type - the `StateType` describing how to shadow each managed state value.
+
+		@return {StateType} this instance for use in chaining configuration calls.
+	*/
 	managedType(type) {
 		assert( a =&gt; a.is(type instanceof StateType, &quot;&apos;type&apos; parameter not StateType&quot;) );
 
@@ -434,12 +550,24 @@ export default class StateType {
 		return this;
 	}
 
+	/**
+		Sets the {@link Property} class used for shadowing the state property.
+
+		@param {Property} PropertyClass - a `Property` subclass
+
+		@return {StateType} this instance for use in chaining configuration calls
+	*/
 	propertyClass(PropertyClass) {
 		this._PropertyClass = PropertyClass;
 
 		return this;
 	}
 
+	/**
+		Sets `StateType` values describing the shadowing behavior for multiple child properties.
+
+		@return {StateType} this instance for use in chaining configuration calls
+	*/
 	properties(propTypes) {
 		assert( a =&gt; {
 				a.is(isKeyedPrototype(this._PropertyClass),
@@ -453,12 +581,25 @@ export default class StateType {
 		return this;
 	}
 
+	/**
+		Sets the {@link Shadow} class to be used for shadowing the property.
+
+		@param {Shadow} cls - The `Shadow` subclass
+
+		@return {StateType} this instance for use in chaining configuration calls
+	*/
 	shadowClass(cls) {
 		this._shadowClass = cls;
 
 		return this;
 	}
 
+	/**
+		Sets a descriptive type name on a property class. This is accomplished by setting the `name` on
+		the {@link StateType#_PropertyClass} constructor using a variable called `__fluxTypeName__`.
+
+		@return {StateType} this instance for use in chaining configuration calls
+	*/
 	typeName(name) {
 		this._typeName = name;
 		this._PropertyClass.__fluxTypeName__ = name;
@@ -471,10 +612,21 @@ export default class StateType {
 	//  StateType runtime API used during the shadowing process
 	//---------------------------------------------------------------------------------------------
 
+	/**
+		Creates a shallow copy of this `StateType`
+
+		@return {StateType}
+	*/
 	clone() {
 		return Object.assign(new StateType(), this);
 	}
 
+	/**
+		Generates the initial state for this property and its immediate child properties. This method
+		does not account for any explicit default values set using {@link StateType#default}.
+
+		@return the initial state
+	*/
 	computeInitialState() {
 		const state = cloneDeep(this._initialState);
 		const propSpecs = this._properties;
@@ -494,43 +646,63 @@ export default class StateType {
 		return state;
 	}
 
-	/*
+	/**
 		Configures an existing shader with the values of this type.
+
+		@ignore
 	*/
 	configureShader(shader) {
 		shader.setAutoshadow(this._autoshadow);
 
-		this._setupShader(shader);
+		this[_setupShader](shader);
 	}
 
+	/** @ignore */
 	createProperty() {
 		return new this._PropertyClass(this);
 	}
 
-	/*
-		Returns a PropertyFactoryShader that will create property instances as configured by this StateType.
+	/**
+		Returns a {@link PropertyFactoryShader} that will create property instances as configured by
+		this `StateType`.
+
+		@ignore
 	*/
 	factory(parentProperty) {
 		const PropertyFactoryShader = require(&quot;./PropertyFactoryShader&quot;).default;
 		const shader = new PropertyFactoryShader(this, parentProperty);
 
-		this._setupShader(shader);
+		this[_setupShader](shader);
 
 		return shader;
 	}
 
+	/** @ignore */
 	isAutomount() {
 		return false;
 	}
 
+	/** @ignore */
 	getManagedType() {
 		return this._managedType;
 	}
 
+	/**
+		Gets the descriptive type name from the {@link StateType#_PropertyClass}. This value is set using
+		{@link StateType#typeName}.
+
+		@return {string} the descriptive name.
+	*/
 	getTypeName() {
-		return this.ProperClass.__fluxTypeName__;
+		return this._PropertyClass.__fluxTypeName__;
 	}
 
+	/**
+		Generates the initial state for this property and its immediate child properties. The intial
+		state is merged with any explicit default values set using {@link StateType#default}.
+
+		@return the initial state
+	*/
 	initialStateWithDefaults(state) {
 		const arrayType = isArray(state);
 		const propSpecs = this._properties;
@@ -558,19 +730,23 @@ export default class StateType {
 		return state;
 	}
 
+	/** @ignore */
 	hasJitProperties() {
 		return !!this._jitProperties;
 	}
 
+	/** @ignore */
 	isComplex() {
 		return Object.keys(this._properties).length || this._managedType || this._elementType;
 	}
 
-	/*
+	/**
 		Gets a shader based on just-in-time configured shader. This mechanism is used when the type structure
 		is not static but based on the state contents. You could think of this as a type of polymorphism.
 
 		Shaders returned are configured through the &apos;jitProperties()&apos; setup API.
+
+		@ignore
 	*/
 	jitShaderFor(name, state, property) {
 		// cache types with an identity comparison (may need shallow comparison)
@@ -584,15 +760,17 @@ export default class StateType {
 		return type &amp;&amp; type.factory(property);
 	}
 
+	/** @ignore */
 	shader(property) {
 		const Shader = require(&quot;./Shader&quot;).default;
 		const shader = new Shader(property);
 
-		this._setupShader(shader);
+		this[_setupShader](shader);
 
 		return shader;
 	}
 
+	/** @ignore */
 	shadowClassForProperty(defaultClass=Shadow) {
 		if (this._shadowClass) {
 			return this._shadowClass;
@@ -601,7 +779,8 @@ export default class StateType {
 		}
 	}
 
-	_setupShader(shader) {
+	/** @ignore */
+	[_setupShader](shader) {
 		if (this._elementType) {
 			let eltType = this._elementType;
 

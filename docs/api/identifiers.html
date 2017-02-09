@@ -58,8 +58,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Transients.js~TransientsProperty.html">TransientsProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Transients.js~TransientsShadow.html">TransientsShadow</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createPropertyClass">createPropertyClass</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-devDebug">devDebug</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-extendProperty">extendProperty</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">collection</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html">CollectionProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html">CollectionShadow</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/ModelAccess.js~ModelAccess.html">ModelAccess</a></span></span></li>
@@ -93,9 +91,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-shadow">shadow</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-shadowBound">shadowBound</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-shadowPropertyHelper">shadowPropertyHelper</a></span></span></li>
-<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">listeners</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listeners/Logger.js~FrameAction.html">FrameAction</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listeners/Logger.js~LogFrame.html">LogFrame</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listeners/Logger.js~Logger.html">Logger</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">listeners</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listeners/Logger.js~Logger.html">Logger</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createConsoleLogger">createConsoleLogger</a></span></span></li>
 </ul>
 </div>
@@ -152,7 +148,10 @@
       <div>
         
         
-        
+        <div data-ice="description"><p><code>ArrayProperty</code> models an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>
+and the shadow API exposes all <code>Array</code> methods, such as <code>filter()</code>, <code>push()</code>, <code>pop()</code>,
+and <code>reduce()</code> to name a few.</p>
+</div>
       </div>
     </td>
     <td>
@@ -254,33 +253,6 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/listeners/Logger.js~FrameAction.html">FrameAction</a></span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
           <span data-ice="name"><span><a href="class/src/IndexedApi.js~IndexedApi.html">IndexedApi</a></span></span>
         </p>
       </div>
@@ -314,7 +286,10 @@
       <div>
         
         
-        
+        <div data-ice="description"><p><code>IndexedProperty</code> models an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>
+while limiting the shadow API to the non-mutating <code>Array</code> methods, such as <code>filter()</code>, <code>find()</code>, <code>indexOf()</code>,
+and <code>map()</code> to name a few.</p>
+</div>
       </div>
     </td>
     <td>
@@ -395,34 +370,8 @@
       <div>
         
         
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/src/listeners/Logger.js~LogFrame.html">LogFrame</a></span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
+        <div data-ice="description"><p>API implementation for properties that support keyed access to child properties.</p>
+</div>
       </div>
     </td>
     <td>
@@ -476,7 +425,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Exposes a Map interface on a shadow property.</p>
+</div>
       </div>
     </td>
     <td>
@@ -584,7 +534,7 @@
       <div>
         
         
-        <div data-ice="description"><p>A generic object property type that supports keyed child properties.</p>
+        <div data-ice="description"><p>A generic object property type that supports keyed child properties access.</p>
 </div>
       </div>
     </td>
@@ -940,7 +890,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Defines the shadowing behavior for a property.</p>
+</div>
       </div>
     </td>
     <td>
@@ -967,7 +918,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>F.lux uses the <code>Store</code> class for representing stores.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1212,61 +1164,7 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="function/index.html#static-function-devDebug">devDebug</a></span></span><span data-ice="signature">(modname: <span>*</span>): <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
           <span data-ice="name"><span><a href="function/index.html#static-function-extendOptions">extendOptions</a></span></span><span data-ice="signature">(options: <span>*</span>)</span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="function/index.html#static-function-extendProperty">extendProperty</a></span></span><span data-ice="signature">(property: <span>*</span>, impl: <span>*</span>, shadow: <span>*</span>)</span>
         </p>
       </div>
       <div>
@@ -1468,7 +1366,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>All middleware operations.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1495,7 +1394,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Event emitted on collection changes.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1522,7 +1422,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Middleware operation for create requests.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1576,7 +1477,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Event emitted on collection destroy() success.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1603,7 +1505,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Middleware operation for destroy requests.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1630,7 +1533,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Event emitted on error during an operation.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1657,7 +1561,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Middleware operation for fetch requests.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1684,7 +1589,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Event emitted on collection fetch() success.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1711,7 +1617,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Middleware operation for find requests.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1738,7 +1645,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Event emitted on collection find() success.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1846,7 +1754,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Event emitted on collection save() success.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1873,7 +1782,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Middleware operation for update requests.</p>
+</div>
       </div>
     </td>
     <td>

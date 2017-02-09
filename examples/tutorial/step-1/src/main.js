@@ -3,7 +3,7 @@ import "babel-polyfill";
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { Store } from "f.lux";
+import { ObjectProperty, Store } from "f.lux";
 
 import Todos from "./Todos.react";
 

@@ -7,12 +7,8 @@ import {
 } from "akutils";
 
 
-/*
+/**
 	API implementation for properties that support keyed access to child properties.
-
-	History note: This code was extracted from KeyedProperty so keyed api functionality is added using
-		composition instead of inheritance to avoid name space polution. This name space pollution
-		proved to be problematic when implementing collections (should come as no surprise).
 */
 export default class KeyedApi {
 	constructor(property) {

@@ -1,7 +1,7 @@
 import has from "lodash.has";
 import isFunction from "lodash.isfunction";
 
-/*
+/**
 	Extends a shadow property with the definition returned by the assoicated Property methods
 	marked using the @shadow and @shadowBound decorators.
 

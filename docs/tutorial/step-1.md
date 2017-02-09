@@ -17,7 +17,7 @@ The [`examples/tutorial/step-1`](https://github.com/akrumel/f.lux/tree/master/ex
 
 ## Technical background
 
-F.lux stores all application state in a single object tree. A single source of truth greatly simplifies application state management, reduces complexity, and eases debugging. The f.lux store efficiently virtualizes the state tree into a shadow state as inspired by the React shadow DOM. The virtualization process, called shadowing, binds action-type functions onto the state tree properties. Binding the functions with the data makes explicit the operations that may be performed on a state tree property. Shadowing is recursively applied to the entire state tree. For performance reasons, the process occurs on a just-in-time basis so only the accessed properties are virtualized.
+F.lux stores all application state in a single object tree. A single source of truth greatly simplifies application state management, reduces complexity, and eases debugging. The f.lux store efficiently virtualizes the state tree into a shadow state as inspired by React's virtual DOM. The virtualization process, called shadowing, binds action-type functions onto the state. Binding functions with the state makes explicit the operations that may be performed on a state property. Shadowing is recursively applied to the entire state tree. For performance reasons, the process occurs on a just-in-time basis so only the accessed properties are virtualized.
 
 F.lux uses the `Store` class for representing stores. The following image shows how the store exposes the root state and the root property. Inside the root property is its shadow, which contains a reference to the actual state.
 

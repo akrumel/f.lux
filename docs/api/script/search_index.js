@@ -96,12 +96,6 @@ window.esdocSearchIndex = [
     "variable"
   ],
   [
-    "f.lux/src/listeners/logger.js~frameaction",
-    "class/src/listeners/Logger.js~FrameAction.html",
-    "<span>FrameAction</span> <span class=\"search-result-import-path\">f.lux/src/listeners/Logger.js</span>",
-    "class"
-  ],
-  [
     "f.lux/src/indexedapi.js~indexedapi",
     "class/src/IndexedApi.js~IndexedApi.html",
     "<span>IndexedApi</span> <span class=\"search-result-import-path\">f.lux/src/IndexedApi.js</span>",
@@ -129,12 +123,6 @@ window.esdocSearchIndex = [
     "f.lux/src/keyedapi.js~keyedapi",
     "class/src/KeyedApi.js~KeyedApi.html",
     "<span>KeyedApi</span> <span class=\"search-result-import-path\">f.lux/src/KeyedApi.js</span>",
-    "class"
-  ],
-  [
-    "f.lux/src/listeners/logger.js~logframe",
-    "class/src/listeners/Logger.js~LogFrame.html",
-    "<span>LogFrame</span> <span class=\"search-result-import-path\">f.lux/src/listeners/Logger.js</span>",
     "class"
   ],
   [
@@ -336,21 +324,9 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
-    "f.lux/src/debug.js~devdebug",
-    "function/index.html#static-function-devDebug",
-    "<span>devDebug</span> <span class=\"search-result-import-path\">f.lux/src/debug.js</span>",
-    "function"
-  ],
-  [
     "f.lux/src/collection/fetchoptions.js~extendoptions",
     "function/index.html#static-function-extendOptions",
     "<span>extendOptions</span> <span class=\"search-result-import-path\">f.lux/src/collection/fetchOptions.js</span>",
-    "function"
-  ],
-  [
-    "f.lux/src/extendproperty.js~extendproperty",
-    "function/index.html#static-function-extendProperty",
-    "<span>extendProperty</span> <span class=\"search-result-import-path\">f.lux/src/extendProperty.js</span>",
     "function"
   ],
   [
@@ -2064,12 +2040,6 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "src/property.js~property#implementationclass",
-    "class/src/Property.js~Property.html#instance-method-implementationClass",
-    "src/Property.js~Property#implementationClass",
-    "method"
-  ],
-  [
     "src/property.js~property#initialstate",
     "class/src/Property.js~Property.html#instance-method-initialState",
     "src/Property.js~Property#initialState",
@@ -2106,42 +2076,6 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "src/property.js~property#onchildinvalidated",
-    "class/src/Property.js~Property.html#instance-method-onChildInvalidated",
-    "src/Property.js~Property#onChildInvalidated",
-    "method"
-  ],
-  [
-    "src/property.js~property#onpropertydidshadow",
-    "class/src/Property.js~Property.html#instance-method-onPropertyDidShadow",
-    "src/Property.js~Property#onPropertyDidShadow",
-    "method"
-  ],
-  [
-    "src/property.js~property#onpropertydidunshadow",
-    "class/src/Property.js~Property.html#instance-method-onPropertyDidUnshadow",
-    "src/Property.js~Property#onPropertyDidUnshadow",
-    "method"
-  ],
-  [
-    "src/property.js~property#onpropertydidupdate",
-    "class/src/Property.js~Property.html#instance-method-onPropertyDidUpdate",
-    "src/Property.js~Property#onPropertyDidUpdate",
-    "method"
-  ],
-  [
-    "src/property.js~property#onpropertywillshadow",
-    "class/src/Property.js~Property.html#instance-method-onPropertyWillShadow",
-    "src/Property.js~Property#onPropertyWillShadow",
-    "method"
-  ],
-  [
-    "src/property.js~property#onpropertywillunshadow",
-    "class/src/Property.js~Property.html#instance-method-onPropertyWillUnshadow",
-    "src/Property.js~Property#onPropertyWillUnshadow",
-    "method"
-  ],
-  [
     "src/property.js~property#parent",
     "class/src/Property.js~Property.html#instance-method-parent",
     "src/Property.js~Property#parent",
@@ -2175,12 +2109,6 @@ window.esdocSearchIndex = [
     "src/property.js~property#propertydidshadow",
     "class/src/Property.js~Property.html#instance-method-propertyDidShadow",
     "src/Property.js~Property#propertyDidShadow",
-    "method"
-  ],
-  [
-    "src/property.js~property#propertydidunshadow",
-    "class/src/Property.js~Property.html#instance-method-propertyDidUnshadow",
-    "src/Property.js~Property#propertyDidUnshadow",
     "method"
   ],
   [
@@ -2226,12 +2154,6 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "src/property.js~property#setimpl",
-    "class/src/Property.js~Property.html#instance-method-setImpl",
-    "src/Property.js~Property#setImpl",
-    "method"
-  ],
-  [
     "src/property.js~property#setimplementationclass",
     "class/src/Property.js~Property.html#instance-method-setImplementationClass",
     "src/Property.js~Property#setImplementationClass",
@@ -2244,21 +2166,9 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "src/property.js~property#setparent",
-    "class/src/Property.js~Property.html#instance-method-setParent",
-    "src/Property.js~Property#setParent",
-    "method"
-  ],
-  [
     "src/property.js~property#setreadonly",
     "class/src/Property.js~Property.html#instance-method-setReadonly",
     "src/Property.js~Property#setReadonly",
-    "method"
-  ],
-  [
-    "src/property.js~property#setshader",
-    "class/src/Property.js~Property.html#instance-method-setShader",
-    "src/Property.js~Property#setShader",
     "method"
   ],
   [
@@ -2268,21 +2178,9 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "src/property.js~property#setstore",
-    "class/src/Property.js~Property.html#instance-method-setStore",
-    "src/Property.js~Property#setStore",
-    "method"
-  ],
-  [
     "src/property.js~property#shader",
     "class/src/Property.js~Property.html#instance-method-shader",
     "src/Property.js~Property#shader",
-    "method"
-  ],
-  [
-    "src/property.js~property#shadow",
-    "class/src/Property.js~Property.html#instance-method-shadow",
-    "src/Property.js~Property#shadow",
     "method"
   ],
   [
@@ -2598,6 +2496,12 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
+    "src/shadowimpl.js~shadowimpl#[_createshadow]",
+    "class/src/ShadowImpl.js~ShadowImpl.html#instance-method-[_createShadow]",
+    "src/ShadowImpl.js~ShadowImpl#[_createShadow]",
+    "method"
+  ],
+  [
     "src/shadowimpl.js~shadowimpl#[_dead]",
     "class/src/ShadowImpl.js~ShadowImpl.html#instance-member-[_dead]",
     "src/ShadowImpl.js~ShadowImpl#[_dead]",
@@ -2698,6 +2602,12 @@ window.esdocSearchIndex = [
     "class/src/ShadowImpl.js~ShadowImpl.html#instance-member-[_scheduled]",
     "src/ShadowImpl.js~ShadowImpl#[_scheduled]",
     "member"
+  ],
+  [
+    "src/shadowimpl.js~shadowimpl#[_setupshadow]",
+    "class/src/ShadowImpl.js~ShadowImpl.html#instance-method-[_setupShadow]",
+    "src/ShadowImpl.js~ShadowImpl#[_setupShadow]",
+    "method"
   ],
   [
     "src/shadowimpl.js~shadowimpl#[_shadow]",
@@ -3168,21 +3078,9 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "src/statetype.js~statetype#configureshader",
-    "class/src/StateType.js~StateType.html#instance-method-configureShader",
-    "src/StateType.js~StateType#configureShader",
-    "method"
-  ],
-  [
     "src/statetype.js~statetype#constructor",
     "class/src/StateType.js~StateType.html#instance-constructor-constructor",
     "src/StateType.js~StateType#constructor",
-    "method"
-  ],
-  [
-    "src/statetype.js~statetype#createproperty",
-    "class/src/StateType.js~StateType.html#instance-method-createProperty",
-    "src/StateType.js~StateType#createProperty",
     "method"
   ],
   [
@@ -3198,27 +3096,9 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "src/statetype.js~statetype#factory",
-    "class/src/StateType.js~StateType.html#instance-method-factory",
-    "src/StateType.js~StateType#factory",
-    "method"
-  ],
-  [
-    "src/statetype.js~statetype#getmanagedtype",
-    "class/src/StateType.js~StateType.html#instance-method-getManagedType",
-    "src/StateType.js~StateType#getManagedType",
-    "method"
-  ],
-  [
     "src/statetype.js~statetype#gettypename",
     "class/src/StateType.js~StateType.html#instance-method-getTypeName",
     "src/StateType.js~StateType#getTypeName",
-    "method"
-  ],
-  [
-    "src/statetype.js~statetype#hasjitproperties",
-    "class/src/StateType.js~StateType.html#instance-method-hasJitProperties",
-    "src/StateType.js~StateType#hasJitProperties",
     "method"
   ],
   [
@@ -3240,27 +3120,9 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "src/statetype.js~statetype#isautomount",
-    "class/src/StateType.js~StateType.html#instance-method-isAutomount",
-    "src/StateType.js~StateType#isAutomount",
-    "method"
-  ],
-  [
-    "src/statetype.js~statetype#iscomplex",
-    "class/src/StateType.js~StateType.html#instance-method-isComplex",
-    "src/StateType.js~StateType#isComplex",
-    "method"
-  ],
-  [
     "src/statetype.js~statetype#jitproperties",
     "class/src/StateType.js~StateType.html#instance-method-jitProperties",
     "src/StateType.js~StateType#jitProperties",
-    "method"
-  ],
-  [
-    "src/statetype.js~statetype#jitshaderfor",
-    "class/src/StateType.js~StateType.html#instance-method-jitShaderFor",
-    "src/StateType.js~StateType#jitShaderFor",
     "method"
   ],
   [
@@ -3294,21 +3156,9 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
-    "src/statetype.js~statetype#shader",
-    "class/src/StateType.js~StateType.html#instance-method-shader",
-    "src/StateType.js~StateType#shader",
-    "method"
-  ],
-  [
     "src/statetype.js~statetype#shadowclass",
     "class/src/StateType.js~StateType.html#instance-method-shadowClass",
     "src/StateType.js~StateType#shadowClass",
-    "method"
-  ],
-  [
-    "src/statetype.js~statetype#shadowclassforproperty",
-    "class/src/StateType.js~StateType.html#instance-method-shadowClassForProperty",
-    "src/StateType.js~StateType#shadowClassForProperty",
     "method"
   ],
   [
@@ -4954,132 +4804,6 @@ window.esdocSearchIndex = [
     "file/src/listeners/Logger.js.html",
     "src/listeners/Logger.js",
     "file"
-  ],
-  [
-    "src/listeners/logger.js~frameaction#action",
-    "class/src/listeners/Logger.js~FrameAction.html#instance-member-action",
-    "src/listeners/Logger.js~FrameAction#action",
-    "member"
-  ],
-  [
-    "src/listeners/logger.js~frameaction#constructor",
-    "class/src/listeners/Logger.js~FrameAction.html#instance-constructor-constructor",
-    "src/listeners/Logger.js~FrameAction#constructor",
-    "method"
-  ],
-  [
-    "src/listeners/logger.js~frameaction#impl",
-    "class/src/listeners/Logger.js~FrameAction.html#instance-member-impl",
-    "src/listeners/Logger.js~FrameAction#impl",
-    "member"
-  ],
-  [
-    "src/listeners/logger.js~frameaction#print",
-    "class/src/listeners/Logger.js~FrameAction.html#instance-method-print",
-    "src/listeners/Logger.js~FrameAction#print",
-    "method"
-  ],
-  [
-    "src/listeners/logger.js~logframe#actions",
-    "class/src/listeners/Logger.js~LogFrame.html#instance-member-actions",
-    "src/listeners/Logger.js~LogFrame#actions",
-    "member"
-  ],
-  [
-    "src/listeners/logger.js~logframe#activate",
-    "class/src/listeners/Logger.js~LogFrame.html#instance-method-activate",
-    "src/listeners/Logger.js~LogFrame#activate",
-    "method"
-  ],
-  [
-    "src/listeners/logger.js~logframe#active",
-    "class/src/listeners/Logger.js~LogFrame.html#instance-member-active",
-    "src/listeners/Logger.js~LogFrame#active",
-    "member"
-  ],
-  [
-    "src/listeners/logger.js~logframe#addaction",
-    "class/src/listeners/Logger.js~LogFrame.html#instance-method-addAction",
-    "src/listeners/Logger.js~LogFrame#addAction",
-    "method"
-  ],
-  [
-    "src/listeners/logger.js~logframe#capturestate",
-    "class/src/listeners/Logger.js~LogFrame.html#instance-method-captureState",
-    "src/listeners/Logger.js~LogFrame#captureState",
-    "method"
-  ],
-  [
-    "src/listeners/logger.js~logframe#capturetime",
-    "class/src/listeners/Logger.js~LogFrame.html#instance-member-captureTime",
-    "src/listeners/Logger.js~LogFrame#captureTime",
-    "member"
-  ],
-  [
-    "src/listeners/logger.js~logframe#completed",
-    "class/src/listeners/Logger.js~LogFrame.html#instance-method-completed",
-    "src/listeners/Logger.js~LogFrame#completed",
-    "method"
-  ],
-  [
-    "src/listeners/logger.js~logframe#constructor",
-    "class/src/listeners/Logger.js~LogFrame.html#instance-constructor-constructor",
-    "src/listeners/Logger.js~LogFrame#constructor",
-    "method"
-  ],
-  [
-    "src/listeners/logger.js~logframe#error",
-    "class/src/listeners/Logger.js~LogFrame.html#instance-member-error",
-    "src/listeners/Logger.js~LogFrame#error",
-    "member"
-  ],
-  [
-    "src/listeners/logger.js~logframe#id",
-    "class/src/listeners/Logger.js~LogFrame.html#instance-member-id",
-    "src/listeners/Logger.js~LogFrame#id",
-    "member"
-  ],
-  [
-    "src/listeners/logger.js~logframe#inactivate",
-    "class/src/listeners/Logger.js~LogFrame.html#instance-method-inactivate",
-    "src/listeners/Logger.js~LogFrame#inactivate",
-    "method"
-  ],
-  [
-    "src/listeners/logger.js~logframe#msg",
-    "class/src/listeners/Logger.js~LogFrame.html#instance-member-msg",
-    "src/listeners/Logger.js~LogFrame#msg",
-    "member"
-  ],
-  [
-    "src/listeners/logger.js~logframe#onerror",
-    "class/src/listeners/Logger.js~LogFrame.html#instance-method-onError",
-    "src/listeners/Logger.js~LogFrame#onError",
-    "method"
-  ],
-  [
-    "src/listeners/logger.js~logframe#print",
-    "class/src/listeners/Logger.js~LogFrame.html#instance-method-print",
-    "src/listeners/Logger.js~LogFrame#print",
-    "method"
-  ],
-  [
-    "src/listeners/logger.js~logframe#state",
-    "class/src/listeners/Logger.js~LogFrame.html#instance-member-state",
-    "src/listeners/Logger.js~LogFrame#state",
-    "member"
-  ],
-  [
-    "src/listeners/logger.js~logframe#store",
-    "class/src/listeners/Logger.js~LogFrame.html#instance-member-store",
-    "src/listeners/Logger.js~LogFrame#store",
-    "member"
-  ],
-  [
-    "src/listeners/logger.js~logframe#time",
-    "class/src/listeners/Logger.js~LogFrame.html#instance-member-time",
-    "src/listeners/Logger.js~LogFrame#time",
-    "member"
   ],
   [
     "src/listeners/logger.js~logger#activeframe",

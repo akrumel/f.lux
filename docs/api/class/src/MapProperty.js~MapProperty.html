@@ -58,8 +58,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Transients.js~TransientsProperty.html">TransientsProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Transients.js~TransientsShadow.html">TransientsShadow</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createPropertyClass">createPropertyClass</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-devDebug">devDebug</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-extendProperty">extendProperty</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">collection</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html">CollectionProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html">CollectionShadow</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/ModelAccess.js~ModelAccess.html">ModelAccess</a></span></span></li>
@@ -93,22 +91,20 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-shadow">shadow</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-shadowBound">shadowBound</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-shadowPropertyHelper">shadowPropertyHelper</a></span></span></li>
-<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">listeners</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listeners/Logger.js~FrameAction.html">FrameAction</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listeners/Logger.js~LogFrame.html">LogFrame</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listeners/Logger.js~Logger.html">Logger</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">listeners</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listeners/Logger.js~Logger.html">Logger</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createConsoleLogger">createConsoleLogger</a></span></span></li>
 </ul>
 </div>
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import MapProperty from &apos;<span><a href="file/src/MapProperty.js.html#lineNumber12">f.lux/src/MapProperty.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import MapProperty from &apos;<span><a href="file/src/MapProperty.js.html#lineNumber33">f.lux/src/MapProperty.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/src/MapProperty.js.html#lineNumber12">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/src/MapProperty.js.html#lineNumber33">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -118,7 +114,7 @@
 
   
   
-  <div class="flat-list" data-ice="extendsChain"><h4>Extends:</h4><div><span><a href="class/src/Property.js~Property.html">Property</a></span> &#x2192; <span><a href="class/src/ObjectProperty.js~ObjectProperty.html">ObjectProperty</a></span> &#x2192; MapProperty</div></div>
+  <div class="flat-list" data-ice="extendsChain"><h4>Extends:</h4><div><span><a href="class/src/Property.js~Property.html">Property</a></span> &#x2192; MapProperty</div></div>
   
   
   
@@ -128,10 +124,23 @@
 
   
   
-  
+  <div class="description" data-ice="description"><p>Exposes a Map interface on a shadow property. The f.lux auto-shadowing process maps <code>objects</code> using
+this <span><a href="class/src/Property.js~Property.html">Property</a></span> subclass.</p>
+<p>The default shadow class is <span><a href="class/src/MapShadow.js~MapShadow.html">MapShadow</a></span>.</p>
+<p>Use <code>MapProperty</code> when you want to shadow an <code>object</code> and provide a
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map"><code>Map</code></a> interface
+for manipulating and accessing <code>object</code> properties.</p>
+<p>The <code>_keyed</code> instance variable exposes a <span><a href="class/src/KeyedApi.js~KeyedApi.html">KeyedApi</a></span> instance for working with properties.
+Readonly properties cannot be updated using the shadow so the <code>this._keyed</code> is used set the value
+or remove it from the object. For example,</p>
+<pre><code class="lang-js"><code class="source-code prettyprint">this._keyed.set(&quot;updated&quot;, Date());</code>
+</code></pre>
+<p>would set the <code>updated</code> shadow property with a string value for the current time.</p>
+</div>
   
 
-  
+  <div data-ice="see"><h4>See:</h4><ul><li><span><span><a href="class/src/KeyedApi.js~KeyedApi.html">KeyedApi</a></span></span></li>
+<li><span><span><a href="class/src/MapShadow.js~MapShadow.html">MapShadow</a></span></span></li></ul></div>
 
   
 
@@ -158,13 +167,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/MapProperty.js~MapProperty.html#static-method-createClass">createClass</a></span></span><span data-ice="signature">(shadowType: {}, specCallback: <span>*</span>, initialState: {}): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/MapProperty.js~MapProperty.html#static-method-createClass">createClass</a></span></span><span data-ice="signature">(shadowType: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="class/src/MapShadow.js~MapShadow.html">MapShadow</a></span>, typeCallback: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(type: <span><a href="class/src/StateType.js~StateType.html">StateType</a></span>)</span></span>, initialState: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>): <span><a href="class/src/MapProperty.js~MapProperty.html">MapProperty</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Factory function for creating an <code>MapProperty</code> subclass suitable for using with new.</p>
+</div>
       </div>
     </td>
     <td>
@@ -185,13 +195,15 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/MapProperty.js~MapProperty.html#static-method-defineType">defineType</a></span></span><span data-ice="signature">(PropClass: <span>*</span>, ShadowType: <span>*</span>, specCallback: <span>*</span>, initialState: {}): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/MapProperty.js~MapProperty.html#static-method-defineType">defineType</a></span></span><span data-ice="signature">(PropClass: <span><a href="class/src/MapProperty.js~MapProperty.html">MapProperty</a></span>, ShadowType: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="class/src/MapShadow.js~MapShadow.html">MapShadow</a></span>, typeCallback: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(type: <span><a href="class/src/StateType.js~StateType.html">StateType</a></span>)</span></span>, initialState: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Factory function for setting up the <span><a href="class/src/StateType.js~StateType.html">StateType</a></span> <code>type</code> class variable with an appropriately
+configured intial state.</p>
+</div>
       </div>
     </td>
     <td>
@@ -219,13 +231,16 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/MapProperty.js~MapProperty.html#instance-constructor-constructor">constructor</a></span></span><span data-ice="signature">(stateType: <span>*</span>)</span>
+          <span data-ice="name"><span><a href="class/src/MapProperty.js~MapProperty.html#instance-constructor-constructor">constructor</a></span></span><span data-ice="signature">(stateType: <span><a href="class/src/StateType.js~StateType.html">StateType</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>If a <span><a href="class/src/StateType.js~StateType.html">StateType</a></span> is not passed to this constructor then one is located using
+<span><a href="class/src/StateType.js~StateType.html#static-method-from">StateType.from</a></span> thus ensuring the f.lux shadowing process is defined for this
+property.</p>
+</div>
       </div>
     </td>
     <td>
@@ -607,7 +622,7 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-$$">$$</a></span></span><span data-ice="signature">(): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-$$">$$</a></span></span><span data-ice="signature">(): <span><a href="class/src/Property.js~Property.html">Property</a></span></span>
         </p>
       </div>
       <div>
@@ -635,13 +650,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-autoShadow">autoShadow</a></span></span><span data-ice="signature">(): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-autoShadow">autoShadow</a></span></span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets if autoshadowing is enabled for this property.</p>
+</div>
       </div>
     </td>
     <td>
@@ -668,7 +684,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Copies the current actual state for later reset using <span><a href="class/src/Property.js~Property.html#instance-method-resetToCheckpoint">Property#resetToCheckpoint</a></span>.</p>
+</div>
       </div>
     </td>
     <td>
@@ -695,7 +712,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Clears an existing checkpoint created using <span><a href="class/src/Property.js~Property.html#instance-method-checkpoint">Property#checkpoint</a></span>.</p>
+</div>
       </div>
     </td>
     <td>
@@ -716,7 +734,7 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-create$">create$</a></span></span><span data-ice="signature">(impl: <span>*</span>): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-create$">create$</a></span></span><span data-ice="signature">(impl: <span>*</span>): <span><a href="class/src/Access.js~Access.html">Access</a></span></span>
         </p>
       </div>
       <div>
@@ -744,13 +762,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-dotPath">dotPath</a></span></span><span data-ice="signature">(): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-dotPath">dotPath</a></span></span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets the path from root property using a dot (<code>.</code>) separator.</p>
+</div>
       </div>
     </td>
     <td>
@@ -777,7 +796,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets the checkpoint state previously recorded using <span><a href="class/src/Property.js~Property.html#instance-method-checkpoint">Property#checkpoint</a></span>.</p>
+</div>
       </div>
     </td>
     <td>
@@ -826,40 +846,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-hasCheckpoint">hasCheckpoint</a></span></span><span data-ice="signature">(): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-hasCheckpoint">hasCheckpoint</a></span></span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-implementationClass">implementationClass</a></span></span><span data-ice="signature">(): <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
+        <div data-ice="description"><p>Gets if an existing checkpoint has be created using <span><a href="class/src/Property.js~Property.html#instance-method-checkpoint">Property#checkpoint</a></span>.</p>
+</div>
       </div>
     </td>
     <td>
@@ -886,7 +880,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets the result from <span><a href="class/src/StateType.js~StateType.html#instance-method-computeInitialState">StateType#computeInitialState</a></span>.</p>
+</div>
       </div>
     </td>
     <td>
@@ -907,13 +902,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-isActive">isActive</a></span></span><span data-ice="signature">(): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-isActive">isActive</a></span></span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets if the property is currently shadowing an actual state property.</p>
+</div>
       </div>
     </td>
     <td>
@@ -934,13 +930,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-isReadonly">isReadonly</a></span></span><span data-ice="signature">(): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-isReadonly">isReadonly</a></span></span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets if the property allows for assignment through the shadow state, ie <code>todo.desc = &quot;go skiing&quot;</code>.</p>
+</div>
       </div>
     </td>
     <td>
@@ -961,13 +958,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-isRoot">isRoot</a></span></span><span data-ice="signature">(): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-isRoot">isRoot</a></span></span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets if this is the shadow state root property.</p>
+</div>
       </div>
     </td>
     <td>
@@ -988,13 +986,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-name">name</a></span></span><span data-ice="signature">(): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-name">name</a></span></span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>The property name by which this property is referenced by the <span><a href="class/src/Property.js~Property.html#instance-method-parent">Property.parent</a></span>.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1021,61 +1020,8 @@
       <div>
         
         
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-onChildInvalidated">onChildInvalidated</a></span></span><span data-ice="signature">(childProperty: <span>*</span>, sourceProperty: <span>*</span>)</span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-onPropertyDidShadow">onPropertyDidShadow</a></span></span><span data-ice="signature">()</span>
-        </p>
-      </div>
-      <div>
-        
-        
-        <div data-ice="description"><p>Invoked by shadowProperty().</p>
+        <div data-ice="description"><p>Gets what the actual state for this property will be after the <span><a href="class/src/Store.js~Store.html">Store</a></span> updates all pending
+actions.</p>
 </div>
       </div>
     </td>
@@ -1097,67 +1043,13 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-onPropertyDidUnshadow">onPropertyDidUnshadow</a></span></span><span data-ice="signature">()</span>
+          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-parent">parent</a></span></span><span data-ice="signature">(): <span><a href="class/src/Property.js~Property.html">Property</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-onPropertyDidUpdate">onPropertyDidUpdate</a></span></span><span data-ice="signature">()</span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-onPropertyWillShadow">onPropertyWillShadow</a></span></span><span data-ice="signature">()</span>
-        </p>
-      </div>
-      <div>
-        
-        
-        <div data-ice="description"><p>Invoked by shadowProperty().</p>
+        <div data-ice="description"><p>Gets the parent property.</p>
 </div>
       </div>
     </td>
@@ -1179,67 +1071,13 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-onPropertyWillUnshadow">onPropertyWillUnshadow</a></span></span><span data-ice="signature">()</span>
+          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-parentShadow">parentShadow</a></span></span><span data-ice="signature">(): <span><a href="class/src/Shadow.js~Shadow.html">Shadow</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-parent">parent</a></span></span><span data-ice="signature">(): <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-parentShadow">parentShadow</a></span></span><span data-ice="signature">(): <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        <div data-ice="description"><p>Gets the parent shadow property, a BaseProperty subclass.</p>
+        <div data-ice="description"><p>Gets the parent&apos;s shadow property.</p>
 </div>
       </div>
     </td>
@@ -1261,13 +1099,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-path">path</a></span></span><span data-ice="signature">(): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-path">path</a></span></span><span data-ice="signature">(): <span><span>[]</span></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets the <span><a href="class/src/Property.js~Property.html#instance-method-name">Property#name</a></span> components from the root property to this property.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1288,13 +1127,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-pid">pid</a></span></span><span data-ice="signature">(): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-pid">pid</a></span></span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets the unique f.lux ID for this property.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1315,7 +1155,7 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-propertyChildInvalidated">propertyChildInvalidated</a></span></span><span data-ice="signature">(childProperty: <span>*</span>, sourceProperty: <span>*</span>)</span>
+          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-propertyChildInvalidated">propertyChildInvalidated</a></span></span><span data-ice="signature">(childProperty: <span><a href="class/src/Property.js~Property.html">Property</a></span>, sourceProperty: <span><a href="class/src/Property.js~Property.html">Property</a></span>)</span>
         </p>
       </div>
       <div>
@@ -1349,34 +1189,8 @@
       <div>
         
         
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-propertyDidUnshadow">propertyDidUnshadow</a></span></span><span data-ice="signature">()</span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
+        <div data-ice="description"><p>Invoked by the f.lux shadowing process after a property initially shadows a state property.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1403,7 +1217,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Invoked by the f.lux shadowing process after a property is reshadowed.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1430,7 +1245,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Invoked by the f.lux shadowing process just before a property initially shadows a state property.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1457,7 +1273,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Invoked by the f.lux shadowing process just before a property will be removed from the shadow state.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1484,7 +1301,9 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Replaces the current property state with a checkpoint state previously recorded using
+<span><a href="class/src/Property.js~Property.html#instance-method-checkpoint">Property#checkpoint</a></span>.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1505,13 +1324,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-root">root</a></span></span><span data-ice="signature">(): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-root">root</a></span></span><span data-ice="signature">(): <span><a href="class/src/Property.js~Property.html">Property</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets the shadow state root property for the <span><a href="class/src/Store.js~Store.html">Store</a></span> managing this property.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1538,7 +1358,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets the root shadow state for the <span><a href="class/src/Store.js~Store.html">Store</a></span> managing this property.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1559,7 +1380,7 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-setAutoshadow">setAutoshadow</a></span></span><span data-ice="signature">(auto: <span>*</span>): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-setAutoshadow">setAutoshadow</a></span></span><span data-ice="signature">(auto: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>): <span>*</span></span>
         </p>
       </div>
       <div>
@@ -1587,35 +1408,7 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-setImpl">setImpl</a></span></span><span data-ice="signature">(impl: <span>*</span>)</span>
-        </p>
-      </div>
-      <div>
-        
-        
-        <div data-ice="description"><p>Invoked everytime the property is shadowed to set the PropertyImpl instance backing this property.</p>
-</div>
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-setImplementationClass">setImplementationClass</a></span></span><span data-ice="signature">(PropertyClass: <span>*</span>)</span>
+          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-setImplementationClass">setImplementationClass</a></span></span><span data-ice="signature">(ImplClass: <span>*</span>)</span>
         </p>
       </div>
       <div>
@@ -1642,41 +1435,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-setInitialState">setInitialState</a></span></span><span data-ice="signature">(state: <span>*</span>): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-setInitialState">setInitialState</a></span></span><span data-ice="signature">(state: <span>*</span>): <span><a href="class/src/Property.js~Property.html">Property</a></span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>Sets the default value returned by getInitialState().</p>
-</div>
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-setParent">setParent</a></span></span><span data-ice="signature">(parent: <span>*</span>): <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        <div data-ice="description"><p>Sets this properties parent Property instance.</p>
+        <div data-ice="description"><p>Explicitly sets an initial state that will be used if the state tree does not have a value for this
+property.</p>
 </div>
       </div>
     </td>
@@ -1704,8 +1470,7 @@
       <div>
         
         
-        <div data-ice="description"><p>Sets the readonly flag which will prevent a &apos;set&apos; function being set in the implementation&apos;s
-defineProeprty().</p>
+        <div data-ice="description"><p>Sets the readonly flag which will prevent an assignment from changing the value.</p>
 </div>
       </div>
     </td>
@@ -1727,68 +1492,13 @@ defineProeprty().</p>
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-setShader">setShader</a></span></span><span data-ice="signature">(shader: <span>*</span>)</span>
+          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-setShadowClass">setShadowClass</a></span></span><span data-ice="signature">(ShadowClass: <span><a href="class/src/Shadow.js~Shadow.html">Shadow</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>Used by PropertyFactoryShader to set the shader used to create this property.</p>
-</div>
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-setShadowClass">setShadowClass</a></span></span><span data-ice="signature">(ShadowClass: <span>*</span>)</span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-setStore">setStore</a></span></span><span data-ice="signature">(store: <span>*</span>): <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        <div data-ice="description"><p>Sets the store containing the state represented by this property.</p>
+        <div data-ice="description"><p>Sets the class to be used for the shadow api</p>
 </div>
       </div>
     </td>
@@ -1816,34 +1526,7 @@ defineProeprty().</p>
       <div>
         
         
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-shadow">shadow</a></span></span><span data-ice="signature">()</span>
-        </p>
-      </div>
-      <div>
-        
-        
-        <div data-ice="description"><p>Generates the functional mixin to map onto the state property shadow.</p>
+        <div data-ice="description"><p>Gets the <span><a href="class/src/Shader.js~Shader.html">Shader</a></span> instance for this property.</p>
 </div>
       </div>
     </td>
@@ -1893,13 +1576,14 @@ defineProeprty().</p>
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-slashPath">slashPath</a></span></span><span data-ice="signature">(): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-slashPath">slashPath</a></span></span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets the path from root property using a slash (<code>/</code>) separator.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1926,7 +1610,7 @@ defineProeprty().</p>
       <div>
         
         
-        <div data-ice="description"><p>Gets the underlying property state.</p>
+        <div data-ice="description"><p>Gets the actual state being shadowed.</p>
 </div>
       </div>
     </td>
@@ -1982,7 +1666,7 @@ defineProeprty().</p>
       <div>
         
         
-        <div data-ice="description"><p>Gets the store containing the application state.</p>
+        <div data-ice="description"><p>Gets the {@Link Store} containing the application state.</p>
 </div>
       </div>
     </td>
@@ -2038,68 +1722,7 @@ defineProeprty().</p>
       <div>
         
         
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-update">update</a></span></span><span data-ice="signature">(callback: <span>*</span>)</span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-</tbody>
-</table>
-
-<table class="summary" data-ice="summary">
-  <thead><tr><td data-ice="title" colspan="3"><span class="toggle closed"></span> From class <span><a href="class/src/ObjectProperty.js~ObjectProperty.html">ObjectProperty</a></span></td></tr></thead>
-  <tbody>
-  
-  <tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      <span data-ice="static">static</span>
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/src/ObjectProperty.js~ObjectProperty.html#static-method-createClass">createClass</a></span></span><span data-ice="signature">(shadowType: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="class/src/Shadow.js~Shadow.html">Shadow</a></span>, typeCallback: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(type: <span><a href="class/src/StateType.js~StateType.html">StateType</a></span>)</span></span>, initialState: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>): <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        <div data-ice="description"><p>Factory function for creating an <span><a href="class/src/ObjectProperty.js~ObjectProperty.html">ObjectProperty</a></span> subclass suitable for using with new.</p>
+        <div data-ice="description"><p>Gets this property&apos;s <span><a href="class/src/StateType.js~StateType.html#instance-method-typeName">StateType.typeName</a></span> value.</p>
 </div>
       </div>
     </td>
@@ -2111,7 +1734,7 @@ defineProeprty().</p>
 <tr data-ice="target">
     <td>
       <span class="access" data-ice="access">public</span>
-      <span data-ice="static">static</span>
+      
       
       
       <span class="override" data-ice="override"></span>
@@ -2121,13 +1744,13 @@ defineProeprty().</p>
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/ObjectProperty.js~ObjectProperty.html#static-method-defineType">defineType</a></span></span><span data-ice="signature">(PropClass: <span><a href="class/src/ObjectProperty.js~ObjectProperty.html">ObjectProperty</a></span>, ShadowType: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="class/src/Shadow.js~Shadow.html">Shadow</a></span>, typeCallback: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(type: <span><a href="class/src/StateType.js~StateType.html">StateType</a></span>)</span></span>, initialState: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-update">update</a></span></span><span data-ice="signature">(callback: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>Factory function for creating a <span><a href="class/src/StateType.js~StateType.html">StateType</a></span> with an appropriately set intial state.</p>
+        <div data-ice="description"><p>Makes changes to the next proeprty state.</p>
 </div>
       </div>
     </td>
@@ -2151,21 +1774,30 @@ defineProeprty().</p>
     
     
     
-    <span data-ice="name">createClass</span><span data-ice="signature">(shadowType: {}, specCallback: <span>*</span>, initialState: {}): <span>*</span></span>
+    <span data-ice="name">createClass</span><span data-ice="signature">(shadowType: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="class/src/MapShadow.js~MapShadow.html">MapShadow</a></span>, typeCallback: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(type: <span><a href="class/src/StateType.js~StateType.html">StateType</a></span>)</span></span>, initialState: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>): <span><a href="class/src/MapProperty.js~MapProperty.html">MapProperty</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/MapProperty.js.html#lineNumber29">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/MapProperty.js.html#lineNumber75">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>Factory function for creating an <span><a href="class/src/ObjectProperty.js~ObjectProperty.html">ObjectProperty</a></span> subclass suitable for using with new.</p>
-</div>
+  <div data-ice="description"><p>Factory function for creating an <code>MapProperty</code> subclass suitable for using with new. The generated
+class will have the <code>type</code> <span><a href="class/src/StateType.js~StateType.html">StateType</a></span> descriptor set upon return.</p>
+<p>Example usage:</p>
+<pre><code><code class="source-code prettyprint">class SomeShadow extends MapShadow {
+// definition here
+}
 
-  <div data-ice="override"><h4>Override:</h4><span><a href="class/src/ObjectProperty.js~ObjectProperty.html#static-method-createClass">ObjectProperty#createClass</a></span></div>
+export default MapProperty.createClass(SomeShadow, type =&gt; {
+// configure type variable
+});</code>
+</code></pre></div>
+
+  
 
   <div data-ice="properties"><div data-ice="properties">
   <h4 data-ice="title">Params:</h4>
@@ -2177,23 +1809,29 @@ defineProeprty().</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">shadowType</td>
-      <td data-ice="type">{}</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="class/src/MapShadow.js~MapShadow.html">MapShadow</a></span></td>
       <td data-ice="appendix"><ul><li>optional</li>
 <li>default: {}</li></ul></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p><code>MapShadow</code> subclass or object literal api definition.
+If object literal specified, each property and function is mapped onto a Shadow subclass.</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">specCallback</td>
-      <td data-ice="type"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="name" data-depth="0">typeCallback</td>
+      <td data-ice="type"><span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(type: <span><a href="class/src/StateType.js~StateType.html">StateType</a></span>)</span></span></td>
+      <td data-ice="appendix"><ul><li>optional</li></ul></td>
+      <td data-ice="description"><p>a callback function that will be passed the
+<span><a href="class/src/StateType.js~StateType.html">StateType</a></span> spec for additional customization, such as setting autoshadow, initial state,
+or readonly.</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">initialState</td>
-      <td data-ice="type">{}</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
       <td data-ice="appendix"><ul><li>optional</li>
 <li>default: {}</li></ul></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the initial state for the new property.</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -2205,8 +1843,9 @@ defineProeprty().</p>
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
-          
+          <td class="return-type" data-ice="returnType"><span><a href="class/src/MapProperty.js~MapProperty.html">MapProperty</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>newly defined <code>MapProperty</code> subclass.</p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -2237,21 +1876,34 @@ defineProeprty().</p>
     
     
     
-    <span data-ice="name">defineType</span><span data-ice="signature">(PropClass: <span>*</span>, ShadowType: <span>*</span>, specCallback: <span>*</span>, initialState: {}): <span>*</span></span>
+    <span data-ice="name">defineType</span><span data-ice="signature">(PropClass: <span><a href="class/src/MapProperty.js~MapProperty.html">MapProperty</a></span>, ShadowType: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="class/src/MapShadow.js~MapShadow.html">MapShadow</a></span>, typeCallback: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(type: <span><a href="class/src/StateType.js~StateType.html">StateType</a></span>)</span></span>, initialState: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/MapProperty.js.html#lineNumber43">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/MapProperty.js.html#lineNumber106">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>Factory function for creating a <span><a href="class/src/StateType.js~StateType.html">StateType</a></span> with an appropriately set intial state.</p>
-</div>
+  <div data-ice="description"><p>Factory function for setting up the <span><a href="class/src/StateType.js~StateType.html">StateType</a></span> <code>type</code> class variable with an appropriately
+configured intial state.</p>
+<p>Example usage:</p>
+<pre><code><code class="source-code prettyprint">export default class SomeProperty extends MapProperty {
+// implement property here
+}
 
-  <div data-ice="override"><h4>Override:</h4><span><a href="class/src/ObjectProperty.js~ObjectProperty.html#static-method-defineType">ObjectProperty#defineType</a></span></div>
+class SomeShadow extends MapShadow {
+// implement shadow api here
+}
+
+MapProperty.defineType(SomeProperty, SomeShadow, type =&gt; {
+// configure type variable
+});</code>
+</code></pre></div>
+
+  
 
   <div data-ice="properties"><div data-ice="properties">
   <h4 data-ice="title">Params:</h4>
@@ -2263,47 +1915,42 @@ defineProeprty().</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">PropClass</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="class/src/MapProperty.js~MapProperty.html">MapProperty</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>MapProperty subclass</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">ShadowType</td>
-      <td data-ice="type"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="class/src/MapShadow.js~MapShadow.html">MapShadow</a></span></td>
+      <td data-ice="appendix"><ul><li>optional</li></ul></td>
+      <td data-ice="description"><p><code>MapShadow</code> subclass or object literal api definition.
+If object literal specified, each property and function is mapped onto a Shadow subclass.</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">specCallback</td>
-      <td data-ice="type"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="name" data-depth="0">typeCallback</td>
+      <td data-ice="type"><span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(type: <span><a href="class/src/StateType.js~StateType.html">StateType</a></span>)</span></span></td>
+      <td data-ice="appendix"><ul><li>optional</li></ul></td>
+      <td data-ice="description"><p>a callback function that will be passed the
+<span><a href="class/src/StateType.js~StateType.html">StateType</a></span> spec for additional customization, such as setting autoshadow, initial state, or
+readonly.</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">initialState</td>
-      <td data-ice="type">{}</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
       <td data-ice="appendix"><ul><li>optional</li>
 <li>default: {}</li></ul></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the initial state for the new property.</p>
+</td>
     </tr>
 </tbody>
   </table>
 </div>
 </div>
 
-  <div class="return-params" data-ice="returnParams">
-    <h4>Return:</h4>
-    <table>
-      <tbody>
-        <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
-          
-        </tr>
-      </tbody>
-    </table>
-    <div data-ice="returnProperties">
-</div>
-  </div>
+  
 
   
 
@@ -2331,20 +1978,23 @@ defineProeprty().</p>
     
     
     
-    <span data-ice="name">constructor</span><span data-ice="signature">(stateType: <span>*</span>)</span>
+    <span data-ice="name">constructor</span><span data-ice="signature">(stateType: <span><a href="class/src/StateType.js~StateType.html">StateType</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/MapProperty.js.html#lineNumber13">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/MapProperty.js.html#lineNumber42">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>If a <span><a href="class/src/StateType.js~StateType.html">StateType</a></span> is not passed to this constructor then one is located using
+<span><a href="class/src/StateType.js~StateType.html#static-method-from">StateType.from</a></span> thus ensuring the f.lux shadowing process is defined for this
+property.</p>
+</div>
 
-  <div data-ice="override"><h4>Override:</h4><span><a href="class/src/ObjectProperty.js~ObjectProperty.html#instance-constructor-constructor">ObjectProperty#constructor</a></span></div>
+  <div data-ice="override"><h4>Override:</h4><span><a href="class/src/Property.js~Property.html#instance-constructor-constructor">Property#constructor</a></span></div>
 
   <div data-ice="properties"><div data-ice="properties">
   <h4 data-ice="title">Params:</h4>
@@ -2356,9 +2006,11 @@ defineProeprty().</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">stateType</td>
-      <td data-ice="type"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="type"><span><a href="class/src/StateType.js~StateType.html">StateType</a></span></td>
+      <td data-ice="appendix"><ul><li>optional</li></ul></td>
+      <td data-ice="description"><p>a specialized <span><a href="class/src/StateType.js~StateType.html">StateType</a></span> instance describing how f.lux should
+shadow this property.</p>
+</td>
     </tr>
 </tbody>
   </table>

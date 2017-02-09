@@ -8,13 +8,8 @@ import isString from "lodash.isstring"
 import sortBy from "lodash.sortby";
 import result from "lodash.result";
 
-/*
-	Todo:
-		- Time travel
-		- realtime loggin flags: updates and actions (with path filters)
-*/
 
-const HELP_MSG = `f.lux logger commands:
+const HelpMsg = `f.lux logger commands:
 \tback          - moves backward in time by one store state frame
 \tclear         - removes all logs
 \tforward       - moves forward in time by one store state frame
@@ -35,6 +30,7 @@ const HELP_MSG = `f.lux logger commands:
 \ttail(count=10, printState=true)    - prints last 'count' store updates
 \n
 f.lux log available at window.`;
+
 
 export default class Logger {
 	constructor(store, name="flog") {
@@ -256,6 +252,7 @@ export default class Logger {
 	}
 }
 
+/** @ignore */
 export class LogFrame {
 	constructor(store, id) {
 		this.id = id;
@@ -338,6 +335,7 @@ export class LogFrame {
 	}
 }
 
+/** @ignore */
 export class FrameAction {
 	constructor(action, impl) {
 		this.action = action;
@@ -372,7 +370,7 @@ export function createConsoleLogger(logger) {
 		},
 
 		get help() {
-			console.log(HELP_MSG+logger.name+"\n\n");
+			console.log(HelpMsg+logger.name+"\n\n");
 		},
 
 		get index() {

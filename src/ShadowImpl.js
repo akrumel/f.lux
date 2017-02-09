@@ -48,9 +48,11 @@ const _state = Symbol('state');
 const _time = Symbol('time');
 
 // private method symbols
+const _createShadow = Symbol('createShadow');
 const _defineProperty = Symbol('defineProperty');
 const _modelForUpdate = Symbol('modelForUpdate');
 const _scheduleUpdate = Symbol('scheduleUpdate');
+const _setupShadow = Symbol('setupShadow');
 const _changeRoot = Symbol('changeRoot');
 
 
@@ -394,8 +396,6 @@ export default class ShadowImpl {
 		}
 
 		this[_dead] = true;
-
-		this[_property].onPropertyDidUnshadow();
 	}
 
 	obsoleteChildren() {
@@ -452,7 +452,7 @@ export default class ShadowImpl {
 		debug( d => d(`reshadowed(): ${this.dotPath()}, mapped=${prev.isMapped()}, time=${this[_time]}, prevTime=${prev[_time]}`) );
 
 		if (prev.__getCalled__) {
-			this._setupShadow(prev, true);
+			this[_setupShadow](prev, true);
 		}
 
 		this.onReshadow(prev);
@@ -477,7 +477,7 @@ export default class ShadowImpl {
 		const property = this[_property];
 
 		if (this.isRoot()) {
-			this._setupShadow(prev);
+			this[_setupShadow](prev);
 
 		} else {
 			this[_defineProperty](prev, !!prev);
@@ -685,7 +685,7 @@ export default class ShadowImpl {
 	}
 
 	definePropertyGetValue(state) {
-		return this._createShadow();
+		return this[_createShadow]();
 	}
 
 	definePropertySetValue(newValue) {
@@ -846,7 +846,7 @@ export default class ShadowImpl {
 		}
 	}
 
-	_createShadow() {
+	[_createShadow]() {
 		if (!this[_shadow]) {
 			let ShadowClass = this[_property].shadowClass();
 
@@ -857,7 +857,7 @@ export default class ShadowImpl {
 		return this[_shadow];
 	}
 
-	_setupShadow(prev, inCtor) {
+	[_setupShadow](prev, inCtor) {
 		if (!this.__getCalled__) {
 			let state = this.state();
 
@@ -907,7 +907,7 @@ export default class ShadowImpl {
 					enumerable: enumerable,
 					get: () => {
 							if (isSomething(state)) {
-								return this._setupShadow();
+								return this[_setupShadow]();
 							} else {
 								return state;
 							}

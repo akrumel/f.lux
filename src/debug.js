@@ -56,6 +56,7 @@ export const TransientKey = 'f.lux:transient';
 
 function debugoff() { }
 
+/** @ignore */
 export default function devDebug(modname) {
 	if (process.env.NODE_ENV !== 'production') {
 		let appDebug = debug(modname);

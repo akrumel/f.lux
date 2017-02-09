@@ -58,8 +58,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Transients.js~TransientsProperty.html">TransientsProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Transients.js~TransientsShadow.html">TransientsShadow</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createPropertyClass">createPropertyClass</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-devDebug">devDebug</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-extendProperty">extendProperty</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">collection</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html">CollectionProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html">CollectionShadow</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/ModelAccess.js~ModelAccess.html">ModelAccess</a></span></span></li>
@@ -93,9 +91,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-shadow">shadow</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-shadowBound">shadowBound</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-shadowPropertyHelper">shadowPropertyHelper</a></span></span></li>
-<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">listeners</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listeners/Logger.js~FrameAction.html">FrameAction</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listeners/Logger.js~LogFrame.html">LogFrame</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listeners/Logger.js~Logger.html">Logger</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">listeners</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listeners/Logger.js~Logger.html">Logger</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createConsoleLogger">createConsoleLogger</a></span></span></li>
 </ul>
 </div>
@@ -105,7 +101,7 @@
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import has from &quot;lodash.has&quot;;
 import isFunction from &quot;lodash.isfunction&quot;;
 
-/*
+/**
 	Extends a shadow property with the definition returned by the assoicated Property methods
 	marked using the @shadow and @shadowBound decorators.
 

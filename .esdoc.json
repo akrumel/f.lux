@@ -4,6 +4,7 @@
 	"destination": "./docs/api",
 	"index": "./docs/api.md",
 	"experimentalProposal": {
+		"classProperties": true,
 		"decorators": true,
 		"objectRestSpread": true
 	}

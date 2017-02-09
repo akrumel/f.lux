@@ -58,8 +58,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Transients.js~TransientsProperty.html">TransientsProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Transients.js~TransientsShadow.html">TransientsShadow</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createPropertyClass">createPropertyClass</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-devDebug">devDebug</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-extendProperty">extendProperty</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">collection</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html">CollectionProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html">CollectionShadow</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/ModelAccess.js~ModelAccess.html">ModelAccess</a></span></span></li>
@@ -93,9 +91,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-shadow">shadow</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-shadowBound">shadowBound</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-shadowPropertyHelper">shadowPropertyHelper</a></span></span></li>
-<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">listeners</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listeners/Logger.js~FrameAction.html">FrameAction</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listeners/Logger.js~LogFrame.html">LogFrame</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listeners/Logger.js~Logger.html">Logger</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">listeners</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listeners/Logger.js~Logger.html">Logger</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createConsoleLogger">createConsoleLogger</a></span></span></li>
 </ul>
 </div>
@@ -112,13 +108,8 @@ import isString from &quot;lodash.isstring&quot;
 import sortBy from &quot;lodash.sortby&quot;;
 import result from &quot;lodash.result&quot;;
 
-/*
-	Todo:
-		- Time travel
-		- realtime loggin flags: updates and actions (with path filters)
-*/
 
-const HELP_MSG = `f.lux logger commands:
+const HelpMsg = `f.lux logger commands:
 \tback          - moves backward in time by one store state frame
 \tclear         - removes all logs
 \tforward       - moves forward in time by one store state frame
@@ -139,6 +130,7 @@ const HELP_MSG = `f.lux logger commands:
 \ttail(count=10, printState=true)    - prints last &apos;count&apos; store updates
 \n
 f.lux log available at window.`;
+
 
 export default class Logger {
 	constructor(store, name=&quot;flog&quot;) {
@@ -360,6 +352,7 @@ export default class Logger {
 	}
 }
 
+/** @ignore */
 export class LogFrame {
 	constructor(store, id) {
 		this.id = id;
@@ -442,6 +435,7 @@ export class LogFrame {
 	}
 }
 
+/** @ignore */
 export class FrameAction {
 	constructor(action, impl) {
 		this.action = action;
@@ -476,7 +470,7 @@ export function createConsoleLogger(logger) {
 		},
 
 		get help() {
-			console.log(HELP_MSG+logger.name+&quot;\n\n&quot;);
+			console.log(HelpMsg+logger.name+&quot;\n\n&quot;);
 		},
 
 		get index() {

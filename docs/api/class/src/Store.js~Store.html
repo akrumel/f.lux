@@ -58,8 +58,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Transients.js~TransientsProperty.html">TransientsProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Transients.js~TransientsShadow.html">TransientsShadow</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createPropertyClass">createPropertyClass</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-devDebug">devDebug</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-extendProperty">extendProperty</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">collection</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html">CollectionProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html">CollectionShadow</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/ModelAccess.js~ModelAccess.html">ModelAccess</a></span></span></li>
@@ -93,22 +91,20 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-shadow">shadow</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-shadowBound">shadowBound</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-shadowPropertyHelper">shadowPropertyHelper</a></span></span></li>
-<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">listeners</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listeners/Logger.js~FrameAction.html">FrameAction</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listeners/Logger.js~LogFrame.html">LogFrame</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listeners/Logger.js~Logger.html">Logger</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">listeners</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listeners/Logger.js~Logger.html">Logger</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createConsoleLogger">createConsoleLogger</a></span></span></li>
 </ul>
 </div>
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Store from &apos;<span><a href="file/src/Store.js.html#lineNumber31">f.lux/src/Store.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Store from &apos;<span><a href="file/src/Store.js.html#lineNumber35">f.lux/src/Store.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/src/Store.js.html#lineNumber31">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/src/Store.js.html#lineNumber35">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -128,7 +124,10 @@
 
   
   
-  
+  <div class="description" data-ice="description"><p>F.lux uses the <code>Store</code> class for representing stores. The following image shows how the store exposes the
+root state and the root property. Inside the root property is its shadow, which contains a reference to the actual state.</p>
+<p><img src="/assets/f.lux-architecture.png" alt="F.lux Architecture"></p>
+</div>
   
 
   
@@ -1190,7 +1189,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber346">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber350">source</a></span></span>
     </span>
   </h3>
 
@@ -1261,7 +1260,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber330">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber334">source</a></span></span>
     </span>
   </h3>
 
@@ -1332,7 +1331,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber334">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber338">source</a></span></span>
     </span>
   </h3>
 
@@ -1403,7 +1402,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber311">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber315">source</a></span></span>
     </span>
   </h3>
 
@@ -1458,7 +1457,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber350">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber354">source</a></span></span>
     </span>
   </h3>
 
@@ -1529,7 +1528,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber354">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber358">source</a></span></span>
     </span>
   </h3>
 
@@ -1600,7 +1599,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber358">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber362">source</a></span></span>
     </span>
   </h3>
 
@@ -1671,7 +1670,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber338">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber342">source</a></span></span>
     </span>
   </h3>
 
@@ -1754,7 +1753,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber315">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber319">source</a></span></span>
     </span>
   </h3>
 
@@ -1813,7 +1812,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber319">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber323">source</a></span></span>
     </span>
   </h3>
 
@@ -1872,7 +1871,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber342">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber346">source</a></span></span>
     </span>
   </h3>
 
@@ -1958,7 +1957,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber32">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber36">source</a></span></span>
     </span>
   </h3>
 
@@ -2033,7 +2032,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber88">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber92">source</a></span></span>
     </span>
   </h3>
 
@@ -2076,7 +2075,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber92">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber96">source</a></span></span>
     </span>
   </h3>
 
@@ -2119,7 +2118,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber96">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber100">source</a></span></span>
     </span>
   </h3>
 
@@ -2162,7 +2161,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber100">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber104">source</a></span></span>
     </span>
   </h3>
 
@@ -2205,7 +2204,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber104">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber108">source</a></span></span>
     </span>
   </h3>
 
@@ -2248,7 +2247,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber108">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber112">source</a></span></span>
     </span>
   </h3>
 
@@ -2294,7 +2293,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber234">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber238">source</a></span></span>
     </span>
   </h3>
 
@@ -2353,7 +2352,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber116">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber120">source</a></span></span>
     </span>
   </h3>
 
@@ -2427,7 +2426,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber139">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber143">source</a></span></span>
     </span>
   </h3>
 
@@ -2470,7 +2469,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber251">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber255">source</a></span></span>
     </span>
   </h3>
 
@@ -2529,7 +2528,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber145">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber149">source</a></span></span>
     </span>
   </h3>
 
@@ -2600,7 +2599,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber184">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber188">source</a></span></span>
     </span>
   </h3>
 
@@ -2665,7 +2664,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber204">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber208">source</a></span></span>
     </span>
   </h3>
 
@@ -2730,7 +2729,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber224">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber228">source</a></span></span>
     </span>
   </h3>
 
@@ -2801,7 +2800,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber194">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber198">source</a></span></span>
     </span>
   </h3>
 
@@ -2866,7 +2865,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber214">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber218">source</a></span></span>
     </span>
   </h3>
 
@@ -2931,7 +2930,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber238">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber242">source</a></span></span>
     </span>
   </h3>
 
@@ -2990,7 +2989,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber264">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber268">source</a></span></span>
     </span>
   </h3>
 
@@ -3034,7 +3033,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber151">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber155">source</a></span></span>
     </span>
   </h3>
 
@@ -3100,7 +3099,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber58">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber62">source</a></span></span>
     </span>
   </h3>
 
@@ -3159,7 +3158,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber66">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber70">source</a></span></span>
     </span>
   </h3>
 
@@ -3218,7 +3217,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber271">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber275">source</a></span></span>
     </span>
   </h3>
 
@@ -3277,7 +3276,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber282">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber286">source</a></span></span>
     </span>
   </h3>
 
@@ -3337,7 +3336,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber290">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber294">source</a></span></span>
     </span>
   </h3>
 
@@ -3396,7 +3395,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber300">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber304">source</a></span></span>
     </span>
   </h3>
 

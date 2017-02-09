@@ -58,8 +58,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Transients.js~TransientsProperty.html">TransientsProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Transients.js~TransientsShadow.html">TransientsShadow</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createPropertyClass">createPropertyClass</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-devDebug">devDebug</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-extendProperty">extendProperty</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">collection</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html">CollectionProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html">CollectionShadow</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/ModelAccess.js~ModelAccess.html">ModelAccess</a></span></span></li>
@@ -93,9 +91,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-shadow">shadow</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-shadowBound">shadowBound</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-shadowPropertyHelper">shadowPropertyHelper</a></span></span></li>
-<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">listeners</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listeners/Logger.js~FrameAction.html">FrameAction</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listeners/Logger.js~LogFrame.html">LogFrame</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listeners/Logger.js~Logger.html">Logger</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">listeners</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listeners/Logger.js~Logger.html">Logger</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createConsoleLogger">createConsoleLogger</a></span></span></li>
 </ul>
 </div>
@@ -104,33 +100,34 @@
 <div class="content" data-ice="content"><h1 data-ice="title">src/collection/CollectionProperty.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {
 	assert,
-	isObject,
 	uuid,
 	doneIterator,
 	iteratorFor,
 	iterateOver,
 } from &quot;akutils&quot;;
+import isPlainObject from &quot;lodash.isplainobject&quot;;
 
 import Emitter from &quot;component-emitter&quot;;
-import invariant from &quot;invariant&quot;;
 
 import ArrayProperty from &quot;../ArrayProperty&quot;;
 import createPropertyClass from &quot;../createPropertyClass&quot;;
-import ObjectProperty from &quot;../ObjectProperty&quot;;
+import KeyedApi from &quot;../KeyedApi&quot;;
 import MapProperty from &quot;../MapProperty&quot;;
+import ObjectShadowImpl from &quot;../ObjectShadowImpl&quot;;
 import PrimitiveProperty from &quot;../PrimitiveProperty&quot;;
+import Property from &quot;../Property&quot;;
+import StateType from &quot;../StateType&quot;;
 import Store from &quot;../Store&quot;;
 
 import CollectionShadow from &quot;./CollectionShadow&quot;;
 import ModelProperty from &quot;./ModelProperty&quot;;
-import StateType from &quot;../StateType&quot;;
+
 
 import appDebug, { CollectionPropertyKey as DebugKey } from &quot;../debug&quot;;
 const debug = appDebug(DebugKey);
 
 
 const _endpoint = &quot;_endpoint&quot;;
-//const _fetching = &apos;_fetching&apos;;
 const _id2cid = &quot;_id2cid&quot;;
 const _idName = &quot;idName&quot;;
 const _lastPageSize = &apos;lastPageSize&apos;;
@@ -145,52 +142,52 @@ const _fetching = Symbol(&apos;fetching&apos;);
 const _middleware = Symbol(&quot;middleware&quot;);
 const _offlineState = Symbol(&apos;offlineState&apos;);
 
-/*
+/**
 	Event emitted on collection changes.
 */
 export const ChangeEvent = &quot;change&quot;;
-/*
+/**
 	Event emitted on collection destroy() success.
 */
 export const DeletedEvent = &quot;deleted&quot;;
-/*
+/**
 	Event emitted on collection fetch() success.
 */
 export const FetchedEvent = &quot;fetched&quot;;
-/*
+/**
 	Event emitted on collection find() success.
 */
 export const FoundEvent = &quot;sound&quot;;
-/*
+/**
 	Event emitted on error during an operation.
 */
 export const ErrorEvent = &quot;error&quot;;
-/*
+/**
 	Event emitted on collection save() success.
 */
 export const SavedEvent = &quot;saved&quot;;
 
-/*
+/**
 	Middleware operation for create requests.
 */
 export const CreateOp = &quot;create&quot;;
-/*
+/**
 	Middleware operation for destroy requests.
 */
 export const DestroyOp = &quot;destroy&quot;;
-/*
+/**
 	Middleware operation for fetch requests.
 */
 export const FetchOp = &quot;fetch&quot;;
-/*
+/**
 	Middleware operation for find requests.
 */
 export const FindOp = &quot;find&quot;;
-/*
+/**
 	Middleware operation for update requests.
 */
 export const UpdateOp = &quot;update&quot;;
-/*
+/**
 	All middleware operations.
 */
 export const AllOp = [ CreateOp, DestroyOp, FetchOp, FindOp, UpdateOp ];
@@ -202,10 +199,13 @@ import { DEFAULTS_OPTION, MERGE_OPTION, NONE_OPTION, REPLACE_OPTION, REPLACE_ALL
 	Todo:
 		* _id2cid and _models to ObjectProperty to remove overhead
 */
-export default class CollectionProperty extends ObjectProperty {
+export default class CollectionProperty extends Property {
 	constructor(stateType) {
 		super(stateType);
 
+		this._keyed = new KeyedApi(this);
+
+		this.setImplementationClass(ObjectShadowImpl);
 		this.setShadowClass(CollectionShadow);
 
 		this[_middleware] = {
@@ -956,7 +956,7 @@ export default class CollectionProperty extends ObjectProperty {
 				.then( model =&gt; {
 						// ensure endpoint did not change
 						if (epId === this.endpointId) {
-							this.store().setTimeout( () =&gt; this.emit(SavedEvent, this._(), this) );
+							Store.setTimeout( () =&gt; this.emit(SavedEvent, this._(), this) );
 						}
 
 						return model &amp;&amp; model.data;
@@ -1021,7 +1021,7 @@ export default class CollectionProperty extends ObjectProperty {
 	extractId(model) {
 		var idName = this._()[_idName];
 
-		return isObject(model) ?model[idName] :model;
+		return isPlainObject(model) ?model[idName] :model;
 	}
 
 	onError(error, opMsg) {

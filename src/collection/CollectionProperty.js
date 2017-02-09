@@ -1,32 +1,33 @@
 import {
 	assert,
-	isObject,
 	uuid,
 	doneIterator,
 	iteratorFor,
 	iterateOver,
 } from "akutils";
+import isPlainObject from "lodash.isplainobject";
 
 import Emitter from "component-emitter";
-import invariant from "invariant";
 
 import ArrayProperty from "../ArrayProperty";
 import createPropertyClass from "../createPropertyClass";
-import ObjectProperty from "../ObjectProperty";
+import KeyedApi from "../KeyedApi";
 import MapProperty from "../MapProperty";
+import ObjectShadowImpl from "../ObjectShadowImpl";
 import PrimitiveProperty from "../PrimitiveProperty";
+import Property from "../Property";
+import StateType from "../StateType";
 import Store from "../Store";
 
 import CollectionShadow from "./CollectionShadow";
 import ModelProperty from "./ModelProperty";
-import StateType from "../StateType";
+
 
 import appDebug, { CollectionPropertyKey as DebugKey } from "../debug";
 const debug = appDebug(DebugKey);
 
 
 const _endpoint = "_endpoint";
-//const _fetching = '_fetching';
 const _id2cid = "_id2cid";
 const _idName = "idName";
 const _lastPageSize = 'lastPageSize';
@@ -41,52 +42,52 @@ const _fetching = Symbol('fetching');
 const _middleware = Symbol("middleware");
 const _offlineState = Symbol('offlineState');
 
-/*
+/**
 	Event emitted on collection changes.
 */
 export const ChangeEvent = "change";
-/*
+/**
 	Event emitted on collection destroy() success.
 */
 export const DeletedEvent = "deleted";
-/*
+/**
 	Event emitted on collection fetch() success.
 */
 export const FetchedEvent = "fetched";
-/*
+/**
 	Event emitted on collection find() success.
 */
 export const FoundEvent = "sound";
-/*
+/**
 	Event emitted on error during an operation.
 */
 export const ErrorEvent = "error";
-/*
+/**
 	Event emitted on collection save() success.
 */
 export const SavedEvent = "saved";
 
-/*
+/**
 	Middleware operation for create requests.
 */
 export const CreateOp = "create";
-/*
+/**
 	Middleware operation for destroy requests.
 */
 export const DestroyOp = "destroy";
-/*
+/**
 	Middleware operation for fetch requests.
 */
 export const FetchOp = "fetch";
-/*
+/**
 	Middleware operation for find requests.
 */
 export const FindOp = "find";
-/*
+/**
 	Middleware operation for update requests.
 */
 export const UpdateOp = "update";
-/*
+/**
 	All middleware operations.
 */
 export const AllOp = [ CreateOp, DestroyOp, FetchOp, FindOp, UpdateOp ];
@@ -98,10 +99,13 @@ import { DEFAULTS_OPTION, MERGE_OPTION, NONE_OPTION, REPLACE_OPTION, REPLACE_ALL
 	Todo:
 		* _id2cid and _models to ObjectProperty to remove overhead
 */
-export default class CollectionProperty extends ObjectProperty {
+export default class CollectionProperty extends Property {
 	constructor(stateType) {
 		super(stateType);
 
+		this._keyed = new KeyedApi(this);
+
+		this.setImplementationClass(ObjectShadowImpl);
 		this.setShadowClass(CollectionShadow);
 
 		this[_middleware] = {
@@ -852,7 +856,7 @@ export default class CollectionProperty extends ObjectProperty {
 				.then( model => {
 						// ensure endpoint did not change
 						if (epId === this.endpointId) {
-							this.store().setTimeout( () => this.emit(SavedEvent, this._(), this) );
+							Store.setTimeout( () => this.emit(SavedEvent, this._(), this) );
 						}
 
 						return model && model.data;
@@ -917,7 +921,7 @@ export default class CollectionProperty extends ObjectProperty {
 	extractId(model) {
 		var idName = this._()[_idName];
 
-		return isObject(model) ?model[idName] :model;
+		return isPlainObject(model) ?model[idName] :model;
 	}
 
 	onError(error, opMsg) {

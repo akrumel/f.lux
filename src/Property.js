@@ -8,6 +8,7 @@ import Shadow from "./Shadow";
 import ShadowImpl from "./ShadowImpl";
 import StateType from "./StateType";
 
+
 const _autoShadow = Symbol('autoShadow');
 const _checkpoint = Symbol('checkpoint');
 const _impl = Symbol('impl');
@@ -32,39 +33,55 @@ function isPropertyPrototype(obj) {
 	return Property === obj || Property.isPrototypeOf(obj);
 }
 
+
 /**
-	Base class for custom f.lux properties. A Property has a lifetime from when the state property
-	is mapped until it is replaced/deleted. This differs from ShadowImpl/Shadow pairs as their
-	lifetime lasts from the time of mapping until the state property is replaced/deleted OR the
+	Base class for custom f.lux properties. A `Property` has a lifespan from when the state property
+	is mapped until it is replaced/deleted. This differs from {@link Shadow} as its lifespan
+	that lasts from the time of mapping until the state property is replaced/deleted OR the
 	shadow property is invalidated due to a local change or a descendant property change.
 
-	A Property instance is managed by the current PropertyImpl shadowing a state property.
+	Most shadow state properties can be implemented without writing a `Property` subclass, relying on
+	autoshadowing, or defining the state structure using {@link StateType} along with one of the
+	built-in property class `createClass()` static methods. The primary reason for writing a
+	`Property` subclass is to tie into the f.lux property life-cycle.
+
+	This class provides an experimental check pointing api. Check pointing allows the state to
+	be recorded at a point in time and then later reset to that point. This is handy when a form
+	may accept changes and then allow the user to cancel the edit session.
 
 	Life cycle methods:
-		propertyWillShadow()
-			Invoked just before a state property is going to be shadowed using this instance. The 'state'
-			variable will be undefined.
-		propertyDidShadow()
-			Property was shadowed and fully functional.
-		propertyChildInvalidated(childProperty, sourceProperty)
-			A child property mutation action has occurred and it's value will change in store's next update.
-		propertyDidUpdate()
-			State managed by this property has changed.
-		propertyWillUnshadow()
-			Invoked just before the shadow property is removed from the shadow state because the state
-			property being shadowed has been removed from the application state.
-	}
+	<ul>
+		<li>`propertyWillShadow()` - invoked just before a state property is going to be shadowed using
+			this instance. Shadow state is not valid during this method.</li>
+		<li>`propertyDidShadow()` - property was shadowed and fully functional.</li>
+		<li>`propertyChildInvalidated(childProperty, sourceProperty)` - a child property mutation action
+			has occurred and it's value will change in store's next update.</li>
+		<li>`propertyDidUpdate()` - state managed by this property has changed.</li>
+		<li>`propertyWillUnshadow()` - invoked just before the shadow property is removed from the shadow
+			state because the state property being shadowed has been removed from the application state.</li>
+	</ul>
 
+	@see {@link ArrayProperty}
+	@see {@link CollectionProperty}
+	@see {@link IndexedProperty}
+	@see {@link MapProperty}
+	@see {@link ObjectProperty}
 */
 export default class Property {
+	/**
+		If a {@link StateType} is not passed to this constructor then one is located using
+		{@link StateType.from} thus ensuring the f.lux shadowing process is defined for this
+		property.
+
+		@param {StateType} [stateType] - a specialized {@link StateType} instance describing how f.lux should
+			shadow this property.
+	*/
 	constructor(stateType) {
 		stateType = stateType || StateType.from(this);
 
-		this[_pid] = nextPid++;
-		this[_autoShadow] = stateType._autoShadow;
-		this[_initialState] = stateType.computeInitialState();
-		this[_readonly] = stateType._readonly;
-		this[_stateType] = stateType
+		assert( a => a.is(stateType, "No 'type' static property found in class hieararchy") );
+
+		this[_stateType] = stateType;
 	}
 
 
@@ -72,6 +89,10 @@ export default class Property {
 	// Experimental checkpoint API
 	//------------------------------------------------------------------------------------------------------
 
+	/**
+		Copies the current actual state for later reset using {@link Property#resetToCheckpoint}. An existing
+		checkpoint will take precedence over subsequent calls.
+	*/
 	checkpoint() {
 		assert( a => a.not(this[_checkpoint], `Checkpoint already set: ${ this.dotPath() }`) );
 
@@ -80,18 +101,35 @@ export default class Property {
 		}
 	}
 
+	/**
+		Clears an existing checkpoint created using {@link Property#checkpoint}.
+	*/
 	clearCheckpoint() {
 		delete this[_checkpoint];
 	}
 
+	/**
+		Gets the checkpoint state previously recorded using {@link Property#checkpoint}.
+
+		@return the checkpoint data if checkpoint is set.
+	*/
 	getCheckpoint() {
 		return this[_checkpoint] && this[_checkpoint].data;
 	}
 
+	/**
+		Gets if an existing checkpoint has be created using {@link Property#checkpoint}.
+
+		@return {boolean} true if a checkpoint has been recorded.
+	*/
 	hasCheckpoint() {
 		return !!this[_checkpoint];
 	}
 
+	/**
+		Replaces the current property state with a checkpoint state previously recorded using
+		{@link Property#checkpoint}. The checkpoint is cleared.
+	*/
 	resetToCheckpoint() {
 		if (this[_impl] && this[_checkpoint]) {
 			this[_impl].assign(this[_checkpoint].data);
@@ -102,6 +140,8 @@ export default class Property {
 
 	/**
 		Gets the actual shadow property exposed to application code.
+
+		@return {Shadow} shadow state for this property if active.
 	*/
 	_() {
 		const impl = this[_impl];
@@ -113,60 +153,138 @@ export default class Property {
 
 	/**
 		Anything is possible (almost) with the ShadowImpl reference.
+
+		@return {ShadowImpl} the implementation instance backing the current {@link Shadow}.
 	*/
 	__() {
 		return this[_impl];
 	}
 
 	/**
-		Use this.$$() in shadow methods to get access to the property. Useful in Property subclass
-		@shadow methods since the method will be bound to the shadow. Exposing on the property
-		proper allows for the same code to work when called as a member function using 'this' or
+		Use this.$$() in shadow methods to get access to the property. Useful in `Property` subclass
+		`@shadow` methods since the method will be bound to the shadow. Exposing on the `Property`
+		allows for the same code to work when called as a member function using `this` or
 		called through a shadow function.
+
+		@return {Property} the property instance (`this`)
 	*/
 	$$() {
 		return this;
 	}
 
+	/**
+		Gets if autoshadowing is enabled for this property. Unlike the {@link Property#readonly} shadowing
+		attribute, autoshadowing is not hierarchically determined.
+
+		@return {boolean} true if autoshadowing is enabled
+	*/
 	autoShadow() {
-		return this[_autoShadow];
+		return this[_autoShadow] || this[_stateType]._autoShadow;
 	}
 
+	/**
+		Gets the path from root property using a dot (`.`) separator. Suitable for using with the lodash `result()`
+		function.
+
+		@return {string} path with each component joined by a `.`
+
+		@see https://lodash.com/docs/4.17.4#result
+	*/
 	dotPath() {
 		return this[_impl] ?this[_impl].dotPath() :null;
 	}
 
+	/**
+		Gets the initial state for a property at the beginning of the property mounting process. This
+		implementation merges the {@link StateType#initialStateWithDefaults}, the initial state set using
+		{@link #setInitialState}, and the state passed in from the existing store state. The store's state property
+		values take precedence. The explicitly set initial state is used only when the `state` parameter is
+		`undefined`.
+
+		@param state - the store's property state at the time of mounting.
+
+		@return merged state with the state parameter taking precedence if the initial state is set
+			otherwise returns the state parameter. This base implementation simply returns the state
+			parameter
+	*/
+	getInitialState(state) {
+		const initialState = state !== undefined
+			? state
+			: this[_initialState] !== undefined ?this[_initialState] :this[_stateType].computeInitialState();
+
+		return this[_stateType].initialStateWithDefaults(initialState);
+	}
+
+	/**
+		Gets the {@link ShadowImpl} subclass used for implementing the {@link Shadow} f.lux integration.
+
+		@ignore
+	*/
+	implementationClass() {
+		return StateType.implementationClassForProperty(this, this[_ImplementationClass]);
+	}
+
+	/**
+		Gets the result from {@link StateType#computeInitialState}.
+	*/
 	initialState() {
 		return this[_stateType].computeInitialState();
 	}
 
+	/**
+		Gets if the property is currently shadowing an actual state property.
+
+		@return {boolean}
+	*/
 	isActive() {
 		return this[_impl] && this[_impl].isActive();
 	}
 
+	/**
+		Gets if the property allows for assignment through the shadow state, ie `todo.desc = "go skiing"`. The
+		readonly attribute is hierarchically determined through the parent property if not explicitly set.
+
+		@return {boolean} - true if assignment is not allowed
+	*/
 	isReadonly() {
+		const readonly = this[_readonly] !== undefined ?this[_readonly] :this[_stateType]._readonly;
+
 		// use readonly flag if explicitly set otherwise use value from parent
-		return this[_readonly] === undefined
+		return readonly === undefined
 			? this[_parent] && this[_parent].isReadonly()
-			: this[_readonly];
+			: readonly;
 	}
 
+	/**
+		Gets if this is the shadow state root property.
+
+		@return {boolean} true if this is the root property of the {@link Store} managing the application state.
+	*/
 	isRoot() {
 		return !this[_parent];
 	}
 
+	/**
+		The property name by which this property is referenced by the {@link Property.parent}.
+
+		@return {string|number} the name or `undefined` if not active. A `string` for an object child
+			property and a `nuber` for an array element.
+	*/
 	name() {
 		return this[_impl] && this[_impl].name();
 	}
 
+	/**
+		Gets what the actual state for this property will be after the {@link Store} updates all pending
+		actions.
+
+		@return the next state or `undefined` if not active.
+	*/
 	nextState() {
 		return this[_impl] && this[_impl].nextState();
 	}
 
-	/**
-
-		Invoked by shadowProperty().
-	*/
+	/** @ignore */
 	onPropertyWillShadow() {
 		if (this[_mixins]) {
 			let mixins = this[_mixins];
@@ -181,10 +299,7 @@ export default class Property {
 		this.propertyWillShadow();
 	}
 
-	/**
-
-		Invoked by shadowProperty().
-	*/
+	/** @ignore */
 	onPropertyDidShadow() {
 		if (this[_mixins]) {
 			let mixins = this[_mixins];
@@ -199,6 +314,7 @@ export default class Property {
 		this.propertyDidShadow();
 	}
 
+	/** @ignore */
 	onChildInvalidated(childProperty, sourceProperty) {
 		if (this[_mixins]) {
 			let mixins = this[_mixins];
@@ -213,6 +329,7 @@ export default class Property {
 		this.propertyChildInvalidated(childProperty, sourceProperty);
 	}
 
+	/** @ignore */
 	onPropertyDidUpdate() {
 		if (this[_mixins]) {
 			let mixins = this[_mixins];
@@ -227,6 +344,7 @@ export default class Property {
 		this.propertyDidUpdate();
 	}
 
+	/** @ignore */
 	onPropertyWillUnshadow() {
 		if (this[_mixins]) {
 			let mixins = this[_mixins];
@@ -241,30 +359,29 @@ export default class Property {
 		this.propertyWillUnshadow();
 	}
 
-	onPropertyDidUnshadow() {
-		if (this[_mixins]) {
-			let mixins = this[_mixins];
+	/**
+		Gets the parent property.
 
-			for (let i=0, mixin; mixin=mixins[i]; i++) {
-				if (mixin.propertyDidUnshadow) {
-					mixin.propertyDidUnshadow();
-				}
-			}
-		}
-
-		this.propertyDidUnshadow();
-	}
-
+		@return {Property} the parent property or `undefined` if this is the shadow state root.
+	*/
 	parent() {
 		return this[_parent];
 	}
 
+	/**
+		Gets the {@link Property#name} components from the root property to this property.
+
+		@return {[]} array where each name component is either a `string` or `number` depending on the
+			each parent component's type.
+	*/
 	path() {
 		return this[_impl] ?this[_impl].path :null;
 	}
 
 	/**
-		Gets the parent shadow property, a BaseProperty subclass.
+		Gets the parent's shadow property.
+
+		@return {Shadow}
 	*/
 	parentShadow() {
 		const parentImpl = this[_parent] && this[_parent][_impl];
@@ -272,14 +389,31 @@ export default class Property {
 		return parentImpl && parentImpl.shadow();
 	}
 
+	/**
+		Gets the unique f.lux ID for this property.
+
+		@return {number} the id
+	*/
 	pid() {
+		if (!this[_pid]) {
+			this[_pid] = nextPid++;
+		}
+
 		return this[_pid];
 	}
 
+	/**
+		Gets the shadow state root property for the {@link Store} managing this property.
+
+		@return {Property} the root property
+	*/
 	root() {
 		return this[_store].root;
 	}
 
+	/**
+		Gets the root shadow state for the {@link Store} managing this property.
+	*/
 	rootShadow() {
 		return this[_store]._;
 	}
@@ -287,10 +421,11 @@ export default class Property {
 	/**
 		Sets the auto shadow property flag.
 
-		Parameters:
-			auto - boolean where true means to auto map subproperties.
+		Note: this method is rarely required as the {@link StateType} will usually configure this attribute.
 
-		Returns - reference to this property object.
+		@param {boolean} auto - boolean where true means to auto map subproperties.
+
+		@returns - reference to this property object.
 	*/
 	setAutoshadow(auto) {
 		this[_autoShadow] = !!auto;
@@ -300,6 +435,8 @@ export default class Property {
 
 	/**
 		Invoked everytime the property is shadowed to set the PropertyImpl instance backing this property.
+
+		@ignore
 	*/
 	setImpl(impl) {
 		const isActive = this.isActive();
@@ -308,9 +445,28 @@ export default class Property {
 	}
 
 	/**
-		Sets the default value returned by getInitialState().
 
-		Returns - reference to this property object.
+	*/
+	setImplementationClass(ImplClass) {
+		assert( a => {
+			const isImplClass = ImplClass === ShadowImpl || ShadowImpl.isPrototypeOf(ImplClass);
+
+			a.is(isImplClass, "ImplClass must be a ShadowImpl subclass") ;
+		});
+
+		this[_ImplementationClass] = ImplClass
+	}
+
+	/**
+		Explicitly sets an initial state that will be used if the state tree does not have a value for this
+		property. This value is used by {@link Property#getInitialState} and is merged using
+		{@link StateType#initialStateWithDefaults}.
+
+		Note: this method is rarely required as the {@link StateType} will usually configure this attribute.
+
+		@param state - the initial state for the property
+
+		@return {Property} - reference to this property object.
 	*/
 	setInitialState(state) {
 		this[_initialState] = state;
@@ -319,12 +475,12 @@ export default class Property {
 	}
 
 	/**
-		Sets this properties parent Property instance.
+		Sets this property's parent {@link Property} instance.
 
-		Returns - reference to this property object.
+		@return {Property} reference to this property object.
+		@throws {Error} parent already set.
 
-		Throws
-			Error - if parent already set.
+		@ignore
 	*/
 	setParent(parent) {
 		if (this[_parent]) {
@@ -337,20 +493,49 @@ export default class Property {
 	}
 
 	/**
-		Sets the readonly flag which will prevent a 'set' function being set in the implementation's
-		defineProeprty().
+		Sets the readonly flag which will prevent an assignment from changing the value. More technically, a 'set'
+		function being set in the implementation's defineProeprty().
+
+		Note: this method is rarely required as the {@link StateType} will usually configure this attribute.
 	*/
 	setReadonly(readonly) {
 		this[_readonly] = readonly;
 	}
 
 	/**
+		Used by PropertyFactoryShader to set the shader used to create this property. External code should
+		not need to utilize this method.
+
+		@ignore
+	*/
+	setShader(shader) {
+		assert( a => a.not(this[_shader], "Shader already set for property") );
+
+		this[_shader] = shader;
+	}
+
+	/**
+		Sets the class to be used for the shadow api
+
+		@param {Shadow} ShadowClass - the {@link Shadow} class or one of its subclasses
+	*/
+	setShadowClass(ShadowClass) {
+		assert( a => {
+			const isShadowClass = ShadowClass === Shadow || Shadow.isPrototypeOf(ShadowClass);
+
+			a.is(isShadowClass, "ShadowClass must be a Shadow subclass") ;
+		});
+
+		this[_ShadowClass] = ShadowClass
+	}
+
+	/**
 		Sets the store containing the state represented by this property.
 
-		Returns - reference to this property object.
+		@return {Property} - reference to this property object.
+		@throws {Error} - store already set.
 
-		Throws
-			Error - if store already set.
+		@ignore
 	*/
 	setStore(store) {
 		if (this[_store]) {
@@ -362,19 +547,51 @@ export default class Property {
 		return this;
 	}
 
+	/**
+		Returns the Shadow subclass used to virtualize the state property.
+
+		Returns - Shadow class
+	*/
+	shadowClass() {
+		return this[_stateType].shadowClassForProperty(this[_ShadowClass]);
+	}
+
+	/**
+		Gets the StateType used for creating this property.
+	*/
+	stateType() {
+		return this[_stateType];
+	}
+
+	/**
+		Gets the path from root property using a slash (`/`) separator.
+
+		@return {string} path with each component separated by a `/`
+	*/
 	slashPath() {
 		return this[_impl] ?this[_impl].slashPath() :null;
 	}
 
 	/**
-		Gets the underlying property state.
+		Gets the {@link Shader} instance for this property.
+	*/
+	shader(state) {
+		if (!this[_shader]) {
+			this[_shader] = this[_stateType].shader(this);
+		}
+
+		return this[_shader];
+	}
+
+	/**
+		Gets the actual state being shadowed.
 	*/
 	state() {
 		return this[_impl] && this[_impl].state();
 	}
 
 	/**
-		Gets the store containing the application state.
+		Gets the {@Link Store} containing the application state.
 	*/
 	store() {
 		if (!this[_store] && this[_parent]) {
@@ -394,10 +611,51 @@ export default class Property {
 		}
 	}
 
+	/**
+		Gets this property's {@link StateType.typeName} value.
+	*/
 	typeName() {
 		return this.constructor.__fluxTypeName__ || this.constructor.name;
 	}
 
+	/**
+		Makes changes to the next proeprty state. The callback should be pure (no side affects).
+
+		The callback has the form:
+
+		```js
+		function callback(state) : { name, nextState, replace }
+		```
+		where:
+
+		<ul>
+		<li>`state` - the current state</li>
+		<li>`nextState` - the next state for the property</li>
+		<li>`name` - the name of the action, such as "assign()" (optional)</li>
+		<li>`replace` - should the entire state for this property be replaced with `nextState`. A value of
+			`true` means this property will unshadow and all of it's children will not be able to make
+			future changes to the model. (optional - default=false)</li>
+		</ul>
+
+		The callback return value is called an *action descriptor* and describes the update behavior.To
+		understand the reasoning behind the replace flag consider the following example:
+
+		```
+		const model = { a: { b: { c: 1 } } }
+		const oldB = model.a.b
+
+		model.a.b = "foo"
+		oldB.c = 5
+
+		model.a.b.c === undefined
+		```js
+
+		Thus, oldB.c may change oldB'c property 'c' to 5 but model.a.b is still "foo".
+
+		@param {function} callback - takes the current state and returns an object containing
+			the *action descriptor* (see discussion above). At a minimum, the action descriptor must contain
+			a `nextState` property containing the property's state following the action.
+	*/
 	update(callback) {
 		if (this.isActive()) {
 			this.__().update(callback);
@@ -412,64 +670,14 @@ export default class Property {
 	//------------------------------------------------------------------------------------------------------
 
 	/**
-		Creates the object to be assigned to the shadow.$ property.
+		Creates the object to be assigned to the shadow.$ property. Subclasses can override this method
+		to setup a chain of specialized accessors (`$()`). See {@link Access} for details on setting up
+		specialized accessors. This is an advanced feature and rarely required.
+
+		@return {Access} a property accessor instance.
 	*/
 	create$(impl) {
 		return new Access(impl);
-	}
-
-	implementationClass() {
-		return StateType.implementationClassForProperty(this, this[_ImplementationClass]);
-	}
-
-	setImplementationClass(PropertyClass) {
-		this[_ImplementationClass] = PropertyClass
-	}
-
-	/**
-		Used by PropertyFactoryShader to set the shader used to create this property. External code should
-		not need to utilize this method.
-	*/
-	setShader(shader) {
-		invariant(!this[_shader], `Shader already set for property`);
-
-		this[_shader] = shader;
-	}
-
-	setShadowClass(ShadowClass) {
-		this[_ShadowClass] = ShadowClass
-	}
-
-	shader(state) {
-		if (!this[_shader]) {
-			this[_shader] = this[_stateType].shader(this);
-		}
-
-		return this[_shader];
-	}
-
-	/**
-		Generates the functional mixin to map onto the state property shadow. This method must be
-		overriden.
-
-		Returns - this implementation returns nothing.
-	*/
-	shadow() { }
-
-	/**
-		Returns the Shadow subclass used to virtualize the state property.
-
-		Returns - Shadow class
-	*/
-	shadowClass() {
-		return this[_stateType].shadowClassForProperty(this[_ShadowClass]);
-	}
-
-	/**
-		Gets the StateType used for creating this property.
-	*/
-	stateType() {
-		return this[_stateType];
 	}
 
 	//------------------------------------------------------------------------------------------------------
@@ -477,37 +685,47 @@ export default class Property {
 	//------------------------------------------------------------------------------------------------------
 
 	/**
-		Gets the initial state for a property at the beginning of the property mounting process. This
-		implementation merges the 'initialState' parameter passed to the constructor or set using the
-		initialState() method with the state passed in from the existing store state. The store's state
-		property values take precedence.
+		Invoked by the f.lux shadowing process just before a property initially shadows a state property.
+		The property is not active when this method is invoked so state values cannot be accessed. This
+		method is useful for constructor type activities when you do not want to implement a constructor.
 
-		Parameters:
-			state - the store's property state at the time of mounting.
-
-		Returns - merged state with the state parameter taking precedence if the initial state is set
-			otherwise returns the state parameter. This base implementation simply returns the state
-			parameter
+		Subclasses do not need to invoke the parent implementation.
 	*/
-	getInitialState(state) {
-		const initialState = state === undefined ?this[_initialState] :state;
-
-		return this[_stateType].initialStateWithDefaults(initialState);
-	}
-
 	propertyWillShadow() { /* subscribe to websockets */ }
+
+	/**
+		Invoked by the f.lux shadowing process after a property initially shadows a state property. The
+		property is active and can safely access the shadow state.
+
+		Subclasses do not need to invoke the parent implementation.
+	*/
 	propertyDidShadow() { /* subscribe to websockets */ }
 
 	/**
 		A child property or one of its descendents wil be changing state. Useful hook when a property needs
 		to perform some bookkeepng for child properties. Utilizing this hook provides a chance to make tracking
 		changes in shadow properties before the store updates its state.
+
+		Subclasses do not need to invoke the parent implementation.
+
+		@param {Property} childProperty - the immediate child property through which the update is occurring.
+		@param {Property} sourceProperty - the property generating the property change.
 	*/
 	propertyChildInvalidated(childProperty, sourceProperty) { }
 
+	/**
+		Invoked by the f.lux shadowing process after a property is reshadowed.
+
+		Subclasses do not need to invoke the parent implementation.
+	*/
 	propertyDidUpdate() { /* post reshadow */ }
+
+	/**
+		Invoked by the f.lux shadowing process just before a property will be removed from the shadow state.
+
+		Subclasses do not need to invoke the parent implementation.
+	*/
 	propertyWillUnshadow() { /* unsubscribe to websockets */ }
-	propertyDidUnshadow() { /* this is probably not needed */ }
 
 
 
@@ -515,6 +733,7 @@ export default class Property {
 	// mixin framework internal methods
 	//------------------------------------------------------------------------------------------------------
 
+	/** @ignore */
 	__addMixin(mixin) {
 		// initialize only if needed to conserve space since likely not used often
 		if (!this[_mixins]) {
@@ -524,10 +743,12 @@ export default class Property {
 		this[_mixins].push(mixin);
 	}
 
+	/** @ignore */
 	__hasMixins() {
 		return !!this[_mixins];
 	}
 
+	/** @ignore */
 	__mixins() {
 		return this[_mixins];
 	}
