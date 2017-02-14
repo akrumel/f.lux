@@ -683,17 +683,17 @@
       "expectCount": 30,
       "actualCount": 19,
       "undocumentLines": [
-        609,
-        593,
-        597,
-        574,
         613,
-        617,
-        621,
+        597,
         601,
         578,
+        617,
+        621,
+        625,
+        605,
         582,
-        605
+        586,
+        609
       ]
     },
     "src/TransientProperty.js": {

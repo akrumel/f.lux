@@ -127,12 +127,16 @@ const _transients = &quot;__trans__&quot;;
 
 /**
 	A f.lux based application uses a single store for managing all state. A `Store` instance is created
-	by specifying a root property and the initial state. The property must be a `Property` subclass and
-	the state a json compatible value of appropriate type for the root `Property`. The store manages
+	by specifying a root {@link Property} and the initial state. The property must be a `Property` subclass
+	and the state a json compatible value of appropriate type for the root `Property`. The store manages
 	changes to the state through the shadow state. The shadow state proxies the actual state and each
 	shadow state property is immutable and modifications to the shadow state, whether through function calls
 	or direct assignment, are reflected asynchronously in the next javascript interpreter &apos;tick&apos;.
 
+	The `Store` class contains some advanced features useful for implementing complex business logic,
+	loggers, and memory efficient master/detail user interfaces. Most of the time, however, your
+	application will create a f.lux store and utilize the [f.lux-react](https://github.com/akrumel/f.lux-react)
+	module for accessing the store&apos;s shadow state properties.
 
 	## Subscribing to store changes
 
