@@ -98,13 +98,13 @@
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Store from &apos;<span><a href="file/src/Store.js.html#lineNumber136">f.lux/src/Store.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Store from &apos;<span><a href="file/src/Store.js.html#lineNumber175">f.lux/src/Store.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/src/Store.js.html#lineNumber136">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/src/Store.js.html#lineNumber175">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -127,12 +127,12 @@
   <div class="description" data-ice="description"><p>A f.lux based application uses a single store for managing all state. A <code>Store</code> instance is created
 by specifying a root property and the initial state. The property must be a <code>Property</code> subclass and
 the state a json compatible value of appropriate type for the root <code>Property</code>. The store manages
-changes to the state through the shadow state. The shadow state mirrors the actual state and each
+changes to the state through the shadow state. The shadow state proxies the actual state and each
 shadow state property is immutable and modifications to the shadow state, whether through function calls
 or direct assignment, are reflected asynchronously in the next javascript interpreter &apos;tick&apos;.</p>
 <h2 id="subscribing-to-store-changes">Subscribing to store changes</h2>
-<p>You application can subscribe to the store to be notified each time the state changes through
-actions on the shadow state. Subscription callbacks are registered/unregistered using the methods:</p>
+<p>Entities can subscribe to state changes resulting from actions on the shadow state. Subscription callbacks
+are registered/unregistered using the methods:</p>
 <p><ul>
 <li><code>subscribe(callback)</code> - adds a callback to the subscriber list</li>
 <li><code>unsubscribe(callback)</code> - removes a callback from the subscriber list</li>
@@ -142,11 +142,11 @@ actions on the shadow state. Subscription callbacks are registered/unregistered 
 <p>The <code>callback</code> has the form:</p>
 <pre><code><code class="source-code prettyprint">callback(store, shadow, prevShadow)</code>
 </code></pre><h2 id="update-and-wait">Update and wait</h2>
-<p>Actions resulting from shadow state changes are reflected asynchronously. Usually, this works out
-well since your event and network processing will want to work with a single, consistent state. But
-sometime your code will need to make perform some actions and then need the changes to be reflected
-before performing additional calculations or observations. The <code>Store</code> class exposes several methods
-to make this process straight-forward:</p>
+<p>Shadow state action changes to the actual state occur asynchronously. Usually, this works out
+well since your event and network processing will want to work with a single, consistent state. Certain
+situations occur where your code performs some actions on the shadow state and then needs to perform
+additional calculations/changes on the updated state. The f.lux store exposes several methods
+to make this process easy:</p>
 <p><ul>
 <li>
 <code>updateNow(syncExec)</code> - performs any pending actions synchronously and then invokes the
@@ -165,9 +165,9 @@ that will be resolved following the next state change.
 
 </p>
 <h2 id="transients">Transients</h2>
-<p>Certain types of applications involve rapid inspection of master/detail records. This can quickly
-generate many objects that can result in large, complex lists if all objects are kept in memory.
-The <code>Store</code> class implements a concept called <em>transients</em> to easily manage such objects.</p>
+<p>F.lux store&apos;s transient objects are used for managing applications data that is used for short periods
+of time. Transients are expecially useful for implementing master/detail user interfaces. The master list
+is typically long lived while the detail records are rapidly inspected and discarded.</p>
 <p>Transient shadow objects are available through the {@link Store#transients<code>} method. The</code>transients<code>property is a &lt;span&gt;&lt;a href=&quot;class/src/TransientProperty.js~TransientShadow.html&quot;&gt;TransientShadow&lt;/a&gt;&lt;/span&gt; exposes a</code>Map` interface for adding, accessing,
 and removing transient objects.</p>
 <p>The transient shadow properties are <em>swept</em> after each state change and non-locked properties are
@@ -187,58 +187,75 @@ removing objects when no longer required.</p>
 </p>
 <p>The <code>f.lux-react</code> module contains the <code>TransientManager</code> class that is useful for managing
 transient data in a React component.</p>
+<p><div><h4>See:</h4>
+<ul>
+<li>
+<a href="https://github.com/akrumel/f.lux-react/blob/master/src/TransientManager.js">
+TransientManager
+</a>
+</li>
+<li><span><a href="class/src/Store.js~Store.html#instance-get-transients">Store#transients</a></span></li>
+<li><span><a href="class/src/TransientsProperty.js~TransientsProperty.html">TransientsProperty</a></span></li>
+<li><span><a href="class/src/TransientProperty.js~TransientProperty.html">TransientProperty</a></span></li>
+</ul>
+</div>
+
+
+</p>
+<h2 id="listener-api">Listener API</h2>
+<p>The <code>Store</code> class exposes a listener api for monitoring state changes. The f.lux module ships with
+one listener called <span><a href="class/src/listeners/Logger.js~Logger.html">Logger</a></span> that tracks state changes and provides time travel debugging. A
+listener is registered/unregsitered using:</p>
+<p><ul>
+<li><span><a href="class/src/Store.js~Store.html#instance-method-addListener">Store#addListener</a></span></li>
+<li><span><a href="class/src/Store.js~Store.html#instance-method-removeListener">Store#removeListener</a></span></li>
+</ul>
+
+</p>
+<p>Where the <code>listener</code> parameter is an object that can implement the following methos:</p>
+<p><ul>
+<li><code>onError(msg, error)</code> - an error occurred during a <code>Store</code> operation</li>
+<li><code>onPreStateUpdate(action, impl)</code> - invoked before a shadow property executes an action</li>
+<li><code>onPostStateUpdate(action, impl)</code> - invoked after a shadow property executes an action</li>
+<li><code>onPreUpdate(currState, time)</code> - invoked before the store&apos;s state is updated</li>
+<li><code>onPostUpdate(time, currState, prevState)</code> - invoked after the store&apos;s state is updated</li>
+</ul>
+
+</p>
+<p><div><h4>See:</h4>
+<ul>
+<li><span><a href="class/src/listeners/Logger.js~Logger.html">Logger</a></span></li>
+</ul>
+</div>
+
+
+</p>
+<h2 id="promise-and-timers">Promise and timers</h2>
+<p>Some environments require special handling for timers, such as
+<a href="https://facebook.github.io/react-native/docs/timers.html">React Native</a>. Additionally, developers
+may desire to utilize specific
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise"><code>Promise</code></a>
+libraries in order to take advantage of specialized features. The <code>Store</code> class provides methods for
+setting the timer functions and <code>Promise</code> module to be utilized by f.lux.</p>
+<p><div><h4>See:</h4>
+<ul>
+<li><span><a href="class/src/Store.js~Store.html#static-method-setPromise">Store.setPromise</a></span></li>
+<li><span><a href="class/src/Store.js~Store.html#static-method-setTick">Store.setTick</a></span></li>
+<li><span><a href="class/src/Store.js~Store.html#static-method-getPromise">Store.getPromise</a></span></li>
+<li><span><a href="class/src/Store.js~Store.html#static-method-clearInterval">Store.clearInterval</a></span></li>
+<li><span><a href="class/src/Store.js~Store.html#static-method-clearTimeout">Store.clearTimeout</a></span></li>
+<li><span><a href="class/src/Store.js~Store.html#static-method-setInterval">Store.setInterval</a></span></li>
+<li><span><a href="class/src/Store.js~Store.html#static-method-setTimeout">Store.setTimeout</a></span></li>
+<li><span><a href="class/src/Store.js~Store.html#static-method-all">Store.all</a></span></li>
+<li><span><a href="class/src/Store.js~Store.html#static-method-promise">Store.promise</a></span></li>
+<li><span><a href="class/src/Store.js~Store.html#static-method-reject">Store.reject</a></span></li>
+<li><span><a href="class/src/Store.js~Store.html#static-method-resolve">Store.resolve</a></span></li>
+</ul>
+</div></p>
 </div>
   
 
-  <div data-ice="see"><h4>See:</h4><ul><li><span><span><a href="class/src/Store.js~Store.html#instance-get-transients">Store#transients</a></span></span></li>
-<li><span><span><a href="class/src/TransientsProperty.js~TransientsProperty.html">TransientsProperty</a></span></span></li>
-<li><span><span><a href="class/src/TransientProperty.js~TransientProperty.html">TransientProperty</a></span></span></li>
-<li><span><a href="https://github.com/akrumel/f.lux-react/blob/master/src/TransientManager.js
-
-
-## Listener API
-
-The `Store` class exposes a listener api for monitoring state changes. The f.lux module ships with
-one listener called {@link Logger} that tracks state changes and provides time travel debugging. A
-listener is registered/unregsitered using:
-
-&lt;ul&gt;
-&lt;li&gt;`addListener(listener)`&lt;/li&gt;
-&lt;li&gt;`removeListener(listener)`&lt;/li&gt;
-&lt;/ul&gt;
-
-Where the `listener` parameter is an object that can implement the following methos:
-
-&lt;ul&gt;
-&lt;li&gt;`onError(msg, error)` - an error occurred during a `Store` operation&lt;/li&gt;
-&lt;li&gt;`onPreStateUpdate(action, impl)` - invoked before a shadow property executes an action&lt;/li&gt;
-&lt;li&gt;`onPostStateUpdate(action, impl)` - invoked after a shadow property executes an action&lt;/li&gt;
-&lt;li&gt;`onPreUpdate(currState, time)` - invoked before the store&apos;s state is updated&lt;/li&gt;
-&lt;li&gt;`onPostUpdate(time, currState, prevState)` - invoked after the store&apos;s state is updated&lt;/li&gt;
-&lt;/ul&gt;">https://github.com/akrumel/f.lux-react/blob/master/src/TransientManager.js
-
-
-## Listener API
-
-The `Store` class exposes a listener api for monitoring state changes. The f.lux module ships with
-one listener called {@link Logger} that tracks state changes and provides time travel debugging. A
-listener is registered/unregsitered using:
-
-<ul>
-<li>`addListener(listener)`</li>
-<li>`removeListener(listener)`</li>
-</ul>
-
-Where the `listener` parameter is an object that can implement the following methos:
-
-<ul>
-<li>`onError(msg, error)` - an error occurred during a `Store` operation</li>
-<li>`onPreStateUpdate(action, impl)` - invoked before a shadow property executes an action</li>
-<li>`onPostStateUpdate(action, impl)` - invoked after a shadow property executes an action</li>
-<li>`onPreUpdate(currState, time)` - invoked before the store&apos;s state is updated</li>
-<li>`onPostUpdate(time, currState, prevState)` - invoked after the store&apos;s state is updated</li>
-</ul></a></span></li>
-<li><span><span><a href="class/src/listeners/Logger.js~Logger.html">Logger</a></span></span></li></ul></div>
+  
 
   
 
@@ -569,13 +586,14 @@ Where the `listener` parameter is an object that can implement the following met
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Store.js~Store.html#instance-constructor-constructor">constructor</a></span></span><span data-ice="signature">(root: <span>*</span>, state: <span>*</span>, useTransients: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>)</span>
+          <span data-ice="name"><span><a href="class/src/Store.js~Store.html#instance-constructor-constructor">constructor</a></span></span><span data-ice="signature">(root: <span><a href="class/src/Property.js~Property.html">Property</a></span>, state: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span>, useTransients: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Creates a new f.lux store for managing the application state.</p>
+</div>
       </div>
     </td>
     <td>
@@ -603,13 +621,14 @@ Where the `listener` parameter is an object that can implement the following met
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Store.js~Store.html#instance-get-root">root</a></span></span><span data-ice="signature">: <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/Store.js~Store.html#instance-get-root">root</a></span></span><span data-ice="signature">: <span><a href="class/src/Property.js~Property.html">Property</a></span>: <span>*</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets the top-level <code>Property</code> used for shadowing the application state.</p>
+</div>
       </div>
     </td>
     <td>
@@ -630,13 +649,14 @@ Where the `listener` parameter is an object that can implement the following met
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Store.js~Store.html#instance-get-rootImpl">rootImpl</a></span></span><span data-ice="signature">: <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/Store.js~Store.html#instance-get-rootImpl">rootImpl</a></span></span><span data-ice="signature">: <span><a href="class/src/ShadowImpl.js~ShadowImpl.html">ShadowImpl</a></span>: <span>*</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets the <span><a href="class/src/ShadowImpl.js~ShadowImpl.html">ShadowImpl</a></span> backing the <span><a href="class/src/Store.js~Store.html#instance-get-shadow">Store#shadow</a></span>.</p>
+</div>
       </div>
     </td>
     <td>
@@ -657,13 +677,14 @@ Where the `listener` parameter is an object that can implement the following met
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Store.js~Store.html#instance-get-shadow">shadow</a></span></span><span data-ice="signature">: <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/Store.js~Store.html#instance-get-shadow">shadow</a></span></span><span data-ice="signature">: <span><a href="class/src/Shadow.js~Shadow.html">Shadow</a></span>: <span>*</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets the current f.lux shadow state.</p>
+</div>
       </div>
     </td>
     <td>
@@ -684,13 +705,14 @@ Where the `listener` parameter is an object that can implement the following met
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Store.js~Store.html#instance-get-state">state</a></span></span><span data-ice="signature">: <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/Store.js~Store.html#instance-get-state">state</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span>: <span>*</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets the current, actual application state.</p>
+</div>
       </div>
     </td>
     <td>
@@ -711,40 +733,14 @@ Where the `listener` parameter is an object that can implement the following met
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Store.js~Store.html#instance-get-transients">transients</a></span></span><span data-ice="signature">: <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/Store.js~Store.html#instance-get-transients">transients</a></span></span><span data-ice="signature">: <span><a href="class/src/TransientsProperty.js~TransientsShadow.html">TransientsShadow</a></span>: <span>*</span></span>
         </p>
       </div>
       <div>
         
         
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      <span class="kind" data-ice="kind">get</span>
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/src/Store.js~Store.html#instance-get-updateTime">updateTime</a></span></span><span data-ice="signature">: <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
+        <div data-ice="description"><p>Gets the <code>transients</code> objects</p>
+</div>
       </div>
     </td>
     <td>
@@ -772,41 +768,13 @@ Where the `listener` parameter is an object that can implement the following met
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Store.js~Store.html#instance-method-addListener">addListener</a></span></span><span data-ice="signature">(listener: <span>*</span>)</span>
+          <span data-ice="name"><span><a href="class/src/Store.js~Store.html#instance-method-addListener">addListener</a></span></span><span data-ice="signature">(listener: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/src/Store.js~Store.html#instance-method-changeState">changeState</a></span></span><span data-ice="signature">(state: <span>*</span>, newRoot: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>, time: <span>*</span>)</span>
-        </p>
-      </div>
-      <div>
-        
-        
-        <div data-ice="description"><p>Change the store&apos;s state. This will trigger totally replace the current state and trigger
-a reshadowing. The root Property instance will be reused.</p>
+        <div data-ice="description"><p>Adds a listener object to monitor state changes.</p>
 </div>
       </div>
     </td>
@@ -828,13 +796,14 @@ a reshadowing. The root Property instance will be reused.</p>
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Store.js~Store.html#instance-method-clearCallbacks">clearCallbacks</a></span></span><span data-ice="signature">()</span>
+          <span data-ice="name"><span><a href="class/src/Store.js~Store.html#instance-method-changeState">changeState</a></span></span><span data-ice="signature">(state: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span>, newRoot: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>, time: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Set a new value for the application state.</p>
+</div>
       </div>
     </td>
     <td>
@@ -855,13 +824,14 @@ a reshadowing. The root Property instance will be reused.</p>
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Store.js~Store.html#instance-method-dispatchUpdate">dispatchUpdate</a></span></span><span data-ice="signature">(action: <span>*</span>)</span>
+          <span data-ice="name"><span><a href="class/src/Store.js~Store.html#instance-method-dispatchUpdate">dispatchUpdate</a></span></span><span data-ice="signature">(action: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(time: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>)</span></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Schedules an action to update the application state.</p>
+</div>
       </div>
     </td>
     <td>
@@ -882,148 +852,14 @@ a reshadowing. The root Property instance will be reused.</p>
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Store.js~Store.html#instance-method-findByPath">findByPath</a></span></span><span data-ice="signature">(path: <span>*</span>): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/Store.js~Store.html#instance-method-findByPath">findByPath</a></span></span><span data-ice="signature">(path: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span>): <span><a href="class/src/Shadow.js~Shadow.html">Shadow</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/src/Store.js~Store.html#instance-method-onError">onError</a></span></span><span data-ice="signature">(msg: <span>*</span>, error: <span>*</span>)</span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/src/Store.js~Store.html#instance-method-onPostStateUpdate">onPostStateUpdate</a></span></span><span data-ice="signature">(action: <span>*</span>, impl: <span>*</span>)</span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/src/Store.js~Store.html#instance-method-onPostUpdate">onPostUpdate</a></span></span><span data-ice="signature">(time: <span>*</span>, currState: <span>*</span>, prevState: <span>*</span>)</span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/src/Store.js~Store.html#instance-method-onPreStateUpdate">onPreStateUpdate</a></span></span><span data-ice="signature">(action: <span>*</span>, impl: <span>*</span>)</span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/src/Store.js~Store.html#instance-method-onPreUpdate">onPreUpdate</a></span></span><span data-ice="signature">(currState: <span>*</span>, time: <span>*</span>)</span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
+        <div data-ice="description"><p>Gets the shadow state property based on array of property keys.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1050,7 +886,8 @@ a reshadowing. The root Property instance will be reused.</p>
       <div>
         
         
-        
+        <div data-ice="description"><p>Removes a listener object from monitoring state changes.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1099,13 +936,14 @@ a reshadowing. The root Property instance will be reused.</p>
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Store.js~Store.html#instance-method-setRootProperty">setRootProperty</a></span></span><span data-ice="signature">(root: <span>*</span>, state: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></span>)</span>
+          <span data-ice="name"><span><a href="class/src/Store.js~Store.html#instance-method-setRootProperty">setRootProperty</a></span></span><span data-ice="signature">(root: <span><a href="class/src/Property.js~Property.html">Property</a></span>, state: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Changes the top-level <code>Property</code> and application state.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1126,13 +964,14 @@ a reshadowing. The root Property instance will be reused.</p>
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Store.js~Store.html#instance-method-subscribe">subscribe</a></span></span><span data-ice="signature">(callback: <span>*</span>)</span>
+          <span data-ice="name"><span><a href="class/src/Store.js~Store.html#instance-method-subscribe">subscribe</a></span></span><span data-ice="signature">(callback: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(store: <span><a href="class/src/Store.js~Store.html">Store</a></span>, shadow: <span><a href="class/src/Shadow.js~Shadow.html">Shadow</a></span>, prevShadow: <span><a href="class/src/Shadow.js~Shadow.html">Shadow</a></span>)</span></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Adds a callback to be invoked after each application state change.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1159,61 +998,7 @@ a reshadowing. The root Property instance will be reused.</p>
       <div>
         
         
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/src/Store.js~Store.html#instance-method-update">update</a></span></span><span data-ice="signature">(callback: <span>*</span>)</span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/src/Store.js~Store.html#instance-method-updateNow">updateNow</a></span></span><span data-ice="signature">(syncExec: <span>*</span>)</span>
-        </p>
-      </div>
-      <div>
-        
-        
-        <div data-ice="description"><p>Executes all pending updates and waitFor() requests synchronously.</p>
+        <div data-ice="description"><p>Removes a callback to be invoked after each state change.</p>
 </div>
       </div>
     </td>
@@ -1235,13 +1020,15 @@ a reshadowing. The root Property instance will be reused.</p>
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Store.js~Store.html#instance-method-waitFor">waitFor</a></span></span><span data-ice="signature">(callback: <span>*</span>)</span>
+          <span data-ice="name"><span><a href="class/src/Store.js~Store.html#instance-method-updateNow">updateNow</a></span></span><span data-ice="signature">(syncExec: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>()</span></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Executes all pending updates and waitFor() requests synchronously (immediately) and then invokes
+an optional callback once the shadow state is updated.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1262,13 +1049,42 @@ a reshadowing. The root Property instance will be reused.</p>
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Store.js~Store.html#instance-method-waitThen">waitThen</a></span></span><span data-ice="signature">(): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/Store.js~Store.html#instance-method-waitFor">waitFor</a></span></span><span data-ice="signature">(callback: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>()</span></span>)</span>
         </p>
       </div>
       <div>
         
         
+        <div data-ice="description"><p>Registers a <strong>one-time</strong> no argument callback to be invoked after the next state change.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          <span data-ice="name"><span><a href="class/src/Store.js~Store.html#instance-method-waitThen">waitThen</a></span></span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></span>
+        </p>
+      </div>
+      <div>
         
+        
+        <div data-ice="description"><p>Returns a <code>Promise</code> that is resolved following the next state change.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1297,7 +1113,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber451">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber609">source</a></span></span>
     </span>
   </h3>
 
@@ -1368,7 +1184,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber435">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber593">source</a></span></span>
     </span>
   </h3>
 
@@ -1439,7 +1255,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber439">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber597">source</a></span></span>
     </span>
   </h3>
 
@@ -1510,7 +1326,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber416">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber574">source</a></span></span>
     </span>
   </h3>
 
@@ -1565,7 +1381,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber455">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber613">source</a></span></span>
     </span>
   </h3>
 
@@ -1636,7 +1452,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber459">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber617">source</a></span></span>
     </span>
   </h3>
 
@@ -1707,7 +1523,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber463">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber621">source</a></span></span>
     </span>
   </h3>
 
@@ -1778,7 +1594,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber443">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber601">source</a></span></span>
     </span>
   </h3>
 
@@ -1861,7 +1677,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber420">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber578">source</a></span></span>
     </span>
   </h3>
 
@@ -1920,7 +1736,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber424">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber582">source</a></span></span>
     </span>
   </h3>
 
@@ -1979,7 +1795,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber447">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber605">source</a></span></span>
     </span>
   </h3>
 
@@ -2061,18 +1877,19 @@ a reshadowing. The root Property instance will be reused.</p>
     
     
     
-    <span data-ice="name">constructor</span><span data-ice="signature">(root: <span>*</span>, state: <span>*</span>, useTransients: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>)</span>
+    <span data-ice="name">constructor</span><span data-ice="signature">(root: <span><a href="class/src/Property.js~Property.html">Property</a></span>, state: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span>, useTransients: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber137">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber183">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Creates a new f.lux store for managing the application state.</p>
+</div>
 
   
 
@@ -2086,22 +1903,26 @@ a reshadowing. The root Property instance will be reused.</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">root</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="class/src/Property.js~Property.html">Property</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the top-level <code>Property</code> used to shadow the application state</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">state</td>
-      <td data-ice="type"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></td>
+      <td data-ice="appendix"><ul><li>optional</li>
+<li>default: root.initialState()</li></ul></td>
+      <td data-ice="description"><p>the initial application state</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">useTransients</td>
       <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></td>
       <td data-ice="appendix"><ul><li>optional</li>
 <li>default: true</li></ul></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p><code>true</code> to enable transient state</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -2136,25 +1957,38 @@ a reshadowing. The root Property instance will be reused.</p>
     
     
     
-    <span data-ice="name">root</span><span data-ice="signature">: <span>*</span></span>
+    <span data-ice="name">root</span><span data-ice="signature">: <span><a href="class/src/Property.js~Property.html">Property</a></span>: <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber193">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber262">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets the top-level <code>Property</code> used for shadowing the application state.</p>
+</div>
 
   
 
   <div data-ice="properties">
 </div>
 
-  
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type" data-ice="returnType"><span><a href="class/src/Property.js~Property.html">Property</a></span></td>
+          
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
 
   
 
@@ -2168,7 +2002,7 @@ a reshadowing. The root Property instance will be reused.</p>
 
   
 
-  
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="Store#state">Store#state</a></span></li></ul></div>
   
 </div>
 <div class="detail" data-ice="detail">
@@ -2179,25 +2013,38 @@ a reshadowing. The root Property instance will be reused.</p>
     
     
     
-    <span data-ice="name">rootImpl</span><span data-ice="signature">: <span>*</span></span>
+    <span data-ice="name">rootImpl</span><span data-ice="signature">: <span><a href="class/src/ShadowImpl.js~ShadowImpl.html">ShadowImpl</a></span>: <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber197">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber271">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets the <span><a href="class/src/ShadowImpl.js~ShadowImpl.html">ShadowImpl</a></span> backing the <span><a href="class/src/Store.js~Store.html#instance-get-shadow">Store#shadow</a></span>.</p>
+</div>
 
   
 
   <div data-ice="properties">
 </div>
 
-  
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type" data-ice="returnType"><span><a href="class/src/ShadowImpl.js~ShadowImpl.html">ShadowImpl</a></span></td>
+          
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
 
   
 
@@ -2222,25 +2069,38 @@ a reshadowing. The root Property instance will be reused.</p>
     
     
     
-    <span data-ice="name">shadow</span><span data-ice="signature">: <span>*</span></span>
+    <span data-ice="name">shadow</span><span data-ice="signature">: <span><a href="class/src/Shadow.js~Shadow.html">Shadow</a></span>: <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber201">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber280">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets the current f.lux shadow state.</p>
+</div>
 
   
 
   <div data-ice="properties">
 </div>
 
-  
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type" data-ice="returnType"><span><a href="class/src/Shadow.js~Shadow.html">Shadow</a></span></td>
+          
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
 
   
 
@@ -2265,25 +2125,38 @@ a reshadowing. The root Property instance will be reused.</p>
     
     
     
-    <span data-ice="name">state</span><span data-ice="signature">: <span>*</span></span>
+    <span data-ice="name">state</span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span>: <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber205">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber289">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets the current, actual application state.</p>
+</div>
 
   
 
   <div data-ice="properties">
 </div>
 
-  
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></td>
+          
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
 
   
 
@@ -2308,68 +2181,38 @@ a reshadowing. The root Property instance will be reused.</p>
     
     
     
-    <span data-ice="name">transients</span><span data-ice="signature">: <span>*</span></span>
+    <span data-ice="name">transients</span><span data-ice="signature">: <span><a href="class/src/TransientsProperty.js~TransientsShadow.html">TransientsShadow</a></span>: <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber209">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber298">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets the <code>transients</code> objects</p>
+</div>
 
   
 
   <div data-ice="properties">
 </div>
 
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type" data-ice="returnType"><span><a href="class/src/TransientsProperty.js~TransientsShadow.html">TransientsShadow</a></span></td>
+          
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
 </div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-get-updateTime">
-    <span class="access" data-ice="access">public</span>
-    
-    <span class="kind" data-ice="kind">get</span>
-    
-    
-    
-    <span data-ice="name">updateTime</span><span data-ice="signature">: <span>*</span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber213">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  
-
-  
-
-  <div data-ice="properties">
-</div>
-
-  
+  </div>
 
   
 
@@ -2397,18 +2240,27 @@ a reshadowing. The root Property instance will be reused.</p>
     
     
     
-    <span data-ice="name">addListener</span><span data-ice="signature">(listener: <span>*</span>)</span>
+    <span data-ice="name">addListener</span><span data-ice="signature">(listener: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber339">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber466">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Adds a listener object to monitor state changes. A <code>listener</code> is an object that can
+implement the following methos:</p>
+<p><ul>
+<li><code>onError(msg, error)</code> - an error occurred during a <code>Store</code> operation</li>
+<li><code>onPreStateUpdate(action, impl)</code> - invoked before a shadow property executes an action</li>
+<li><code>onPostStateUpdate(action, impl)</code> - invoked after a shadow property executes an action</li>
+<li><code>onPreUpdate(currState, time)</code> - invoked before the store&apos;s state is updated</li>
+<li><code>onPostUpdate(time, currState, prevState)</code> - invoked after the store&apos;s state is updated</li>
+</ul></p>
+</div>
 
   
 
@@ -2422,9 +2274,10 @@ a reshadowing. The root Property instance will be reused.</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">listener</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>object with methods to be invoked on state changes.</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -2445,7 +2298,7 @@ a reshadowing. The root Property instance will be reused.</p>
 
   
 
-  
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="Logger">Logger</a></span></li></ul></div>
   
 </div>
 <div class="detail" data-ice="detail">
@@ -2456,19 +2309,20 @@ a reshadowing. The root Property instance will be reused.</p>
     
     
     
-    <span data-ice="name">changeState</span><span data-ice="signature">(state: <span>*</span>, newRoot: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>, time: <span>*</span>)</span>
+    <span data-ice="name">changeState</span><span data-ice="signature">(state: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span>, newRoot: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>, time: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber221">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber320">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>Change the store&apos;s state. This will trigger totally replace the current state and trigger
-a reshadowing. The root Property instance will be reused.</p>
+  <div data-ice="description"><p>Set a new value for the application state. This will totally replace the current state and trigger
+a reshadowing. The root <code>Property</code> instance will be reused.</p>
+<p>This method is used by <span><a href="class/src/listeners/Logger.js~Logger.html">Logger</a></span> to implement time travel debugging.</p>
 </div>
 
   
@@ -2483,69 +2337,31 @@ a reshadowing. The root Property instance will be reused.</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">state</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the new application state</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">newRoot</td>
       <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></td>
       <td data-ice="appendix"><ul><li>optional</li>
 <li>default: false</li></ul></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p><code>true</code> if the state object represents an entirely new state.
+<code>false</code> implies the root object is the same but child properties have been updated.</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">time</td>
-      <td data-ice="type"><span>*</span></td>
-      <td data-ice="appendix"><ul><li>optional</li></ul></td>
-      <td data-ice="description"></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></td>
+      <td data-ice="appendix"><ul><li>optional</li>
+<li>default: tick()</li></ul></td>
+      <td data-ice="description"><p>the f.lux time for the change.</p>
+</td>
     </tr>
 </tbody>
   </table>
 </div>
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-clearCallbacks">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    
-    <span data-ice="name">clearCallbacks</span><span data-ice="signature">()</span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber244">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  
-
-  
-
-  <div data-ice="properties">
 </div>
 
   
@@ -2573,18 +2389,21 @@ a reshadowing. The root Property instance will be reused.</p>
     
     
     
-    <span data-ice="name">dispatchUpdate</span><span data-ice="signature">(action: <span>*</span>)</span>
+    <span data-ice="name">dispatchUpdate</span><span data-ice="signature">(action: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(time: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>)</span></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber356">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber495">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Schedules an action to update the application state. This method is utilized by root <span><a href="class/src/ShadowImpl.js~ShadowImpl.html">ShadowImpl</a></span> to
+trigger the reshadow process and custom properties, listeners, and application logic should never need to
+explicitly invoke it.</p>
+</div>
 
   
 
@@ -2598,9 +2417,10 @@ a reshadowing. The root Property instance will be reused.</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">action</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(time: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>)</span></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the callback will normally trigger a reshadow.</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -2613,7 +2433,19 @@ a reshadowing. The root Property instance will be reused.</p>
 
   
 
-  
+  <div data-ice="throwWrap">
+    <h4>Throw:</h4>
+    <table>
+      <tbody>
+      
+      <tr class="throw" data-ice="throw">
+        <td><p data-ice="throwName"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a></span></p></td>
+        <td data-ice="throwDesc"><p>f.lux store already scheduled to perform an update.</p>
+</td>
+      </tr>
+</tbody>
+    </table>
+  </div>
 
   
 
@@ -2632,18 +2464,19 @@ a reshadowing. The root Property instance will be reused.</p>
     
     
     
-    <span data-ice="name">findByPath</span><span data-ice="signature">(path: <span>*</span>): <span>*</span></span>
+    <span data-ice="name">findByPath</span><span data-ice="signature">(path: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span>): <span><a href="class/src/Shadow.js~Shadow.html">Shadow</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber250">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber350">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets the shadow state property based on array of property keys.</p>
+</div>
 
   
 
@@ -2657,9 +2490,10 @@ a reshadowing. The root Property instance will be reused.</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">path</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>array of property keys from the root to the desired property.</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -2671,345 +2505,15 @@ a reshadowing. The root Property instance will be reused.</p>
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
-          
+          <td class="return-type" data-ice="returnType"><span><a href="class/src/Shadow.js~Shadow.html">Shadow</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>the shadow state property if property exists.</p>
+</td>
         </tr>
       </tbody>
     </table>
     <div data-ice="returnProperties">
 </div>
   </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-onError">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    
-    <span data-ice="name">onError</span><span data-ice="signature">(msg: <span>*</span>, error: <span>*</span>)</span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber289">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  
-
-  
-
-  <div data-ice="properties"><div data-ice="properties">
-  <h4 data-ice="title">Params:</h4>
-  <table class="params">
-    <thead>
-    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-    
-    <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">msg</td>
-      <td data-ice="type"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
-    </tr>
-<tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">error</td>
-      <td data-ice="type"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
-    </tr>
-</tbody>
-  </table>
-</div>
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-onPostStateUpdate">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    
-    <span data-ice="name">onPostStateUpdate</span><span data-ice="signature">(action: <span>*</span>, impl: <span>*</span>)</span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber309">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  
-
-  
-
-  <div data-ice="properties"><div data-ice="properties">
-  <h4 data-ice="title">Params:</h4>
-  <table class="params">
-    <thead>
-    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-    
-    <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">action</td>
-      <td data-ice="type"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
-    </tr>
-<tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">impl</td>
-      <td data-ice="type"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
-    </tr>
-</tbody>
-  </table>
-</div>
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-onPostUpdate">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    
-    <span data-ice="name">onPostUpdate</span><span data-ice="signature">(time: <span>*</span>, currState: <span>*</span>, prevState: <span>*</span>)</span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber329">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  
-
-  
-
-  <div data-ice="properties"><div data-ice="properties">
-  <h4 data-ice="title">Params:</h4>
-  <table class="params">
-    <thead>
-    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-    
-    <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">time</td>
-      <td data-ice="type"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
-    </tr>
-<tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">currState</td>
-      <td data-ice="type"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
-    </tr>
-<tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">prevState</td>
-      <td data-ice="type"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
-    </tr>
-</tbody>
-  </table>
-</div>
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-onPreStateUpdate">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    
-    <span data-ice="name">onPreStateUpdate</span><span data-ice="signature">(action: <span>*</span>, impl: <span>*</span>)</span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber299">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  
-
-  
-
-  <div data-ice="properties"><div data-ice="properties">
-  <h4 data-ice="title">Params:</h4>
-  <table class="params">
-    <thead>
-    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-    
-    <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">action</td>
-      <td data-ice="type"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
-    </tr>
-<tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">impl</td>
-      <td data-ice="type"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
-    </tr>
-</tbody>
-  </table>
-</div>
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-onPreUpdate">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    
-    <span data-ice="name">onPreUpdate</span><span data-ice="signature">(currState: <span>*</span>, time: <span>*</span>)</span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber319">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  
-
-  
-
-  <div data-ice="properties"><div data-ice="properties">
-  <h4 data-ice="title">Params:</h4>
-  <table class="params">
-    <thead>
-    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-    
-    <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">currState</td>
-      <td data-ice="type"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
-    </tr>
-<tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">time</td>
-      <td data-ice="type"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
-    </tr>
-</tbody>
-  </table>
-</div>
-</div>
-
-  
 
   
 
@@ -3038,14 +2542,15 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber343">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber473">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Removes a listener object from monitoring state changes.</p>
+</div>
 
   
 
@@ -3097,7 +2602,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber369">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber508">source</a></span></span>
     </span>
   </h3>
 
@@ -3137,18 +2642,19 @@ a reshadowing. The root Property instance will be reused.</p>
     
     
     
-    <span data-ice="name">setRootProperty</span><span data-ice="signature">(root: <span>*</span>, state: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></span>)</span>
+    <span data-ice="name">setRootProperty</span><span data-ice="signature">(root: <span><a href="class/src/Property.js~Property.html">Property</a></span>, state: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber256">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber362">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Changes the top-level <code>Property</code> and application state.</p>
+</div>
 
   
 
@@ -3162,16 +2668,18 @@ a reshadowing. The root Property instance will be reused.</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">root</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="class/src/Property.js~Property.html">Property</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the top-level <code>Property</code> used to shadow the application state</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">state</td>
-      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></td>
       <td data-ice="appendix"><ul><li>optional</li>
-<li>default: undefined</li></ul></td>
-      <td data-ice="description"></td>
+<li>default: root.initialState()</li></ul></td>
+      <td data-ice="description"><p>the initial application state</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -3203,18 +2711,20 @@ a reshadowing. The root Property instance will be reused.</p>
     
     
     
-    <span data-ice="name">subscribe</span><span data-ice="signature">(callback: <span>*</span>)</span>
+    <span data-ice="name">subscribe</span><span data-ice="signature">(callback: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(store: <span><a href="class/src/Store.js~Store.html">Store</a></span>, shadow: <span><a href="class/src/Shadow.js~Shadow.html">Shadow</a></span>, prevShadow: <span><a href="class/src/Shadow.js~Shadow.html">Shadow</a></span>)</span></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber163">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber218">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Adds a callback to be invoked after each application state change. The <code>callback</code> has the form:</p>
+<pre><code><code class="source-code prettyprint">callback(store, shadow, prevShadow)</code>
+</code></pre></div>
 
   
 
@@ -3228,9 +2738,11 @@ a reshadowing. The root Property instance will be reused.</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">callback</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(store: <span><a href="class/src/Store.js~Store.html">Store</a></span>, shadow: <span><a href="class/src/Shadow.js~Shadow.html">Shadow</a></span>, prevShadow: <span><a href="class/src/Shadow.js~Shadow.html">Shadow</a></span>)</span></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>called after each
+state update</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -3266,73 +2778,15 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber171">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber229">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
-
-  
-
-  <div data-ice="properties"><div data-ice="properties">
-  <h4 data-ice="title">Params:</h4>
-  <table class="params">
-    <thead>
-    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-    
-    <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">callback</td>
-      <td data-ice="type"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
-    </tr>
-</tbody>
-  </table>
+  <div data-ice="description"><p>Removes a callback to be invoked after each state change.</p>
 </div>
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-update">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    
-    <span data-ice="name">update</span><span data-ice="signature">(callback: <span>*</span>)</span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber376">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  
 
   
 
@@ -3380,18 +2834,21 @@ a reshadowing. The root Property instance will be reused.</p>
     
     
     
-    <span data-ice="name">updateNow</span><span data-ice="signature">(syncExec: <span>*</span>)</span>
+    <span data-ice="name">updateNow</span><span data-ice="signature">(syncExec: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>()</span></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber387">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber534">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>Executes all pending updates and waitFor() requests synchronously.</p>
+  <div data-ice="description"><p>Executes all pending updates and waitFor() requests synchronously (immediately) and then invokes
+an optional callback once the shadow state is updated.</p>
+<p>This method is useful when custom properties change the shadow state and need these changes
+to be reflected before performing additional processing.</p>
 </div>
 
   
@@ -3406,9 +2863,11 @@ a reshadowing. The root Property instance will be reused.</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">syncExec</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>()</span></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>a callback to be invoked after all pending changes have been
+reflected in the shadow state.</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -3440,18 +2899,19 @@ a reshadowing. The root Property instance will be reused.</p>
     
     
     
-    <span data-ice="name">waitFor</span><span data-ice="signature">(callback: <span>*</span>)</span>
+    <span data-ice="name">waitFor</span><span data-ice="signature">(callback: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>()</span></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber395">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber548">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Registers a <strong>one-time</strong> no argument callback to be invoked after the next state change.</p>
+</div>
 
   
 
@@ -3465,9 +2925,11 @@ a reshadowing. The root Property instance will be reused.</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">callback</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>()</span></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>a callback to be invoked after all pending changes have been
+reflected in the shadow state.</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -3499,18 +2961,19 @@ a reshadowing. The root Property instance will be reused.</p>
     
     
     
-    <span data-ice="name">waitThen</span><span data-ice="signature">(): <span>*</span></span>
+    <span data-ice="name">waitThen</span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber405">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber563">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Returns a <code>Promise</code> that is resolved following the next state change.</p>
+</div>
 
   
 
@@ -3522,7 +2985,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></td>
           
         </tr>
       </tbody>

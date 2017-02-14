@@ -27,17 +27,21 @@ const _transients = "__trans__";
 
 /**
 	A f.lux based application uses a single store for managing all state. A `Store` instance is created
-	by specifying a root property and the initial state. The property must be a `Property` subclass and
-	the state a json compatible value of appropriate type for the root `Property`. The store manages
-	changes to the state through the shadow state. The shadow state mirrors the actual state and each
+	by specifying a root {@link Property} and the initial state. The property must be a `Property` subclass
+	and the state a json compatible value of appropriate type for the root `Property`. The store manages
+	changes to the state through the shadow state. The shadow state proxies the actual state and each
 	shadow state property is immutable and modifications to the shadow state, whether through function calls
 	or direct assignment, are reflected asynchronously in the next javascript interpreter 'tick'.
 
+	The `Store` class contains some advanced features useful for implementing complex business logic,
+	loggers, and memory efficient master/detail user interfaces. Most of the time, however, your
+	application will create a f.lux store and utilize the [f.lux-react](https://github.com/akrumel/f.lux-react)
+	module for accessing the store's shadow state properties.
 
 	## Subscribing to store changes
 
-	You application can subscribe to the store to be notified each time the state changes through
-	actions on the shadow state. Subscription callbacks are registered/unregistered using the methods:
+	Entities can subscribe to state changes resulting from actions on the shadow state. Subscription callbacks
+	are registered/unregistered using the methods:
 
 	<ul>
 		<li>`subscribe(callback)` - adds a callback to the subscriber list</li>
@@ -53,11 +57,11 @@ const _transients = "__trans__";
 
 	## Update and wait
 
-	Actions resulting from shadow state changes are reflected asynchronously. Usually, this works out
-	well since your event and network processing will want to work with a single, consistent state. But
-	sometime your code will need to make perform some actions and then need the changes to be reflected
-	before performing additional calculations or observations. The `Store` class exposes several methods
-	to make this process straight-forward:
+	Shadow state action changes to the actual state occur asynchronously. Usually, this works out
+	well since your event and network processing will want to work with a single, consistent state. Certain
+	situations occur where your code performs some actions on the shadow state and then needs to perform
+	additional calculations/changes on the updated state. The f.lux store exposes several methods
+	to make this process easy:
 
 	<ul>
 		<li>
@@ -77,9 +81,9 @@ const _transients = "__trans__";
 
 	## Transients
 
-	Certain types of applications involve rapid inspection of master/detail records. This can quickly
-	generate many objects that can result in large, complex lists if all objects are kept in memory.
-	The `Store` class implements a concept called *transients* to easily manage such objects.
+	F.lux store's transient objects are used for managing applications data that is used for short periods
+	of time. Transients are expecially useful for implementing master/detail user interfaces. The master list
+	is typically long lived while the detail records are rapidly inspected and discarded.
 
 	Transient shadow objects are available through the {@link Store#transients`} method. The
 	`transients` property is a {@link TransientShadow} exposes a `Map` interface for adding, accessing,
@@ -104,10 +108,18 @@ const _transients = "__trans__";
 	The `f.lux-react` module contains the `TransientManager` class that is useful for managing
 	transient data in a React component.
 
-	@see {@link Store#transients}
-	@see {@link TransientsProperty}
-	@see {@link TransientProperty}
-	@see https://github.com/akrumel/f.lux-react/blob/master/src/TransientManager.js
+	<div data-ice="see"><h4>See:</h4>
+		<ul>
+			<li>
+				<a href=https://github.com/akrumel/f.lux-react/blob/master/src/TransientManager.js>
+					TransientManager
+				</a>
+			</li>
+			<li>{@link Store#transients}</li>
+			<li>{@link TransientsProperty}</li>
+			<li>{@link TransientProperty}</li>
+		</ul>
+	</div>
 
 
 	## Listener API
@@ -117,8 +129,8 @@ const _transients = "__trans__";
 	listener is registered/unregsitered using:
 
 	<ul>
-		<li>`addListener(listener)`</li>
-		<li>`removeListener(listener)`</li>
+		<li>{@link Store#addListener}</li>
+		<li>{@link Store#removeListener}</li>
 	</ul>
 
 	Where the `listener` parameter is an object that can implement the following methos:
@@ -131,9 +143,47 @@ const _transients = "__trans__";
 		<li>`onPostUpdate(time, currState, prevState)` - invoked after the store's state is updated</li>
 	</ul>
 
-	@see {@link Logger}
+	<div data-ice="see"><h4>See:</h4>
+		<ul>
+			<li>{@link Logger}</li>
+		</ul>
+	</div>
+
+
+	## Promise and timers
+
+	Some environments require special handling for timers, such as
+	[React Native](https://facebook.github.io/react-native/docs/timers.html). Additionally, developers
+	may desire to utilize specific
+	[`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
+	libraries in order to take advantage of specialized features. The `Store` class provides methods for
+	setting the timer functions and `Promise` module to be utilized by f.lux.
+
+	<div data-ice="see"><h4>See:</h4>
+		<ul>
+			<li>{@link Store.setPromise}</li>
+			<li>{@link Store.setTick}</li>
+			<li>{@link Store.getPromise}</li>
+			<li>{@link Store.clearInterval}</li>
+			<li>{@link Store.clearTimeout}</li>
+			<li>{@link Store.setInterval}</li>
+			<li>{@link Store.setTimeout}</li>
+			<li>{@link Store.all}</li>
+			<li>{@link Store.promise}</li>
+			<li>{@link Store.reject}</li>
+			<li>{@link Store.resolve}</li>
+		</ul>
+	</div>
 */
+
 export default class Store {
+	/**
+		Creates a new f.lux store for managing the application state.
+
+		@param {Property} root - the top-level `Property` used to shadow the application state
+		@param {Object|Array} [state=root.initialState()] - the initial application state
+		@param {boolean} [useTransients=true] - `true` to enable transient state
+	*/
 	constructor(root, state, useTransients=true) {
 		invariant(root instanceof Property || Array.isArray(root) || isObject(root),
 			"Store root must be one of: Property subclass, object, or array");
@@ -160,6 +210,15 @@ export default class Store {
 		}
 	}
 
+	/**
+		Adds a callback to be invoked after each application state change. The `callback` has the form:
+		```
+		callback(store, shadow, prevShadow)
+		```
+
+		@param {function(store: Store, shadow: Shadow, prevShadow: Shadow)} callback - called after each
+			state update
+	*/
 	subscribe(callback) {
 		assert( a => a.is(typeof callback === 'function', "Callback must be a function") );
 
@@ -168,6 +227,9 @@ export default class Store {
 		}
 	}
 
+	/**
+		Removes a callback to be invoked after each state change.
+	*/
 	unsubscribe(callback) {
 		this._subscribers = this._subscribers.filter( s => s != callback );
 	}
@@ -177,7 +239,9 @@ export default class Store {
 	//******************************************************************************************************************
 
 	/**
-		Alias for shadow property.
+		Alias for top-level shadow property.
+
+		@see Store#shadow
 	*/
 	get _() {
 		return this._root._();
@@ -185,44 +249,83 @@ export default class Store {
 
 	/**
 		Alias for rootImpl property.
+
+		@see Store#rootImpl
 	*/
 	get __() {
 		return this._rootImpl;
 	}
 
+	/**
+		Gets the top-level `Property` used for shadowing the application state.
+
+		@return {Property}
+
+		@see Store#state
+	*/
 	get root() {
 		return this._root;
 	}
 
+	/**
+		Gets the {@link ShadowImpl} backing the {@link Store#shadow}.
+
+		@return {ShadowImpl}
+	*/
 	get rootImpl() {
 		return this._rootImpl;
 	}
 
+	/**
+		Gets the current f.lux shadow state.
+
+		@return {Shadow}
+	*/
 	get shadow() {
 		return this._root._();
 	}
 
+	/**
+		Gets the current, actual application state.
+
+		@return {Object|Array}
+	*/
 	get state() {
 		return this._state;
 	}
 
+	/**
+		Gets the `transients` objects
+
+		@return {TransientsShadow}
+	*/
 	get transients() {
 		return this.shadow[_transients];
 	}
 
+	/**
+		@ignore
+	*/
 	get updateTime() {
 		return this._updateTime;
 	}
 
 	/**
-		Change the store's state. This will trigger totally replace the current state and trigger
-		a reshadowing. The root Property instance will be reused.
+		Set a new value for the application state. This will totally replace the current state and trigger
+		a reshadowing. The root `Property` instance will be reused.
+
+		This method is used by {@link Logger} to implement time travel debugging.
+
+		@param {Object|Array} state - the new application state
+		@param {boolean} [newRoot=false] - `true` if the state object represents an entirely new state.
+			`false` implies the root object is the same but child properties have been updated.
+		@param {number} [time=tick()] - the f.lux time for the change.
 	*/
 	changeState(state, newRoot=false, time=tick()) {
 		this._updateTime = time;
 
 		// all pending callbacks are obsolete now
-		this.clearCallbacks();
+		this._clearCallbacks();
 
 		// invoke will shadow/update lifecycle methods
 		if (this._rootImpl && this._state) {
@@ -241,19 +344,26 @@ export default class Store {
 		this._notifySubscribers();
 	}
 
-	clearCallbacks() {
-		// clear callback data structures
-		this._updateAction = null;
-		this._waitFor = [];
-	}
+	/**
+		Gets the shadow state property based on array of property keys.
 
+		@param {Array} path - array of property keys from the root to the desired property.
+
+		@return {Shadow} the shadow state property if property exists.
+	*/
 	findByPath(path) {
 		const rootImpl = this._root.__();
 
 		return rootImpl.findByPath(path);
 	}
 
-	setRootProperty(root, state=null) {
+	/**
+		Changes the top-level `Property` and application state.
+
+		@param {Property} root - the top-level `Property` used to shadow the application state
+		@param {Object|Array} [state=root.initialState()] - the initial application state
+	*/
+	setRootProperty(root, state=root.initialState()) {
 		if (!(root instanceof Property)) {
 			throw new Error("Root property must be a Property instance");
 		}
@@ -286,6 +396,7 @@ export default class Store {
 	//  Listeners methods
 	//******************************************************************************************************************
 
+	/** @ignore */
 	onError(msg, error) {
 		const listeners = this._listeners;
 
@@ -296,6 +407,7 @@ export default class Store {
 		}
 	}
 
+	/** @ignore */
 	onPreStateUpdate(action, impl) {
 		const listeners = this._listeners;
 
@@ -306,6 +418,7 @@ export default class Store {
 		}
 	}
 
+	/** @ignore */
 	onPostStateUpdate(action, impl) {
 		const listeners = this._listeners;
 
@@ -316,6 +429,7 @@ export default class Store {
 		}
 	}
 
+	/** @ignore */
 	onPreUpdate(currState, time) {
 		const listeners = this._listeners;
 
@@ -326,6 +440,7 @@ export default class Store {
 		}
 	}
 
+	/** @ignore */
 	onPostUpdate(time, currState, prevState) {
 		const listeners = this._listeners;
 
@@ -336,10 +451,29 @@ export default class Store {
 		}
 	}
 
+	/**
+		Adds a listener object to monitor state changes. A `listener` is an object that can
+		implement the following methos:
+
+		<ul>
+			<li>`onError(msg, error)` - an error occurred during a `Store` operation</li>
+			<li>`onPreStateUpdate(action, impl)` - invoked before a shadow property executes an action</li>
+			<li>`onPostStateUpdate(action, impl)` - invoked after a shadow property executes an action</li>
+			<li>`onPreUpdate(currState, time)` - invoked before the store's state is updated</li>
+			<li>`onPostUpdate(time, currState, prevState)` - invoked after the store's state is updated</li>
+		</ul>
+
+		@param {Object} listener - object with methods to be invoked on state changes.
+
+		@see Logger
+	*/
 	addListener(listener) {
 		this._listeners.push(listener);
 	}
 
+	/**
+		Removes a listener object from monitoring state changes.
+	*/
 	removeListener(listener) {
 		var idx;
 
@@ -353,6 +487,15 @@ export default class Store {
 	//  Store state update related methods
 	//******************************************************************************************************************
 
+	/**
+		Schedules an action to update the application state. This method is utilized by root {@link ShadowImpl} to
+		trigger the reshadow process and custom properties, listeners, and application logic should never need to
+		explicitly invoke it.
+
+		@param {function(time: number)} action - the callback will normally trigger a reshadow.
+
+		@throws {Error} f.lux store already scheduled to perform an update.
+	*/
 	dispatchUpdate(action) {
 		if (this._updateAction) {
 			throw new Error("Pending action already waiting for dispatch");
@@ -373,16 +516,24 @@ export default class Store {
 		_setTimeout( () => this._exec() )
 	}
 
-	update(callback) {
-		invariant(callback, "Store.update() requires a callback function");
+	// obsolete (2/14/17)
+	// update(callback) {
+	// 	invariant(callback, "Store.update() requires a callback function");
 
-		callback();
+	// 	callback();
 
-		this._exec();
-	}
+	// 	this._exec();
+	// }
 
 	/**
-		Executes all pending updates and waitFor() requests synchronously.
+		Executes all pending updates and waitFor() requests synchronously (immediately) and then invokes
+		an optional callback once the shadow state is updated.
+
+		This method is useful when custom properties change the shadow state and need these changes
+		to be reflected before performing additional processing.
+
+		@param {function()} syncExec - a callback to be invoked after all pending changes have been
+			reflected in the shadow state.
 	*/
 	updateNow(syncExec) {
 		this._exec();
@@ -392,6 +543,12 @@ export default class Store {
 		}
 	}
 
+	/**
+		Registers a **one-time** no argument callback to be invoked after the next state change.
+
+		@param {function()} callback - a callback to be invoked after all pending changes have been
+			reflected in the shadow state.
+	*/
 	waitFor(callback) {
 		assert( a => a.is(typeof callback === 'function', "Callback must be a function") );
 
@@ -402,6 +559,11 @@ export default class Store {
 		}
 	}
 
+	/**
+		Returns a `Promise` that is resolved following the next state change.
+
+		@return {Promise}
+	*/
 	waitThen() {
 		return new Promise( (resolve, reject) => {
 			this.waitFor(resolve);
@@ -423,7 +585,7 @@ export default class Store {
 
 	static setTick(ticker) {
 		_clearInterval = ticker.clearInterval;
-		_clearTimeout = ticker.clearTimeou;
+		_clearTimeout = ticker.clearTimeout;
 		_setInterval = ticker.setInterval;
 		_setTimeout = ticker.setTimeout;
 	}
@@ -464,71 +626,14 @@ export default class Store {
 		return _Promise.resolve.call(_Promise, ...params);
 	}
 
-	_exec() {
-		const updateAction = this._updateAction;
-		const waitFor = this._waitFor;
-		const prevShadow = this.shadow;
-
-		// Reset the pending actions
+	/** @ignore */
+	_clearCallbacks() {
+		// clear callback data structures
 		this._updateAction = null;
 		this._waitFor = [];
-
-		if (updateAction) {
-			if (this._updating) {
-				debugger
-				throw new Error("Already updating state - use store.waitFor()");
-			}
-
-			try {
-				this._updating = true;
-
-				const currState = this._state;
-				const time = this._updateTime = tick();
-
-				// inform middleware going to perform an update
-				this.onPreUpdate(currState, time);
-
-				this._rootImpl.willShadow(false);
-
-				// perform the update action
-				const impl = updateAction(time);
-
-				if (!(impl instanceof ShadowImpl)) {
-					this._onError("Property update action did not return a ShadowImpl type");
-				} else if (impl.property() != this._root) {
-					this._onError("Property update action cannot replace the root state");
-				} else {
-					this._rootImpl = impl;
-					this._state = impl.state();
-
-					// Have each property invoke did shadow/update lifecycle methods now that store is coherent with new stat
-					this._rootImpl.didShadow(time, false);
-				}
-
-				// inform middleware update completed
-				this.onPostUpdate(time, this._state, currState);
-			} catch(error) {
-				this._onError(`State dispatch UPDATE action exception: ${error}`, error);
-			} finally {
-				this._updating = false;
-			}
-		}
-
-		this._notifyWaitFors(waitFor);
-		this._notifySubscribers(prevShadow);
 	}
 
-	_notifySubscribers(prevShadow) {
-		// Iterate each subscriber
-		for (let i=0, subscriber; subscriber = this._subscribers[i]; i++) {
-			try {
-				subscriber(this, shadow, prevShadow);
-			} catch(error) {
-				this._onError(`Store subscriber notification caused an exception: ${error}`, error);
-			}
-		}
-	}
-
+	/** @ignore */
 	_exec() {
 		const updateAction = this._updateAction;
 		const waitFor = this._waitFor;
@@ -584,6 +689,7 @@ export default class Store {
 		this._sweepTransients();
 	}
 
+	/** @ignore */
 	_notifySubscribers(prevShadow) {
 		// Iterate each subscriber
 		for (let i=0, subscriber; subscriber = this._subscribers[i]; i++) {
@@ -595,6 +701,7 @@ export default class Store {
 		}
 	}
 
+	/** @ignore */
 	_notifyWaitFors(waitFor) {
 		// Iterate each waitFor request
 		for (let i=0, waiting; waiting = waitFor[i]; i++) {
@@ -606,6 +713,7 @@ export default class Store {
 		}
 	}
 
+	/** @ignore */
 	_onError(msg, error) {
 		debug( d => d(`Store error: ${msg}`, error) );
 
@@ -616,6 +724,7 @@ export default class Store {
 		this.onError(msg, error);
 	}
 
+	/** @ignore */
 	_setupTransients() {
 		const root = this._root;
 		const rootShader = root.shader();
@@ -626,6 +735,7 @@ export default class Store {
 		}
 	}
 
+	/** @ignore */
 	_sweepTransients() {
 		const trans = this.shadow[_transients];
 

@@ -3216,12 +3216,6 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "src/store.js~store#clearcallbacks",
-    "class/src/Store.js~Store.html#instance-method-clearCallbacks",
-    "src/Store.js~Store#clearCallbacks",
-    "method"
-  ],
-  [
     "src/store.js~store#constructor",
     "class/src/Store.js~Store.html#instance-constructor-constructor",
     "src/Store.js~Store#constructor",
@@ -3237,36 +3231,6 @@ window.esdocSearchIndex = [
     "src/store.js~store#findbypath",
     "class/src/Store.js~Store.html#instance-method-findByPath",
     "src/Store.js~Store#findByPath",
-    "method"
-  ],
-  [
-    "src/store.js~store#onerror",
-    "class/src/Store.js~Store.html#instance-method-onError",
-    "src/Store.js~Store#onError",
-    "method"
-  ],
-  [
-    "src/store.js~store#onpoststateupdate",
-    "class/src/Store.js~Store.html#instance-method-onPostStateUpdate",
-    "src/Store.js~Store#onPostStateUpdate",
-    "method"
-  ],
-  [
-    "src/store.js~store#onpostupdate",
-    "class/src/Store.js~Store.html#instance-method-onPostUpdate",
-    "src/Store.js~Store#onPostUpdate",
-    "method"
-  ],
-  [
-    "src/store.js~store#onprestateupdate",
-    "class/src/Store.js~Store.html#instance-method-onPreStateUpdate",
-    "src/Store.js~Store#onPreStateUpdate",
-    "method"
-  ],
-  [
-    "src/store.js~store#onpreupdate",
-    "class/src/Store.js~Store.html#instance-method-onPreUpdate",
-    "src/Store.js~Store#onPreUpdate",
     "method"
   ],
   [
@@ -3330,22 +3294,10 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "src/store.js~store#update",
-    "class/src/Store.js~Store.html#instance-method-update",
-    "src/Store.js~Store#update",
-    "method"
-  ],
-  [
     "src/store.js~store#updatenow",
     "class/src/Store.js~Store.html#instance-method-updateNow",
     "src/Store.js~Store#updateNow",
     "method"
-  ],
-  [
-    "src/store.js~store#updatetime",
-    "class/src/Store.js~Store.html#instance-get-updateTime",
-    "src/Store.js~Store#updateTime",
-    "member"
   ],
   [
     "src/store.js~store#waitfor",
