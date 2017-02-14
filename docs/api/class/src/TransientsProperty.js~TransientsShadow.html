@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../">
-  <title data-ice="title">TransientShadow | F.lux API Document</title>
+  <title data-ice="title">TransientsShadow | F.lux API Document</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -98,23 +98,23 @@
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {TransientShadow} from &apos;<span><a href="file/src/TransientProperty.js.html#lineNumber54">f.lux/src/TransientProperty.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {TransientsShadow} from &apos;<span><a href="file/src/TransientsProperty.js.html#lineNumber21">f.lux/src/TransientsProperty.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/src/TransientProperty.js.html#lineNumber54">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/src/TransientsProperty.js.html#lineNumber21">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
-  <h1 data-ice="name">TransientShadow</h1>
+  <h1 data-ice="name">TransientsShadow</h1>
 
   
 
   
   
-  <div class="flat-list" data-ice="extendsChain"><h4>Extends:</h4><div><span><a href="class/src/Shadow.js~Shadow.html">Shadow</a></span> &#x2192; TransientShadow</div></div>
+  <div class="flat-list" data-ice="extendsChain"><h4>Extends:</h4><div><span><a href="class/src/Shadow.js~Shadow.html">Shadow</a></span> &#x2192; TransientsShadow</div></div>
   
   
   
@@ -124,7 +124,9 @@
 
   
   
-  
+  <div class="description" data-ice="description"><p>The shadow api for the <span><a href="class/src/Store.js~Store.html#instance-get-transients">Store#transients</a></span> property. This api implements a superset of the
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a> class.</p>
+</div>
   
 
   
@@ -139,7 +141,40 @@
 
 
 
-
+<div data-ice="memberSummary"><h2>Member Summary</h2><table class="summary" data-ice="summary">
+  <thead><tr><td data-ice="title" colspan="3">Public Members</td></tr></thead>
+  <tbody>
+  
+  <tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      <span class="kind" data-ice="kind">get</span>
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          <span data-ice="name"><span><a href="class/src/TransientsProperty.js~TransientsShadow.html#instance-get-size">size</a></span></span><span data-ice="signature">: <span>*</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+</tbody>
+</table>
+</div>
 <div data-ice="methodSummary"><h2>Method Summary</h2><table class="summary" data-ice="summary">
   <thead><tr><td data-ice="title" colspan="3">Public Methods</td></tr></thead>
   <tbody>
@@ -157,7 +192,7 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/TransientProperty.js~TransientShadow.html#instance-method-delete">delete</a></span></span><span data-ice="signature">()</span>
+          <span data-ice="name"><span><a href="class/src/TransientsProperty.js~TransientsShadow.html#instance-method-[Symbol.iterator]">[Symbol.iterator]</a></span></span><span data-ice="signature">(): <span>*</span></span>
         </p>
       </div>
       <div>
@@ -184,13 +219,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/TransientProperty.js~TransientShadow.html#instance-method-isLocked">isLocked</a></span></span><span data-ice="signature">(): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/TransientsProperty.js~TransientsShadow.html#instance-method-clear">clear</a></span></span><span data-ice="signature">()</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Removes all transient objects.</p>
+</div>
       </div>
     </td>
     <td>
@@ -211,13 +247,186 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/TransientProperty.js~TransientShadow.html#instance-method-lock">lock</a></span></span><span data-ice="signature">(desc: <span>*</span>): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/TransientsProperty.js~TransientsShadow.html#instance-method-delete">delete</a></span></span><span data-ice="signature">(id: <span>*</span>)</span>
         </p>
       </div>
       <div>
         
         
+        <div data-ice="description"><p>Removes the speecified transient object from <span><a href="class/src/Store.js~Store.html#instance-get-transients">Store#transients</a></span>.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          <span data-ice="name"><span><a href="class/src/TransientsProperty.js~TransientsShadow.html#instance-method-entries">entries</a></span></span><span data-ice="signature">(): <span>*</span></span>
+        </p>
+      </div>
+      <div>
         
+        
+        <div data-ice="description"><p>Gets an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators">Iterator</a>
+object that contains the <code>[id, &lt;span&gt;&lt;a href=&quot;class/src/TransientProperty.js~TransientShadow.html&quot;&gt;TransientShadow&lt;/a&gt;&lt;/span&gt;]</code> pairs for each transient property in the
+<span><a href="class/src/Store.js~Store.html#instance-get-transients">Store#transients</a></span> property.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          <span data-ice="name"><span><a href="class/src/TransientsProperty.js~TransientsShadow.html#instance-method-has">has</a></span></span><span data-ice="signature">(id: <span>*</span>): <span>*</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Gets if the <span><a href="class/src/Store.js~Store.html#instance-get-transients">Store#transients</a></span> object contains a transient object.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          <span data-ice="name"><span><a href="class/src/TransientsProperty.js~TransientsShadow.html#instance-method-keys">keys</a></span></span><span data-ice="signature">(): <span>*</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Gets an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators">Iterator</a>
+object that contains the transient keys.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          <span data-ice="name"><span><a href="class/src/TransientsProperty.js~TransientsShadow.html#instance-method-set">set</a></span></span><span data-ice="signature">(id: <span>*</span>, property: <span><a href="class/src/Property.js~Property.html">Property</a></span>): <span>*</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Adds or updates a <span><a href="class/src/TransientProperty.js~TransientProperty.html">TransientProperty</a></span> with a specified id.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          <span data-ice="name"><span><a href="class/src/TransientsProperty.js~TransientsShadow.html#instance-method-sweep">sweep</a></span></span><span data-ice="signature">()</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Invoked by <span>Store#_exec</span> to remove unlocked transient objects.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          <span data-ice="name"><span><a href="class/src/TransientsProperty.js~TransientsShadow.html#instance-method-values">values</a></span></span><span data-ice="signature">(): <span>*</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Gets an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators">Iterator</a>
+object that contains the <span><a href="class/src/TransientProperty.js~TransientShadow.html">TransientShadow</a></span> instances.</p>
+</div>
       </div>
     </td>
     <td>
@@ -375,22 +584,21 @@
 
 
 
-
-<div data-ice="methodDetails"><h2 data-ice="title">Public Methods</h2>
+<div data-ice="memberDetails"><h2 data-ice="title">Public Members</h2>
 
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-delete">
+  <h3 data-ice="anchor" id="instance-get-size">
     <span class="access" data-ice="access">public</span>
     
+    <span class="kind" data-ice="kind">get</span>
     
     
     
-    
-    <span data-ice="name">delete</span><span data-ice="signature">()</span>
+    <span data-ice="name">size</span><span data-ice="signature">: <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/TransientProperty.js.html#lineNumber55">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/TransientsProperty.js.html#lineNumber25">source</a></span></span>
     </span>
   </h3>
 
@@ -421,19 +629,22 @@
   
   
 </div>
+</div>
+<div data-ice="methodDetails"><h2 data-ice="title">Public Methods</h2>
+
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-isLocked">
+  <h3 data-ice="anchor" id="instance-method-[Symbol.iterator]">
     <span class="access" data-ice="access">public</span>
     
     
     
     
     
-    <span data-ice="name">isLocked</span><span data-ice="signature">(): <span>*</span></span>
+    <span data-ice="name">[Symbol.iterator]</span><span data-ice="signature">(): <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/TransientProperty.js.html#lineNumber61">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/TransientsProperty.js.html#lineNumber112">source</a></span></span>
     </span>
   </h3>
 
@@ -477,25 +688,70 @@
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-lock">
+  <h3 data-ice="anchor" id="instance-method-clear">
     <span class="access" data-ice="access">public</span>
     
     
     
     
     
-    <span data-ice="name">lock</span><span data-ice="signature">(desc: <span>*</span>): <span>*</span></span>
+    <span data-ice="name">clear</span><span data-ice="signature">()</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/TransientProperty.js.html#lineNumber65">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/TransientsProperty.js.html#lineNumber32">source</a></span></span>
     </span>
   </h3>
 
   
   
   
+  <div data-ice="description"><p>Removes all transient objects.</p>
+</div>
+
   
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-delete">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span data-ice="name">delete</span><span data-ice="signature">(id: <span>*</span>)</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/TransientsProperty.js.html#lineNumber41">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Removes the speecified transient object from <span><a href="class/src/Store.js~Store.html#instance-get-transients">Store#transients</a></span>.</p>
+</div>
 
   
 
@@ -508,7 +764,126 @@
     <tbody>
     
     <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">desc</td>
+      <td data-ice="name" data-depth="0">id</td>
+      <td data-ice="type"><span>*</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>the transient key</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-entries">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span data-ice="name">entries</span><span data-ice="signature">(): <span>*</span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/TransientsProperty.js.html#lineNumber50">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Gets an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators">Iterator</a>
+object that contains the <code>[id, &lt;span&gt;&lt;a href=&quot;class/src/TransientProperty.js~TransientShadow.html&quot;&gt;TransientShadow&lt;/a&gt;&lt;/span&gt;]</code> pairs for each transient property in the
+<span><a href="class/src/Store.js~Store.html#instance-get-transients">Store#transients</a></span> property.</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type" data-ice="returnType"><span>*</span></td>
+          
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-has">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span data-ice="name">has</span><span data-ice="signature">(id: <span>*</span>): <span>*</span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/TransientsProperty.js.html#lineNumber57">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Gets if the <span><a href="class/src/Store.js~Store.html#instance-get-transients">Store#transients</a></span> object contains a transient object.</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">id</td>
       <td data-ice="type"><span>*</span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"></td>
@@ -516,6 +891,248 @@
 </tbody>
   </table>
 </div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type" data-ice="returnType"><span>*</span></td>
+          
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-keys">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span data-ice="name">keys</span><span data-ice="signature">(): <span>*</span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/TransientsProperty.js.html#lineNumber65">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Gets an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators">Iterator</a>
+object that contains the transient keys.</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type" data-ice="returnType"><span>*</span></td>
+          
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-set">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span data-ice="name">set</span><span data-ice="signature">(id: <span>*</span>, property: <span><a href="class/src/Property.js~Property.html">Property</a></span>): <span>*</span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/TransientsProperty.js.html#lineNumber80">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Adds or updates a <span><a href="class/src/TransientProperty.js~TransientProperty.html">TransientProperty</a></span> with a specified id. The returned <span>TransientProperty#link</span>
+method must be called immediately following this method invocation or the property may be swept from the
+transient list after the next store update.</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">id</td>
+      <td data-ice="type"><span>*</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>the transient key</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">property</td>
+      <td data-ice="type"><span><a href="class/src/Property.js~Property.html">Property</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>a <code>Property</code> instance to track in the transients property.</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type" data-ice="returnType"><span>*</span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>the <span><a href="class/src/TransientProperty.js~TransientProperty.html">TransientProperty</a></span> containing the <code>property</code> instance passed into the
+method.</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-sweep">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span data-ice="name">sweep</span><span data-ice="signature">()</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/TransientsProperty.js.html#lineNumber93">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Invoked by <span>Store#_exec</span> to remove unlocked transient objects.</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-values">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span data-ice="name">values</span><span data-ice="signature">(): <span>*</span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/TransientsProperty.js.html#lineNumber108">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Gets an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators">Iterator</a>
+object that contains the <span><a href="class/src/TransientProperty.js~TransientShadow.html">TransientShadow</a></span> instances.</p>
+</div>
+
+  
+
+  <div data-ice="properties">
 </div>
 
   <div class="return-params" data-ice="returnParams">

@@ -56,7 +56,7 @@ const _setupShadow = Symbol('setupShadow');
 const _changeRoot = Symbol('changeRoot');
 
 
-/**
+/*
 	Todo: reduce memory footprint:
 		1) investigate _time and _previousTime really needed
 		2) investigate getting access from property (reduce object creation and memory footprint)
@@ -954,7 +954,7 @@ export default class ShadowImpl {
 	}
 
 	/**
-		Schedules an UPDATE action with the dispatcher. On action execution, the new property will be generated
+		Schedules an UPDATE action with the store. On action execution, the new property will be generated
 		and returned to the store.
 	*/
 	[_scheduleUpdate]() {

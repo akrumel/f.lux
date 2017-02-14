@@ -55,8 +55,8 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/TransientProperty.js~TransientLock.html">TransientLock</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/TransientProperty.js~TransientProperty.html">TransientProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/TransientProperty.js~TransientShadow.html">TransientShadow</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Transients.js~TransientsProperty.html">TransientsProperty</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Transients.js~TransientsShadow.html">TransientsShadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/TransientsProperty.js~TransientsProperty.html">TransientsProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/TransientsProperty.js~TransientsShadow.html">TransientsShadow</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createPropertyClass">createPropertyClass</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">collection</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html">CollectionProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html">CollectionShadow</a></span></span></li>
@@ -124,10 +124,7 @@
 
   
   
-  <div class="description" data-ice="description"><p>Todo: reduce memory footprint:
-1) investigate _time and _previousTime really needed
-2) investigate getting access from property (reduce object creation and memory footprint)</p>
-</div>
+  
   
 
   
@@ -856,7 +853,7 @@
       <div>
         
         
-        <div data-ice="description"><p>Schedules an UPDATE action with the dispatcher.</p>
+        <div data-ice="description"><p>Schedules an UPDATE action with the store.</p>
 </div>
       </div>
     </td>
@@ -4001,7 +3998,7 @@ and the store informed of the change.</p>
   
   
   
-  <div data-ice="description"><p>Schedules an UPDATE action with the dispatcher. On action execution, the new property will be generated
+  <div data-ice="description"><p>Schedules an UPDATE action with the store. On action execution, the new property will be generated
 and returned to the store.</p>
 </div>
 

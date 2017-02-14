@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../">
-  <title data-ice="title">ArrayProperty | F.lux API Document</title>
+  <title data-ice="title">TransientsProperty | F.lux API Document</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -98,23 +98,23 @@
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import ArrayProperty from &apos;<span><a href="file/src/ArrayProperty.js.html#lineNumber34">f.lux/src/ArrayProperty.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import TransientsProperty from &apos;<span><a href="file/src/TransientsProperty.js.html#lineNumber121">f.lux/src/TransientsProperty.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/src/ArrayProperty.js.html#lineNumber34">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/src/TransientsProperty.js.html#lineNumber121">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
-  <h1 data-ice="name">ArrayProperty</h1>
+  <h1 data-ice="name">TransientsProperty</h1>
 
   
 
   
   
-  <div class="flat-list" data-ice="extendsChain"><h4>Extends:</h4><div><span><a href="class/src/Property.js~Property.html">Property</a></span> &#x2192; ArrayProperty</div></div>
+  <div class="flat-list" data-ice="extendsChain"><h4>Extends:</h4><div><span><a href="class/src/Property.js~Property.html">Property</a></span> &#x2192; <span><a href="class/src/ObjectProperty.js~ObjectProperty.html">ObjectProperty</a></span> &#x2192; TransientsProperty</div></div>
   
   
   
@@ -124,23 +124,11 @@
 
   
   
-  <div class="description" data-ice="description"><p><code>ArrayProperty</code> models an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>
-and the shadow API exposes all <code>Array</code> methods, such as <code>filter()</code>, <code>push()</code>, <code>pop()</code>,
-and <code>reduce()</code> to name a few. The <span><a href="class/src/ArrayShadow.js~ArrayShadow.html">ArrayShadow</a></span> allows for random access and assignment, such as
-<code>todos[1].desc</code>.</p>
-<p>The default shadow class is <span><a href="class/src/ArrayShadow.js~ArrayShadow.html">ArrayShadow</a></span>.</p>
-<p>Use <code>ArrayProperty</code> when you want to model an array state property and allow for the use of <code>Array</code> mutation methods.
-You can then specify a custom shadow api to extend the <code>ArrayShadow</code> api.</p>
-<p>The <code>_indexed</code> instance variable exposes a <span><a href="class/src/IndexedApi.js~IndexedApi.html">IndexedApi</a></span> instance for working with properties.
-Use <code>this._indexed</code> to perform <code>array</code> mutations, such as <code>pop()</code>, <code>push()</code>, <code>shift()</code>, and <code>splice()</code>.
-For example,</p>
-<pre><code class="lang-js"><code class="source-code prettyprint">this._indexed.push(&quot;new element&quot;);</code>
-</code></pre>
-<p>would append &quot;new element&quot; to the array.</p>
+  <div class="description" data-ice="description"><p>The property representing <span><a href="class/src/Store.js~Store.html#instance-get-transients">Store#transients</a></span></p>
 </div>
   
 
-  <div data-ice="see"><h4>See:</h4><ul><li><span><span><a href="class/src/ArrayShadow.js~ArrayShadow.html">ArrayShadow</a></span></span></li></ul></div>
+  <div data-ice="see"><h4>See:</h4><ul><li><span><span><a href="class/src/TransientsProperty.js~TransientsShadow.html">TransientsShadow</a></span></span></li></ul></div>
 
   
 
@@ -150,70 +138,7 @@ For example,</p>
 </div>
 
 
-<div data-ice="staticMethodSummary"><h2>Static Method Summary</h2><table class="summary" data-ice="summary">
-  <thead><tr><td data-ice="title" colspan="3">Static Public Methods</td></tr></thead>
-  <tbody>
-  
-  <tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      <span data-ice="static">static</span>
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/src/ArrayProperty.js~ArrayProperty.html#static-method-createClass">createClass</a></span></span><span data-ice="signature">(shadowType: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="class/src/ArrayShadow.js~ArrayShadow.html">ArrayShadow</a></span>, typeCallback: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(type: <span><a href="class/src/StateType.js~StateType.html">StateType</a></span>)</span></span>, initialState: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>): <span><a href="class/src/ArrayProperty.js~ArrayProperty.html">ArrayProperty</a></span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        <div data-ice="description"><p>Factory function for creating an <code>IndexedProperty</code> subclass.</p>
-</div>
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      <span data-ice="static">static</span>
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/src/ArrayProperty.js~ArrayProperty.html#static-method-defineType">defineType</a></span></span><span data-ice="signature">(PropClass: <span><a href="class/src/ArrayProperty.js~ArrayProperty.html">ArrayProperty</a></span>, ShadowType: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="class/src/ArrayShadow.js~ArrayShadow.html">ArrayShadow</a></span>, typeCallback: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(type: <span><a href="class/src/StateType.js~StateType.html">StateType</a></span>)</span></span>, initialState: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>): <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        <div data-ice="description"><p>Factory function for setting up the <span><a href="class/src/StateType.js~StateType.html">StateType</a></span> <code>type</code> class variable with an appropriately
-configured intial state.</p>
-</div>
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-</tbody>
-</table>
-</div>
+
 <div data-ice="constructorSummary"><h2>Constructor Summary</h2><table class="summary" data-ice="summary">
   <thead><tr><td data-ice="title" colspan="3">Public Constructor</td></tr></thead>
   <tbody>
@@ -231,7 +156,7 @@ configured intial state.</p>
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/ArrayProperty.js~ArrayProperty.html#instance-constructor-constructor">constructor</a></span></span><span data-ice="signature">(stateType: <span>*</span>)</span>
+          <span data-ice="name"><span><a href="class/src/TransientsProperty.js~TransientsProperty.html#instance-constructor-constructor">constructor</a></span></span><span data-ice="signature">(type: <span>*</span>)</span>
         </p>
       </div>
       <div>
@@ -1758,224 +1683,74 @@ property.</p>
   </tr>
 </tbody>
 </table>
-</div>
 
-
-<div data-ice="staticMethodDetails"><h2 data-ice="title">Static Public Methods</h2>
-
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="static-method-createClass">
-    <span class="access" data-ice="access">public</span>
-    <span data-ice="static">static</span>
-    
-    
-    
-    
-    <span data-ice="name">createClass</span><span data-ice="signature">(shadowType: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="class/src/ArrayShadow.js~ArrayShadow.html">ArrayShadow</a></span>, typeCallback: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(type: <span><a href="class/src/StateType.js~StateType.html">StateType</a></span>)</span></span>, initialState: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>): <span><a href="class/src/ArrayProperty.js~ArrayProperty.html">ArrayProperty</a></span></span>
-    <span class="right-info">
+<table class="summary" data-ice="summary">
+  <thead><tr><td data-ice="title" colspan="3"><span class="toggle closed"></span> From class <span><a href="class/src/ObjectProperty.js~ObjectProperty.html">ObjectProperty</a></span></td></tr></thead>
+  <tbody>
+  
+  <tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      <span data-ice="static">static</span>
       
       
-      <span data-ice="source"><span><a href="file/src/ArrayProperty.js.html#lineNumber68">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  <div data-ice="description"><p>Factory function for creating an <code>IndexedProperty</code> subclass. The generated class will have
-the <code>type</code> <span><a href="class/src/StateType.js~StateType.html">StateType</a></span> descriptor set upon return.</p>
-<p>Example usage:</p>
-<pre><code><code class="source-code prettyprint">class SomeShadow extends ArrayShadow {
-// definition here
-}
-
-export default ArrayProperty.createClass(SomeShadow, type =&gt; {
-// configure type variable
-});</code>
-</code></pre></div>
-
-  
-
-  <div data-ice="properties"><div data-ice="properties">
-  <h4 data-ice="title">Params:</h4>
-  <table class="params">
-    <thead>
-    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-    
-    <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">shadowType</td>
-      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="class/src/ArrayShadow.js~ArrayShadow.html">ArrayShadow</a></span></td>
-      <td data-ice="appendix"><ul><li>optional</li>
-<li>default: {}</li></ul></td>
-      <td data-ice="description"><p><code>ArrayShadow</code> subclass or object literal api definition.
-If object literal specified, each property and function is mapped onto a Shadow subclass.</p>
-</td>
-    </tr>
-<tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">typeCallback</td>
-      <td data-ice="type"><span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(type: <span><a href="class/src/StateType.js~StateType.html">StateType</a></span>)</span></span></td>
-      <td data-ice="appendix"><ul><li>optional</li></ul></td>
-      <td data-ice="description"><p>a callback function that will be passed the
-<span><a href="class/src/StateType.js~StateType.html">StateType</a></span> spec for additional customization, such as setting autoshadow, initial state,
-or readonly.</p>
-</td>
-    </tr>
-<tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">initialState</td>
-      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
-      <td data-ice="appendix"><ul><li>optional</li></ul></td>
-      <td data-ice="description"><p>=[] - the initial state for the new property.</p>
-</td>
-    </tr>
-</tbody>
-  </table>
-</div>
-</div>
-
-  <div class="return-params" data-ice="returnParams">
-    <h4>Return:</h4>
-    <table>
-      <tbody>
-        <tr>
-          <td class="return-type" data-ice="returnType"><span><a href="class/src/ArrayProperty.js~ArrayProperty.html">ArrayProperty</a></span></td>
-          <td class="return-desc" data-ice="returnDescription"><p>newly defined <code>ArrayProperty</code> subclass.</p>
-</td>
-        </tr>
-      </tbody>
-    </table>
-    <div data-ice="returnProperties">
-</div>
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="static-method-defineType">
-    <span class="access" data-ice="access">public</span>
-    <span data-ice="static">static</span>
-    
-    
-    
-    
-    <span data-ice="name">defineType</span><span data-ice="signature">(PropClass: <span><a href="class/src/ArrayProperty.js~ArrayProperty.html">ArrayProperty</a></span>, ShadowType: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="class/src/ArrayShadow.js~ArrayShadow.html">ArrayShadow</a></span>, typeCallback: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(type: <span><a href="class/src/StateType.js~StateType.html">StateType</a></span>)</span></span>, initialState: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>): <span>*</span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/ArrayProperty.js.html#lineNumber99">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  <div data-ice="description"><p>Factory function for setting up the <span><a href="class/src/StateType.js~StateType.html">StateType</a></span> <code>type</code> class variable with an appropriately
-configured intial state.</p>
-<p>Example usage:</p>
-<pre><code><code class="source-code prettyprint">export default class SomeProperty extends ArrayProperty {
-// implement property here
-}
-
-class SomeShadow extends ArrayShadow {
-// implement shadow api here
-}
-
-MapProperty.defineType(SomeProperty, SomeShadow, type =&gt; {
-// configure type variable
-});</code>
-</code></pre></div>
-
-  
-
-  <div data-ice="properties"><div data-ice="properties">
-  <h4 data-ice="title">Params:</h4>
-  <table class="params">
-    <thead>
-    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-    
-    <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">PropClass</td>
-      <td data-ice="type"><span><a href="class/src/ArrayProperty.js~ArrayProperty.html">ArrayProperty</a></span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"><p>ArrayProperty subclass</p>
-</td>
-    </tr>
-<tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">ShadowType</td>
-      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="class/src/ArrayShadow.js~ArrayShadow.html">ArrayShadow</a></span></td>
-      <td data-ice="appendix"><ul><li>optional</li></ul></td>
-      <td data-ice="description"><p><code>ArrayShadow</code> subclass or object literal api definition.
-If object literal specified, each property and function is mapped onto a Shadow subclass.</p>
-</td>
-    </tr>
-<tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">typeCallback</td>
-      <td data-ice="type"><span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(type: <span><a href="class/src/StateType.js~StateType.html">StateType</a></span>)</span></span></td>
-      <td data-ice="appendix"><ul><li>optional</li></ul></td>
-      <td data-ice="description"><p>a callback function that will be passed the
-<span><a href="class/src/StateType.js~StateType.html">StateType</a></span> spec for additional customization, such as setting autoshadow, initial state, or
-readonly.</p>
-</td>
-    </tr>
-<tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">initialState</td>
-      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
-      <td data-ice="appendix"><ul><li>optional</li>
-<li>default: []</li></ul></td>
-      <td data-ice="description"><p>the initial state for the new property.</p>
-</td>
-    </tr>
-</tbody>
-  </table>
-</div>
-</div>
-
-  <div class="return-params" data-ice="returnParams">
-    <h4>Return:</h4>
-    <table>
-      <tbody>
-        <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
           
-        </tr>
-      </tbody>
-    </table>
-    <div data-ice="returnProperties">
+          
+          <span data-ice="name"><span><a href="class/src/ObjectProperty.js~ObjectProperty.html#static-method-createClass">createClass</a></span></span><span data-ice="signature">(shadowType: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="class/src/Shadow.js~Shadow.html">Shadow</a></span>, typeCallback: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(type: <span><a href="class/src/StateType.js~StateType.html">StateType</a></span>)</span></span>, initialState: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>): <span><a href="class/src/ObjectProperty.js~ObjectProperty.html">ObjectProperty</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Factory function for creating an <code>ObjectProperty</code> subclass.</p>
 </div>
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      <span data-ice="static">static</span>
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          <span data-ice="name"><span><a href="class/src/ObjectProperty.js~ObjectProperty.html#static-method-defineType">defineType</a></span></span><span data-ice="signature">(PropClass: <span><a href="class/src/ObjectProperty.js~ObjectProperty.html">ObjectProperty</a></span>, ShadowType: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="class/src/Shadow.js~Shadow.html">Shadow</a></span>, typeCallback: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(type: <span><a href="class/src/StateType.js~StateType.html">StateType</a></span>)</span></span>, initialState: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Factory function for setting up the <span><a href="class/src/StateType.js~StateType.html">StateType</a></span> <code>type</code> class variable with an appropriately
+configured intial state.</p>
 </div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+</tbody>
+</table>
 </div>
+
+
+
 <div data-ice="constructorDetails"><h2 data-ice="title">Public Constructors</h2>
 
 <div class="detail" data-ice="detail">
@@ -1986,11 +1761,11 @@ readonly.</p>
     
     
     
-    <span data-ice="name">constructor</span><span data-ice="signature">(stateType: <span>*</span>)</span>
+    <span data-ice="name">constructor</span><span data-ice="signature">(type: <span>*</span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/ArrayProperty.js.html#lineNumber35">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/TransientsProperty.js.html#lineNumber122">source</a></span></span>
     </span>
   </h3>
 
@@ -2002,7 +1777,7 @@ readonly.</p>
 property.</p>
 </div>
 
-  <div data-ice="override"><h4>Override:</h4><span><a href="class/src/Property.js~Property.html#instance-constructor-constructor">Property#constructor</a></span></div>
+  <div data-ice="override"><h4>Override:</h4><span><a href="class/src/ObjectProperty.js~ObjectProperty.html#instance-constructor-constructor">ObjectProperty#constructor</a></span></div>
 
   <div data-ice="properties"><div data-ice="properties">
   <h4 data-ice="title">Params:</h4>
@@ -2013,7 +1788,7 @@ property.</p>
     <tbody>
     
     <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">stateType</td>
+      <td data-ice="name" data-depth="0">type</td>
       <td data-ice="type"><span>*</span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"></td>

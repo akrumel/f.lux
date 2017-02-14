@@ -55,8 +55,8 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/TransientProperty.js~TransientLock.html">TransientLock</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/TransientProperty.js~TransientProperty.html">TransientProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/TransientProperty.js~TransientShadow.html">TransientShadow</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Transients.js~TransientsProperty.html">TransientsProperty</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Transients.js~TransientsShadow.html">TransientsShadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/TransientsProperty.js~TransientsProperty.html">TransientsProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/TransientsProperty.js~TransientsShadow.html">TransientsShadow</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createPropertyClass">createPropertyClass</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">collection</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html">CollectionProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html">CollectionShadow</a></span></span></li>
@@ -98,13 +98,13 @@
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Store from &apos;<span><a href="file/src/Store.js.html#lineNumber51">f.lux/src/Store.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Store from &apos;<span><a href="file/src/Store.js.html#lineNumber136">f.lux/src/Store.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/src/Store.js.html#lineNumber51">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/src/Store.js.html#lineNumber136">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -124,26 +124,121 @@
 
   
   
-  <div class="description" data-ice="description"><p>F.lux stores all application state in a single object tree. A single source of truth greatly simplifies application
-state management, reduces complexity, and eases debugging. The f.lux store efficiently virtualizes the state tree
-into a shadow state as inspired by React&apos;s virtual DOM. The virtualization process, called shadowing, binds action-type
-functions onto the state. Binding functions with the state makes explicit the operations that may be performed on a
-state property. Shadowing is recursively applied to the entire state tree. For performance reasons, the process
-occurs on a just-in-time basis so only the accessed properties are virtualized.</p>
-<p>F.lux uses the <code>Store</code> class for representing stores. The following image shows how the store exposes the
-root state and the root property. Inside the root property is its shadow, which contains a reference to the actual state.</p>
-<p><img src="/f.lux/assets/f.lux-architecture.png" width="500px"></p>
-<p>Topics:
-Creating a store
-subscribe()
-root/state/shadow(_)
-update/wait
-transients
-listener API</p>
+  <div class="description" data-ice="description"><p>A f.lux based application uses a single store for managing all state. A <code>Store</code> instance is created
+by specifying a root property and the initial state. The property must be a <code>Property</code> subclass and
+the state a json compatible value of appropriate type for the root <code>Property</code>. The store manages
+changes to the state through the shadow state. The shadow state mirrors the actual state and each
+shadow state property is immutable and modifications to the shadow state, whether through function calls
+or direct assignment, are reflected asynchronously in the next javascript interpreter &apos;tick&apos;.</p>
+<h2 id="subscribing-to-store-changes">Subscribing to store changes</h2>
+<p>You application can subscribe to the store to be notified each time the state changes through
+actions on the shadow state. Subscription callbacks are registered/unregistered using the methods:</p>
+<p><ul>
+<li><code>subscribe(callback)</code> - adds a callback to the subscriber list</li>
+<li><code>unsubscribe(callback)</code> - removes a callback from the subscriber list</li>
+</ul>
+
+</p>
+<p>The <code>callback</code> has the form:</p>
+<pre><code><code class="source-code prettyprint">callback(store, shadow, prevShadow)</code>
+</code></pre><h2 id="update-and-wait">Update and wait</h2>
+<p>Actions resulting from shadow state changes are reflected asynchronously. Usually, this works out
+well since your event and network processing will want to work with a single, consistent state. But
+sometime your code will need to make perform some actions and then need the changes to be reflected
+before performing additional calculations or observations. The <code>Store</code> class exposes several methods
+to make this process straight-forward:</p>
+<p><ul>
+<li>
+<code>updateNow(syncExec)</code> - performs any pending actions synchronously and then invokes the
+<code>syncExec</code> callback which does not take any parameters.
+</li>
+<li>
+<code>waitFor(callback)</code> - registers a <strong>one-time</strong> no argument callback to be invoked after the
+next state change.
+</li>
+<li>
+<code>waitThen()</code> - returns a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise"><code>Promise</code></a>
+that will be resolved following the next state change.
+</li>
+</ul>
+
+
+</p>
+<h2 id="transients">Transients</h2>
+<p>Certain types of applications involve rapid inspection of master/detail records. This can quickly
+generate many objects that can result in large, complex lists if all objects are kept in memory.
+The <code>Store</code> class implements a concept called <em>transients</em> to easily manage such objects.</p>
+<p>Transient shadow objects are available through the {@link Store#transients<code>} method. The</code>transients<code>property is a &lt;span&gt;&lt;a href=&quot;class/src/TransientProperty.js~TransientShadow.html&quot;&gt;TransientShadow&lt;/a&gt;&lt;/span&gt; exposes a</code>Map` interface for adding, accessing,
+and removing transient objects.</p>
+<p>The transient shadow properties are <em>swept</em> after each state change and non-locked properties are
+removed from the <code>transients</code> object relieving your code of the responsibility of proactively
+removing objects when no longer required.</p>
+<p>The normal flow of working with a transient is:</p>
+<p><ol>
+<li>Create a <code>Property</code></li>
+<li>Pick a transient object ID (<code>transId</code>)</li>
+<li>Obtain <code>Store.transients</code></li>
+<li><code>var trans = transients.set(transId, property)</code> - returns a <code>TransientProperty</code></li>
+<li>Do somethings with the transient object: <code>trans.data()</code></li>
+<li><code>trans.lock()</code></li>
+<li>`trans.unlock(transId</li>
+</ol>
+
+</p>
+<p>The <code>f.lux-react</code> module contains the <code>TransientManager</code> class that is useful for managing
+transient data in a React component.</p>
 </div>
   
 
-  <div data-ice="see"><h4>See:</h4><ul><li><span><span><a href="class/src/listeners/Logger.js~Logger.html">Logger</a></span></span></li></ul></div>
+  <div data-ice="see"><h4>See:</h4><ul><li><span><span><a href="class/src/Store.js~Store.html#instance-get-transients">Store#transients</a></span></span></li>
+<li><span><span><a href="class/src/TransientsProperty.js~TransientsProperty.html">TransientsProperty</a></span></span></li>
+<li><span><span><a href="class/src/TransientProperty.js~TransientProperty.html">TransientProperty</a></span></span></li>
+<li><span><a href="https://github.com/akrumel/f.lux-react/blob/master/src/TransientManager.js
+
+
+## Listener API
+
+The `Store` class exposes a listener api for monitoring state changes. The f.lux module ships with
+one listener called {@link Logger} that tracks state changes and provides time travel debugging. A
+listener is registered/unregsitered using:
+
+&lt;ul&gt;
+&lt;li&gt;`addListener(listener)`&lt;/li&gt;
+&lt;li&gt;`removeListener(listener)`&lt;/li&gt;
+&lt;/ul&gt;
+
+Where the `listener` parameter is an object that can implement the following methos:
+
+&lt;ul&gt;
+&lt;li&gt;`onError(msg, error)` - an error occurred during a `Store` operation&lt;/li&gt;
+&lt;li&gt;`onPreStateUpdate(action, impl)` - invoked before a shadow property executes an action&lt;/li&gt;
+&lt;li&gt;`onPostStateUpdate(action, impl)` - invoked after a shadow property executes an action&lt;/li&gt;
+&lt;li&gt;`onPreUpdate(currState, time)` - invoked before the store&apos;s state is updated&lt;/li&gt;
+&lt;li&gt;`onPostUpdate(time, currState, prevState)` - invoked after the store&apos;s state is updated&lt;/li&gt;
+&lt;/ul&gt;">https://github.com/akrumel/f.lux-react/blob/master/src/TransientManager.js
+
+
+## Listener API
+
+The `Store` class exposes a listener api for monitoring state changes. The f.lux module ships with
+one listener called {@link Logger} that tracks state changes and provides time travel debugging. A
+listener is registered/unregsitered using:
+
+<ul>
+<li>`addListener(listener)`</li>
+<li>`removeListener(listener)`</li>
+</ul>
+
+Where the `listener` parameter is an object that can implement the following methos:
+
+<ul>
+<li>`onError(msg, error)` - an error occurred during a `Store` operation</li>
+<li>`onPreStateUpdate(action, impl)` - invoked before a shadow property executes an action</li>
+<li>`onPostStateUpdate(action, impl)` - invoked after a shadow property executes an action</li>
+<li>`onPreUpdate(currState, time)` - invoked before the store&apos;s state is updated</li>
+<li>`onPostUpdate(time, currState, prevState)` - invoked after the store&apos;s state is updated</li>
+</ul></a></span></li>
+<li><span><span><a href="class/src/listeners/Logger.js~Logger.html">Logger</a></span></span></li></ul></div>
 
   
 
@@ -677,7 +772,7 @@ listener API</p>
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Store.js~Store.html#instance-method-addListener">addListener</a></span></span><span data-ice="signature">(callback: <span>*</span>)</span>
+          <span data-ice="name"><span><a href="class/src/Store.js~Store.html#instance-method-addListener">addListener</a></span></span><span data-ice="signature">(listener: <span>*</span>)</span>
         </p>
       </div>
       <div>
@@ -949,7 +1044,7 @@ a reshadowing. The root Property instance will be reused.</p>
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Store.js~Store.html#instance-method-removeListener">removeListener</a></span></span><span data-ice="signature">(callback: <span>*</span>)</span>
+          <span data-ice="name"><span><a href="class/src/Store.js~Store.html#instance-method-removeListener">removeListener</a></span></span><span data-ice="signature">(listener: <span>*</span>)</span>
         </p>
       </div>
       <div>
@@ -1202,7 +1297,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber366">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber451">source</a></span></span>
     </span>
   </h3>
 
@@ -1273,7 +1368,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber350">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber435">source</a></span></span>
     </span>
   </h3>
 
@@ -1344,7 +1439,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber354">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber439">source</a></span></span>
     </span>
   </h3>
 
@@ -1415,7 +1510,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber331">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber416">source</a></span></span>
     </span>
   </h3>
 
@@ -1470,7 +1565,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber370">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber455">source</a></span></span>
     </span>
   </h3>
 
@@ -1541,7 +1636,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber374">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber459">source</a></span></span>
     </span>
   </h3>
 
@@ -1612,7 +1707,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber378">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber463">source</a></span></span>
     </span>
   </h3>
 
@@ -1683,7 +1778,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber358">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber443">source</a></span></span>
     </span>
   </h3>
 
@@ -1766,7 +1861,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber335">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber420">source</a></span></span>
     </span>
   </h3>
 
@@ -1825,7 +1920,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber339">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber424">source</a></span></span>
     </span>
   </h3>
 
@@ -1884,7 +1979,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber362">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber447">source</a></span></span>
     </span>
   </h3>
 
@@ -1970,7 +2065,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber52">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber137">source</a></span></span>
     </span>
   </h3>
 
@@ -2045,7 +2140,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber108">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber193">source</a></span></span>
     </span>
   </h3>
 
@@ -2088,7 +2183,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber112">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber197">source</a></span></span>
     </span>
   </h3>
 
@@ -2131,7 +2226,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber116">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber201">source</a></span></span>
     </span>
   </h3>
 
@@ -2174,7 +2269,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber120">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber205">source</a></span></span>
     </span>
   </h3>
 
@@ -2217,7 +2312,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber124">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber209">source</a></span></span>
     </span>
   </h3>
 
@@ -2260,7 +2355,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber128">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber213">source</a></span></span>
     </span>
   </h3>
 
@@ -2302,11 +2397,11 @@ a reshadowing. The root Property instance will be reused.</p>
     
     
     
-    <span data-ice="name">addListener</span><span data-ice="signature">(callback: <span>*</span>)</span>
+    <span data-ice="name">addListener</span><span data-ice="signature">(listener: <span>*</span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber254">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber339">source</a></span></span>
     </span>
   </h3>
 
@@ -2326,7 +2421,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <tbody>
     
     <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">callback</td>
+      <td data-ice="name" data-depth="0">listener</td>
       <td data-ice="type"><span>*</span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"></td>
@@ -2365,7 +2460,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber136">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber221">source</a></span></span>
     </span>
   </h3>
 
@@ -2439,7 +2534,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber159">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber244">source</a></span></span>
     </span>
   </h3>
 
@@ -2482,7 +2577,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber271">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber356">source</a></span></span>
     </span>
   </h3>
 
@@ -2541,7 +2636,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber165">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber250">source</a></span></span>
     </span>
   </h3>
 
@@ -2612,7 +2707,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber204">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber289">source</a></span></span>
     </span>
   </h3>
 
@@ -2677,7 +2772,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber224">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber309">source</a></span></span>
     </span>
   </h3>
 
@@ -2742,7 +2837,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber244">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber329">source</a></span></span>
     </span>
   </h3>
 
@@ -2813,7 +2908,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber214">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber299">source</a></span></span>
     </span>
   </h3>
 
@@ -2878,7 +2973,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber234">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber319">source</a></span></span>
     </span>
   </h3>
 
@@ -2939,11 +3034,11 @@ a reshadowing. The root Property instance will be reused.</p>
     
     
     
-    <span data-ice="name">removeListener</span><span data-ice="signature">(callback: <span>*</span>)</span>
+    <span data-ice="name">removeListener</span><span data-ice="signature">(listener: <span>*</span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber258">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber343">source</a></span></span>
     </span>
   </h3>
 
@@ -2963,7 +3058,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <tbody>
     
     <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">callback</td>
+      <td data-ice="name" data-depth="0">listener</td>
       <td data-ice="type"><span>*</span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"></td>
@@ -3002,7 +3097,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber284">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber369">source</a></span></span>
     </span>
   </h3>
 
@@ -3046,7 +3141,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber171">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber256">source</a></span></span>
     </span>
   </h3>
 
@@ -3112,7 +3207,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber78">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber163">source</a></span></span>
     </span>
   </h3>
 
@@ -3171,7 +3266,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber86">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber171">source</a></span></span>
     </span>
   </h3>
 
@@ -3230,7 +3325,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber291">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber376">source</a></span></span>
     </span>
   </h3>
 
@@ -3289,7 +3384,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber302">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber387">source</a></span></span>
     </span>
   </h3>
 
@@ -3349,7 +3444,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber310">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber395">source</a></span></span>
     </span>
   </h3>
 
@@ -3408,7 +3503,7 @@ a reshadowing. The root Property instance will be reused.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber320">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Store.js.html#lineNumber405">source</a></span></span>
     </span>
   </h3>
 

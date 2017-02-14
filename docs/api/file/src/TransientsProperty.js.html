@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../">
-  <title data-ice="title">src/IndexedApi.js | F.lux API Document</title>
+  <title data-ice="title">src/TransientsProperty.js | F.lux API Document</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -97,85 +97,145 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1 data-ice="title">src/IndexedApi.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">
+<div class="content" data-ice="content"><h1 data-ice="title">src/TransientsProperty.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {
+	assert,
+	doneIterator,
+	iteratorFor,
+	iterateOver,
+} from &quot;akutils&quot;;
 
-export default class IndexedApi {
-	constructor(property) {
-		this._property = property;
+import ObjectProperty from &quot;./ObjectProperty&quot;;
+import Shadow from &quot;./Shadow&quot;;
+import StateType from &quot;./StateType&quot;;
+import TransientProperty from &quot;./TransientProperty&quot;;
+
+import appDebug, { TransientKey as DebugKey } from &quot;./debug&quot;;
+const debug = appDebug(DebugKey);
+
+
+/**
+	The shadow api for the {@link Store#transients} property. This api implements a superset of the
+	[Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) class.
+*/
+export class TransientsShadow extends Shadow {
+	/*
+		Gets the number of transient objects.
+	*/
+	get size() {
+		return this.__().size();
 	}
 
-	impl() {
-		return this._property.__();
-	}
-
-	isActive() {
-		return this._property.isActive();
-	}
-
-	shadow() {
-		return this._property._();
-	}
-
-	get length() {
-		if (this.isActive()) {
-			return this.impl().length;
-		}
-	}
-
-	//------------------------------------------------------------------------------------------------------
-	//    Select Array methods:
-	//          (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)
-	//------------------------------------------------------------------------------------------------------
-
+	/**
+		Removes all transient objects.
+	*/
 	clear() {
-		if (this.isActive()) {
-			this.impl().clear();
+		this.__().clear();
+	}
+
+	/**
+		Removes the speecified transient object from {@link Store#transients}.
+
+		@param id - the transient key
+	*/
+	delete(id) {
+		this.$$()._keyed.removeProperty(id);
+	}
+
+	/**
+		Gets an [Iterator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators)
+		object that contains the `[id, {@link TransientShadow}]` pairs for each transient property in the
+		{@link Store#transients} property.
+	*/
+	entries() {
+		return iterateOver(this.__().keys(), key =&gt; [ key, this[key] ] );
+	}
+
+	/**
+		Gets if the {@link Store#transients} object contains a transient object.
+	*/
+	has(id) {
+		return this.__().has(id);
+	}
+
+	/**
+		Gets an [Iterator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators)
+		object that contains the transient keys.
+	*/
+	keys() {
+		return iteratorFor(this.__().keys());
+	}
+
+	/**
+		Adds or updates a {@link TransientProperty} with a specified id. The returned {@link TransientProperty#link}
+		method must be called immediately following this method invocation or the property may be swept from the
+		transient list after the next store update.
+
+		@param id - the transient key
+		@param {Property} property - a `Property` instance to track in the transients property.
+
+		@return the {@link TransientProperty} containing the `property` instance passed into the
+			method.
+	*/
+	set(id, property) {
+		assert( a =&gt; a.is(id, &quot;id must be specifeid for setting a transient property&quot;) );
+
+		var trans = new TransientProperty(id, property);
+
+		this.$$()._keyed.addProperty(id, trans);
+
+		return trans;
+	}
+
+	/**
+		Invoked by {@link Store#_exec} to remove unlocked transient objects.
+	*/
+	sweep() {
+		const property = this.$$();
+		const keys = property._keyed.keysArray();
+
+		for (let i=0, t; t=this[keys[i]]; i++) {
+			if (!t.isLocked()) {
+				this.delete(keys[i]);
+			}
 		}
 	}
 
-	concat(...values) {
-		if (this.isActive()) {
-			return this.impl().concat(...values);
-		}
+	/**
+		Gets an [Iterator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators)
+		object that contains the {@link TransientShadow} instances.
+	*/
+	values() {
+		return iterateOver(this.__().keys(), key =&gt; this[key]);
 	}
 
-	pop() {
-		if (this.isActive()) {
-			return this.impl().pop();
-		}
-	}
+	[Symbol.iterator]() { return this.entries() }
+}
 
-	push(...values) {
-		if (this.isActive()) {
-			return this.impl().push(...values);
-		}
-	}
 
-	remove(idx) {
-		if (this.isActive()) {
-			return this.impl().remove(idx);
-		}
-	}
+/**
+	The property representing {@link Store#transients}
 
-	shift() {
-		if (this.isActive()) {
-			return this.impl().shift();
-		}
-	}
+	@see {@link TransientsShadow}
+*/
+export default class TransientsProperty extends ObjectProperty {
+	constructor(type) {
+		super(type);
 
-	splice(start, deleteCount, ...newItems) {
-		if (this.isActive()) {
-			return this.impl().splice(start, deleteCount, ...newItems);
-		}
+		this.setShadowClass(TransientsShadow);
 	}
+}
 
-	unshift(...values) {
-		if (this.isActive()) {
-			return this.impl().unshift(...values);
-		}
-	}
-}</code></pre>
+
+StateType.defineType(TransientsProperty, spec =&gt; {
+	spec.initialState({})
+		.autoshadowOff
+		.readonly
+		.typeName(&quot;TransientsProperty&quot;);
+});
+
+
+</code></pre>
 
 </div>
 

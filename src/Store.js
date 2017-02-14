@@ -9,7 +9,7 @@ import Property from "./Property";
 import ShadowImpl from "./ShadowImpl";
 import Shader from "./Shader";
 import tick from "./tick";
-import Transients from "./Transients";
+import TransientsProperty from "./TransientsProperty";
 
 import appDebug, { StoreKey as DebugKey } from "./debug";
 const debug = appDebug(DebugKey);
@@ -26,25 +26,110 @@ const _transients = "__trans__";
 
 
 /**
-	F.lux stores all application state in a single object tree. A single source of truth greatly simplifies application
-	state management, reduces complexity, and eases debugging. The f.lux store efficiently virtualizes the state tree
-	into a shadow state as inspired by React's virtual DOM. The virtualization process, called shadowing, binds action-type
-	functions onto the state. Binding functions with the state makes explicit the operations that may be performed on a
-	state property. Shadowing is recursively applied to the entire state tree. For performance reasons, the process
-	occurs on a just-in-time basis so only the accessed properties are virtualized.
+	A f.lux based application uses a single store for managing all state. A `Store` instance is created
+	by specifying a root property and the initial state. The property must be a `Property` subclass and
+	the state a json compatible value of appropriate type for the root `Property`. The store manages
+	changes to the state through the shadow state. The shadow state mirrors the actual state and each
+	shadow state property is immutable and modifications to the shadow state, whether through function calls
+	or direct assignment, are reflected asynchronously in the next javascript interpreter 'tick'.
 
-	F.lux uses the `Store` class for representing stores. The following image shows how the store exposes the
-	root state and the root property. Inside the root property is its shadow, which contains a reference to the actual state.
 
-	<img src="/f.lux/assets/f.lux-architecture.png" width="500px" />
+	## Subscribing to store changes
 
-	Topics:
-		Creating a store
-		subscribe()
-		root/state/shadow(_)
-		update/wait
-		transients
-		listener API
+	You application can subscribe to the store to be notified each time the state changes through
+	actions on the shadow state. Subscription callbacks are registered/unregistered using the methods:
+
+	<ul>
+		<li>`subscribe(callback)` - adds a callback to the subscriber list</li>
+		<li>`unsubscribe(callback)` - removes a callback from the subscriber list</li>
+	</ul>
+
+	The `callback` has the form:
+
+	```
+	callback(store, shadow, prevShadow)
+	```
+
+
+	## Update and wait
+
+	Actions resulting from shadow state changes are reflected asynchronously. Usually, this works out
+	well since your event and network processing will want to work with a single, consistent state. But
+	sometime your code will need to make perform some actions and then need the changes to be reflected
+	before performing additional calculations or observations. The `Store` class exposes several methods
+	to make this process straight-forward:
+
+	<ul>
+		<li>
+			`updateNow(syncExec)` - performs any pending actions synchronously and then invokes the
+				`syncExec` callback which does not take any parameters.
+		</li>
+		<li>
+			`waitFor(callback)` - registers a **one-time** no argument callback to be invoked after the
+				next state change.
+		</li>
+		<li>
+			`waitThen()` - returns a [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
+				that will be resolved following the next state change.
+		</li>
+	</ul>
+
+
+	## Transients
+
+	Certain types of applications involve rapid inspection of master/detail records. This can quickly
+	generate many objects that can result in large, complex lists if all objects are kept in memory.
+	The `Store` class implements a concept called *transients* to easily manage such objects.
+
+	Transient shadow objects are available through the {@link Store#transients`} method. The
+	`transients` property is a {@link TransientShadow} exposes a `Map` interface for adding, accessing,
+	and removing transient objects.
+
+	The transient shadow properties are *swept* after each state change and non-locked properties are
+	removed from the `transients` object relieving your code of the responsibility of proactively
+	removing objects when no longer required.
+
+	The normal flow of working with a transient is:
+
+	<ol>
+		<li>Create a `Property`</li>
+		<li>Pick a transient object ID (`transId`)</li>
+		<li>Obtain `Store.transients`</li>
+		<li>`var trans = transients.set(transId, property)` - returns a `TransientProperty`</li>
+		<li>Do somethings with the transient object: `trans.data()`</li>
+		<li>`trans.lock()`</li>
+		<li>`trans.unlock(transId</li>
+	</ol>
+
+	The `f.lux-react` module contains the `TransientManager` class that is useful for managing
+	transient data in a React component.
+
+	@see {@link Store#transients}
+	@see {@link TransientsProperty}
+	@see {@link TransientProperty}
+	@see https://github.com/akrumel/f.lux-react/blob/master/src/TransientManager.js
+
+
+	## Listener API
+
+	The `Store` class exposes a listener api for monitoring state changes. The f.lux module ships with
+	one listener called {@link Logger} that tracks state changes and provides time travel debugging. A
+	listener is registered/unregsitered using:
+
+	<ul>
+		<li>`addListener(listener)`</li>
+		<li>`removeListener(listener)`</li>
+	</ul>
+
+	Where the `listener` parameter is an object that can implement the following methos:
+
+	<ul>
+		<li>`onError(msg, error)` - an error occurred during a `Store` operation</li>
+		<li>`onPreStateUpdate(action, impl)` - invoked before a shadow property executes an action</li>
+		<li>`onPostStateUpdate(action, impl)` - invoked after a shadow property executes an action</li>
+		<li>`onPreUpdate(currState, time)` - invoked before the store's state is updated</li>
+		<li>`onPostUpdate(time, currState, prevState)` - invoked after the store's state is updated</li>
+	</ul>
 
 	@see {@link Logger}
 */
@@ -251,14 +336,14 @@ export default class Store {
 		}
 	}
 
-	addListener(callback) {
-		this._listeners.push(callback);
+	addListener(listener) {
+		this._listeners.push(listener);
 	}
 
-	removeListener(callback) {
+	removeListener(listener) {
 		var idx;
 
-		while((idx = this._listeners.indexOf(callback)) != -1) {
+		while((idx = this._listeners.indexOf(listener)) != -1) {
 			this._listeners.splice(idx, 1);
 		}
 	}
@@ -536,8 +621,8 @@ export default class Store {
 		const rootShader = root.shader();
 		const keyedApi = root._keyed ?root._keyed :root;
 
-		if (this._useTransients && !rootShader.has(_transients)) {
-			keyedApi.addProperty(_transients, new Transients());
+		if (keyedApi && this._useTransients && !rootShader.has(_transients)) {
+			keyedApi.addProperty(_transients, new TransientsProperty());
 		}
 	}
 

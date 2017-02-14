@@ -288,15 +288,15 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
-    "f.lux/src/transients.js~transientsproperty",
-    "class/src/Transients.js~TransientsProperty.html",
-    "<span>TransientsProperty</span> <span class=\"search-result-import-path\">f.lux/src/Transients.js</span>",
+    "f.lux/src/transientsproperty.js~transientsproperty",
+    "class/src/TransientsProperty.js~TransientsProperty.html",
+    "<span>TransientsProperty</span> <span class=\"search-result-import-path\">f.lux/src/TransientsProperty.js</span>",
     "class"
   ],
   [
-    "f.lux/src/transients.js~transientsshadow",
-    "class/src/Transients.js~TransientsShadow.html",
-    "<span>TransientsShadow</span> <span class=\"search-result-import-path\">f.lux/src/Transients.js</span>",
+    "f.lux/src/transientsproperty.js~transientsshadow",
+    "class/src/TransientsProperty.js~TransientsShadow.html",
+    "<span>TransientsShadow</span> <span class=\"search-result-import-path\">f.lux/src/TransientsProperty.js</span>",
     "class"
   ],
   [
@@ -3552,75 +3552,75 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "src/transients.js",
-    "file/src/Transients.js.html",
-    "src/Transients.js",
+    "src/transientsproperty.js",
+    "file/src/TransientsProperty.js.html",
+    "src/TransientsProperty.js",
     "file"
   ],
   [
-    "src/transients.js~transientsproperty#constructor",
-    "class/src/Transients.js~TransientsProperty.html#instance-constructor-constructor",
-    "src/Transients.js~TransientsProperty#constructor",
+    "src/transientsproperty.js~transientsproperty#constructor",
+    "class/src/TransientsProperty.js~TransientsProperty.html#instance-constructor-constructor",
+    "src/TransientsProperty.js~TransientsProperty#constructor",
     "method"
   ],
   [
-    "src/transients.js~transientsshadow#[symbol.iterator]",
-    "class/src/Transients.js~TransientsShadow.html#instance-method-[Symbol.iterator]",
-    "src/Transients.js~TransientsShadow#[Symbol.iterator]",
+    "src/transientsproperty.js~transientsshadow#[symbol.iterator]",
+    "class/src/TransientsProperty.js~TransientsShadow.html#instance-method-[Symbol.iterator]",
+    "src/TransientsProperty.js~TransientsShadow#[Symbol.iterator]",
     "method"
   ],
   [
-    "src/transients.js~transientsshadow#clear",
-    "class/src/Transients.js~TransientsShadow.html#instance-method-clear",
-    "src/Transients.js~TransientsShadow#clear",
+    "src/transientsproperty.js~transientsshadow#clear",
+    "class/src/TransientsProperty.js~TransientsShadow.html#instance-method-clear",
+    "src/TransientsProperty.js~TransientsShadow#clear",
     "method"
   ],
   [
-    "src/transients.js~transientsshadow#delete",
-    "class/src/Transients.js~TransientsShadow.html#instance-method-delete",
-    "src/Transients.js~TransientsShadow#delete",
+    "src/transientsproperty.js~transientsshadow#delete",
+    "class/src/TransientsProperty.js~TransientsShadow.html#instance-method-delete",
+    "src/TransientsProperty.js~TransientsShadow#delete",
     "method"
   ],
   [
-    "src/transients.js~transientsshadow#entries",
-    "class/src/Transients.js~TransientsShadow.html#instance-method-entries",
-    "src/Transients.js~TransientsShadow#entries",
+    "src/transientsproperty.js~transientsshadow#entries",
+    "class/src/TransientsProperty.js~TransientsShadow.html#instance-method-entries",
+    "src/TransientsProperty.js~TransientsShadow#entries",
     "method"
   ],
   [
-    "src/transients.js~transientsshadow#has",
-    "class/src/Transients.js~TransientsShadow.html#instance-method-has",
-    "src/Transients.js~TransientsShadow#has",
+    "src/transientsproperty.js~transientsshadow#has",
+    "class/src/TransientsProperty.js~TransientsShadow.html#instance-method-has",
+    "src/TransientsProperty.js~TransientsShadow#has",
     "method"
   ],
   [
-    "src/transients.js~transientsshadow#keys",
-    "class/src/Transients.js~TransientsShadow.html#instance-method-keys",
-    "src/Transients.js~TransientsShadow#keys",
+    "src/transientsproperty.js~transientsshadow#keys",
+    "class/src/TransientsProperty.js~TransientsShadow.html#instance-method-keys",
+    "src/TransientsProperty.js~TransientsShadow#keys",
     "method"
   ],
   [
-    "src/transients.js~transientsshadow#set",
-    "class/src/Transients.js~TransientsShadow.html#instance-method-set",
-    "src/Transients.js~TransientsShadow#set",
+    "src/transientsproperty.js~transientsshadow#set",
+    "class/src/TransientsProperty.js~TransientsShadow.html#instance-method-set",
+    "src/TransientsProperty.js~TransientsShadow#set",
     "method"
   ],
   [
-    "src/transients.js~transientsshadow#size",
-    "class/src/Transients.js~TransientsShadow.html#instance-get-size",
-    "src/Transients.js~TransientsShadow#size",
+    "src/transientsproperty.js~transientsshadow#size",
+    "class/src/TransientsProperty.js~TransientsShadow.html#instance-get-size",
+    "src/TransientsProperty.js~TransientsShadow#size",
     "member"
   ],
   [
-    "src/transients.js~transientsshadow#sweep",
-    "class/src/Transients.js~TransientsShadow.html#instance-method-sweep",
-    "src/Transients.js~TransientsShadow#sweep",
+    "src/transientsproperty.js~transientsshadow#sweep",
+    "class/src/TransientsProperty.js~TransientsShadow.html#instance-method-sweep",
+    "src/TransientsProperty.js~TransientsShadow#sweep",
     "method"
   ],
   [
-    "src/transients.js~transientsshadow#values",
-    "class/src/Transients.js~TransientsShadow.html#instance-method-values",
-    "src/Transients.js~TransientsShadow#values",
+    "src/transientsproperty.js~transientsshadow#values",
+    "class/src/TransientsProperty.js~TransientsShadow.html#instance-method-values",
+    "src/TransientsProperty.js~TransientsShadow#values",
     "method"
   ],
   [
