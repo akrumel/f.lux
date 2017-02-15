@@ -127,9 +127,6 @@ const _property = Symbol(&apos;property&apos;);
 const _shaders = Symbol(&apos;shaders&apos;);
 
 
-/*
-	Combine with PropertyShader now that everything is a property.
-*/
 export default class Shader {
 	constructor(property) {
 		const stateType = property.stateType();

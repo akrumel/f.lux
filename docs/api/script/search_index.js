@@ -768,12 +768,6 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "src/access.js~access#merge",
-    "class/src/Access.js~Access.html#instance-method-merge",
-    "src/Access.js~Access#merge",
-    "method"
-  ],
-  [
     "src/access.js~access#nextstate",
     "class/src/Access.js~Access.html#instance-method-nextState",
     "src/Access.js~Access#nextState",

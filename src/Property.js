@@ -413,6 +413,8 @@ export default class Property {
 
 	/**
 		Gets the root shadow state for the {@link Store} managing this property.
+
+		@return {Shadow}
 	*/
 	rootShadow() {
 		return this[_store]._;
@@ -557,13 +559,6 @@ export default class Property {
 	}
 
 	/**
-		Gets the StateType used for creating this property.
-	*/
-	stateType() {
-		return this[_stateType];
-	}
-
-	/**
 		Gets the path from root property using a slash (`/`) separator.
 
 		@return {string} path with each component separated by a `/`
@@ -588,6 +583,13 @@ export default class Property {
 	*/
 	state() {
 		return this[_impl] && this[_impl].state();
+	}
+
+	/**
+		Gets the StateType used for creating this property.
+	*/
+	stateType() {
+		return this[_stateType];
 	}
 
 	/**

@@ -27,8 +27,18 @@ const _property = Symbol('property');
 const _shaders = Symbol('shaders');
 
 
-/*
-	Combine with PropertyShader now that everything is a property.
+/**
+	Shaders implement the shadowing process by which the shadow state proxies the actual state.
+	Each {@link Property} maintains a shader used for shadowing its associated state property.
+
+	The {@link Shader#shadowProperty} method is responsible for setting up the `Shadow` proxy
+	for the state.
+
+	Shaders are setup through {@link StateType} instances associated with `Property` objects
+	and there is rarely a need to directly interact with them.
+
+	@see {@link Property}
+	@see {@link StateType}
 */
 export default class Shader {
 	constructor(property) {

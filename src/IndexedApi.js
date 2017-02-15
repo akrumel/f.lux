@@ -1,5 +1,10 @@
 
+/**
+	Aggregation api for properties providing indexed or array-like access to child properties.
 
+	@see {@link ArrayProperty}
+	@see {@link IndexedProperty}
+*/
 export default class IndexedApi {
 	constructor(property) {
 		this._property = property;
@@ -17,16 +22,16 @@ export default class IndexedApi {
 		return this._property._();
 	}
 
+	//------------------------------------------------------------------------------------------------------
+	//    Select Array methods:
+	//          (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)
+	//------------------------------------------------------------------------------------------------------
+
 	get length() {
 		if (this.isActive()) {
 			return this.impl().length;
 		}
 	}
-
-	//------------------------------------------------------------------------------------------------------
-	//    Select Array methods:
-	//          (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)
-	//------------------------------------------------------------------------------------------------------
 
 	clear() {
 		if (this.isActive()) {

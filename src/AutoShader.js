@@ -6,7 +6,11 @@ import noParentStateErrorMsg from "./noParentStateErrorMsg";
 import PropertyFactoryShader from "./PropertyFactoryShader";
 
 
-/** @ignore */
+/**
+	Simplified shader used by `Shader` for handling auto-shadowing.
+
+	@see {@link Shader}.
+ */
 export default class AutoShader {
 	constructor(readonly) {
 		this.readonly = readonly;

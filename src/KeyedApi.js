@@ -9,6 +9,9 @@ import {
 
 /**
 	API implementation for properties that support keyed access to child properties.
+
+	@see {@link MapProperty}
+	@see {@link ObjectProperty}
 */
 export default class KeyedApi {
 	constructor(property) {

@@ -57,9 +57,24 @@ const _changeRoot = Symbol('changeRoot');
 
 
 /*
-	Todo: reduce memory footprint:
-		1) investigate _time and _previousTime really needed
-		2) investigate getting access from property (reduce object creation and memory footprint)
+	Todos:
+		* Reduce memory footprint:
+			1) investigate _time and _previousTime really needed
+			2) investigate getting access from property (reduce object creation and memory footprint)
+		* Investigate replacing impl with Proxy
+*/
+
+/**
+	The base class for {@link Shadow} backing objects. Each shadow property has an 'impl' that
+	performs the f.lux bookkeeping to enable the shadow state to work properly. The 'impl' is
+	broken out from the shadow proper to prevent polluting the namespace with a bunch of crazy
+	looking variables and methods.
+
+	A shadow property's 'impl' is available through the {@link Shadow.__} method. Direct access
+	to the 'impl' is rarely needed by custom properties, shadows, or application logic. And there
+	almost certainly no reason to directly subclass this class.
+
+	@see {@link Shadow.__}
 */
 export default class ShadowImpl {
 	constructor(time, property, name, state, parent, shader, prev) {

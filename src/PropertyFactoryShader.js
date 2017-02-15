@@ -9,7 +9,13 @@ import Shader from "./Shader";
 import StateType from "./StateType";
 
 
-/** @ignore */
+/**
+	Specialized shader that uses a {@link StateType} instance to instantiate a {@link Property}.
+	Used by `KeyedApi` for adding child properties to the {@link Property#shader}.
+
+	@use {@link KeyedApi}
+	@see {@link Shader}
+*/
 export default class PropertyFactoryShader {
 	/*
 		Creates a factory that will create a shader for instantiating shadow properties for a property type.

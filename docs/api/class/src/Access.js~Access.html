@@ -98,13 +98,13 @@
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Access from &apos;<span><a href="file/src/Access.js.html#lineNumber7">f.lux/src/Access.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Access from &apos;<span><a href="file/src/Access.js.html#lineNumber28">f.lux/src/Access.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/src/Access.js.html#lineNumber7">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/src/Access.js.html#lineNumber28">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -124,10 +124,26 @@
 
   
   
-  
+  <div class="description" data-ice="description"><p>The base class for <code>Shadow.$()</code> method used for obtaining f.lux contextual information
+concerning a non-primitive shadow state property.</p>
+<p>The most commonly used methods include:</p>
+<p><ul>
+<li><span><a href="class/src/Access.js~Access.html#instance-method-dotPath">Access#dotPath</a></span></li>
+<li><span><a href="class/src/Access.js~Access.html#instance-method-property">Access#property</a></span></li>
+<li><span><a href="class/src/Access.js~Access.html#instance-method-pid">Access#pid</a></span></li>
+<li><span><a href="class/src/Access.js~Access.html#instance-method-state">Access#state</a></span></li>
+<li><span><a href="class/src/Access.js~Access.html#instance-method-store">Access#store</a></span></li>
+<li><span><a href="class/src/Access.js~Access.html#instance-method-waitFor">Access#waitFor</a></span></li>
+</ul>
+
+</p>
+<p>This class provides access to the experimental <span><a href="class/src/Property.js~Property.html">Property</a></span> checkpointing api. Checkpointing
+allows the state to be recorded at a point in time and then later reset to that point. This is
+handy when a form may accept changes and then allow the user to cancel the edit session.</p>
+</div>
   
 
-  
+  <div data-ice="see"><h4>See:</h4><ul><li><span><span><a href="class/src/Shadow.js~Shadow.html">Shadow</a></span></span></li></ul></div>
 
   
 
@@ -229,7 +245,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Copies the current actual state for later reset using <span><a href="class/src/Property.js~Property.html#instance-method-resetToCheckpoint">Property#resetToCheckpoint</a></span>.</p>
+</div>
       </div>
     </td>
     <td>
@@ -256,7 +273,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Clears an existing checkpoint created using <span><a href="class/src/Property.js~Property.html#instance-method-checkpoint">Property#checkpoint</a></span>.</p>
+</div>
       </div>
     </td>
     <td>
@@ -277,13 +295,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Access.js~Access.html#instance-method-dotPath">dotPath</a></span></span><span data-ice="signature">(): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/Access.js~Access.html#instance-method-dotPath">dotPath</a></span></span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets the path from root property using a dot (<code>.</code>) separator.</p>
+</div>
       </div>
     </td>
     <td>
@@ -304,13 +323,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Access.js~Access.html#instance-method-getCheckpoint">getCheckpoint</a></span></span><span data-ice="signature">(): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/Access.js~Access.html#instance-method-getCheckpoint">getCheckpoint</a></span></span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets the checkpoint state previously recorded using <span><a href="class/src/Property.js~Property.html#instance-method-checkpoint">Property#checkpoint</a></span>.</p>
+</div>
       </div>
     </td>
     <td>
@@ -331,13 +351,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Access.js~Access.html#instance-method-hasCheckpoint">hasCheckpoint</a></span></span><span data-ice="signature">(): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/Access.js~Access.html#instance-method-hasCheckpoint">hasCheckpoint</a></span></span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets if an existing checkpoint has be created using <span><a href="class/src/Property.js~Property.html#instance-method-checkpoint">Property#checkpoint</a></span>.</p>
+</div>
       </div>
     </td>
     <td>
@@ -358,13 +379,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Access.js~Access.html#instance-method-isActive">isActive</a></span></span><span data-ice="signature">(): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/Access.js~Access.html#instance-method-isActive">isActive</a></span></span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets if the shadow state property is proxying the current actual state contained in the f.lux store.</p>
+</div>
       </div>
     </td>
     <td>
@@ -385,13 +407,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Access.js~Access.html#instance-method-isReadonly">isReadonly</a></span></span><span data-ice="signature">(): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/Access.js~Access.html#instance-method-isReadonly">isReadonly</a></span></span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets if the property allows for assignment through the shadow state, ie <code>todo.desc = &quot;go skiing&quot;</code>.</p>
+</div>
       </div>
     </td>
     <td>
@@ -412,13 +435,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Access.js~Access.html#instance-method-isValid">isValid</a></span></span><span data-ice="signature">(): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/Access.js~Access.html#instance-method-isValid">isValid</a></span></span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets if the shadow property has experienced a mutation action.</p>
+</div>
       </div>
     </td>
     <td>
@@ -439,13 +463,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Access.js~Access.html#instance-method-latest">latest</a></span></span><span data-ice="signature">(): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/Access.js~Access.html#instance-method-latest">latest</a></span></span><span data-ice="signature">(): <span><a href="class/src/Shadow.js~Shadow.html">Shadow</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets the current shadow state for this property.</p>
+</div>
       </div>
     </td>
     <td>
@@ -466,13 +491,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Access.js~Access.html#instance-method-merge">merge</a></span></span><span data-ice="signature">(data: <span>*</span>)</span>
+          <span data-ice="name"><span><a href="class/src/Access.js~Access.html#instance-method-nextState">nextState</a></span></span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets the next actual state for this property following any pending actions.</p>
+</div>
       </div>
     </td>
     <td>
@@ -493,13 +519,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Access.js~Access.html#instance-method-nextState">nextState</a></span></span><span data-ice="signature">(): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/Access.js~Access.html#instance-method-path">path</a></span></span><span data-ice="signature">(): <span><span>[]</span></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets the <span><a href="class/src/Property.js~Property.html#instance-method-name">Property#name</a></span> components from the root property to this property.</p>
+</div>
       </div>
     </td>
     <td>
@@ -520,13 +547,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Access.js~Access.html#instance-method-path">path</a></span></span><span data-ice="signature">(): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/Access.js~Access.html#instance-method-pid">pid</a></span></span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets the unique f.lux ID for this property.</p>
+</div>
       </div>
     </td>
     <td>
@@ -547,40 +575,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Access.js~Access.html#instance-method-pid">pid</a></span></span><span data-ice="signature">(): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/Access.js~Access.html#instance-method-property">property</a></span></span><span data-ice="signature">(): <span><a href="class/src/Property.js~Property.html">Property</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/src/Access.js~Access.html#instance-method-property">property</a></span></span><span data-ice="signature">(): <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
+        <div data-ice="description"><p>Gets the <span><a href="class/src/Property.js~Property.html">Property</a></span> managing this shadow property.</p>
+</div>
       </div>
     </td>
     <td>
@@ -607,7 +609,9 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Replaces the current property state with a checkpoint state previously recorded using
+<span><a href="class/src/Property.js~Property.html#instance-method-checkpoint">Property#checkpoint</a></span>.</p>
+</div>
       </div>
     </td>
     <td>
@@ -628,13 +632,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Access.js~Access.html#instance-method-rootShadow">rootShadow</a></span></span><span data-ice="signature">(): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/Access.js~Access.html#instance-method-rootShadow">rootShadow</a></span></span><span data-ice="signature">(): <span><a href="class/src/Shadow.js~Shadow.html">Shadow</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets the top-level shadow from the <span><a href="class/src/Store.js~Store.html">Store</a></span> containing this shadow state property.</p>
+</div>
       </div>
     </td>
     <td>
@@ -682,13 +687,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Access.js~Access.html#instance-method-slashPath">slashPath</a></span></span><span data-ice="signature">(): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/Access.js~Access.html#instance-method-slashPath">slashPath</a></span></span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets the path from root property using a slash (<code>/</code>) separator.</p>
+</div>
       </div>
     </td>
     <td>
@@ -709,13 +715,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Access.js~Access.html#instance-method-state">state</a></span></span><span data-ice="signature">(): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/Access.js~Access.html#instance-method-state">state</a></span></span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets the actual state being shadowed.</p>
+</div>
       </div>
     </td>
     <td>
@@ -736,13 +743,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Access.js~Access.html#instance-method-store">store</a></span></span><span data-ice="signature">(): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/Access.js~Access.html#instance-method-store">store</a></span></span><span data-ice="signature">(): <span><a href="class/src/Store.js~Store.html">Store</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets the {@Link Store} containing the application state.</p>
+</div>
       </div>
     </td>
     <td>
@@ -769,7 +777,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Performs an update on the state values.</p>
+</div>
       </div>
     </td>
     <td>
@@ -790,13 +799,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/Access.js~Access.html#instance-method-waitFor">waitFor</a></span></span><span data-ice="signature">(callback: <span>*</span>)</span>
+          <span data-ice="name"><span><a href="class/src/Access.js~Access.html#instance-method-waitFor">waitFor</a></span></span><span data-ice="signature">(callback: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(shadow: <span><a href="class/src/Shadow.js~Shadow.html">Shadow</a></span>)</span></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Registers a <strong>one-time</strong> no argument callback to be invoked after the next <span><a href="class/src/Store.js~Store.html">Store</a></span> state change.</p>
+</div>
       </div>
     </td>
     <td>
@@ -826,7 +836,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber8">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber29">source</a></span></span>
     </span>
   </h3>
 
@@ -888,7 +898,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber9">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber30">source</a></span></span>
     </span>
   </h3>
 
@@ -934,14 +944,16 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber16">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber46">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Copies the current actual state for later reset using <span><a href="class/src/Property.js~Property.html#instance-method-resetToCheckpoint">Property#resetToCheckpoint</a></span>. An existing
+checkpoint will take precedence over subsequent calls.</p>
+</div>
 
   
 
@@ -977,14 +989,15 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber20">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber53">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Clears an existing checkpoint created using <span><a href="class/src/Property.js~Property.html#instance-method-checkpoint">Property#checkpoint</a></span>.</p>
+</div>
 
   
 
@@ -1016,18 +1029,20 @@
     
     
     
-    <span data-ice="name">dotPath</span><span data-ice="signature">(): <span>*</span></span>
+    <span data-ice="name">dotPath</span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber24">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber65">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets the path from root property using a dot (<code>.</code>) separator. Suitable for using with the lodash <code>result()</code>
+function.</p>
+</div>
 
   
 
@@ -1039,8 +1054,9 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
-          
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>path with each component joined by a <code>.</code></p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -1060,7 +1076,7 @@
 
   
 
-  
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://lodash.com/docs/4.17.4#result">https://lodash.com/docs/4.17.4#result</a></span></li></ul></div>
   
 </div>
 <div class="detail" data-ice="detail">
@@ -1071,18 +1087,19 @@
     
     
     
-    <span data-ice="name">getCheckpoint</span><span data-ice="signature">(): <span>*</span></span>
+    <span data-ice="name">getCheckpoint</span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber28">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber74">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets the checkpoint state previously recorded using <span><a href="class/src/Property.js~Property.html#instance-method-checkpoint">Property#checkpoint</a></span>.</p>
+</div>
 
   
 
@@ -1094,8 +1111,9 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
-          
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>the checkpoint data if checkpoint is set.</p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -1126,18 +1144,19 @@
     
     
     
-    <span data-ice="name">hasCheckpoint</span><span data-ice="signature">(): <span>*</span></span>
+    <span data-ice="name">hasCheckpoint</span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber32">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber83">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets if an existing checkpoint has be created using <span><a href="class/src/Property.js~Property.html#instance-method-checkpoint">Property#checkpoint</a></span>.</p>
+</div>
 
   
 
@@ -1149,8 +1168,9 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
-          
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>true if a checkpoint has been recorded.</p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -1181,18 +1201,19 @@
     
     
     
-    <span data-ice="name">isActive</span><span data-ice="signature">(): <span>*</span></span>
+    <span data-ice="name">isActive</span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber36">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber92">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets if the shadow state property is proxying the current actual state contained in the f.lux store.</p>
+</div>
 
   
 
@@ -1204,8 +1225,9 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
-          
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p><code>true</code> if actively proxying the state.</p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -1236,18 +1258,20 @@
     
     
     
-    <span data-ice="name">isReadonly</span><span data-ice="signature">(): <span>*</span></span>
+    <span data-ice="name">isReadonly</span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber44">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber113">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets if the property allows for assignment through the shadow state, ie <code>todo.desc = &quot;go skiing&quot;</code>. The
+readonly attribute is hierarchically determined through the parent property if not explicitly set.</p>
+</div>
 
   
 
@@ -1259,8 +1283,9 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
-          
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>true if assignment is not allowed</p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -1291,18 +1316,21 @@
     
     
     
-    <span data-ice="name">isValid</span><span data-ice="signature">(): <span>*</span></span>
+    <span data-ice="name">isValid</span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber40">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber103">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets if the shadow property has experienced a mutation action. This method will return <code>true</code> and
+<span><a href="class/src/Access.js~Access.html#instance-method-isActive">Access#isActive</a></span> may also return true if the f.lux store has not yet been transitioned to
+the next state.</p>
+</div>
 
   
 
@@ -1314,8 +1342,9 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
-          
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p><code>true</code> if the state has not been changed.</p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -1346,18 +1375,21 @@
     
     
     
-    <span data-ice="name">latest</span><span data-ice="signature">(): <span>*</span></span>
+    <span data-ice="name">latest</span><span data-ice="signature">(): <span><a href="class/src/Shadow.js~Shadow.html">Shadow</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber48">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber124">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets the current shadow state for this property. The shadow state referenced by this access object
+could be stale if a javascript closure has a previous reference and then performed an asynchronous
+operation like a network request.</p>
+</div>
 
   
 
@@ -1369,7 +1401,7 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
+          <td class="return-type" data-ice="returnType"><span><a href="class/src/Shadow.js~Shadow.html">Shadow</a></span></td>
           
         </tr>
       </tbody>
@@ -1394,65 +1426,6 @@
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-merge">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    
-    <span data-ice="name">merge</span><span data-ice="signature">(data: <span>*</span>)</span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber54">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  
-
-  
-
-  <div data-ice="properties"><div data-ice="properties">
-  <h4 data-ice="title">Params:</h4>
-  <table class="params">
-    <thead>
-    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-    
-    <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">data</td>
-      <td data-ice="type"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
-    </tr>
-</tbody>
-  </table>
-</div>
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="instance-method-nextState">
     <span class="access" data-ice="access">public</span>
     
@@ -1460,18 +1433,19 @@
     
     
     
-    <span data-ice="name">nextState</span><span data-ice="signature">(): <span>*</span></span>
+    <span data-ice="name">nextState</span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber58">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber140">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets the next actual state for this property following any pending actions.</p>
+</div>
 
   
 
@@ -1483,7 +1457,7 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></td>
           
         </tr>
       </tbody>
@@ -1515,18 +1489,19 @@
     
     
     
-    <span data-ice="name">path</span><span data-ice="signature">(): <span>*</span></span>
+    <span data-ice="name">path</span><span data-ice="signature">(): <span><span>[]</span></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber62">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber150">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets the <span><a href="class/src/Property.js~Property.html#instance-method-name">Property#name</a></span> components from the root property to this property.</p>
+</div>
 
   
 
@@ -1538,8 +1513,10 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
-          
+          <td class="return-type" data-ice="returnType"><span><span>[]</span></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>array where each name component is either a <code>string</code> or <code>number</code> depending on the
+each parent component&apos;s type.</p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -1570,18 +1547,19 @@
     
     
     
-    <span data-ice="name">pid</span><span data-ice="signature">(): <span>*</span></span>
+    <span data-ice="name">pid</span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber66">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber159">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets the unique f.lux ID for this property.</p>
+</div>
 
   
 
@@ -1593,8 +1571,9 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
-          
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>the id</p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -1625,18 +1604,19 @@
     
     
     
-    <span data-ice="name">property</span><span data-ice="signature">(): <span>*</span></span>
+    <span data-ice="name">property</span><span data-ice="signature">(): <span><a href="class/src/Property.js~Property.html">Property</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber70">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber168">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets the <span><a href="class/src/Property.js~Property.html">Property</a></span> managing this shadow property.</p>
+</div>
 
   
 
@@ -1648,7 +1628,7 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
+          <td class="return-type" data-ice="returnType"><span><a href="class/src/Property.js~Property.html">Property</a></span></td>
           
         </tr>
       </tbody>
@@ -1684,14 +1664,16 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber74">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber176">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Replaces the current property state with a checkpoint state previously recorded using
+<span><a href="class/src/Property.js~Property.html#instance-method-checkpoint">Property#checkpoint</a></span>. The checkpoint is cleared.</p>
+</div>
 
   
 
@@ -1723,18 +1705,19 @@
     
     
     
-    <span data-ice="name">rootShadow</span><span data-ice="signature">(): <span>*</span></span>
+    <span data-ice="name">rootShadow</span><span data-ice="signature">(): <span><a href="class/src/Shadow.js~Shadow.html">Shadow</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber78">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber185">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets the top-level shadow from the <span><a href="class/src/Store.js~Store.html">Store</a></span> containing this shadow state property.</p>
+</div>
 
   
 
@@ -1746,7 +1729,7 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
+          <td class="return-type" data-ice="returnType"><span><a href="class/src/Shadow.js~Shadow.html">Shadow</a></span></td>
           
         </tr>
       </tbody>
@@ -1782,7 +1765,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber86">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber202">source</a></span></span>
     </span>
   </h3>
 
@@ -1833,18 +1816,19 @@
     
     
     
-    <span data-ice="name">slashPath</span><span data-ice="signature">(): <span>*</span></span>
+    <span data-ice="name">slashPath</span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber82">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber194">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets the path from root property using a slash (<code>/</code>) separator.</p>
+</div>
 
   
 
@@ -1856,8 +1840,9 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
-          
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>path with each component separated by a <code>/</code></p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -1888,18 +1873,19 @@
     
     
     
-    <span data-ice="name">state</span><span data-ice="signature">(): <span>*</span></span>
+    <span data-ice="name">state</span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber90">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber211">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets the actual state being shadowed.</p>
+</div>
 
   
 
@@ -1911,7 +1897,7 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></td>
           
         </tr>
       </tbody>
@@ -1943,18 +1929,19 @@
     
     
     
-    <span data-ice="name">store</span><span data-ice="signature">(): <span>*</span></span>
+    <span data-ice="name">store</span><span data-ice="signature">(): <span><a href="class/src/Store.js~Store.html">Store</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber94">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber220">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets the {@Link Store} containing the application state.</p>
+</div>
 
   
 
@@ -1966,7 +1953,7 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
+          <td class="return-type" data-ice="returnType"><span><a href="class/src/Store.js~Store.html">Store</a></span></td>
           
         </tr>
       </tbody>
@@ -2002,14 +1989,30 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber118">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber249">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Performs an update on the state values.</p>
+<p>The callback should be pure and have the form:</p>
+<pre><code><code class="source-code prettyprint">callback(nextState) : nextState</code>
+</code></pre><ul>
+<li>or -</li>
+</ul>
+<pre><code><code class="source-code prettyprint">callback(nextState) : { name, nextState }</code>
+</code></pre><p>The <code>nextState</code> parameter is a javascript object (not a <code>Shadow</code>) that represents the next state starting
+from the current state and having all the actions in the current tick applied to it before this <code>update()</code>
+call.</p>
+<p>The callback should return an object with the following properties:</p>
+<p><ul>
+<li> <code>name</code> - a stort moniker identifying the update call purpose. This will passed to the store middleware.
+This value is optional with the default value being &apos;[path].$().update()&apos;.</li>
+<li><code>nextState</code> - the value for the next state after the update functionality.</li>
+</ul></p>
+</div>
 
   
 
@@ -2057,18 +2060,19 @@
     
     
     
-    <span data-ice="name">waitFor</span><span data-ice="signature">(callback: <span>*</span>)</span>
+    <span data-ice="name">waitFor</span><span data-ice="signature">(callback: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(shadow: <span><a href="class/src/Shadow.js~Shadow.html">Shadow</a></span>)</span></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber135">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Access.js.html#lineNumber272">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Registers a <strong>one-time</strong> no argument callback to be invoked after the next <span><a href="class/src/Store.js~Store.html">Store</a></span> state change.</p>
+</div>
 
   
 
@@ -2082,9 +2086,11 @@
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">callback</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(shadow: <span><a href="class/src/Shadow.js~Shadow.html">Shadow</a></span>)</span></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>a callback to be invoked after all pending changes have been
+reflected in the shadow state.</p>
+</td>
     </tr>
 </tbody>
   </table>
