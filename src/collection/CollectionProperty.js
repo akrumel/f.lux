@@ -96,18 +96,257 @@ import { DEFAULTS_OPTION, MERGE_OPTION, NONE_OPTION, REPLACE_OPTION, REPLACE_ALL
 
 
 /*
-	Todo:
-		* _id2cid and _models to ObjectProperty to remove overhead
+	Improvements
+		* Paging - consider either adding an endpoint fetchNext() method or make setting the
+			query parameters pluggable
+		* Serialization - make an abstract structure so less brittle to internal data
+			structure changes
+		* Paging - sliding window support
+		* Isolated objects - reduce mapping costs for large collections
+		* Map models onto collection
+*/
+
+/**
+	`CollectionProperty` provides a standard means for accessing remote data and was inspired by
+	[Backbone collections](http://backbonejs.org/#Collection). The protocol for interacting with
+	the data source is delegated to an *endpoint* so the same application logic can work with data from
+	a RESTful api, graphql, local test data, or even an in-browser database like localforage. F.lux
+	ships with support for two endpoints, {@link RestEndpointProperty} and {@link PojoEndpointProperty}.
+
+	F.lux ships with a [example](https://github.com/akrumel/f.lux/tree/master/examples/todo-collections)
+	using collections in a todo application utilizing an in memory data source. The example uses a local
+	data source to make setup dead simple while still demonstrating the basic features of creating
+	and interacting with collections.
+
+	## Basic operations
+
+	<ul>
+		<li>`add(state, mergeOp)`</li>
+		<li>`all()`</li>
+		<li>`clear()</li>
+		<li>`create(model)`</li>
+		<li>`destroy(id)`</li>
+		<li>`fetch(filter, mergeOp)`</li>
+		<li>`find(id)`</li>
+		<li>`get(id)`</li>
+		<li>`has(id)`</li>
+		<li>`remove(id)`</li>
+	</ul>
+
+
+	## Utility functions
+
+	<ul>
+		<li>`entries()`</li>
+		<li>`every(iteratee, context)`</li>
+		<li>`filter(iteratee, context)`</li>
+		<li>`groupBy(callback, context)`</li>
+		<li>`keys()`</li>
+		<li>`map(iteratee, context)`</li>
+		<li>`reduce(iteratee, acc, context)`</li>
+		<li>`some(iteratee, context)`</li>
+		<li>`sortBy(...iteratee)`</li>
+		<li>`values()`</li>
+	</ul>
+
+
+	## Model access
+
+	Properties managed by a collection receive an f.lux accessor (`$()`) with additional
+	capabilities related to the collection. The accessor class is ${@link ShadowModelAccess}.
+
+	<ul>
+		<li>`collection()` - gets the {@link Collection} managing this model</li>
+		<li>`destroy()` - permanently deletes the model from the collection using
+			{@link CollectionProperty#destroy}</li>
+		<li>`id()` - gets the ID used by the data source for tracking the model</li>
+		<li>`isWaiting()` - is a network operation in progress associated with this model</li>
+		<li>`isDirty()` - has the model been modified since it was last saved/retrieved</li>
+		<li>`isNew()` - gets whether the model has yet to be written to the collection's endpoint</li>
+		<li>`remove()` - removes the model from the collection using {@link CollectionProperty#remove}</li>
+		<li>`save()` - save the model using {@link CollectionProperty#save}</li>
+	</ul>
+
+
+	## Paging
+
+	The collection provides redimentary paging support for potentially large collections. The
+	current implementation simply grows the collection size wtih each call to `fetchNext()`
+	and does not make any efforts to remove previous models. (A likely future enhancement)
+
+	<ul>
+		<li>`fetchNext()` - gets the next group of models</li>
+		<li>`isPaging()` - gets if a paging request is outstanding (only one paging request per
+				collection allowed at one time)</li>
+		<li>`hasMorePages()` - does the endpoint have additional models</li>
+		<li>`nextOffset()` - gets the offset for the next paging request</li>
+		<li>`resetPaging()` - resets the internal paging variables</li>
+		<li>`setLimit()` - change the number of models requested with each `fetchNext()` request</li>
+	</ul>
+
+
+	## Endpoints
+
+	Collections represent a protocol independent means of managing persistent models that
+	exist outside the application state. Endpoints implement the protocol connection to the
+	data source. F.lux endpoints have been implemented for RESTful server apis, in-memory,
+	GraphQL, Sqlite, and Couchbase. F.lux ships with support for RESTful servers and in-memory.
+
+	A simple, explicit example of creating a collection and assigning an endpoint:
+
+	```
+	const rootProperty = store.root();
+	const collection = new CollectionProperty(colType);
+	const ep = new RestEndpointProperty.createFor("http://some-url.com/an-api");
+
+	collection.setEndpoint(ep);
+
+	root._keyed.addProperty("aCollection", collection);
+	```
+
+	The [Todo Collection Example](https://github.com/akrumel/f.lux/tree/master/examples/todo-collections)
+	demonstrates a more typical example of setting up a collection.
+
+	<div data-ice="see"><h4>See:</h4>
+		<ul>
+			<li>{@link RestEndpointProperty}</li>
+			<li>{@link PojoEndpointProperty}</li>
+		</ul>
+	</div>
+
+
+	## Query filters
+
+	Collection models are retrieved in full using {@link CollectionProperty#fetch} that has the following
+	signature:
+
+	```
+	fetch(filter=null, mergeOp=REPLACE_OPTION, replaceAll=true)
+	```
+
+	where:
+	<ul>
+		<li>`filter` - a query filter object or `null` for no endpoint filtering</li>
+		<li>`mergeOp` - one of `DEFAULTS_OPTION`, `MERGE_OPTION`, or `REPLACE_OPTION` and specifies
+				how to combine an existing model with a matching ID with a newly retrieved model.</li>
+		<li>`replaceAll` - a boolean where `true` means replace the current colleciton models with
+				the returned models.</li>
+	</ul>
+
+	The `filter` parameter is a specialized object generated by the endpoint method `queryBuilder()`.
+	A query builder is specialized to the endpoint and expose the following methods:
+
+	<ul>
+		<li>`equals(name, value)`</li>
+		<li>`gt(name, value)`</li>
+		<li>`gte(name, value)`</li>
+		<li>`lt(name, value)`</li>
+		<li>`lte(name, value)`</li>
+	</ul>
+
+	An example of using a query builder is:
+
+	```
+	const qb = colleciton.endpoint.queryBuilder();
+
+	qb.equals("name", "fred");
+
+	collection.fetch(qb);
+	```
+
+	<div data-ice="see"><h4>See:</h4>
+		<ul>
+			<li>{@link RestQueryBuilder}</li>
+			<li>{@link PojoQueryBuilder}</li>
+		</ul>
+	</div>
+
+
+	## Errors
+
+	Methods utilizing the collection endpoint are asynchronous and return a `Promise`. Errors generated
+	during an endpoint operation reject using an `Error` with several specialized properties:
+
+	<ul>
+		<li>`status` - an HTTP status code for the error type</li>
+		<li>`endpointError` - the error object generated by the endpoint</li>
+	</ul>
+
+
+	## Auto-checkpointing
+
+	The `Property` class supports checkpointing state that can be reset at a later time using
+	{@link Property#resetToCheckpoint}. Collections support setting an 'auto-checkpoint' flag
+	that will result in managed models automatically setting a checkpoint on change. This handy
+	for situations like a 'Cancel' button on a form where all changes need to be undone. The
+	checkpoints are automatically cleared when a model is saved.
+
+
+	<ul>
+		<li>`isAutocheckpoint()`</li>
+		<li>`setAutocheckpoint(auto)`</li>
+	</ul>
+
+
+	## Middleware
+
+	A middleware operation is invoked before each asynchronous/network operation involving the
+	endpoint. Middleware operations are functions with the following format
+
+	```
+	function middleware(collectionShadow, collectionProperty, op): Promise
+	```
+
+	Middleware functions must return a `Promise` and are invoked in the order registered. A function
+	generating an error will terminate the middleware chain and the collection operation will not
+	be performed.
+
+	<ul>
+		<li>`CreateOp` - invoked prior to create rquests</li>
+		<li>`DestroyOp` - invoked prior to destroy rquests</li>
+		<li>`FetchOp` - invoked prior to fetch rquests</li>
+		<li>`FindOp` - invoked prior to find rquests</li>
+		<li>`UpdateOp` - invoked prior to update rquests</li>
+		<li>`` - </li>
+	</ul>
+
+
+	## Events
+
+	A colleciton is an [Event Emitter](https://github.com/component/emitter) and generates
+	the following events:
+
+	<ul>
+		<li>`ChangeEvent` - collection changes</li>
+		<li>`DeletedEvent` - collection destroy() success</li>
+		<li>`FetchedEvent` - collection fetch() success</li>
+		<li>`FoundEvent` - collection find() success</li>
+		<li>`ErrorEvent` - error during an operation</li>
+		<li>`SavedEvent` - collection save() success</li>
+	</ul>
+
+	Events are can be utilized to handle authorization errors, offline support, logging, or
+	debugging tools.
+
+
+	@see {@link CollectionShadow}
+	@see {@link ShadowModelAccess}
+	@see {@link RestEndpointProperty}
+	@see {@link PojoEndpointProperty}
+	@see {@link RestQueryBuilder}
+	@see {@link PojoQueryBuilder}
 */
 export default class CollectionProperty extends Property {
 	constructor(stateType) {
 		super(stateType);
 
+		/** @ignore */
 		this._keyed = new KeyedApi(this);
 
 		this.setImplementationClass(ObjectShadowImpl);
 		this.setShadowClass(CollectionShadow);
 
+		/** @ignore */
 		this[_middleware] = {
 			[CreateOp]: [],
 			[DestroyOp]: [],
@@ -118,7 +357,9 @@ export default class CollectionProperty extends Property {
 
 		// keep isFetching as an instance variable because transient data and gives immediate
 		// feedback to prevent concurrent fetches
+		/** @ignore */
 		this[_fetching] = false;
+		/** @ignore */
 		this[_autocheckpoint] = false;
 
 		this._keyed.addPropertyType(_idName, PrimitiveProperty.type.initialState("id").autoshadow);
@@ -147,42 +388,75 @@ export default class CollectionProperty extends Property {
 		modelsShader.elementShader().addProperty("data", managedType);
 	}
 
-	/*
-		Factory function for creating an CollectionProperty subclass suitable for using with new.
+	/**
+		Factory function for creating an `CollectionProperty` subclass. The generated class will have
+		the `type` {@link StateType} descriptor set upon return.
 
-		Parameters (all are optional):
-			shadowType: one of a pojo or class. This parameter defines the new property
-				shadow. If pojo specified, each property and function is mapped onto a CollectionShadow
-				subclass.
-			specCallback: a callback function that will be passed the StateType spec for additional
-				customization, such as setting autoshadow, initial state, or readonly.
-			initialState: the initial state for the new property. (default is {})
+		Example usage:
+		```
+		class SomeShadow extends CollectionShadow {
+		    // definition here
+		}
+
+		export default CollectionProperty.createClass(SomeShadow, type => {
+			// configure type variable
+		});
+		```
+
+		@param {Object|CollectionShadow} [shadowType={}] - `Shadow` subclass or object literal api definition.
+			If object literal specified, each property and function is mapped onto a Shadow subclass.
+		@param {function(type: StateType)} [typeCallback] - a callback function that will be passed the
+			{@link StateType} spec for additional customization, such as setting autoshadow, initial state,
+			or readonly.
+		@param {Object} [initialState]={} - the initial state for the new property.
+
+		@return {ObjectProperty} newly defined `ObjectProperty` subclass.
 	*/
-	static createClass(shadowType={}, specCallback, initialState={}) {
-		return createPropertyClass(shadowType, initialState, specCallback, CollectionProperty, CollectionShadow);
+	static createClass(shadowType={}, typeCallback, initialState={}) {
+		return createPropertyClass(shadowType, initialState, typeCallback, CollectionProperty, CollectionShadow);
 	}
 
-	/*
-		Factory function for creating a StateType with an appropriately set intial state.
+	/**
+		Factory function for setting up the {@link StateType} `type` class variable with an appropriately
+		configured intial state.
 
-		Parameters:
-			PropClass: CollectionProperty subclass (required)
-			ShadowClass: Shadow subclass (optional)
-			specCallback: a callback function that will be passed the StateType spec for additional
-				customization, such as setting autoshadow or readonly. (optional)
-			initialState: the initial state for the new property. (default is {})
+		Example usage:
+		```
+        export default class TodosCollection extends CollectionProperty {
+			// implement property here
+        }
+
+        class TodosShadow extends CollectionShadow {
+			// implement shadow api here
+        }
+
+        ObjectProperty.defineType(TodosCollection, TodosShadow, type => {
+			// configure type variable
+        });
+		```
+
+		@param {CollectionShadow} PropClass - `CollectionShadow` subclass
+		@param {Object|CollectionShadow} [ShadowType] - Shadow` subclass or object literal api definition.
+			If object literal specified, each property and function is mapped onto a Shadow subclass.
+		@param {function(type: StateType)} [typeCallback] - a callback function that will be passed the
+			{@link StateType} spec for additional customization, such as setting autoshadow, initial state, or
+			readonly.
+		@param {Object} [initialState={}] - the initial state for the new property.
 	*/
-	static defineType(PropClass, ShadowType, specCallback, initialState={}) {
+	static defineType(PropClass, ShadowType, typeCallback, initialState={}) {
 		assert( a => a.is(CollectionProperty.isPrototypeOf(PropClass), "PropClass must subclass CollectionProperty") );
 
-		return StateType.defineTypeEx(PropClass, ShadowType, specCallback, initialState);
+		return StateType.defineTypeEx(PropClass, ShadowType, typeCallback, initialState);
 	}
 
-	/*
+	/**
 		Override the base functionality method, and not designed life-cycle method propertyWillUpdate(), so
 		subclasses can do the normal override without using super.propertyWillUpdate() to preserve functionality.
+
+		@ignore
 	*/
 	onPropertyDidUpdate() {
+		// need to call parent classes version
 		super.onPropertyDidUpdate();
 
 		this.emit(ChangeEvent, this._(), this);
@@ -192,10 +466,22 @@ export default class CollectionProperty extends Property {
 	//------------------------------------------------------------------------------------------------------
 	// Checkpoint support API
 	//------------------------------------------------------------------------------------------------------
+
+
+	/**
+		Sets whether auto-checkpointing is enabled.
+
+		@return {boolean}
+	*/
 	isAutocheckpoint() {
 		return this[_autocheckpoint];
 	}
 
+	/**
+		Sets whether auto-checkpointing should be enabled.
+
+		@param {boolean} auto - `true` to enable.
+	*/
 	setAutocheckpoint(auto) {
 		this[_autocheckpoint] = auto;
 	}
@@ -204,29 +490,38 @@ export default class CollectionProperty extends Property {
 	// Offline data support API
 	//------------------------------------------------------------------------------------------------------
 
-	/*
-		Experimental feature
+	/**
+		Gets an object capable of providing a persisted version of this collection.
 
-		Gets an object capable of providing a persisted version of this collection. The object must
-		expose a single method with the form:
+		@return {Object}
 
-			restore()
-				Method sets the collection state for offline access.
+		@experimental
 	*/
 	getOfflineState() {
 		return this[_offlineState];
 	}
 
-	/*
-		Experimental feature
-
-		Sets an object capable of providing a persisted version of this collection. The object must
+	/**
+		Sets an object capable of providing a persisted version of this collection. The object must minimally
 		expose a single method with the form:
 
-			restore()
-				Method sets the collection state for offline access.
+		```
+		function restore()
+		```
+
+		Method sets the collection state for offline access. Typically invoked by application logic after
+		a failed `fetch()` to the endpoint.
+
+		An object is used as the offline state management entity because it will normally perform other
+		duties such as registering for {@link ChangeEvent} to persistently store collection state on changes
+		and support deleting previous backups
+
+		@param {Object} offline - the object containing the `restore()` function.
+
+		@experimental
 	*/
 	setOfflineState(offline) {
+		/** @ignore */
 		this[_offlineState] = offline;
 	}
 
@@ -235,10 +530,13 @@ export default class CollectionProperty extends Property {
 	// Middleware API
 	//------------------------------------------------------------------------------------------------------
 
-	/*
+	/**
 		Registers collection middleware operation. A middleware operation is invoked before each asynchronous/
 		network operation. Middleware operations are functions with the following format:
-			fn(shadow, property)
+
+		```
+		function mwCallback(collectionShadow, collectionProperty)
+		```
 
 		Middleware functions must return a promise and are invoked in the order registered. A function
 		generating an error will terminate the middleware chain and the collection operation will not
@@ -254,8 +552,10 @@ export default class CollectionProperty extends Property {
 		}
 	}
 
-	/*
+	/**
 		Serially invokes each middleware function for the specified operation.
+
+		@ignore
 	*/
 	_on(op, idx=0) {
 		assert( a => a.is(this[_middleware][op], `Unknown middleware operation: ${op}`) );
@@ -275,8 +575,13 @@ export default class CollectionProperty extends Property {
 		}
 	}
 
-	/*
+	/**
 		Experimental feature to update values with any modifications from the server.
+
+		Question: should this be delegated to the endpoint?
+
+		@experimental
+		@ignore
 	*/
 	resync() {
 		const values = this._().valuesArray();
@@ -314,7 +619,7 @@ export default class CollectionProperty extends Property {
 
 		debug( d => d(`resync() - path=${ this.dotPath() }, initial_id=${initialId}, updated_at=${lastUpdate}`) );
 
-// Todo: rework network call returns two arrays: new/modified models and deleted model IDs
+// Todo: rework network call to return two arrays: new/modified models and deleted model IDs
 //       as currently structured there is no delete support.
 //       What about dirty models? Perhaps they should not be touched if there is a conflict.
 
@@ -325,7 +630,19 @@ export default class CollectionProperty extends Property {
 	// Paging API (could improve by adding two offsets and maintain max pages)
 	//------------------------------------------------------------------------------------------------------
 
-	fetchNext(mergeOp=MERGE_OPTION) {
+	/**
+		Fetches the next set of models from the endpoint. This method differs from
+		{@link CollectionProperty#fetch} by passing `offset` and `limit` filter criteria to the
+		endpoint.
+
+		@param {string} [mergeOp=REPLACE_OPTION] - one of `DEFAULTS_OPTION`, `MERGE_OPTION`, or
+			`REPLACE_OPTION` and specifies how to combine an existing model with a matching ID
+			with a newly retrieved model.
+
+		@return {Promise} - resolves with a single argument of an array of model json objects as
+			returned from the endpoint.
+	*/
+	fetchNext(mergeOp=REPLACE_OPTION) {
 		if (this.pagingTime) {
 			throw new Error("Paging operation in progress");
 		} else if (!this.hasMorePages()) {
@@ -357,22 +674,34 @@ export default class CollectionProperty extends Property {
 			});
 	}
 
+	/**
+		Gets if a paging operation ({@link CollectionProperty#fetchNext}) call is in progress.
+	*/
 	isPaging(state=this._()) {
 		// use pagingTime instance variable (instant) and _paging state variable (tied to state) to
 		// return the most conservative value
 		return this.pagingTime || state[_paging];
 	}
 
+	/**
+		Gets if additional paging calls will return additional results.
+	*/
 	hasMorePages(state=this._()) {
 		return this.isConnected() &&
 			!state[_synced] &&
 			(!state[_lastPageSize] || this._()[_lastPageSize] >= this._()[_limit]);
 	}
 
+	/**
+		Gets the offset for the next paging request.
+	*/
 	nextOffset() {
 		return this._keyed.get(_nextOffset);
 	}
 
+	/**
+		Resets all internal paging tracking variables but does not affect currently stored models.
+	*/
 	resetPaging() {
 		this.pagingTime = null;
 		this._keyed.set(_lastPageSize, null);
@@ -380,6 +709,12 @@ export default class CollectionProperty extends Property {
 		this._keyed.set(_paging, false);
 	}
 
+	/**
+		Sets the number of models to request with each paging request. The default paging size is
+		50.
+
+		@param {number} limit
+	*/
 	setLimit(limit) {
 		this.pagingTime = null;
 
@@ -394,21 +729,37 @@ export default class CollectionProperty extends Property {
 	// Endpoint methods
 	//------------------------------------------------------------------------------------------------------
 
+	/**
+		Gets the endpoint for accessing the remote data source.
+
+		@return {Object}
+	*/
 	get endpoint() {
 		return this.isActive() && this._()[_endpoint];
 	}
 
+	/**
+		Gets the endpoint ID, which for {@link RestEndpointProperty} is its URL.
+
+		@return {string}
+	*/
 	get endpointId() {
 		const endpoint = this.endpoint;
 
 		return endpoint && endpoint.id;
 	}
 
+	/**
+		Removes the endpoint from the collection. This has the side-effect of clearing the mdoels.
+	*/
 	clearEndpoint() {
 		this.removeAllModels();
 		this.removeProperty(_endpoint);
 	}
 
+	/**
+		Sets the {@link CollectionProperty#endpoint}.
+	*/
 	setEndpoint(endPoint) {
 		this.setFetching(false);
 		this.resetPaging();
@@ -421,21 +772,24 @@ export default class CollectionProperty extends Property {
 	// Collection methods
 	//------------------------------------------------------------------------------------------------------
 
-	get modelsCount() {
-		return this._()[_models].size;
+	/**
+		Gets the number of models contained in the collection.
+	*/
+	get size() {
+		return this.isActive() && this._().size;
 	}
 
-	/*
-		Synchronously adds a new model object to the store. Call model.$().save() to persist the newly added
-		object.
+	/**
+		Synchronously adds a new model object to the collection. Call `model.$().save()` to persist the newly
+		added object.
 
-		Parmaeters:
-			state - the object model to add to the collection
-			merge - boolean declaring whether this state should be merged over an existing model with
-				the same ID. False means a current model will be replaced with the new model value.
+		@param {object} state - the json model to add to the collection
+		@param {string} [mergeOp=REPLACE_OPTION] - one of `DEFAULTS_OPTION`, `MERGE_OPTION`, or
+			`REPLACE_OPTION` and specifies how to combine an existing model with a matching ID
+			with a newly retrieved model.
 
-		Returns the object's ID. And ID is assigned if the 'id' parameter was not set and it could not
-			be found in the 'state' parameter.
+		@return the object's ID. And ID is assigned if the 'id' parameter was not set and it could not
+			be found in the `state` parameter.
 	*/
 	addModel(state, mergeOp=REPLACE_OPTION) {
 		if (!this.isConnected()) { throw new Error(`Collection is not connected.`) }
@@ -476,15 +830,15 @@ export default class CollectionProperty extends Property {
 		return modelId;
 	}
 
-	/*
+	/**
 		Bulk adds multiple models. Models must have an ID as it is assumed they have been previously
 		saved.
 
-		Parameters:
-			models - array of model values
-			merge - boolean declaring whether each state should be merged over an existing model with
-				the same ID. False means a current model will be replaced with the new model value.
-			syncOp - sets the synced flag to true if this parameter is true
+		@param {array} models - array of model values
+		@param {string} [mergeOp=REPLACE_OPTION] - one of `DEFAULTS_OPTION`, `MERGE_OPTION`, or
+			`REPLACE_OPTION` and specifies how to combine an existing model with a matching ID
+			with a newly retrieved model.
+		@param {boolean} [syncOp=true] - sets the `synced` flag to true if this parameter is true
 	*/
 	addModels(models, mergeOp=REPLACE_OPTION, syncOp=true) {
 		if (!this.isConnected()) { throw new(`Collection ${this.slashPath()} is not connected`) }
@@ -500,8 +854,12 @@ export default class CollectionProperty extends Property {
 		}
 	}
 
-	/*
-		Combines an add and save actions.
+	/**
+		Combines an {@link CollectionProperty#add} and {@link CollectionProperty#save} actions.
+
+		@param {Object} model - the json data
+
+		@return {Promise} resolves with the f.lux shadow state for the new model
 	*/
 	create(model) {
 		if (!this.isConnected()) { return Store.reject(`Collection ${this.slashPath()} is not connected`) }
@@ -512,6 +870,13 @@ export default class CollectionProperty extends Property {
 			.then( () => this.save(cid) );
 	}
 
+	/**
+		Permantently deletes the model with the endpoint and removes it from the collection.
+
+		@param id - the model ID to delete
+
+		@return {Promise} resolves with the ID for the removed mdoel
+	*/
 	destroy(id) {
 		if (!this.hasModel(id)) {
 			return Store.resolve(this._());
@@ -561,6 +926,19 @@ export default class CollectionProperty extends Property {
 		}
 	}
 
+	/**
+		Fetches all the models from the endpoint.
+
+		@param [filter=null] - filter object created using the endpoint.
+		@param {string} [mergeOp=REPLACE_OPTION] - one of `DEFAULTS_OPTION`, `MERGE_OPTION`, or
+			`REPLACE_OPTION` and specifies how to combine an existing model with a matching ID
+			with a newly retrieved model.
+		@param {boolean} [replaceAll=true] - set to `true` replace any current models by the ones
+			returned by the endpoint.
+		@param callback - invoked before retrieved models are process or in case of an error
+
+		@return {Promise} resolves with the json models from the endpoint
+	*/
 	fetch(filter=null, mergeOp=REPLACE_OPTION, replaceAll=true, callback) {
 		if (!this.isConnected()) { return Store.reject(`Collection ${this.slashPath()} is not connected`) }
 
@@ -637,6 +1015,14 @@ export default class CollectionProperty extends Property {
 		}
 	}
 
+	/**
+		Gets a model by ID. The method looks for a matching model in the collection. If one
+		is not found then one is requested from the endpoint.
+
+		@param id - the model ID
+
+		@return {Promise} reolves with the model or undefined if one is not found
+	*/
 	find(id) {
 		if (!this.isConnected()) { return Store.reject(`Collection ${this.slashPath()} is not connected`) }
 
@@ -670,43 +1056,70 @@ export default class CollectionProperty extends Property {
 		}
 	}
 
-	getModel(id, state=this._()) {
-		const model = this._getModel(id, state);
+	/**
+		Gets a model by ID. The method looks for a matching model in the collection and never
+		looks for one remotely through the endpoint.
+
+		@param id - the model ID
+
+		@return {Object} the model or undefined if one is not found
+	*/
+	getModel(id) {
+		const model = this._getModel(id);
 
 		return model && model.data;
 	}
 
-	hasModel(id, state=this._()) {
+	/**
+		Gets if the collection contains a matching model.
+
+		@param id - the model ID
+
+		@return {boolean}
+	*/
+	hasModel(id) {
+		const state = this._();
+
 		return state[_id2cid].has(id) || state[_models].has(id);
 	}
 
-	/*
+	/**
 		Gets if the collection is active (has a shadow) and an endpoint.
 	*/
 	isConnected() {
 		return this._() && this._()[_endpoint] && this._()[_endpoint].isConnected();
 	}
 
+	/**
+		Gets if a fetching operation that will replace ALL models is in progress.
+	*/
 	isFetching() {
 		return this[_fetching];
 	}
 
-	isNew(id, state=this._()) {
-		const model = this._getModel(id, state);
+	/**
+		Gets if a model has never been persisted to the endpoint.
+	*/
+	isNew(id) {
+		const model = this._getModel(id);
 
 		return !model || model.isNew();
 	}
 
+	/**
+		Gets if a model shadow state model represents a model that has never been persisted
+		to the endpoint.
+	*/
 	isNewModel(shadow) {
 		const id = this.extractId(shadow);
 
 		return !id;
 	}
 
-	/*
+	/**
 		Gets the shadow models currently managed by the collection.
 
-		Returns an array of models already fetched and/or added.
+		@return {array} all models being managed by the collection
 	*/
 	modelsArray(state) {
 		if (!state && !this.isConnected()) { throw new Error(`Collection is not connected.`) }
@@ -724,6 +1137,11 @@ export default class CollectionProperty extends Property {
 		return result;
 	}
 
+	/**
+		Gets an iterator with [ID, model] paris.
+
+		@return {Array}
+	*/
 	modelEntries(state) {
 		if (!state && !this.isActive()) { return doneIterator; }
 
@@ -735,11 +1153,21 @@ export default class CollectionProperty extends Property {
 		return iterateOver(keys, key => [key, this.getModel(key)] );
 	}
 
+	/**
+		Gets an iterator containing each model IDs.
+
+		@return {Iterator}
+	*/
 	modelKeys(state=this._()) {
 		// too brute force but quick and sure to work
 		return iteratorFor(this.modelKeysArray(state));
 	}
 
+	/**
+		Gets an array containing each model iDs.
+
+		@return {Array}
+	*/
 	modelKeysArray(state) {
 		if (!state && !this.isActive()) { return []; }
 
@@ -748,12 +1176,19 @@ export default class CollectionProperty extends Property {
 		return Object.keys(state[_models]);
 	}
 
+	/**
+		Gets an iterator containing each f.lux shadow state model.
+
+		@return {Iterator}
+	*/
 	modelValues(state=this._()) {
 		return iterateOver(this.modelKeysArray(state), key => this.getModel(key, state));
 	}
 
-	/*
+	/**
 		Synchronously removes the model from the collection without performing an endpoint operation.
+
+		@param id - the model id or cid
 	*/
 	remove(id) {
 		if (!this.hasModel(id)) { return }
@@ -765,7 +1200,7 @@ export default class CollectionProperty extends Property {
 		this._()[_id2cid].delete(model.id);
 	}
 
-	/*
+	/**
 		Removes all models from the collection and marks the collection as having not synched with the
 		endpoint.
 	*/
@@ -777,14 +1212,15 @@ export default class CollectionProperty extends Property {
 		this._()[_id2cid].clear();
 	}
 
-	/*
+	/**
 		Saves a model through the endpoint.
 
-		Parameters:
-			id - the model id or cid
-			mergeOp - one of constants: DEFAULTS, MERGE, NONE, REPLACE
+		@param id - the model id or cid
+		@param {string} [mergeOp=REPLACE_OPTION] - one of `DEFAULTS_OPTION`, `MERGE_OPTION`, or
+			`REPLACE_OPTION` and specifies how to combine an existing model with a matching ID
+			with a newly retrieved model.
 
-		Returns a promise. The resolve function arguments are F.lux models and this adapter as arguments
+		@return {Promise} resolves to the f.lux shadow state for the saved model
 	*/
 	save(id, mergeOp=MERGE_OPTION) {
 		if (!this.isConnected()) { return Store.reject(`Collection ${this.slashPath()} is not connected`) }
@@ -875,20 +1311,30 @@ export default class CollectionProperty extends Property {
 		}
 	}
 
+	/**
+		Sets the property name containing the model ID. Default is `id`.
+	*/
 	setIdName(idName) {
 		this._()[_idName] = idName;
 	}
 
+
+	/**
+		TODO: make private
+
+		@ignore
+	*/
 	setFetching(fetching) {
 		this[_fetching] = fetching;
 		this.touch();
 //		this._keyed.set(_fetching, fetching);
 	}
 
-	/*
+	/**
 		Bulk replaces current models with an array of new models.
 
-		See comments for addModels().
+		@param {array} models - array of model values
+		@param {boolean} [syncOp=true] - sets the `synced` flag to true if this parameter is true
 	*/
 	setModels(models, syncOp=true) {
 		this.removeAllModels();
@@ -914,7 +1360,7 @@ export default class CollectionProperty extends Property {
 		return json;
 	}
 
-	/*
+	/**
 		Used by the private _shadow() method to get the id from the model JSON representation as returned by the
 		subclass doXXX() apis. The default implementation simply returns the 'id' model property.
 	*/
@@ -924,6 +1370,7 @@ export default class CollectionProperty extends Property {
 		return isPlainObject(model) ?model[idName] :model;
 	}
 
+	/** @ignore */
 	onError(error, opMsg) {
 		var msg;
 
@@ -955,10 +1402,13 @@ export default class CollectionProperty extends Property {
 	// Private methods
 	//------------------------------------------------------------------------------------------------------
 
-	/*
+	/**
 		Gets the Model container object NOT the actual model.
+
+		@ignore
 	*/
-	_getModel(id, state=this._()) {
+	_getModel(id) {
+		const state = this._();
 		const id2cid = state[_id2cid];
 		var cid = id2cid.has(id) ?id2cid.get(id) :id;
 

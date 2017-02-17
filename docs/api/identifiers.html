@@ -35,6 +35,7 @@
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Access.js~Access.html">Access</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ArrayProperty.js~ArrayProperty.html">ArrayProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ArrayShadow.js~ArrayShadow.html">ArrayShadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/AutoShader.js~AutoShader.html">AutoShader</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IndexedApi.js~IndexedApi.html">IndexedApi</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IndexedProperty.js~IndexedProperty.html">IndexedProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IndexedShadow.js~IndexedShadow.html">IndexedShadow</a></span></span></li>
@@ -47,6 +48,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/PrimitiveProperty.js~PrimitiveProperty.html">PrimitiveProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/PrimitiveShadowImpl.js~PrimitiveShadowImpl.html">PrimitiveShadowImpl</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Property.js~Property.html">Property</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/PropertyFactoryShader.js~PropertyFactoryShader.html">PropertyFactoryShader</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Shader.js~Shader.html">Shader</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Shadow.js~Shadow.html">Shadow</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ShadowImpl.js~ShadowImpl.html">ShadowImpl</a></span></span></li>
@@ -180,7 +182,36 @@ and <code>reduce()</code> to name a few.</p>
       <div>
         
         
+        <div data-ice="description"><p>Default shadow api for the <code>ArratProperty</code>.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          <span data-ice="name"><span><a href="class/src/AutoShader.js~AutoShader.html">AutoShader</a></span></span>
+        </p>
+      </div>
+      <div>
         
+        
+        <div data-ice="description"><p>Simplified shader used by <code>Shader</code> for handling auto-shadowing.</p>
+</div>
       </div>
     </td>
     <td>
@@ -207,7 +238,9 @@ and <code>reduce()</code> to name a few.</p>
       <div>
         
         
-        
+        <div data-ice="description"><p><code>CollectionProperty</code> provides a standard means for accessing remote data and was inspired by
+<a href="http://backbonejs.org/#Collection">Backbone collections</a>.</p>
+</div>
       </div>
     </td>
     <td>
@@ -234,7 +267,8 @@ and <code>reduce()</code> to name a few.</p>
       <div>
         
         
-        
+        <div data-ice="description"><p>Shadow api for the <code>CollectionProperty</code>.</p>
+</div>
       </div>
     </td>
     <td>
@@ -319,7 +353,8 @@ and <code>map()</code> to name a few.</p>
       <div>
         
         
-        
+        <div data-ice="description"><p>Default shadow api for the <code>IndexedProperty</code>.</p>
+</div>
       </div>
     </td>
     <td>
@@ -456,7 +491,8 @@ and <code>map()</code> to name a few.</p>
       <div>
         
         
-        
+        <div data-ice="description"><p>Default shadow api for the <code>MapProperty</code>.</p>
+</div>
       </div>
     </td>
     <td>
@@ -722,6 +758,34 @@ and <code>map()</code> to name a few.</p>
         <p>
           
           
+          <span data-ice="name"><span><a href="class/src/PropertyFactoryShader.js~PropertyFactoryShader.html">PropertyFactoryShader</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Specialized shader that uses a <span><a href="class/src/StateType.js~StateType.html">StateType</a></span> instance to instantiate a <span><a href="class/src/Property.js~Property.html">Property</a></span>.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
           <span data-ice="name"><span><a href="class/src/collection/RestEndpointProperty.js~RestEndpointProperty.html">RestEndpointProperty</a></span></span>
         </p>
       </div>
@@ -782,7 +846,8 @@ and <code>map()</code> to name a few.</p>
       <div>
         
         
-        
+        <div data-ice="description"><p>Shaders implement the shadowing process by which the shadow state proxies the actual state.</p>
+</div>
       </div>
     </td>
     <td>

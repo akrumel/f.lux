@@ -1,6 +1,10 @@
-
 import IndexedShadow from "./IndexedShadow";
 
+/**
+	Default shadow api for the `ArratProperty`. Exposes the {@link Array} interface.
+
+	@see {@link ArratProperty}
+*/
 export default class ArrayShadow extends IndexedShadow {
 	clear() {
 		this.__().clear();

@@ -24,6 +24,15 @@ var _setTimeout = setTimeout;
 
 const _transients = "__trans__";
 
+/*
+	Futures/Experiments:
+		* Isolated objects - objects that can be referenced by properties within the shadow state without
+			being explicitly mapped. Motivation: enable a Map interface to front a large number of
+			objects without having to remap all properties with each contained object property change.
+			Would be useful in efficiently implementing collections.
+		* Use Proxy to replace ShadowImpl. Need to test performance first. Would remove many of the
+			restrictions on using the shadow state, such as delete, unexpected property assignment.
+*/
 
 /**
 	A f.lux based application uses a single store for managing all state. A `Store` instance is created

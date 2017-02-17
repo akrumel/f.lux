@@ -35,6 +35,7 @@
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Access.js~Access.html">Access</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ArrayProperty.js~ArrayProperty.html">ArrayProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ArrayShadow.js~ArrayShadow.html">ArrayShadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/AutoShader.js~AutoShader.html">AutoShader</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IndexedApi.js~IndexedApi.html">IndexedApi</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IndexedProperty.js~IndexedProperty.html">IndexedProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IndexedShadow.js~IndexedShadow.html">IndexedShadow</a></span></span></li>
@@ -47,6 +48,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/PrimitiveProperty.js~PrimitiveProperty.html">PrimitiveProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/PrimitiveShadowImpl.js~PrimitiveShadowImpl.html">PrimitiveShadowImpl</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Property.js~Property.html">Property</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/PropertyFactoryShader.js~PropertyFactoryShader.html">PropertyFactoryShader</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Shader.js~Shader.html">Shader</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Shadow.js~Shadow.html">Shadow</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ShadowImpl.js~ShadowImpl.html">ShadowImpl</a></span></span></li>
@@ -98,13 +100,13 @@
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Shader from &apos;<span><a href="file/src/Shader.js.html#lineNumber30">f.lux/src/Shader.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Shader from &apos;<span><a href="file/src/Shader.js.html#lineNumber43">f.lux/src/Shader.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/src/Shader.js.html#lineNumber30">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/src/Shader.js.html#lineNumber43">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -124,10 +126,17 @@
 
   
   
-  
+  <div class="description" data-ice="description"><p>Shaders implement the shadowing process by which the shadow state proxies the actual state.
+Each <span><a href="class/src/Property.js~Property.html">Property</a></span> maintains a shader used for shadowing its associated state property.</p>
+<p>The <span><a href="class/src/Shader.js~Shader.html#instance-method-shadowProperty">Shader#shadowProperty</a></span> method is responsible for setting up the <code>Shadow</code> proxy
+for the state.</p>
+<p>Shaders are setup through <span><a href="class/src/StateType.js~StateType.html">StateType</a></span> instances associated with <code>Property</code> objects
+and there is rarely a need to directly interact with them.</p>
+</div>
   
 
-  
+  <div data-ice="see"><h4>See:</h4><ul><li><span><span><a href="class/src/Property.js~Property.html">Property</a></span></span></li>
+<li><span><span><a href="class/src/StateType.js~StateType.html">StateType</a></span></span></li></ul></div>
 
   
 
@@ -993,7 +1002,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber43">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber56">source</a></span></span>
     </span>
   </h3>
 
@@ -1061,7 +1070,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber31">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber44">source</a></span></span>
     </span>
   </h3>
 
@@ -1123,7 +1132,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber35">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber48">source</a></span></span>
     </span>
   </h3>
 
@@ -1166,7 +1175,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber34">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber47">source</a></span></span>
     </span>
   </h3>
 
@@ -1209,7 +1218,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber36">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber49">source</a></span></span>
     </span>
   </h3>
 
@@ -1252,7 +1261,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber153">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber166">source</a></span></span>
     </span>
   </h3>
 
@@ -1295,7 +1304,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber37">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber50">source</a></span></span>
     </span>
   </h3>
 
@@ -1338,7 +1347,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber38">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber51">source</a></span></span>
     </span>
   </h3>
 
@@ -1381,7 +1390,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber39">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber52">source</a></span></span>
     </span>
   </h3>
 
@@ -1424,7 +1433,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber40">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber53">source</a></span></span>
     </span>
   </h3>
 
@@ -1470,7 +1479,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber47">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber60">source</a></span></span>
     </span>
   </h3>
 
@@ -1553,7 +1562,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber65">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber78">source</a></span></span>
     </span>
   </h3>
 
@@ -1618,7 +1627,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber72">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber85">source</a></span></span>
     </span>
   </h3>
 
@@ -1673,7 +1682,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber80">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber93">source</a></span></span>
     </span>
   </h3>
 
@@ -1728,7 +1737,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber57">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber70">source</a></span></span>
     </span>
   </h3>
 
@@ -1783,7 +1792,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber84">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber97">source</a></span></span>
     </span>
   </h3>
 
@@ -1838,7 +1847,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber88">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber101">source</a></span></span>
     </span>
   </h3>
 
@@ -1909,7 +1918,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber92">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber105">source</a></span></span>
     </span>
   </h3>
 
@@ -1980,7 +1989,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber96">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber109">source</a></span></span>
     </span>
   </h3>
 
@@ -2051,7 +2060,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber112">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber125">source</a></span></span>
     </span>
   </h3>
 
@@ -2106,7 +2115,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber116">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber129">source</a></span></span>
     </span>
   </h3>
 
@@ -2177,7 +2186,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber129">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber142">source</a></span></span>
     </span>
   </h3>
 
@@ -2236,7 +2245,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber133">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber146">source</a></span></span>
     </span>
   </h3>
 
@@ -2307,7 +2316,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber146">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber159">source</a></span></span>
     </span>
   </h3>
 
@@ -2384,7 +2393,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber139">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber152">source</a></span></span>
     </span>
   </h3>
 
@@ -2455,7 +2464,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber170">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber183">source</a></span></span>
     </span>
   </h3>
 
@@ -2532,7 +2541,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber182">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber195">source</a></span></span>
     </span>
   </h3>
 
@@ -2621,7 +2630,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber219">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber232">source</a></span></span>
     </span>
   </h3>
 
@@ -2692,7 +2701,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber238">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber251">source</a></span></span>
     </span>
   </h3>
 
@@ -2747,7 +2756,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber244">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Shader.js.html#lineNumber257">source</a></span></span>
     </span>
   </h3>
 

@@ -35,6 +35,7 @@
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Access.js~Access.html">Access</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ArrayProperty.js~ArrayProperty.html">ArrayProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ArrayShadow.js~ArrayShadow.html">ArrayShadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/AutoShader.js~AutoShader.html">AutoShader</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IndexedApi.js~IndexedApi.html">IndexedApi</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IndexedProperty.js~IndexedProperty.html">IndexedProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IndexedShadow.js~IndexedShadow.html">IndexedShadow</a></span></span></li>
@@ -47,6 +48,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/PrimitiveProperty.js~PrimitiveProperty.html">PrimitiveProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/PrimitiveShadowImpl.js~PrimitiveShadowImpl.html">PrimitiveShadowImpl</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Property.js~Property.html">Property</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/PropertyFactoryShader.js~PropertyFactoryShader.html">PropertyFactoryShader</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Shader.js~Shader.html">Shader</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Shadow.js~Shadow.html">Shadow</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ShadowImpl.js~ShadowImpl.html">ShadowImpl</a></span></span></li>
@@ -98,13 +100,13 @@
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import CollectionShadow from &apos;<span><a href="file/src/collection/CollectionShadow.js.html#lineNumber15">f.lux/src/collection/CollectionShadow.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import CollectionShadow from &apos;<span><a href="file/src/collection/CollectionShadow.js.html#lineNumber64">f.lux/src/collection/CollectionShadow.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/src/collection/CollectionShadow.js.html#lineNumber15">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/src/collection/CollectionShadow.js.html#lineNumber64">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -124,10 +126,52 @@
 
   
   
-  
+  <div class="description" data-ice="description"><p>Shadow api for the <code>CollectionProperty</code>.</p>
+<h2 id="basic-functions">Basic functions</h2>
+<p><ul>
+<li><code>add(state, mergeOp)</code> - </li>
+<li><code>all()</code> - </li>
+<li><code>clear()</code> - </li>
+<li><code>create(model)</code> - </li>
+<li><code>destroy(id)</code> - </li>
+<li><code>fetch(filter, mergeOp)</code> - </li>
+<li><code>find(id)</code> - </li>
+<li><code>get(id)</code> - </li>
+<li><code>has(id)</code> - </li>
+<li><code>remove(id)</code> - </li>
+</ul>
+
+
+</p>
+<h2 id="utility-functions">Utility functions</h2>
+<p><ul>
+<li><code>entries()</code> - </li>
+<li><code>every(iteratee, context)</code> - </li>
+<li><code>filter(iteratee, context)</code> - </li>
+<li><code>groupBy(callback, context)</code> - </li>
+<li><code>keys()</code> - </li>
+<li><code>map(iteratee, context)</code> - </li>
+<li><code>reduce(iteratee, acc, context)</code> - </li>
+<li><code>some(iteratee, context)</code> - </li>
+<li><code>sortBy(...iteratee)</code> - </li>
+<li><code>values()</code> - </li>
+</ul>
+
+</p>
+<h2 id="paging-function">Paging function</h2>
+<p><ul>
+<li><code>fetchNext()</code> - gets the next group of models</li>
+<li><code>isPaging()</code> - gets if a paging request is outstanding (only one paging request per
+collection allowed at one time)</li>
+<li><code>hasMorePages()</code> - does the endpoint have additional models</li>
+<li><code>nextOffset()</code> - gets the offset for the next paging request</li>
+<li><code>resetPaging()</code> - resets the internal paging variables</li>
+<li><code>setLimit()</code> - change the number of models requested with each <code>fetchNext()</code> request</li>
+</ul></p>
+</div>
   
 
-  
+  <div data-ice="see"><h4>See:</h4><ul><li><span><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html">CollectionProperty</a></span></span></li></ul></div>
 
   
 
@@ -216,13 +260,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-get-endpoint">endpoint</a></span></span><span data-ice="signature">: <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-get-endpoint">endpoint</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>: <span>*</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets the endpoint for accessing the remote data source.</p>
+</div>
       </div>
     </td>
     <td>
@@ -249,7 +294,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets if a fetching operation that will replace ALL models is in progress.</p>
+</div>
       </div>
     </td>
     <td>
@@ -270,13 +316,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-get-id">id</a></span></span><span data-ice="signature">: <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-get-id">id</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>: <span>*</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets the endpoint ID, which for <span><a href="class/src/collection/RestEndpointProperty.js~RestEndpointProperty.html">RestEndpointProperty</a></span> is its URL.</p>
+</div>
       </div>
     </td>
     <td>
@@ -303,7 +350,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets the number of models to fetch with each paging request.</p>
+</div>
       </div>
     </td>
     <td>
@@ -330,7 +378,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets the offset for the next paging request.</p>
+</div>
       </div>
     </td>
     <td>
@@ -357,7 +406,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets if a paging operation (<span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-fetchNext">CollectionProperty#fetchNext</a></span>) call is in progress.</p>
+</div>
       </div>
     </td>
     <td>
@@ -384,7 +434,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets the number of models being managed by the collection</p>
+</div>
       </div>
     </td>
     <td>
@@ -439,13 +490,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-add">add</a></span></span><span data-ice="signature">(state: <span>*</span>, mergeOp: <span>*</span>): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-add">add</a></span></span><span data-ice="signature">(state: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>, mergeOp: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span>*</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Synchronously adds a new model object to the collection.</p>
+</div>
       </div>
     </td>
     <td>
@@ -493,13 +545,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-addModels">addModels</a></span></span><span data-ice="signature">(models: <span>*</span>, mergeOp: <span>*</span>, syncOp: <span>*</span>)</span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-addModels">addModels</a></span></span><span data-ice="signature">(models: <span>array</span>, mergeOp: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, syncOp: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Bulk adds multiple models.</p>
+</div>
       </div>
     </td>
     <td>
@@ -520,13 +573,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-all">all</a></span></span><span data-ice="signature">(): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-all">all</a></span></span><span data-ice="signature">(): <span>array</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets the shadow models currently managed by the collection.</p>
+</div>
       </div>
     </td>
     <td>
@@ -553,7 +607,9 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Removes all models from the collection and marks the collection as having not synched with the
+endpoint.</p>
+</div>
       </div>
     </td>
     <td>
@@ -574,13 +630,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-create">create</a></span></span><span data-ice="signature">(model: <span>*</span>): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-create">create</a></span></span><span data-ice="signature">(model: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Combines an <span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-add">CollectionShadow#add</a></span> and <span>CollectionShadow#save</span> actions.</p>
+</div>
       </div>
     </td>
     <td>
@@ -601,13 +658,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-destroy">destroy</a></span></span><span data-ice="signature">(id: <span>*</span>): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-destroy">destroy</a></span></span><span data-ice="signature">(id: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Permantently deletes the model with the endpoint and removes it from the collection.</p>
+</div>
       </div>
     </td>
     <td>
@@ -628,13 +686,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-entries">entries</a></span></span><span data-ice="signature">(): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-entries">entries</a></span></span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets an iterator with [ID, model] paris.</p>
+</div>
       </div>
     </td>
     <td>
@@ -661,7 +720,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Tests whether all elements in the array pass the test implemented by the provided function.</p>
+</div>
       </div>
     </td>
     <td>
@@ -682,13 +742,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-fetch">fetch</a></span></span><span data-ice="signature">(filter: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></span>, mergeOp: <span>*</span>): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-fetch">fetch</a></span></span><span data-ice="signature">(filter: <span>*</span>, mergeOp: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Fetches all the models from the endpoint.</p>
+</div>
       </div>
     </td>
     <td>
@@ -709,13 +770,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-fetchNext">fetchNext</a></span></span><span data-ice="signature">(mergeOp: <span>*</span>): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-fetchNext">fetchNext</a></span></span><span data-ice="signature">(mergeOp: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Fetches the next set of models from the endpoint.</p>
+</div>
       </div>
     </td>
     <td>
@@ -742,7 +804,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Creates an array with all elements that pass the test implemented by the provided function.</p>
+</div>
       </div>
     </td>
     <td>
@@ -763,13 +826,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-find">find</a></span></span><span data-ice="signature">(id: <span>*</span>): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-find">find</a></span></span><span data-ice="signature">(id: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets a model by ID.</p>
+</div>
       </div>
     </td>
     <td>
@@ -790,13 +854,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-findModel">findModel</a></span></span><span data-ice="signature">(iteratee: <span>*</span>, context: <span>*</span>): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-findModel">findModel</a></span></span><span data-ice="signature">(iteratee: <span>*</span>, context: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>): <span>*</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets the first model that satisfies the provided testing function.</p>
+</div>
       </div>
     </td>
     <td>
@@ -817,13 +882,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-forEach">forEach</a></span></span><span data-ice="signature">(callback: <span>*</span>, context: <span>*</span>)</span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-forEach">forEach</a></span></span><span data-ice="signature">(iteratee: <span>*</span>, context: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Executes a provided function once for each array element.</p>
+</div>
       </div>
     </td>
     <td>
@@ -844,13 +910,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-get">get</a></span></span><span data-ice="signature">(id: <span>*</span>): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-get">get</a></span></span><span data-ice="signature">(id: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets a model by ID.</p>
+</div>
       </div>
     </td>
     <td>
@@ -877,7 +944,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Inspired by <a href="https://lodash.com/docs/4.17.4#groupBy">Lodash groupBy()</a> method.</p>
+</div>
       </div>
     </td>
     <td>
@@ -898,13 +966,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-has">has</a></span></span><span data-ice="signature">(id: <span>*</span>): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-has">has</a></span></span><span data-ice="signature">(id: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets if the collection contains a matching model.</p>
+</div>
       </div>
     </td>
     <td>
@@ -931,7 +1000,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets if additional paging calls will return additional results.</p>
+</div>
       </div>
     </td>
     <td>
@@ -952,13 +1022,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-isAutocheckpoint">isAutocheckpoint</a></span></span><span data-ice="signature">(): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-isAutocheckpoint">isAutocheckpoint</a></span></span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Sets whether auto-checkpointing is enabled.</p>
+</div>
       </div>
     </td>
     <td>
@@ -985,7 +1056,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets if the collection is active (has a shadow) and an endpoint.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1012,7 +1084,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets if a model has never been persisted to the endpoint.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1033,13 +1106,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-keys">keys</a></span></span><span data-ice="signature">(): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-keys">keys</a></span></span><span data-ice="signature">(): <span>Iterator</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets an iterator containing each model IDs.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1060,13 +1134,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-keysArray">keysArray</a></span></span><span data-ice="signature">(): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-keysArray">keysArray</a></span></span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets an array containing each model iDs.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1087,13 +1162,15 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-map">map</a></span></span><span data-ice="signature">(iteratee: <span>*</span>, context: <span>*</span>): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-map">map</a></span></span><span data-ice="signature">(iteratee: <span>*</span>, context: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>): <span>*</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Creates a new array with the results of calling a provided function on every element in
+this collection.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1114,13 +1191,15 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-reduce">reduce</a></span></span><span data-ice="signature">(iteratee: <span>*</span>, acc: <span>*</span>, context: <span>*</span>): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-reduce">reduce</a></span></span><span data-ice="signature">(iteratee: <span>*</span>, acc: <span>*</span>, context: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>): <span>*</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Applies a function against an accumulator and each value of the collection to reduce it
+to a single value.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1147,7 +1226,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Synchronously removes the model from the collection without performing an endpoint operation.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1174,7 +1254,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Resets all dirty models to their last checkpoint and removes all unsaved models.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1195,40 +1276,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-resync">resync</a></span></span><span data-ice="signature">(): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-setAutocheckpoint">setAutocheckpoint</a></span></span><span data-ice="signature">(auto: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-setAutocheckpoint">setAutocheckpoint</a></span></span><span data-ice="signature">(auto: <span>*</span>)</span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
+        <div data-ice="description"><p>Sets whether auto-checkpointing should be enabled.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1255,7 +1310,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Sets the <span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-get-endpoint">CollectionProperty#endpoint</a></span>.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1276,13 +1332,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-setLimit">setLimit</a></span></span><span data-ice="signature">(limit: <span>*</span>)</span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-setLimit">setLimit</a></span></span><span data-ice="signature">(limit: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Sets the number of models to request with each paging request.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1303,13 +1360,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-setModels">setModels</a></span></span><span data-ice="signature">(models: <span>*</span>)</span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-setModels">setModels</a></span></span><span data-ice="signature">(models: <span>array</span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Bulk replaces current models with an array of new models.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1330,13 +1388,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-some">some</a></span></span><span data-ice="signature">(iteratee: <span>*</span>, context: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-some">some</a></span></span><span data-ice="signature">(iteratee: <span>*</span>, context: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Tests whether some element in the array passes the test implemented by the provided function.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1384,13 +1443,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-values">values</a></span></span><span data-ice="signature">(): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-values">values</a></span></span><span data-ice="signature">(): <span>Iterator</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets an iterator containing each f.lux shadow state model.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1411,13 +1471,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-valuesArray">valuesArray</a></span></span><span data-ice="signature">(): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-valuesArray">valuesArray</a></span></span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets an array containing each model iDs.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1591,7 +1652,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber16">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber65">source</a></span></span>
     </span>
   </h3>
 
@@ -1653,7 +1714,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber19">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber68">source</a></span></span>
     </span>
   </h3>
 
@@ -1692,25 +1753,38 @@
     
     
     
-    <span data-ice="name">endpoint</span><span data-ice="signature">: <span>*</span></span>
+    <span data-ice="name">endpoint</span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>: <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber22">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber76">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets the endpoint for accessing the remote data source.</p>
+</div>
 
   
 
   <div data-ice="properties">
 </div>
 
-  
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
+          
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
 
   
 
@@ -1739,14 +1813,15 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber26">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber83">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets if a fetching operation that will replace ALL models is in progress.</p>
+</div>
 
   
 
@@ -1778,25 +1853,38 @@
     
     
     
-    <span data-ice="name">id</span><span data-ice="signature">: <span>*</span></span>
+    <span data-ice="name">id</span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>: <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber30">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber92">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets the endpoint ID, which for <span><a href="class/src/collection/RestEndpointProperty.js~RestEndpointProperty.html">RestEndpointProperty</a></span> is its URL.</p>
+</div>
 
   
 
   <div data-ice="properties">
 </div>
 
-  
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+          
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
 
   
 
@@ -1825,14 +1913,15 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber42">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber108">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets the number of models to fetch with each paging request.</p>
+</div>
 
   
 
@@ -1868,14 +1957,15 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber46">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber115">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets the offset for the next paging request.</p>
+</div>
 
   
 
@@ -1911,14 +2001,15 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber50">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber122">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets if a paging operation (<span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-fetchNext">CollectionProperty#fetchNext</a></span>) call is in progress.</p>
+</div>
 
   
 
@@ -1954,14 +2045,15 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber34">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber97">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets the number of models being managed by the collection</p>
+</div>
 
   
 
@@ -2000,7 +2092,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber366">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber617">source</a></span></span>
     </span>
   </h3>
 
@@ -2051,18 +2143,20 @@
     
     
     
-    <span data-ice="name">add</span><span data-ice="signature">(state: <span>*</span>, mergeOp: <span>*</span>): <span>*</span></span>
+    <span data-ice="name">add</span><span data-ice="signature">(state: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>, mergeOp: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber109">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber215">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Synchronously adds a new model object to the collection. Call <code>model.$().save()</code> to persist the newly
+added object.</p>
+</div>
 
   
 
@@ -2076,16 +2170,20 @@
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">state</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the json model to add to the collection</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">mergeOp</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
       <td data-ice="appendix"><ul><li>optional</li>
 <li>default: REPLACE_OPTION</li></ul></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>one of <code>DEFAULTS_OPTION</code>, <code>MERGE_OPTION</code>, or
+<code>REPLACE_OPTION</code> and specifies how to combine an existing model with a matching ID
+with a newly retrieved model.</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -2098,7 +2196,9 @@
       <tbody>
         <tr>
           <td class="return-type" data-ice="returnType"><span>*</span></td>
-          
+          <td class="return-desc" data-ice="returnDescription"><p>the object&apos;s ID. And ID is assigned if the &apos;id&apos; parameter was not set and it could not
+be found in the <code>state</code> parameter.</p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -2133,7 +2233,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber127">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber222">source</a></span></span>
     </span>
   </h3>
 
@@ -2207,18 +2307,20 @@
     
     
     
-    <span data-ice="name">addModels</span><span data-ice="signature">(models: <span>*</span>, mergeOp: <span>*</span>, syncOp: <span>*</span>)</span>
+    <span data-ice="name">addModels</span><span data-ice="signature">(models: <span>array</span>, mergeOp: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, syncOp: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber141">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber236">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Bulk adds multiple models. Models must have an ID as it is assumed they have been previously
+saved.</p>
+</div>
 
   
 
@@ -2232,22 +2334,28 @@
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">models</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span>array</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>array of model values</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">mergeOp</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
       <td data-ice="appendix"><ul><li>optional</li>
 <li>default: REPLACE_OPTION</li></ul></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>one of <code>DEFAULTS_OPTION</code>, <code>MERGE_OPTION</code>, or
+<code>REPLACE_OPTION</code> and specifies how to combine an existing model with a matching ID
+with a newly retrieved model.</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">syncOp</td>
-      <td data-ice="type"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></td>
+      <td data-ice="appendix"><ul><li>optional</li>
+<li>default: true</li></ul></td>
+      <td data-ice="description"><p>sets the <code>synced</code> flag to true if this parameter is true</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -2279,18 +2387,19 @@
     
     
     
-    <span data-ice="name">all</span><span data-ice="signature">(): <span>*</span></span>
+    <span data-ice="name">all</span><span data-ice="signature">(): <span>array</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber148">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber245">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets the shadow models currently managed by the collection.</p>
+</div>
 
   
 
@@ -2302,8 +2411,9 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
-          
+          <td class="return-type" data-ice="returnType"><span>array</span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>all models being managed by the collection</p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -2338,14 +2448,16 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber152">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber253">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Removes all models from the collection and marks the collection as having not synched with the
+endpoint.</p>
+</div>
 
   
 
@@ -2377,18 +2489,19 @@
     
     
     
-    <span data-ice="name">create</span><span data-ice="signature">(model: <span>*</span>): <span>*</span></span>
+    <span data-ice="name">create</span><span data-ice="signature">(model: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber159">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber264">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Combines an <span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-add">CollectionShadow#add</a></span> and <span>CollectionShadow#save</span> actions.</p>
+</div>
 
   
 
@@ -2402,9 +2515,10 @@
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">model</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the json data</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -2416,8 +2530,9 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
-          
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>resolves with the f.lux shadow state for the new model</p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -2448,18 +2563,19 @@
     
     
     
-    <span data-ice="name">destroy</span><span data-ice="signature">(id: <span>*</span>): <span>*</span></span>
+    <span data-ice="name">destroy</span><span data-ice="signature">(id: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber163">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber275">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Permantently deletes the model with the endpoint and removes it from the collection.</p>
+</div>
 
   
 
@@ -2475,7 +2591,8 @@
       <td data-ice="name" data-depth="0">id</td>
       <td data-ice="type"><span>*</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the model ID to delete</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -2487,8 +2604,9 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
-          
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>resolves with the ID for the removed mdoel</p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -2519,18 +2637,19 @@
     
     
     
-    <span data-ice="name">entries</span><span data-ice="signature">(): <span>*</span></span>
+    <span data-ice="name">entries</span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber167">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber284">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets an iterator with [ID, model] paris.</p>
+</div>
 
   
 
@@ -2542,7 +2661,7 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></td>
           
         </tr>
       </tbody>
@@ -2578,14 +2697,15 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber171">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber291">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Tests whether all elements in the array pass the test implemented by the provided function.</p>
+</div>
 
   
 
@@ -2651,18 +2771,19 @@
     
     
     
-    <span data-ice="name">fetch</span><span data-ice="signature">(filter: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></span>, mergeOp: <span>*</span>): <span>*</span></span>
+    <span data-ice="name">fetch</span><span data-ice="signature">(filter: <span>*</span>, mergeOp: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber187">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber317">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Fetches all the models from the endpoint.</p>
+</div>
 
   
 
@@ -2676,17 +2797,21 @@
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">filter</td>
-      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></span></td>
+      <td data-ice="type"><span>*</span></td>
       <td data-ice="appendix"><ul><li>optional</li>
-<li>default: undefined</li></ul></td>
-      <td data-ice="description"></td>
+<li>default: null</li></ul></td>
+      <td data-ice="description"><p>filter object created using the endpoint.</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">mergeOp</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
       <td data-ice="appendix"><ul><li>optional</li>
 <li>default: REPLACE_OPTION</li></ul></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>one of <code>DEFAULTS_OPTION</code>, <code>MERGE_OPTION</code>, or
+<code>REPLACE_OPTION</code> and specifies how to combine an existing model with a matching ID
+with a newly retrieved model.</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -2698,8 +2823,9 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
-          
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>resolves with the json models from the endpoint</p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -2730,18 +2856,21 @@
     
     
     
-    <span data-ice="name">fetchNext</span><span data-ice="signature">(mergeOp: <span>*</span>): <span>*</span></span>
+    <span data-ice="name">fetchNext</span><span data-ice="signature">(mergeOp: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber54">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber138">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Fetches the next set of models from the endpoint. This method differs from
+<span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-fetch">CollectionProperty#fetch</a></span> by passing <code>offset</code> and <code>limit</code> filter criteria to the
+endpoint.</p>
+</div>
 
   
 
@@ -2755,10 +2884,13 @@
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">mergeOp</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
       <td data-ice="appendix"><ul><li>optional</li>
 <li>default: REPLACE_OPTION</li></ul></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>one of <code>DEFAULTS_OPTION</code>, <code>MERGE_OPTION</code>, or
+<code>REPLACE_OPTION</code> and specifies how to combine an existing model with a matching ID
+with a newly retrieved model.</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -2770,8 +2902,10 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
-          
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>resolves with a single argument of an array of model json objects as
+returned from the endpoint.</p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -2806,14 +2940,15 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber191">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber324">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Creates an array with all elements that pass the test implemented by the provided function.</p>
+</div>
 
   
 
@@ -2879,18 +3014,20 @@
     
     
     
-    <span data-ice="name">find</span><span data-ice="signature">(id: <span>*</span>): <span>*</span></span>
+    <span data-ice="name">find</span><span data-ice="signature">(id: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber208">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber349">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets a model by ID. The method looks for a matching model in the collection. If one
+is not found then one is requested from the endpoint.</p>
+</div>
 
   
 
@@ -2906,7 +3043,8 @@
       <td data-ice="name" data-depth="0">id</td>
       <td data-ice="type"><span>*</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the model ID</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -2918,8 +3056,9 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
-          
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>reolves with the model or undefined if one is not found</p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -2950,18 +3089,19 @@
     
     
     
-    <span data-ice="name">findModel</span><span data-ice="signature">(iteratee: <span>*</span>, context: <span>*</span>): <span>*</span></span>
+    <span data-ice="name">findModel</span><span data-ice="signature">(iteratee: <span>*</span>, context: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>): <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber212">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber362">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets the first model that satisfies the provided testing function.</p>
+</div>
 
   
 
@@ -2977,13 +3117,16 @@
       <td data-ice="name" data-depth="0">iteratee</td>
       <td data-ice="type"><span>*</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>Function to execute on each value in the array, taking three arguments:
+element, ID, and the collection reference.</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">context</td>
-      <td data-ice="type"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></td>
+      <td data-ice="appendix"><ul><li>optional</li></ul></td>
+      <td data-ice="description"><p>object to use as <code>this</code> when executing callback</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -2996,7 +3139,8 @@
       <tbody>
         <tr>
           <td class="return-type" data-ice="returnType"><span>*</span></td>
-          
+          <td class="return-desc" data-ice="returnDescription"><p>the model or undefined if one is not found</p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -3027,18 +3171,19 @@
     
     
     
-    <span data-ice="name">forEach</span><span data-ice="signature">(callback: <span>*</span>, context: <span>*</span>)</span>
+    <span data-ice="name">forEach</span><span data-ice="signature">(iteratee: <span>*</span>, context: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber228">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber383">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Executes a provided function once for each array element.</p>
+</div>
 
   
 
@@ -3051,16 +3196,19 @@
     <tbody>
     
     <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">callback</td>
+      <td data-ice="name" data-depth="0">iteratee</td>
       <td data-ice="type"><span>*</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>Function to execute on each value in the array, taking three arguments:
+element, ID, and the collection reference.</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">context</td>
-      <td data-ice="type"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></td>
+      <td data-ice="appendix"><ul><li>optional</li></ul></td>
+      <td data-ice="description"><p>object to use as <code>this</code> when executing callback</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -3092,18 +3240,20 @@
     
     
     
-    <span data-ice="name">get</span><span data-ice="signature">(id: <span>*</span>): <span>*</span></span>
+    <span data-ice="name">get</span><span data-ice="signature">(id: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber239">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber402">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets a model by ID. The method looks for a matching model in the collection and never
+looks for one remotely through the endpoint.</p>
+</div>
 
   
 
@@ -3119,7 +3269,8 @@
       <td data-ice="name" data-depth="0">id</td>
       <td data-ice="type"><span>*</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the model ID</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -3131,8 +3282,9 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
-          
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>the model or undefined if one is not found</p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -3167,14 +3319,19 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber243">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber416">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Inspired by <a href="https://lodash.com/docs/4.17.4#groupBy">Lodash groupBy()</a> method.</p>
+<p>Creates an object composed of keys generated from the results of running each element of
+collection thru iteratee. The order of grouped values is determined by the order they occur
+in collection. The corresponding value of each key is an array of elements responsible for
+generating the key. The iteratee is invoked with one argument: (value).</p>
+</div>
 
   
 
@@ -3217,7 +3374,7 @@
 
   
 
-  
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://lodash.com/docs/4.17.4#groupBy">https://lodash.com/docs/4.17.4#groupBy</a></span></li></ul></div>
   
 </div>
 <div class="detail" data-ice="detail">
@@ -3228,18 +3385,19 @@
     
     
     
-    <span data-ice="name">has</span><span data-ice="signature">(id: <span>*</span>): <span>*</span></span>
+    <span data-ice="name">has</span><span data-ice="signature">(id: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber261">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber441">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets if the collection contains a matching model.</p>
+</div>
 
   
 
@@ -3255,7 +3413,8 @@
       <td data-ice="name" data-depth="0">id</td>
       <td data-ice="type"><span>*</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the model ID</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -3267,7 +3426,7 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></td>
           
         </tr>
       </tbody>
@@ -3303,14 +3462,15 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber58">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber145">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets if additional paging calls will return additional results.</p>
+</div>
 
   
 
@@ -3354,18 +3514,19 @@
     
     
     
-    <span data-ice="name">isAutocheckpoint</span><span data-ice="signature">(): <span>*</span></span>
+    <span data-ice="name">isAutocheckpoint</span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber70">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber168">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Sets whether auto-checkpointing is enabled.</p>
+</div>
 
   
 
@@ -3377,7 +3538,7 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></td>
           
         </tr>
       </tbody>
@@ -3413,14 +3574,15 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber265">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber448">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets if the collection is active (has a shadow) and an endpoint.</p>
+</div>
 
   
 
@@ -3468,14 +3630,15 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber269">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber455">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets if a model has never been persisted to the endpoint.</p>
+</div>
 
   
 
@@ -3535,18 +3698,19 @@
     
     
     
-    <span data-ice="name">keys</span><span data-ice="signature">(): <span>*</span></span>
+    <span data-ice="name">keys</span><span data-ice="signature">(): <span>Iterator</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber273">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber464">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets an iterator containing each model IDs.</p>
+</div>
 
   
 
@@ -3558,7 +3722,7 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
+          <td class="return-type" data-ice="returnType"><span>Iterator</span></td>
           
         </tr>
       </tbody>
@@ -3590,18 +3754,19 @@
     
     
     
-    <span data-ice="name">keysArray</span><span data-ice="signature">(): <span>*</span></span>
+    <span data-ice="name">keysArray</span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber277">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber473">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets an array containing each model iDs.</p>
+</div>
 
   
 
@@ -3613,7 +3778,7 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></td>
           
         </tr>
       </tbody>
@@ -3645,18 +3810,20 @@
     
     
     
-    <span data-ice="name">map</span><span data-ice="signature">(iteratee: <span>*</span>, context: <span>*</span>): <span>*</span></span>
+    <span data-ice="name">map</span><span data-ice="signature">(iteratee: <span>*</span>, context: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>): <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber285">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber489">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Creates a new array with the results of calling a provided function on every element in
+this collection.</p>
+</div>
 
   
 
@@ -3672,13 +3839,16 @@
       <td data-ice="name" data-depth="0">iteratee</td>
       <td data-ice="type"><span>*</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>Function that produces an element of the new array, taking three arguments:
+element, ID, and the collection reference.</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">context</td>
-      <td data-ice="type"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></td>
+      <td data-ice="appendix"><ul><li>optional</li></ul></td>
+      <td data-ice="description"><p>object to use as <code>this</code> when executing callback</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -3722,18 +3892,20 @@
     
     
     
-    <span data-ice="name">reduce</span><span data-ice="signature">(iteratee: <span>*</span>, acc: <span>*</span>, context: <span>*</span>): <span>*</span></span>
+    <span data-ice="name">reduce</span><span data-ice="signature">(iteratee: <span>*</span>, acc: <span>*</span>, context: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>): <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber299">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber512">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Applies a function against an accumulator and each value of the collection to reduce it
+to a single value.</p>
+</div>
 
   
 
@@ -3749,19 +3921,23 @@
       <td data-ice="name" data-depth="0">iteratee</td>
       <td data-ice="type"><span>*</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>Function to execute on each value in the array, taking four arguments:
+accumulator, element, ID, and the collection reference.</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">acc</td>
       <td data-ice="type"><span>*</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the initial accumulator value</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">context</td>
-      <td data-ice="type"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></td>
+      <td data-ice="appendix"><ul><li>optional</li></ul></td>
+      <td data-ice="description"><p>object to use as <code>this</code> when executing callback</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -3809,14 +3985,15 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber313">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber531">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Synchronously removes the model from the collection without performing an endpoint operation.</p>
+</div>
 
   
 
@@ -3832,7 +4009,8 @@
       <td data-ice="name" data-depth="0">id</td>
       <td data-ice="type"><span>*</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the model id or cid</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -3880,14 +4058,15 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber78">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber184">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Resets all dirty models to their last checkpoint and removes all unsaved models.</p>
+</div>
 
   
 
@@ -3895,61 +4074,6 @@
 </div>
 
   
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-resync">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    
-    <span data-ice="name">resync</span><span data-ice="signature">(): <span>*</span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber317">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  
-
-  
-
-  <div data-ice="properties">
-</div>
-
-  <div class="return-params" data-ice="returnParams">
-    <h4>Return:</h4>
-    <table>
-      <tbody>
-        <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
-          
-        </tr>
-      </tbody>
-    </table>
-    <div data-ice="returnProperties">
-</div>
-  </div>
 
   
 
@@ -3974,18 +4098,19 @@
     
     
     
-    <span data-ice="name">setAutocheckpoint</span><span data-ice="signature">(auto: <span>*</span>)</span>
+    <span data-ice="name">setAutocheckpoint</span><span data-ice="signature">(auto: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber74">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber177">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Sets whether auto-checkpointing should be enabled.</p>
+</div>
 
   
 
@@ -3999,9 +4124,10 @@
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">auto</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p><code>true</code> to enable.</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -4037,14 +4163,15 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber321">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber550">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Sets the <span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-get-endpoint">CollectionProperty#endpoint</a></span>.</p>
+</div>
 
   
 
@@ -4092,18 +4219,20 @@
     
     
     
-    <span data-ice="name">setLimit</span><span data-ice="signature">(limit: <span>*</span>)</span>
+    <span data-ice="name">setLimit</span><span data-ice="signature">(limit: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber62">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber155">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Sets the number of models to request with each paging request. The default paging size is
+50.</p>
+</div>
 
   
 
@@ -4117,7 +4246,7 @@
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">limit</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"></td>
     </tr>
@@ -4151,18 +4280,19 @@
     
     
     
-    <span data-ice="name">setModels</span><span data-ice="signature">(models: <span>*</span>)</span>
+    <span data-ice="name">setModels</span><span data-ice="signature">(models: <span>array</span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber325">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber559">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Bulk replaces current models with an array of new models.</p>
+</div>
 
   
 
@@ -4176,9 +4306,10 @@
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">models</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span>array</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>array of model values</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -4210,18 +4341,19 @@
     
     
     
-    <span data-ice="name">some</span><span data-ice="signature">(iteratee: <span>*</span>, context: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
+    <span data-ice="name">some</span><span data-ice="signature">(iteratee: <span>*</span>, context: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber329">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber570">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Tests whether some element in the array passes the test implemented by the provided function.</p>
+</div>
 
   
 
@@ -4237,13 +4369,16 @@
       <td data-ice="name" data-depth="0">iteratee</td>
       <td data-ice="type"><span>*</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>Function to test for each element, taking three arguments:
+element, ID, and the collection reference.</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">context</td>
-      <td data-ice="type"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></td>
+      <td data-ice="appendix"><ul><li>optional</li></ul></td>
+      <td data-ice="description"><p>object to use as <code>this</code> when executing callback</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -4291,7 +4426,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber348">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber589">source</a></span></span>
     </span>
   </h3>
 
@@ -4358,18 +4493,19 @@
     
     
     
-    <span data-ice="name">values</span><span data-ice="signature">(): <span>*</span></span>
+    <span data-ice="name">values</span><span data-ice="signature">(): <span>Iterator</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber354">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber600">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets an iterator containing each f.lux shadow state model.</p>
+</div>
 
   
 
@@ -4381,7 +4517,7 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
+          <td class="return-type" data-ice="returnType"><span>Iterator</span></td>
           
         </tr>
       </tbody>
@@ -4413,18 +4549,19 @@
     
     
     
-    <span data-ice="name">valuesArray</span><span data-ice="signature">(): <span>*</span></span>
+    <span data-ice="name">valuesArray</span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber358">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionShadow.js.html#lineNumber609">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets an array containing each model iDs.</p>
+</div>
 
   
 
@@ -4436,7 +4573,7 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></td>
           
         </tr>
       </tbody>

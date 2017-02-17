@@ -6,8 +6,10 @@ import {
 import Shadow from "./Shadow";
 
 
-/*
+/**
+	Default shadow api for the `MapProperty`. Exposes the {@link Map} interface.
 
+	@see {@link MapProperty}
 */
 export default class MapShadow extends Shadow {
 	constructor(impl) {

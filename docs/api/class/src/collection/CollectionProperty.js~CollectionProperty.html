@@ -35,6 +35,7 @@
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Access.js~Access.html">Access</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ArrayProperty.js~ArrayProperty.html">ArrayProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ArrayShadow.js~ArrayShadow.html">ArrayShadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/AutoShader.js~AutoShader.html">AutoShader</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IndexedApi.js~IndexedApi.html">IndexedApi</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IndexedProperty.js~IndexedProperty.html">IndexedProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IndexedShadow.js~IndexedShadow.html">IndexedShadow</a></span></span></li>
@@ -47,6 +48,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/PrimitiveProperty.js~PrimitiveProperty.html">PrimitiveProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/PrimitiveShadowImpl.js~PrimitiveShadowImpl.html">PrimitiveShadowImpl</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Property.js~Property.html">Property</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/PropertyFactoryShader.js~PropertyFactoryShader.html">PropertyFactoryShader</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Shader.js~Shader.html">Shader</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Shadow.js~Shadow.html">Shadow</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ShadowImpl.js~ShadowImpl.html">ShadowImpl</a></span></span></li>
@@ -98,13 +100,13 @@
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import CollectionProperty from &apos;<span><a href="file/src/collection/CollectionProperty.js.html#lineNumber102">f.lux/src/collection/CollectionProperty.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import CollectionProperty from &apos;<span><a href="file/src/collection/CollectionProperty.js.html#lineNumber339">f.lux/src/collection/CollectionProperty.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/src/collection/CollectionProperty.js.html#lineNumber102">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/src/collection/CollectionProperty.js.html#lineNumber339">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -124,10 +126,209 @@
 
   
   
-  
+  <div class="description" data-ice="description"><p><code>CollectionProperty</code> provides a standard means for accessing remote data and was inspired by
+<a href="http://backbonejs.org/#Collection">Backbone collections</a>. The protocol for interacting with
+the data source is delegated to an <em>endpoint</em> so the same application logic can work with data from
+a RESTful api, graphql, local test data, or even an in-browser database like localforage. F.lux
+ships with support for two endpoints, <span><a href="class/src/collection/RestEndpointProperty.js~RestEndpointProperty.html">RestEndpointProperty</a></span> and <span><a href="class/src/collection/PojoEndpointProperty.js~PojoEndpointProperty.html">PojoEndpointProperty</a></span>.</p>
+<p>F.lux ships with a <a href="https://github.com/akrumel/f.lux/tree/master/examples/todo-collections">example</a>
+using collections in a todo application utilizing an in memory data source. The example uses a local
+data source to make setup dead simple while still demonstrating the basic features of creating
+and interacting with collections.</p>
+<h2 id="basic-operations">Basic operations</h2>
+<p><ul>
+<li><code>add(state, mergeOp)</code></li>
+<li><code>all()</code></li>
+<li><code>clear()&lt;/li&gt;
+&lt;li&gt;</code>create(model)<code>&lt;/li&gt;
+&lt;li&gt;</code>destroy(id)<code>&lt;/li&gt;
+&lt;li&gt;</code>fetch(filter, mergeOp)<code>&lt;/li&gt;
+&lt;li&gt;</code>find(id)<code>&lt;/li&gt;
+&lt;li&gt;</code>get(id)<code>&lt;/li&gt;
+&lt;li&gt;</code>has(id)<code>&lt;/li&gt;
+&lt;li&gt;</code>remove(id)`</li>
+</ul>
+
+
+</p>
+<h2 id="utility-functions">Utility functions</h2>
+<p><ul>
+<li><code>entries()</code></li>
+<li><code>every(iteratee, context)</code></li>
+<li><code>filter(iteratee, context)</code></li>
+<li><code>groupBy(callback, context)</code></li>
+<li><code>keys()</code></li>
+<li><code>map(iteratee, context)</code></li>
+<li><code>reduce(iteratee, acc, context)</code></li>
+<li><code>some(iteratee, context)</code></li>
+<li><code>sortBy(...iteratee)</code></li>
+<li><code>values()</code></li>
+</ul>
+
+
+</p>
+<h2 id="model-access">Model access</h2>
+<p>Properties managed by a collection receive an f.lux accessor (<code>$()</code>) with additional
+capabilities related to the collection. The accessor class is $<span><a href="class/src/collection/ShadowModelAccess.js~ShadowModelAccess.html">ShadowModelAccess</a></span>.</p>
+<p><ul>
+<li><code>collection()</code> - gets the <span>Collection</span> managing this model</li>
+<li><code>destroy()</code> - permanently deletes the model from the collection using
+<span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-destroy">CollectionProperty#destroy</a></span></li>
+<li><code>id()</code> - gets the ID used by the data source for tracking the model</li>
+<li><code>isWaiting()</code> - is a network operation in progress associated with this model</li>
+<li><code>isDirty()</code> - has the model been modified since it was last saved/retrieved</li>
+<li><code>isNew()</code> - gets whether the model has yet to be written to the collection&apos;s endpoint</li>
+<li><code>remove()</code> - removes the model from the collection using <span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-remove">CollectionProperty#remove</a></span></li>
+<li><code>save()</code> - save the model using <span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-save">CollectionProperty#save</a></span></li>
+</ul>
+
+
+</p>
+<h2 id="paging">Paging</h2>
+<p>The collection provides redimentary paging support for potentially large collections. The
+current implementation simply grows the collection size wtih each call to <code>fetchNext()</code>
+and does not make any efforts to remove previous models. (A likely future enhancement)</p>
+<p><ul>
+<li><code>fetchNext()</code> - gets the next group of models</li>
+<li><code>isPaging()</code> - gets if a paging request is outstanding (only one paging request per
+collection allowed at one time)</li>
+<li><code>hasMorePages()</code> - does the endpoint have additional models</li>
+<li><code>nextOffset()</code> - gets the offset for the next paging request</li>
+<li><code>resetPaging()</code> - resets the internal paging variables</li>
+<li><code>setLimit()</code> - change the number of models requested with each <code>fetchNext()</code> request</li>
+</ul>
+
+
+</p>
+<h2 id="endpoints">Endpoints</h2>
+<p>Collections represent a protocol independent means of managing persistent models that
+exist outside the application state. Endpoints implement the protocol connection to the
+data source. F.lux endpoints have been implemented for RESTful server apis, in-memory,
+GraphQL, Sqlite, and Couchbase. F.lux ships with support for RESTful servers and in-memory.</p>
+<p>A simple, explicit example of creating a collection and assigning an endpoint:</p>
+<pre><code><code class="source-code prettyprint">const rootProperty = store.root();
+const collection = new CollectionProperty(colType);
+const ep = new RestEndpointProperty.createFor(&quot;http://some-url.com/an-api&quot;);
+
+collection.setEndpoint(ep);
+
+root._keyed.addProperty(&quot;aCollection&quot;, collection);</code>
+</code></pre><p>The <a href="https://github.com/akrumel/f.lux/tree/master/examples/todo-collections">Todo Collection Example</a>
+demonstrates a more typical example of setting up a collection.</p>
+<p><div><h4>See:</h4>
+<ul>
+<li><span><a href="class/src/collection/RestEndpointProperty.js~RestEndpointProperty.html">RestEndpointProperty</a></span></li>
+<li><span><a href="class/src/collection/PojoEndpointProperty.js~PojoEndpointProperty.html">PojoEndpointProperty</a></span></li>
+</ul>
+</div>
+
+
+</p>
+<h2 id="query-filters">Query filters</h2>
+<p>Collection models are retrieved in full using <span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-fetch">CollectionProperty#fetch</a></span> that has the following
+signature:</p>
+<pre><code><code class="source-code prettyprint">fetch(filter=null, mergeOp=REPLACE_OPTION, replaceAll=true)</code>
+</code></pre><p>where:</p>
+<p><ul>
+<li><code>filter</code> - a query filter object or <code>null</code> for no endpoint filtering</li>
+<li><code>mergeOp</code> - one of <code>DEFAULTS_OPTION</code>, <code>MERGE_OPTION</code>, or <code>REPLACE_OPTION</code> and specifies
+how to combine an existing model with a matching ID with a newly retrieved model.</li>
+<li><code>replaceAll</code> - a boolean where <code>true</code> means replace the current colleciton models with
+the returned models.</li>
+</ul>
+
+</p>
+<p>The <code>filter</code> parameter is a specialized object generated by the endpoint method <code>queryBuilder()</code>.
+A query builder is specialized to the endpoint and expose the following methods:</p>
+<p><ul>
+<li><code>equals(name, value)</code></li>
+<li><code>gt(name, value)</code></li>
+<li><code>gte(name, value)</code></li>
+<li><code>lt(name, value)</code></li>
+<li><code>lte(name, value)</code></li>
+</ul>
+
+</p>
+<p>An example of using a query builder is:</p>
+<pre><code><code class="source-code prettyprint">const qb = colleciton.endpoint.queryBuilder();
+
+qb.equals(&quot;name&quot;, &quot;fred&quot;);
+
+collection.fetch(qb);</code>
+</code></pre><p><div><h4>See:</h4>
+<ul>
+<li><span><a href="class/src/collection/RestQueryBuilder.js~RestQueryBuilder.html">RestQueryBuilder</a></span></li>
+<li><span><a href="class/src/collection/PojoQueryBuilder.js~PojoQueryBuilder.html">PojoQueryBuilder</a></span></li>
+</ul>
+</div>
+
+
+</p>
+<h2 id="errors">Errors</h2>
+<p>Methods utilizing the collection endpoint are asynchronous and return a <code>Promise</code>. Errors generated
+during an endpoint operation reject using an <code>Error</code> with several specialized properties:</p>
+<p><ul>
+<li><code>status</code> - an HTTP status code for the error type</li>
+<li><code>endpointError</code> - the error object generated by the endpoint</li>
+</ul>
+
+
+</p>
+<h2 id="auto-checkpointing">Auto-checkpointing</h2>
+<p>The <code>Property</code> class supports checkpointing state that can be reset at a later time using
+<span><a href="class/src/Property.js~Property.html#instance-method-resetToCheckpoint">Property#resetToCheckpoint</a></span>. Collections support setting an &apos;auto-checkpoint&apos; flag
+that will result in managed models automatically setting a checkpoint on change. This handy
+for situations like a &apos;Cancel&apos; button on a form where all changes need to be undone. The
+checkpoints are automatically cleared when a model is saved.</p>
+<p><ul>
+<li><code>isAutocheckpoint()</code></li>
+<li><code>setAutocheckpoint(auto)</code></li>
+</ul>
+
+
+</p>
+<h2 id="middleware">Middleware</h2>
+<p>A middleware operation is invoked before each asynchronous/network operation involving the
+endpoint. Middleware operations are functions with the following format</p>
+<pre><code><code class="source-code prettyprint">function middleware(collectionShadow, collectionProperty, op): Promise</code>
+</code></pre><p>Middleware functions must return a <code>Promise</code> and are invoked in the order registered. A function
+generating an error will terminate the middleware chain and the collection operation will not
+be performed.</p>
+<p><ul>
+<li><code>CreateOp</code> - invoked prior to create rquests</li>
+<li><code>DestroyOp</code> - invoked prior to destroy rquests</li>
+<li><code>FetchOp</code> - invoked prior to fetch rquests</li>
+<li><code>FindOp</code> - invoked prior to find rquests</li>
+<li><code>UpdateOp</code> - invoked prior to update rquests</li>
+<li>`` - </li>
+</ul>
+
+
+</p>
+<h2 id="events">Events</h2>
+<p>A colleciton is an <a href="https://github.com/component/emitter">Event Emitter</a> and generates
+the following events:</p>
+<p><ul>
+<li><code>ChangeEvent</code> - collection changes</li>
+<li><code>DeletedEvent</code> - collection destroy() success</li>
+<li><code>FetchedEvent</code> - collection fetch() success</li>
+<li><code>FoundEvent</code> - collection find() success</li>
+<li><code>ErrorEvent</code> - error during an operation</li>
+<li><code>SavedEvent</code> - collection save() success</li>
+</ul>
+
+</p>
+<p>Events are can be utilized to handle authorization errors, offline support, logging, or
+debugging tools.</p>
+</div>
   
 
-  
+  <div data-ice="see"><h4>See:</h4><ul><li><span><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html">CollectionShadow</a></span></span></li>
+<li><span><span><a href="class/src/collection/ShadowModelAccess.js~ShadowModelAccess.html">ShadowModelAccess</a></span></span></li>
+<li><span><span><a href="class/src/collection/RestEndpointProperty.js~RestEndpointProperty.html">RestEndpointProperty</a></span></span></li>
+<li><span><span><a href="class/src/collection/PojoEndpointProperty.js~PojoEndpointProperty.html">PojoEndpointProperty</a></span></span></li>
+<li><span><span><a href="class/src/collection/RestQueryBuilder.js~RestQueryBuilder.html">RestQueryBuilder</a></span></span></li>
+<li><span><span><a href="class/src/collection/PojoQueryBuilder.js~PojoQueryBuilder.html">PojoQueryBuilder</a></span></span></li></ul></div>
 
   
 
@@ -154,13 +355,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#static-method-createClass">createClass</a></span></span><span data-ice="signature">(shadowType: {}, specCallback: <span>*</span>, initialState: {}): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#static-method-createClass">createClass</a></span></span><span data-ice="signature">(shadowType: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html">CollectionShadow</a></span>, typeCallback: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(type: <span><a href="class/src/StateType.js~StateType.html">StateType</a></span>)</span></span>, initialState: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>): <span><a href="class/src/ObjectProperty.js~ObjectProperty.html">ObjectProperty</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Factory function for creating an <code>CollectionProperty</code> subclass.</p>
+</div>
       </div>
     </td>
     <td>
@@ -181,13 +383,15 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#static-method-defineType">defineType</a></span></span><span data-ice="signature">(PropClass: <span>*</span>, ShadowType: <span>*</span>, specCallback: <span>*</span>, initialState: {}): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#static-method-defineType">defineType</a></span></span><span data-ice="signature">(PropClass: <span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html">CollectionShadow</a></span>, ShadowType: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html">CollectionShadow</a></span>, typeCallback: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(type: <span><a href="class/src/StateType.js~StateType.html">StateType</a></span>)</span></span>, initialState: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>): <span>*</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Factory function for setting up the <span><a href="class/src/StateType.js~StateType.html">StateType</a></span> <code>type</code> class variable with an appropriately
+configured intial state.</p>
+</div>
       </div>
     </td>
     <td>
@@ -240,34 +444,7 @@
     <td>
       <span class="access" data-ice="access">public</span>
       
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-member-[_autocheckpoint]">[_autocheckpoint]</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
+      <span class="kind" data-ice="kind">get</span>
       
       <span class="override" data-ice="override"></span>
     </td>
@@ -276,67 +453,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-member-[_fetching]">[_fetching]</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-get-endpoint">endpoint</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>: <span>*</span></span>
         </p>
       </div>
       <div>
         
         
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-member-[_middleware]">[_middleware]</a></span></span><span data-ice="signature">: {&quot;CreateOp&quot;: <span>*</span>, &quot;DestroyOp&quot;: <span>*</span>, &quot;FetchOp&quot;: <span>*</span>, &quot;FindOp&quot;: <span>*</span>, &quot;UpdateOp&quot;: <span>*</span>}</span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-member-[_offlineState]">[_offlineState]</a></span></span><span data-ice="signature">: <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
+        <div data-ice="description"><p>Gets the endpoint for accessing the remote data source.</p>
+</div>
       </div>
     </td>
     <td>
@@ -357,67 +481,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-get-endpoint">endpoint</a></span></span><span data-ice="signature">: <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-get-endpointId">endpointId</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>: <span>*</span></span>
         </p>
       </div>
       <div>
         
         
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      <span class="kind" data-ice="kind">get</span>
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-get-endpointId">endpointId</a></span></span><span data-ice="signature">: <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      <span class="kind" data-ice="kind">get</span>
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-get-modelsCount">modelsCount</a></span></span><span data-ice="signature">: <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
+        <div data-ice="description"><p>Gets the endpoint ID, which for <span><a href="class/src/collection/RestEndpointProperty.js~RestEndpointProperty.html">RestEndpointProperty</a></span> is its URL.</p>
+</div>
       </div>
     </td>
     <td>
@@ -452,6 +523,34 @@
       
     </td>
   </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      <span class="kind" data-ice="kind">get</span>
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-get-size">size</a></span></span><span data-ice="signature">: <span>*</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Gets the number of models contained in the collection.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
 </tbody>
 </table>
 </div>
@@ -472,13 +571,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-addModel">addModel</a></span></span><span data-ice="signature">(state: <span>*</span>, mergeOp: <span>*</span>): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-addModel">addModel</a></span></span><span data-ice="signature">(state: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>, mergeOp: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span>*</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Synchronously adds a new model object to the collection.</p>
+</div>
       </div>
     </td>
     <td>
@@ -499,13 +599,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-addModels">addModels</a></span></span><span data-ice="signature">(models: <span>*</span>, mergeOp: <span>*</span>, syncOp: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>)</span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-addModels">addModels</a></span></span><span data-ice="signature">(models: <span>array</span>, mergeOp: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, syncOp: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Bulk adds multiple models.</p>
+</div>
       </div>
     </td>
     <td>
@@ -559,7 +660,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Removes the endpoint from the collection.</p>
+</div>
       </div>
     </td>
     <td>
@@ -580,13 +682,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-create">create</a></span></span><span data-ice="signature">(model: <span>*</span>): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-create">create</a></span></span><span data-ice="signature">(model: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Combines an <span>CollectionProperty#add</span> and <span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-save">CollectionProperty#save</a></span> actions.</p>
+</div>
       </div>
     </td>
     <td>
@@ -607,13 +710,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-destroy">destroy</a></span></span><span data-ice="signature">(id: <span>*</span>): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-destroy">destroy</a></span></span><span data-ice="signature">(id: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Permantently deletes the model with the endpoint and removes it from the collection.</p>
+</div>
       </div>
     </td>
     <td>
@@ -640,7 +744,9 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Used by the private _shadow() method to get the id from the model JSON representation as returned by the
+subclass doXXX() apis.</p>
+</div>
       </div>
     </td>
     <td>
@@ -661,13 +767,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-fetch">fetch</a></span></span><span data-ice="signature">(filter: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></span>, mergeOp: <span>*</span>, replaceAll: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>, callback: <span>*</span>): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-fetch">fetch</a></span></span><span data-ice="signature">(filter: <span>*</span>, mergeOp: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, replaceAll: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>, callback: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Fetches all the models from the endpoint.</p>
+</div>
       </div>
     </td>
     <td>
@@ -688,13 +795,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-fetchNext">fetchNext</a></span></span><span data-ice="signature">(mergeOp: <span>*</span>): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-fetchNext">fetchNext</a></span></span><span data-ice="signature">(mergeOp: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Fetches the next set of models from the endpoint.</p>
+</div>
       </div>
     </td>
     <td>
@@ -715,13 +823,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-find">find</a></span></span><span data-ice="signature">(id: <span>*</span>): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-find">find</a></span></span><span data-ice="signature">(id: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets a model by ID.</p>
+</div>
       </div>
     </td>
     <td>
@@ -742,13 +851,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-getModel">getModel</a></span></span><span data-ice="signature">(id: <span>*</span>, state: <span>*</span>): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-getModel">getModel</a></span></span><span data-ice="signature">(id: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets a model by ID.</p>
+</div>
       </div>
     </td>
     <td>
@@ -769,13 +879,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-getOfflineState">getOfflineState</a></span></span><span data-ice="signature">(): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-getOfflineState">getOfflineState</a></span></span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
         </p>
       </div>
       <div>
         
-        
-        
+        <div class="experimental" data-ice="experimental">this method is experimental.</div>
+        <div data-ice="description"><p>Gets an object capable of providing a persisted version of this collection.</p>
+</div>
       </div>
     </td>
     <td>
@@ -796,13 +907,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-hasModel">hasModel</a></span></span><span data-ice="signature">(id: <span>*</span>, state: <span>*</span>): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-hasModel">hasModel</a></span></span><span data-ice="signature">(id: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets if the collection contains a matching model.</p>
+</div>
       </div>
     </td>
     <td>
@@ -829,7 +941,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets if additional paging calls will return additional results.</p>
+</div>
       </div>
     </td>
     <td>
@@ -850,13 +963,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-isAutocheckpoint">isAutocheckpoint</a></span></span><span data-ice="signature">(): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-isAutocheckpoint">isAutocheckpoint</a></span></span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Sets whether auto-checkpointing is enabled.</p>
+</div>
       </div>
     </td>
     <td>
@@ -883,7 +997,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets if the collection is active (has a shadow) and an endpoint.</p>
+</div>
       </div>
     </td>
     <td>
@@ -910,7 +1025,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets if a fetching operation that will replace ALL models is in progress.</p>
+</div>
       </div>
     </td>
     <td>
@@ -931,13 +1047,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-isNew">isNew</a></span></span><span data-ice="signature">(id: <span>*</span>, state: <span>*</span>): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-isNew">isNew</a></span></span><span data-ice="signature">(id: <span>*</span>): <span>*</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets if a model has never been persisted to the endpoint.</p>
+</div>
       </div>
     </td>
     <td>
@@ -964,7 +1081,9 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets if a model shadow state model represents a model that has never been persisted
+to the endpoint.</p>
+</div>
       </div>
     </td>
     <td>
@@ -991,7 +1110,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets if a paging operation (<span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-fetchNext">CollectionProperty#fetchNext</a></span>) call is in progress.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1039,13 +1159,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-modelEntries">modelEntries</a></span></span><span data-ice="signature">(state: <span>*</span>): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-modelEntries">modelEntries</a></span></span><span data-ice="signature">(state: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets an iterator with [ID, model] paris.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1066,13 +1187,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-modelKeys">modelKeys</a></span></span><span data-ice="signature">(state: <span>*</span>): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-modelKeys">modelKeys</a></span></span><span data-ice="signature">(state: <span>*</span>): <span>Iterator</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets an iterator containing each model IDs.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1093,13 +1215,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-modelKeysArray">modelKeysArray</a></span></span><span data-ice="signature">(state: <span>*</span>): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-modelKeysArray">modelKeysArray</a></span></span><span data-ice="signature">(state: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets an array containing each model iDs.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1120,13 +1243,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-modelValues">modelValues</a></span></span><span data-ice="signature">(state: <span>*</span>): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-modelValues">modelValues</a></span></span><span data-ice="signature">(state: <span>*</span>): <span>Iterator</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets an iterator containing each f.lux shadow state model.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1147,13 +1271,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-modelsArray">modelsArray</a></span></span><span data-ice="signature">(state: <span>*</span>): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-modelsArray">modelsArray</a></span></span><span data-ice="signature">(state: <span>*</span>): <span>array</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets the shadow models currently managed by the collection.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1180,61 +1305,8 @@
       <div>
         
         
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-onError">onError</a></span></span><span data-ice="signature">(error: <span>*</span>, opMsg: <span>*</span>): <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-onPropertyDidUpdate">onPropertyDidUpdate</a></span></span><span data-ice="signature">()</span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
+        <div data-ice="description"><p>Gets the offset for the next paging request.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1261,7 +1333,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Synchronously removes the model from the collection without performing an endpoint operation.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1288,7 +1361,9 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Removes all models from the collection and marks the collection as having not synched with the
+endpoint.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1315,7 +1390,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Resets all internal paging tracking variables but does not affect currently stored models.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1336,13 +1412,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-resync">resync</a></span></span><span data-ice="signature">(): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-save">save</a></span></span><span data-ice="signature">(id: <span>*</span>, mergeOp: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Saves a model through the endpoint.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1363,40 +1440,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-save">save</a></span></span><span data-ice="signature">(id: <span>*</span>, mergeOp: <span>*</span>): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-setAutocheckpoint">setAutocheckpoint</a></span></span><span data-ice="signature">(auto: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-setAutocheckpoint">setAutocheckpoint</a></span></span><span data-ice="signature">(auto: <span>*</span>)</span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
+        <div data-ice="description"><p>Sets whether auto-checkpointing should be enabled.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1423,34 +1474,8 @@
       <div>
         
         
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-setFetching">setFetching</a></span></span><span data-ice="signature">(fetching: <span>*</span>)</span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
+        <div data-ice="description"><p>Sets the <span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-get-endpoint">CollectionProperty#endpoint</a></span>.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1477,7 +1502,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Sets the property name containing the model ID.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1498,13 +1524,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-setLimit">setLimit</a></span></span><span data-ice="signature">(limit: <span>*</span>)</span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-setLimit">setLimit</a></span></span><span data-ice="signature">(limit: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Sets the number of models to request with each paging request.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1525,13 +1552,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-setModels">setModels</a></span></span><span data-ice="signature">(models: <span>*</span>, syncOp: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>)</span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-setModels">setModels</a></span></span><span data-ice="signature">(models: <span>array</span>, syncOp: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Bulk replaces current models with an array of new models.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1552,13 +1580,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-setOfflineState">setOfflineState</a></span></span><span data-ice="signature">(offline: <span>*</span>)</span>
+          <span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-setOfflineState">setOfflineState</a></span></span><span data-ice="signature">(offline: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
         </p>
       </div>
       <div>
         
-        
-        
+        <div class="experimental" data-ice="experimental">this method is experimental.</div>
+        <div data-ice="description"><p>Sets an object capable of providing a persisted version of this collection.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1585,7 +1614,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Registers collection middleware operation.</p>
+</div>
       </div>
     </td>
     <td>
@@ -3117,18 +3147,28 @@ property.</p>
     
     
     
-    <span data-ice="name">createClass</span><span data-ice="signature">(shadowType: {}, specCallback: <span>*</span>, initialState: {}): <span>*</span></span>
+    <span data-ice="name">createClass</span><span data-ice="signature">(shadowType: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html">CollectionShadow</a></span>, typeCallback: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(type: <span><a href="class/src/StateType.js~StateType.html">StateType</a></span>)</span></span>, initialState: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>): <span><a href="class/src/ObjectProperty.js~ObjectProperty.html">ObjectProperty</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber161">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber415">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Factory function for creating an <code>CollectionProperty</code> subclass. The generated class will have
+the <code>type</code> <span><a href="class/src/StateType.js~StateType.html">StateType</a></span> descriptor set upon return.</p>
+<p>Example usage:</p>
+<pre><code><code class="source-code prettyprint">class SomeShadow extends CollectionShadow {
+// definition here
+}
+
+export default CollectionProperty.createClass(SomeShadow, type =&gt; {
+// configure type variable
+});</code>
+</code></pre></div>
 
   
 
@@ -3142,23 +3182,28 @@ property.</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">shadowType</td>
-      <td data-ice="type">{}</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html">CollectionShadow</a></span></td>
       <td data-ice="appendix"><ul><li>optional</li>
 <li>default: {}</li></ul></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p><code>Shadow</code> subclass or object literal api definition.
+If object literal specified, each property and function is mapped onto a Shadow subclass.</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">specCallback</td>
-      <td data-ice="type"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="name" data-depth="0">typeCallback</td>
+      <td data-ice="type"><span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(type: <span><a href="class/src/StateType.js~StateType.html">StateType</a></span>)</span></span></td>
+      <td data-ice="appendix"><ul><li>optional</li></ul></td>
+      <td data-ice="description"><p>a callback function that will be passed the
+<span><a href="class/src/StateType.js~StateType.html">StateType</a></span> spec for additional customization, such as setting autoshadow, initial state,
+or readonly.</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">initialState</td>
-      <td data-ice="type">{}</td>
-      <td data-ice="appendix"><ul><li>optional</li>
-<li>default: {}</li></ul></td>
-      <td data-ice="description"></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
+      <td data-ice="appendix"><ul><li>optional</li></ul></td>
+      <td data-ice="description"><p>={} - the initial state for the new property.</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -3170,8 +3215,9 @@ property.</p>
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
-          
+          <td class="return-type" data-ice="returnType"><span><a href="class/src/ObjectProperty.js~ObjectProperty.html">ObjectProperty</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>newly defined <code>ObjectProperty</code> subclass.</p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -3202,18 +3248,32 @@ property.</p>
     
     
     
-    <span data-ice="name">defineType</span><span data-ice="signature">(PropClass: <span>*</span>, ShadowType: <span>*</span>, specCallback: <span>*</span>, initialState: {}): <span>*</span></span>
+    <span data-ice="name">defineType</span><span data-ice="signature">(PropClass: <span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html">CollectionShadow</a></span>, ShadowType: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html">CollectionShadow</a></span>, typeCallback: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(type: <span><a href="class/src/StateType.js~StateType.html">StateType</a></span>)</span></span>, initialState: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>): <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber175">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber446">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Factory function for setting up the <span><a href="class/src/StateType.js~StateType.html">StateType</a></span> <code>type</code> class variable with an appropriately
+configured intial state.</p>
+<p>Example usage:</p>
+<pre><code><code class="source-code prettyprint">export default class TodosCollection extends CollectionProperty {
+// implement property here
+}
+
+class TodosShadow extends CollectionShadow {
+// implement shadow api here
+}
+
+ObjectProperty.defineType(TodosCollection, TodosShadow, type =&gt; {
+// configure type variable
+});</code>
+</code></pre></div>
 
   
 
@@ -3227,28 +3287,35 @@ property.</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">PropClass</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html">CollectionShadow</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p><code>CollectionShadow</code> subclass</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">ShadowType</td>
-      <td data-ice="type"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html">CollectionShadow</a></span></td>
+      <td data-ice="appendix"><ul><li>optional</li></ul></td>
+      <td data-ice="description"><p>Shadow` subclass or object literal api definition.
+If object literal specified, each property and function is mapped onto a Shadow subclass.</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">specCallback</td>
-      <td data-ice="type"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="name" data-depth="0">typeCallback</td>
+      <td data-ice="type"><span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(type: <span><a href="class/src/StateType.js~StateType.html">StateType</a></span>)</span></span></td>
+      <td data-ice="appendix"><ul><li>optional</li></ul></td>
+      <td data-ice="description"><p>a callback function that will be passed the
+<span><a href="class/src/StateType.js~StateType.html">StateType</a></span> spec for additional customization, such as setting autoshadow, initial state, or
+readonly.</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">initialState</td>
-      <td data-ice="type">{}</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
       <td data-ice="appendix"><ul><li>optional</li>
 <li>default: {}</li></ul></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the initial state for the new property.</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -3299,7 +3366,7 @@ property.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber103">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber340">source</a></span></span>
     </span>
   </h3>
 
@@ -3353,178 +3420,6 @@ property.</p>
 <div data-ice="memberDetails"><h2 data-ice="title">Public Members</h2>
 
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-[_autocheckpoint]">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    
-    <span data-ice="name">[_autocheckpoint]</span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber122">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  
-
-  
-
-  <div data-ice="properties">
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-[_fetching]">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    
-    <span data-ice="name">[_fetching]</span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber121">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  
-
-  
-
-  <div data-ice="properties">
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-[_middleware]">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    
-    <span data-ice="name">[_middleware]</span><span data-ice="signature">: {&quot;CreateOp&quot;: <span>*</span>, &quot;DestroyOp&quot;: <span>*</span>, &quot;FetchOp&quot;: <span>*</span>, &quot;FindOp&quot;: <span>*</span>, &quot;UpdateOp&quot;: <span>*</span>}</span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber111">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  
-
-  
-
-  <div data-ice="properties">
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-[_offlineState]">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    
-    <span data-ice="name">[_offlineState]</span><span data-ice="signature">: <span>*</span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber230">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  
-
-  
-
-  <div data-ice="properties">
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="instance-get-endpoint">
     <span class="access" data-ice="access">public</span>
     
@@ -3532,25 +3427,38 @@ property.</p>
     
     
     
-    <span data-ice="name">endpoint</span><span data-ice="signature">: <span>*</span></span>
+    <span data-ice="name">endpoint</span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>: <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber397">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber737">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets the endpoint for accessing the remote data source.</p>
+</div>
 
   
 
   <div data-ice="properties">
 </div>
 
-  
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
+          
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
 
   
 
@@ -3575,68 +3483,38 @@ property.</p>
     
     
     
-    <span data-ice="name">endpointId</span><span data-ice="signature">: <span>*</span></span>
+    <span data-ice="name">endpointId</span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>: <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber401">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber746">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets the endpoint ID, which for <span><a href="class/src/collection/RestEndpointProperty.js~RestEndpointProperty.html">RestEndpointProperty</a></span> is its URL.</p>
+</div>
 
   
 
   <div data-ice="properties">
 </div>
 
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+          
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
 </div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-get-modelsCount">
-    <span class="access" data-ice="access">public</span>
-    
-    <span class="kind" data-ice="kind">get</span>
-    
-    
-    
-    <span data-ice="name">modelsCount</span><span data-ice="signature">: <span>*</span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber424">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  
-
-  
-
-  <div data-ice="properties">
-</div>
-
-  
+  </div>
 
   
 
@@ -3665,7 +3543,7 @@ property.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber130">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber371">source</a></span></span>
     </span>
   </h3>
 
@@ -3673,6 +3551,50 @@ property.</p>
   
   
   
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-get-size">
+    <span class="access" data-ice="access">public</span>
+    
+    <span class="kind" data-ice="kind">get</span>
+    
+    
+    
+    <span data-ice="name">size</span><span data-ice="signature">: <span>*</span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber778">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Gets the number of models contained in the collection.</p>
+</div>
 
   
 
@@ -3707,18 +3629,20 @@ property.</p>
     
     
     
-    <span data-ice="name">addModel</span><span data-ice="signature">(state: <span>*</span>, mergeOp: <span>*</span>): <span>*</span></span>
+    <span data-ice="name">addModel</span><span data-ice="signature">(state: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>, mergeOp: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber440">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber794">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Synchronously adds a new model object to the collection. Call <code>model.$().save()</code> to persist the newly
+added object.</p>
+</div>
 
   
 
@@ -3732,16 +3656,20 @@ property.</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">state</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the json model to add to the collection</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">mergeOp</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
       <td data-ice="appendix"><ul><li>optional</li>
 <li>default: REPLACE_OPTION</li></ul></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>one of <code>DEFAULTS_OPTION</code>, <code>MERGE_OPTION</code>, or
+<code>REPLACE_OPTION</code> and specifies how to combine an existing model with a matching ID
+with a newly retrieved model.</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -3754,7 +3682,9 @@ property.</p>
       <tbody>
         <tr>
           <td class="return-type" data-ice="returnType"><span>*</span></td>
-          
+          <td class="return-desc" data-ice="returnDescription"><p>the object&apos;s ID. And ID is assigned if the &apos;id&apos; parameter was not set and it could not
+be found in the <code>state</code> parameter.</p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -3785,18 +3715,20 @@ property.</p>
     
     
     
-    <span data-ice="name">addModels</span><span data-ice="signature">(models: <span>*</span>, mergeOp: <span>*</span>, syncOp: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>)</span>
+    <span data-ice="name">addModels</span><span data-ice="signature">(models: <span>array</span>, mergeOp: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, syncOp: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber489">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber843">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Bulk adds multiple models. Models must have an ID as it is assumed they have been previously
+saved.</p>
+</div>
 
   
 
@@ -3810,23 +3742,28 @@ property.</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">models</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span>array</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>array of model values</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">mergeOp</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
       <td data-ice="appendix"><ul><li>optional</li>
 <li>default: REPLACE_OPTION</li></ul></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>one of <code>DEFAULTS_OPTION</code>, <code>MERGE_OPTION</code>, or
+<code>REPLACE_OPTION</code> and specifies how to combine an existing model with a matching ID
+with a newly retrieved model.</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">syncOp</td>
       <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></td>
       <td data-ice="appendix"><ul><li>optional</li>
 <li>default: true</li></ul></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>sets the <code>synced</code> flag to true if this parameter is true</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -3862,7 +3799,7 @@ property.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber913">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1359">source</a></span></span>
     </span>
   </h3>
 
@@ -3933,14 +3870,15 @@ property.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber407">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber755">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Removes the endpoint from the collection. This has the side-effect of clearing the mdoels.</p>
+</div>
 
   
 
@@ -3972,18 +3910,19 @@ property.</p>
     
     
     
-    <span data-ice="name">create</span><span data-ice="signature">(model: <span>*</span>): <span>*</span></span>
+    <span data-ice="name">create</span><span data-ice="signature">(model: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber506">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber864">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Combines an <span>CollectionProperty#add</span> and <span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-save">CollectionProperty#save</a></span> actions.</p>
+</div>
 
   
 
@@ -3997,9 +3936,10 @@ property.</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">model</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the json data</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -4011,8 +3951,9 @@ property.</p>
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
-          
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>resolves with the f.lux shadow state for the new model</p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -4043,18 +3984,19 @@ property.</p>
     
     
     
-    <span data-ice="name">destroy</span><span data-ice="signature">(id: <span>*</span>): <span>*</span></span>
+    <span data-ice="name">destroy</span><span data-ice="signature">(id: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber515">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber880">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Permantently deletes the model with the endpoint and removes it from the collection.</p>
+</div>
 
   
 
@@ -4070,7 +4012,8 @@ property.</p>
       <td data-ice="name" data-depth="0">id</td>
       <td data-ice="type"><span>*</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the model ID to delete</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -4082,8 +4025,9 @@ property.</p>
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
-          
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>resolves with the ID for the removed mdoel</p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -4118,14 +4062,16 @@ property.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber921">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1367">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Used by the private _shadow() method to get the id from the model JSON representation as returned by the
+subclass doXXX() apis. The default implementation simply returns the &apos;id&apos; model property.</p>
+</div>
 
   
 
@@ -4185,18 +4131,19 @@ property.</p>
     
     
     
-    <span data-ice="name">fetch</span><span data-ice="signature">(filter: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></span>, mergeOp: <span>*</span>, replaceAll: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>, callback: <span>*</span>): <span>*</span></span>
+    <span data-ice="name">fetch</span><span data-ice="signature">(filter: <span>*</span>, mergeOp: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, replaceAll: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>, callback: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber564">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber942">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Fetches all the models from the endpoint.</p>
+</div>
 
   
 
@@ -4210,30 +4157,37 @@ property.</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">filter</td>
-      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></span></td>
+      <td data-ice="type"><span>*</span></td>
       <td data-ice="appendix"><ul><li>optional</li>
-<li>default: undefined</li></ul></td>
-      <td data-ice="description"></td>
+<li>default: null</li></ul></td>
+      <td data-ice="description"><p>filter object created using the endpoint.</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">mergeOp</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
       <td data-ice="appendix"><ul><li>optional</li>
 <li>default: REPLACE_OPTION</li></ul></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>one of <code>DEFAULTS_OPTION</code>, <code>MERGE_OPTION</code>, or
+<code>REPLACE_OPTION</code> and specifies how to combine an existing model with a matching ID
+with a newly retrieved model.</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">replaceAll</td>
       <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></td>
       <td data-ice="appendix"><ul><li>optional</li>
 <li>default: true</li></ul></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>set to <code>true</code> replace any current models by the ones
+returned by the endpoint.</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">callback</td>
       <td data-ice="type"><span>*</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>invoked before retrieved models are process or in case of an error</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -4245,8 +4199,9 @@ property.</p>
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
-          
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>resolves with the json models from the endpoint</p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -4277,18 +4232,21 @@ property.</p>
     
     
     
-    <span data-ice="name">fetchNext</span><span data-ice="signature">(mergeOp: <span>*</span>): <span>*</span></span>
+    <span data-ice="name">fetchNext</span><span data-ice="signature">(mergeOp: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber328">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber645">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Fetches the next set of models from the endpoint. This method differs from
+<span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-fetch">CollectionProperty#fetch</a></span> by passing <code>offset</code> and <code>limit</code> filter criteria to the
+endpoint.</p>
+</div>
 
   
 
@@ -4302,10 +4260,13 @@ property.</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">mergeOp</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
       <td data-ice="appendix"><ul><li>optional</li>
-<li>default: MERGE_OPTION</li></ul></td>
-      <td data-ice="description"></td>
+<li>default: REPLACE_OPTION</li></ul></td>
+      <td data-ice="description"><p>one of <code>DEFAULTS_OPTION</code>, <code>MERGE_OPTION</code>, or
+<code>REPLACE_OPTION</code> and specifies how to combine an existing model with a matching ID
+with a newly retrieved model.</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -4317,8 +4278,10 @@ property.</p>
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
-          
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>resolves with a single argument of an array of model json objects as
+returned from the endpoint.</p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -4349,18 +4312,20 @@ property.</p>
     
     
     
-    <span data-ice="name">find</span><span data-ice="signature">(id: <span>*</span>): <span>*</span></span>
+    <span data-ice="name">find</span><span data-ice="signature">(id: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber640">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1026">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets a model by ID. The method looks for a matching model in the collection. If one
+is not found then one is requested from the endpoint.</p>
+</div>
 
   
 
@@ -4376,7 +4341,8 @@ property.</p>
       <td data-ice="name" data-depth="0">id</td>
       <td data-ice="type"><span>*</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the model ID</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -4388,8 +4354,9 @@ property.</p>
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
-          
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>reolves with the model or undefined if one is not found</p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -4420,18 +4387,20 @@ property.</p>
     
     
     
-    <span data-ice="name">getModel</span><span data-ice="signature">(id: <span>*</span>, state: <span>*</span>): <span>*</span></span>
+    <span data-ice="name">getModel</span><span data-ice="signature">(id: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber673">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1067">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets a model by ID. The method looks for a matching model in the collection and never
+looks for one remotely through the endpoint.</p>
+</div>
 
   
 
@@ -4447,13 +4416,8 @@ property.</p>
       <td data-ice="name" data-depth="0">id</td>
       <td data-ice="type"><span>*</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
-    </tr>
-<tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">state</td>
-      <td data-ice="type"><span>*</span></td>
-      <td data-ice="appendix"><ul><li>optional</li></ul></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the model ID</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -4465,8 +4429,9 @@ property.</p>
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
-          
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>the model or undefined if one is not found</p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -4497,18 +4462,19 @@ property.</p>
     
     
     
-    <span data-ice="name">getOfflineState</span><span data-ice="signature">(): <span>*</span></span>
+    <span data-ice="name">getOfflineState</span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber216">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber500">source</a></span></span>
     </span>
   </h3>
 
   
   
-  
-  
+  <div class="experimental" data-ice="experimental">this method is experimental.</div>
+  <div data-ice="description"><p>Gets an object capable of providing a persisted version of this collection.</p>
+</div>
 
   
 
@@ -4520,7 +4486,7 @@ property.</p>
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
           
         </tr>
       </tbody>
@@ -4552,18 +4518,19 @@ property.</p>
     
     
     
-    <span data-ice="name">hasModel</span><span data-ice="signature">(id: <span>*</span>, state: <span>*</span>): <span>*</span></span>
+    <span data-ice="name">hasModel</span><span data-ice="signature">(id: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber679">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1080">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets if the collection contains a matching model.</p>
+</div>
 
   
 
@@ -4579,13 +4546,8 @@ property.</p>
       <td data-ice="name" data-depth="0">id</td>
       <td data-ice="type"><span>*</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
-    </tr>
-<tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">state</td>
-      <td data-ice="type"><span>*</span></td>
-      <td data-ice="appendix"><ul><li>optional</li></ul></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the model ID</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -4597,7 +4559,7 @@ property.</p>
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></td>
           
         </tr>
       </tbody>
@@ -4633,14 +4595,15 @@ property.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber366">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber689">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets if additional paging calls will return additional results.</p>
+</div>
 
   
 
@@ -4700,18 +4663,19 @@ property.</p>
     
     
     
-    <span data-ice="name">isAutocheckpoint</span><span data-ice="signature">(): <span>*</span></span>
+    <span data-ice="name">isAutocheckpoint</span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber195">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber476">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Sets whether auto-checkpointing is enabled.</p>
+</div>
 
   
 
@@ -4723,7 +4687,7 @@ property.</p>
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></td>
           
         </tr>
       </tbody>
@@ -4759,14 +4723,15 @@ property.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber686">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1089">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets if the collection is active (has a shadow) and an endpoint.</p>
+</div>
 
   
 
@@ -4814,14 +4779,15 @@ property.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber690">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1096">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets if a fetching operation that will replace ALL models is in progress.</p>
+</div>
 
   
 
@@ -4865,18 +4831,19 @@ property.</p>
     
     
     
-    <span data-ice="name">isNew</span><span data-ice="signature">(id: <span>*</span>, state: <span>*</span>): <span>*</span></span>
+    <span data-ice="name">isNew</span><span data-ice="signature">(id: <span>*</span>): <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber694">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1103">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets if a model has never been persisted to the endpoint.</p>
+</div>
 
   
 
@@ -4892,12 +4859,6 @@ property.</p>
       <td data-ice="name" data-depth="0">id</td>
       <td data-ice="type"><span>*</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
-    </tr>
-<tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">state</td>
-      <td data-ice="type"><span>*</span></td>
-      <td data-ice="appendix"><ul><li>optional</li></ul></td>
       <td data-ice="description"></td>
     </tr>
 </tbody>
@@ -4946,14 +4907,16 @@ property.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber700">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1113">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets if a model shadow state model represents a model that has never been persisted
+to the endpoint.</p>
+</div>
 
   
 
@@ -5017,14 +4980,15 @@ property.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber360">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber680">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets if a paging operation (<span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-fetchNext">CollectionProperty#fetchNext</a></span>) call is in progress.</p>
+</div>
 
   
 
@@ -5088,7 +5052,7 @@ property.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber906">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1352">source</a></span></span>
     </span>
   </h3>
 
@@ -5139,18 +5103,19 @@ property.</p>
     
     
     
-    <span data-ice="name">modelEntries</span><span data-ice="signature">(state: <span>*</span>): <span>*</span></span>
+    <span data-ice="name">modelEntries</span><span data-ice="signature">(state: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber727">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1145">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets an iterator with [ID, model] paris.</p>
+</div>
 
   
 
@@ -5178,7 +5143,7 @@ property.</p>
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></td>
           
         </tr>
       </tbody>
@@ -5210,18 +5175,19 @@ property.</p>
     
     
     
-    <span data-ice="name">modelKeys</span><span data-ice="signature">(state: <span>*</span>): <span>*</span></span>
+    <span data-ice="name">modelKeys</span><span data-ice="signature">(state: <span>*</span>): <span>Iterator</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber738">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1161">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets an iterator containing each model IDs.</p>
+</div>
 
   
 
@@ -5249,7 +5215,7 @@ property.</p>
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
+          <td class="return-type" data-ice="returnType"><span>Iterator</span></td>
           
         </tr>
       </tbody>
@@ -5281,18 +5247,19 @@ property.</p>
     
     
     
-    <span data-ice="name">modelKeysArray</span><span data-ice="signature">(state: <span>*</span>): <span>*</span></span>
+    <span data-ice="name">modelKeysArray</span><span data-ice="signature">(state: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber743">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1171">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets an array containing each model iDs.</p>
+</div>
 
   
 
@@ -5320,7 +5287,7 @@ property.</p>
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></td>
           
         </tr>
       </tbody>
@@ -5352,18 +5319,19 @@ property.</p>
     
     
     
-    <span data-ice="name">modelValues</span><span data-ice="signature">(state: <span>*</span>): <span>*</span></span>
+    <span data-ice="name">modelValues</span><span data-ice="signature">(state: <span>*</span>): <span>Iterator</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber751">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1184">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets an iterator containing each f.lux shadow state model.</p>
+</div>
 
   
 
@@ -5391,7 +5359,7 @@ property.</p>
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
+          <td class="return-type" data-ice="returnType"><span>Iterator</span></td>
           
         </tr>
       </tbody>
@@ -5423,18 +5391,19 @@ property.</p>
     
     
     
-    <span data-ice="name">modelsArray</span><span data-ice="signature">(state: <span>*</span>): <span>*</span></span>
+    <span data-ice="name">modelsArray</span><span data-ice="signature">(state: <span>*</span>): <span>array</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber711">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1124">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets the shadow models currently managed by the collection.</p>
+</div>
 
   
 
@@ -5462,8 +5431,9 @@ property.</p>
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
-          
+          <td class="return-type" data-ice="returnType"><span>array</span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>all models being managed by the collection</p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -5498,14 +5468,15 @@ property.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber372">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber698">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Gets the offset for the next paging request.</p>
+</div>
 
   
 
@@ -5525,126 +5496,6 @@ property.</p>
     <div data-ice="returnProperties">
 </div>
   </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-onError">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    
-    <span data-ice="name">onError</span><span data-ice="signature">(error: <span>*</span>, opMsg: <span>*</span>): <span>*</span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber927">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  
-
-  
-
-  <div data-ice="properties"><div data-ice="properties">
-  <h4 data-ice="title">Params:</h4>
-  <table class="params">
-    <thead>
-    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-    
-    <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">error</td>
-      <td data-ice="type"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
-    </tr>
-<tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">opMsg</td>
-      <td data-ice="type"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
-    </tr>
-</tbody>
-  </table>
-</div>
-</div>
-
-  <div class="return-params" data-ice="returnParams">
-    <h4>Return:</h4>
-    <table>
-      <tbody>
-        <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
-          
-        </tr>
-      </tbody>
-    </table>
-    <div data-ice="returnProperties">
-</div>
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-onPropertyDidUpdate">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    
-    <span data-ice="name">onPropertyDidUpdate</span><span data-ice="signature">()</span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber185">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  
-
-  
-
-  <div data-ice="properties">
-</div>
-
-  
 
   
 
@@ -5673,14 +5524,15 @@ property.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber758">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1193">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Synchronously removes the model from the collection without performing an endpoint operation.</p>
+</div>
 
   
 
@@ -5696,7 +5548,8 @@ property.</p>
       <td data-ice="name" data-depth="0">id</td>
       <td data-ice="type"><span>*</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the model id or cid</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -5732,14 +5585,16 @@ property.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber772">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1207">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Removes all models from the collection and marks the collection as having not synched with the
+endpoint.</p>
+</div>
 
   
 
@@ -5775,14 +5630,15 @@ property.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber376">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber705">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Resets all internal paging tracking variables but does not affect currently stored models.</p>
+</div>
 
   
 
@@ -5790,61 +5646,6 @@ property.</p>
 </div>
 
   
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-resync">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    
-    <span data-ice="name">resync</span><span data-ice="signature">(): <span>*</span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber281">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  
-
-  
-
-  <div data-ice="properties">
-</div>
-
-  <div class="return-params" data-ice="returnParams">
-    <h4>Return:</h4>
-    <table>
-      <tbody>
-        <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
-          
-        </tr>
-      </tbody>
-    </table>
-    <div data-ice="returnProperties">
-</div>
-  </div>
 
   
 
@@ -5869,18 +5670,19 @@ property.</p>
     
     
     
-    <span data-ice="name">save</span><span data-ice="signature">(id: <span>*</span>, mergeOp: <span>*</span>): <span>*</span></span>
+    <span data-ice="name">save</span><span data-ice="signature">(id: <span>*</span>, mergeOp: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber789">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1225">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Saves a model through the endpoint.</p>
+</div>
 
   
 
@@ -5896,14 +5698,18 @@ property.</p>
       <td data-ice="name" data-depth="0">id</td>
       <td data-ice="type"><span>*</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the model id or cid</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">mergeOp</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
       <td data-ice="appendix"><ul><li>optional</li>
-<li>default: MERGE_OPTION</li></ul></td>
-      <td data-ice="description"></td>
+<li>default: REPLACE_OPTION</li></ul></td>
+      <td data-ice="description"><p>one of <code>DEFAULTS_OPTION</code>, <code>MERGE_OPTION</code>, or
+<code>REPLACE_OPTION</code> and specifies how to combine an existing model with a matching ID
+with a newly retrieved model.</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -5915,8 +5721,9 @@ property.</p>
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
-          
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>resolves to the f.lux shadow state for the saved model</p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -5947,18 +5754,19 @@ property.</p>
     
     
     
-    <span data-ice="name">setAutocheckpoint</span><span data-ice="signature">(auto: <span>*</span>)</span>
+    <span data-ice="name">setAutocheckpoint</span><span data-ice="signature">(auto: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber199">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber485">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Sets whether auto-checkpointing should be enabled.</p>
+</div>
 
   
 
@@ -5972,9 +5780,10 @@ property.</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">auto</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p><code>true</code> to enable.</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -6010,14 +5819,15 @@ property.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber412">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber763">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Sets the <span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-get-endpoint">CollectionProperty#endpoint</a></span>.</p>
+</div>
 
   
 
@@ -6058,65 +5868,6 @@ property.</p>
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-setFetching">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    
-    <span data-ice="name">setFetching</span><span data-ice="signature">(fetching: <span>*</span>)</span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber882">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  
-
-  
-
-  <div data-ice="properties"><div data-ice="properties">
-  <h4 data-ice="title">Params:</h4>
-  <table class="params">
-    <thead>
-    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-    
-    <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">fetching</td>
-      <td data-ice="type"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
-    </tr>
-</tbody>
-  </table>
-</div>
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="instance-method-setIdName">
     <span class="access" data-ice="access">public</span>
     
@@ -6128,14 +5879,15 @@ property.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber878">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1317">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Sets the property name containing the model ID. Default is <code>id</code>.</p>
+</div>
 
   
 
@@ -6183,18 +5935,20 @@ property.</p>
     
     
     
-    <span data-ice="name">setLimit</span><span data-ice="signature">(limit: <span>*</span>)</span>
+    <span data-ice="name">setLimit</span><span data-ice="signature">(limit: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber383">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber718">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Sets the number of models to request with each paging request. The default paging size is
+50.</p>
+</div>
 
   
 
@@ -6208,7 +5962,7 @@ property.</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">limit</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"></td>
     </tr>
@@ -6242,18 +5996,19 @@ property.</p>
     
     
     
-    <span data-ice="name">setModels</span><span data-ice="signature">(models: <span>*</span>, syncOp: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>)</span>
+    <span data-ice="name">setModels</span><span data-ice="signature">(models: <span>array</span>, syncOp: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber893">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1339">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Bulk replaces current models with an array of new models.</p>
+</div>
 
   
 
@@ -6267,16 +6022,18 @@ property.</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">models</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span>array</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>array of model values</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">syncOp</td>
       <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></td>
       <td data-ice="appendix"><ul><li>optional</li>
 <li>default: true</li></ul></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>sets the <code>synced</code> flag to true if this parameter is true</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -6308,18 +6065,26 @@ property.</p>
     
     
     
-    <span data-ice="name">setOfflineState</span><span data-ice="signature">(offline: <span>*</span>)</span>
+    <span data-ice="name">setOfflineState</span><span data-ice="signature">(offline: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber229">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber523">source</a></span></span>
     </span>
   </h3>
 
   
   
-  
-  
+  <div class="experimental" data-ice="experimental">this method is experimental.</div>
+  <div data-ice="description"><p>Sets an object capable of providing a persisted version of this collection. The object must minimally
+expose a single method with the form:</p>
+<pre><code><code class="source-code prettyprint">function restore()</code>
+</code></pre><p>Method sets the collection state for offline access. Typically invoked by application logic after
+a failed <code>fetch()</code> to the endpoint.</p>
+<p>An object is used as the offline state management entity because it will normally perform other
+duties such as registering for <span><a href="variable/index.html#static-variable-ChangeEvent">ChangeEvent</a></span> to persistently store collection state on changes
+and support deleting previous backups</p>
+</div>
 
   
 
@@ -6333,9 +6098,10 @@ property.</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">offline</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the object containing the <code>restore()</code> function.</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -6371,14 +6137,20 @@ property.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber247">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber545">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Registers collection middleware operation. A middleware operation is invoked before each asynchronous/
+network operation. Middleware operations are functions with the following format:</p>
+<pre><code><code class="source-code prettyprint">function mwCallback(collectionShadow, collectionProperty)</code>
+</code></pre><p>Middleware functions must return a promise and are invoked in the order registered. A function
+generating an error will terminate the middleware chain and the collection operation will not
+be performed.</p>
+</div>
 
   
 

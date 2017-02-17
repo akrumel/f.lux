@@ -24,6 +24,12 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
+    "f.lux/src/autoshader.js~autoshader",
+    "class/src/AutoShader.js~AutoShader.html",
+    "<span>AutoShader</span> <span class=\"search-result-import-path\">f.lux/src/AutoShader.js</span>",
+    "class"
+  ],
+  [
     "f.lux/src/collection/collectionproperty.js~changeevent",
     "variable/index.html#static-variable-ChangeEvent",
     "<span>ChangeEvent</span> <span class=\"search-result-import-path\">f.lux/src/collection/CollectionProperty.js</span>",
@@ -207,6 +213,12 @@ window.esdocSearchIndex = [
     "f.lux/src/property.js~property",
     "class/src/Property.js~Property.html",
     "<span>Property</span> <span class=\"search-result-import-path\">f.lux/src/Property.js</span>",
+    "class"
+  ],
+  [
+    "f.lux/src/propertyfactoryshader.js~propertyfactoryshader",
+    "class/src/PropertyFactoryShader.js~PropertyFactoryShader.html",
+    "<span>PropertyFactoryShader</span> <span class=\"search-result-import-path\">f.lux/src/PropertyFactoryShader.js</span>",
     "class"
   ],
   [
@@ -922,6 +934,36 @@ window.esdocSearchIndex = [
     "file/src/AutoShader.js.html",
     "src/AutoShader.js",
     "file"
+  ],
+  [
+    "src/autoshader.js~autoshader#constructor",
+    "class/src/AutoShader.js~AutoShader.html#instance-constructor-constructor",
+    "src/AutoShader.js~AutoShader#constructor",
+    "method"
+  ],
+  [
+    "src/autoshader.js~autoshader#readonly",
+    "class/src/AutoShader.js~AutoShader.html#instance-member-readonly",
+    "src/AutoShader.js~AutoShader#readonly",
+    "member"
+  ],
+  [
+    "src/autoshader.js~autoshader#shaderfor",
+    "class/src/AutoShader.js~AutoShader.html#instance-method-shaderFor",
+    "src/AutoShader.js~AutoShader#shaderFor",
+    "method"
+  ],
+  [
+    "src/autoshader.js~autoshader#shadowproperty",
+    "class/src/AutoShader.js~AutoShader.html#instance-method-shadowProperty",
+    "src/AutoShader.js~AutoShader#shadowProperty",
+    "method"
+  ],
+  [
+    "src/autoshader.js~autoshader#shouldautomount",
+    "class/src/AutoShader.js~AutoShader.html#instance-method-shouldAutomount",
+    "src/AutoShader.js~AutoShader#shouldAutomount",
+    "method"
   ],
   [
     "src/indexedapi.js",
@@ -2230,6 +2272,60 @@ window.esdocSearchIndex = [
     "file/src/PropertyFactoryShader.js.html",
     "src/PropertyFactoryShader.js",
     "file"
+  ],
+  [
+    "src/propertyfactoryshader.js~propertyfactoryshader#addproperty",
+    "class/src/PropertyFactoryShader.js~PropertyFactoryShader.html#instance-method-addProperty",
+    "src/PropertyFactoryShader.js~PropertyFactoryShader#addProperty",
+    "method"
+  ],
+  [
+    "src/propertyfactoryshader.js~propertyfactoryshader#constructor",
+    "class/src/PropertyFactoryShader.js~PropertyFactoryShader.html#instance-constructor-constructor",
+    "src/PropertyFactoryShader.js~PropertyFactoryShader#constructor",
+    "method"
+  ],
+  [
+    "src/propertyfactoryshader.js~propertyfactoryshader#elementtype",
+    "class/src/PropertyFactoryShader.js~PropertyFactoryShader.html#instance-member-elementType",
+    "src/PropertyFactoryShader.js~PropertyFactoryShader#elementType",
+    "member"
+  ],
+  [
+    "src/propertyfactoryshader.js~propertyfactoryshader#parent",
+    "class/src/PropertyFactoryShader.js~PropertyFactoryShader.html#instance-member-parent",
+    "src/PropertyFactoryShader.js~PropertyFactoryShader#parent",
+    "member"
+  ],
+  [
+    "src/propertyfactoryshader.js~propertyfactoryshader#propertyshaderdefn",
+    "class/src/PropertyFactoryShader.js~PropertyFactoryShader.html#instance-member-propertyShaderDefn",
+    "src/PropertyFactoryShader.js~PropertyFactoryShader#propertyShaderDefn",
+    "member"
+  ],
+  [
+    "src/propertyfactoryshader.js~propertyfactoryshader#setelementtype",
+    "class/src/PropertyFactoryShader.js~PropertyFactoryShader.html#instance-method-setElementType",
+    "src/PropertyFactoryShader.js~PropertyFactoryShader#setElementType",
+    "method"
+  ],
+  [
+    "src/propertyfactoryshader.js~propertyfactoryshader#shadowproperty",
+    "class/src/PropertyFactoryShader.js~PropertyFactoryShader.html#instance-method-shadowProperty",
+    "src/PropertyFactoryShader.js~PropertyFactoryShader#shadowProperty",
+    "method"
+  ],
+  [
+    "src/propertyfactoryshader.js~propertyfactoryshader#shouldautomount",
+    "class/src/PropertyFactoryShader.js~PropertyFactoryShader.html#instance-method-shouldAutomount",
+    "src/PropertyFactoryShader.js~PropertyFactoryShader#shouldAutomount",
+    "method"
+  ],
+  [
+    "src/propertyfactoryshader.js~propertyfactoryshader#statetype",
+    "class/src/PropertyFactoryShader.js~PropertyFactoryShader.html#instance-member-stateType",
+    "src/PropertyFactoryShader.js~PropertyFactoryShader#stateType",
+    "member"
   ],
   [
     "src/shader.js",
@@ -3588,30 +3684,6 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
-    "src/collection/collectionproperty.js~collectionproperty#[_autocheckpoint]",
-    "class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-member-[_autocheckpoint]",
-    "src/collection/CollectionProperty.js~CollectionProperty#[_autocheckpoint]",
-    "member"
-  ],
-  [
-    "src/collection/collectionproperty.js~collectionproperty#[_fetching]",
-    "class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-member-[_fetching]",
-    "src/collection/CollectionProperty.js~CollectionProperty#[_fetching]",
-    "member"
-  ],
-  [
-    "src/collection/collectionproperty.js~collectionproperty#[_middleware]",
-    "class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-member-[_middleware]",
-    "src/collection/CollectionProperty.js~CollectionProperty#[_middleware]",
-    "member"
-  ],
-  [
-    "src/collection/collectionproperty.js~collectionproperty#[_offlinestate]",
-    "class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-member-[_offlineState]",
-    "src/collection/CollectionProperty.js~CollectionProperty#[_offlineState]",
-    "member"
-  ],
-  [
     "src/collection/collectionproperty.js~collectionproperty#addmodel",
     "class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-addModel",
     "src/collection/CollectionProperty.js~CollectionProperty#addModel",
@@ -3786,27 +3858,9 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "src/collection/collectionproperty.js~collectionproperty#modelscount",
-    "class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-get-modelsCount",
-    "src/collection/CollectionProperty.js~CollectionProperty#modelsCount",
-    "member"
-  ],
-  [
     "src/collection/collectionproperty.js~collectionproperty#nextoffset",
     "class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-nextOffset",
     "src/collection/CollectionProperty.js~CollectionProperty#nextOffset",
-    "method"
-  ],
-  [
-    "src/collection/collectionproperty.js~collectionproperty#onerror",
-    "class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-onError",
-    "src/collection/CollectionProperty.js~CollectionProperty#onError",
-    "method"
-  ],
-  [
-    "src/collection/collectionproperty.js~collectionproperty#onpropertydidupdate",
-    "class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-onPropertyDidUpdate",
-    "src/collection/CollectionProperty.js~CollectionProperty#onPropertyDidUpdate",
     "method"
   ],
   [
@@ -3834,12 +3888,6 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "src/collection/collectionproperty.js~collectionproperty#resync",
-    "class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-resync",
-    "src/collection/CollectionProperty.js~CollectionProperty#resync",
-    "method"
-  ],
-  [
     "src/collection/collectionproperty.js~collectionproperty#save",
     "class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-save",
     "src/collection/CollectionProperty.js~CollectionProperty#save",
@@ -3855,12 +3903,6 @@ window.esdocSearchIndex = [
     "src/collection/collectionproperty.js~collectionproperty#setendpoint",
     "class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-setEndpoint",
     "src/collection/CollectionProperty.js~CollectionProperty#setEndpoint",
-    "method"
-  ],
-  [
-    "src/collection/collectionproperty.js~collectionproperty#setfetching",
-    "class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-setFetching",
-    "src/collection/CollectionProperty.js~CollectionProperty#setFetching",
     "method"
   ],
   [
@@ -3886,6 +3928,12 @@ window.esdocSearchIndex = [
     "class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-method-setOfflineState",
     "src/collection/CollectionProperty.js~CollectionProperty#setOfflineState",
     "method"
+  ],
+  [
+    "src/collection/collectionproperty.js~collectionproperty#size",
+    "class/src/collection/CollectionProperty.js~CollectionProperty.html#instance-get-size",
+    "src/collection/CollectionProperty.js~CollectionProperty#size",
+    "member"
   ],
   [
     "src/collection/collectionproperty.js~collectionproperty#use",
@@ -4131,12 +4179,6 @@ window.esdocSearchIndex = [
     "src/collection/collectionshadow.js~collectionshadow#resettolastendpointstate",
     "class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-resetToLastEndpointState",
     "src/collection/CollectionShadow.js~CollectionShadow#resetToLastEndpointState",
-    "method"
-  ],
-  [
-    "src/collection/collectionshadow.js~collectionshadow#resync",
-    "class/src/collection/CollectionShadow.js~CollectionShadow.html#instance-method-resync",
-    "src/collection/CollectionShadow.js~CollectionShadow#resync",
     "method"
   ],
   [

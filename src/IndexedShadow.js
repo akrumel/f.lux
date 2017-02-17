@@ -8,6 +8,12 @@ const _cache = Symbol("_cache");
 const _valuesArray = Symbol('_valuesArray');
 
 
+/**
+	Default shadow api for the `IndexedProperty`. Exposes the non-mutating methods of the
+	{@link Array} interface.
+
+	@see {@link IndexedProperty}
+*/
 export default class IndexedShadow extends Shadow {
 	constructor(impl) {
 		super(impl);
