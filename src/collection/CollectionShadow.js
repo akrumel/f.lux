@@ -18,32 +18,32 @@ const _valuesArray = Symbol('_valuesArray');
 	## Basic functions
 
 	<ul>
-		<li>`add(state, mergeOp)` - </li>
-		<li>`all()` - </li>
-		<li>`clear()` - </li>
-		<li>`create(model)` - </li>
-		<li>`destroy(id)` - </li>
-		<li>`fetch(filter, mergeOp)` - </li>
-		<li>`find(id)` - </li>
-		<li>`get(id)` - </li>
-		<li>`has(id)` - </li>
-		<li>`remove(id)` - </li>
+		<li>`add(state, mergeOp)`</li>
+		<li>`all()`</li>
+		<li>`clear()</li>
+		<li>`create(model)`</li>
+		<li>`destroy(id)`</li>
+		<li>`fetch(filter, mergeOp)`</li>
+		<li>`find(id)`</li>
+		<li>`get(id)`</li>
+		<li>`has(id)`</li>
+		<li>`remove(id)`</li>
 	</ul>
 
 
 	## Utility functions
 
 	<ul>
-		<li>`entries()` - </li>
-		<li>`every(iteratee, context)` - </li>
-		<li>`filter(iteratee, context)` - </li>
-		<li>`groupBy(callback, context)` - </li>
-		<li>`keys()` - </li>
-		<li>`map(iteratee, context)` - </li>
-		<li>`reduce(iteratee, acc, context)` - </li>
-		<li>`some(iteratee, context)` - </li>
-		<li>`sortBy(...iteratee)` - </li>
-		<li>`values()` - </li>
+		<li>`entries()`</li>
+		<li>`every(iteratee, context)`</li>
+		<li>`filter(iteratee, context)`</li>
+		<li>`groupBy(callback, context)`</li>
+		<li>`keys()`</li>
+		<li>`map(iteratee, context)`</li>
+		<li>`reduce(iteratee, acc, context)`</li>
+		<li>`some(iteratee, context)`</li>
+		<li>`sortBy(...iteratee)`</li>
+		<li>`values()`</li>
 	</ul>
 
 	## Paging function

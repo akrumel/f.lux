@@ -4,6 +4,7 @@ import { assert, isObject } from "akutils";
 
 
 import ArrayProperty from "./MapProperty";
+import IsolatedApi from "./IsolatedApi";
 import MapProperty from "./MapProperty";
 import Property from "./Property";
 import ShadowImpl from "./ShadowImpl";
@@ -191,9 +192,9 @@ export default class Store {
 
 		@param {Property} root - the top-level `Property` used to shadow the application state
 		@param {Object|Array} [state=root.initialState()] - the initial application state
-		@param {boolean} [useTransients=true] - `true` to enable transient state
+		@param {boolean} [useTransients=false] - `true` to enable transient state
 	*/
-	constructor(root, state, useTransients=true) {
+	constructor(root, state, useTransients=false) {
 		invariant(root instanceof Property || Array.isArray(root) || isObject(root),
 			"Store root must be one of: Property subclass, object, or array");
 
@@ -207,8 +208,9 @@ export default class Store {
 		}
 
 		this._useTransients = useTransients;
-		this._subscribers = [];
+		this._isolated = new IsolatedApi(this);
 		this._listeners = [];
+		this._subscribers = [];
 
 		// dispatcher queues for pending actions and waitFor() requests
 		this._updateAction = null;
@@ -366,6 +368,10 @@ export default class Store {
 		return rootImpl.findByPath(path);
 	}
 
+	isolated() {
+		return this._isolated;
+	}
+
 	/**
 		Changes the top-level `Property` and application state.
 
@@ -513,6 +519,15 @@ export default class Store {
 		this._updateAction = action;
 
 		this.schedule();
+	}
+
+	/**
+		Gets if an update action has been registered with the store.
+
+		@return {boolean}
+	*/
+	isScheduled() {
+		return !!this._updateAction;
 	}
 
 	/**

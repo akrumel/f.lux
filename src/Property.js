@@ -241,6 +241,16 @@ export default class Property {
 	}
 
 	/**
+		Gets if property is an actual isolated property managed by the store. This implementation always
+		returns false. Override to change behavior.
+
+		@return {boolean}
+	*/
+	isIsolated() {
+		return false;
+	}
+
+	/**
 		Gets if the property allows for assignment through the shadow state, ie `todo.desc = "go skiing"`. The
 		readonly attribute is hierarchically determined through the parent property if not explicitly set.
 
@@ -375,7 +385,7 @@ export default class Property {
 			each parent component's type.
 	*/
 	path() {
-		return this[_impl] ?this[_impl].path :null;
+		return this[_impl] ?this[_impl].path() :null;
 	}
 
 	/**
@@ -400,6 +410,11 @@ export default class Property {
 		}
 
 		return this[_pid];
+	}
+
+	/** @ignore */
+	readonlyExplicit() {
+		return this[_readonly];
 	}
 
 	/**
@@ -609,7 +624,7 @@ export default class Property {
 	*/
 	touch() {
 		if (this.isActive()) {
-			this.__().update( state => ( { name: "Property.touch()", nextState: state } ) );
+			this[_impl].update( state => ( { name: "Property.touch()", nextState: state } ) );
 		}
 	}
 
@@ -660,7 +675,7 @@ export default class Property {
 	*/
 	update(callback) {
 		if (this.isActive()) {
-			this.__().update(callback);
+			this[_impl].update(callback);
 		} else {
 			throw new Error("Property must be active to invoke update()");
 		}
@@ -680,6 +695,17 @@ export default class Property {
 	*/
 	create$(impl) {
 		return new Access(impl);
+	}
+
+	/**
+		Gets the object containing or managing this property. All properties have an owner except
+		the root property. Isolated properties are a case where a property is independently managed
+		by the store so it can have an owner but not a parent.
+
+		@return {Property} alias for {@link Property#parent}
+	*/
+	owner() {
+		return this.parent();
 	}
 
 	//------------------------------------------------------------------------------------------------------

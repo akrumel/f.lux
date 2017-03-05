@@ -193,8 +193,9 @@ export default class Shader {
 		Creates the proxy (shadow) for a state property.
 	*/
 	shadowProperty(time, name, parentState, parentImpl) {
+		const IsolatedProperty = require("./IsolatedProperty").default;
 		const property = this[_property];
-		const isRoot = property.isRoot();
+		const isRoot = property.isRoot() || property instanceof IsolatedProperty;
 
 		invariant(parentState || isRoot, noParentStateErrorMsg(name, parentImpl));
 
@@ -202,7 +203,6 @@ export default class Shader {
 		const currState = isRoot ?parentState :parentState[name];
 		const state = property.getInitialState(currState);
 
-// if (name === 0) debugger
 		if (!isRoot) {
 			parentState[name] = state;
 		}

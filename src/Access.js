@@ -94,6 +94,16 @@ export default class Access {
 	}
 
 	/**
+		Gets if the property allows for assignment through the shadow state, ie `todo.desc = "go skiing"`. The
+		readonly attribute is hierarchically determined through the parent property if not explicitly set.
+
+		@return {boolean} - true if assignment is not allowed
+	*/
+	isReadonly() {
+		return this.property().isReadonly();
+	}
+
+	/**
 		Gets if the shadow property has experienced a mutation action. This method will return `true` and
 		{@link Access#isActive} may also return true if the f.lux store has not yet been transitioned to
 		the next state.
@@ -102,16 +112,6 @@ export default class Access {
 	*/
 	isValid() {
 		return this[_impl].isValid();
-	}
-
-	/**
-		Gets if the property allows for assignment through the shadow state, ie `todo.desc = "go skiing"`. The
-		readonly attribute is hierarchically determined through the parent property if not explicitly set.
-
-		@return {boolean} - true if assignment is not allowed
-	*/
-	isReadonly() {
-		return this.property().isReadonly();
 	}
 
 	/**

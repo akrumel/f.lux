@@ -25,10 +25,7 @@ export default class ObjectShadowImpl extends ShadowImpl {
 	}
 
 	/*
-		Define child properties for root properties and copies (prev is defined). The root case is
-		necessary since cannot trigger child property setting on an access through parent property.
-		Mapping properties when 'prev' is set enables the reuse of unchanged shadow properties. This
-		reduces number of objects created and affords use of '===' operator for detecting change.
+		Remove invalid but still active children.
 	*/
 	onReshadow(prev) {
 		// Kill invalid() nodes that are still active
@@ -129,7 +126,7 @@ export default class ObjectShadowImpl extends ShadowImpl {
 		return { ...this[_impls] };
 	}
 
-	extend(...sources) {
+	extend(sources) {
 		this.update( state => {
 				if (state) {
 					return {
@@ -287,26 +284,6 @@ export default class ObjectShadowImpl extends ShadowImpl {
 	}
 
 	/*
-		Gets a child implementation matching a property name or undefined if no such property exists.
-	*/
-	getChild(name) {
-		return this.get(name);
-	}
-
-	isMapped() {
-		return this[_mapped];
-	}
-
-	/*
-		Gets the keys/indices for this property.
-
-		Implementation note: Subclasses should implement this method in such a way as not to trigger a mapping.
-	*/
-	keys() {
-		return Object.keys(this.state());
-	}
-
-	/*
 		Maps all child properties onto this property using Object.defineProperty().
 	*/
 	defineChildProperties(prev, inCtor) {
@@ -338,20 +315,6 @@ export default class ObjectShadowImpl extends ShadowImpl {
 		}
 	}
 
-	_killInvalidButActiveChildren() {
-		// kill any unvisited children from previous implementation
-		const prevNames = Object.keys(this[_impls]);
-		var child;
-
-		for (let i=0, len=prevNames.length; i<len; i++) {
-			child = this[_impls][prevNames[i]];
-
-			if (!child.isValid() && child.isActive()) {
-				child.obsoleteTree();
-			}
-		}
-	}
-
 	defineChildProperty(name, elementShader, state, prev, inCtor=false) {
 		// ensure not already defined
 		if (this[_impls][name]) { return }
@@ -359,7 +322,7 @@ export default class ObjectShadowImpl extends ShadowImpl {
 		const prevChild = prev && prev[_impls][name];
 		var child;
 
-		if (prevChild) {
+		if (prevChild && !prevChild.replaced()) {
 			child = reshadow(this.time(), state, prevChild, this);
 		} else {
 			child = elementShader.shadowProperty(this.time(), name, state, this, this.store());
@@ -370,6 +333,40 @@ export default class ObjectShadowImpl extends ShadowImpl {
 
 			if (!prevChild && !inCtor) {
 				child.didShadow(this.time());
+			}
+		}
+	}
+
+	/*
+		Gets a child implementation matching a property name or undefined if no such property exists.
+	*/
+	getChild(name) {
+		return this.get(name);
+	}
+
+	isMapped() {
+		return this[_mapped];
+	}
+
+	/*
+		Gets the keys/indices for this property.
+
+		Implementation note: Subclasses should implement this method in such a way as not to trigger a mapping.
+	*/
+	keys() {
+		return Object.keys(this.state());
+	}
+
+	_killInvalidButActiveChildren() {
+		// kill any unvisited children from previous implementation
+		const prevNames = Object.keys(this[_impls]);
+		var child;
+
+		for (let i=0, len=prevNames.length; i<len; i++) {
+			child = this[_impls][prevNames[i]];
+
+			if (!child.isValid() && child.isActive()) {
+				child.obsoleteTree();
 			}
 		}
 	}

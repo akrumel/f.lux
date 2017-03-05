@@ -410,7 +410,7 @@ export default class IndexedShadowImpl extends ShadowImpl {
 		const prevChild = prevMapping && prevMapping[idx];
 		var child;
 
-		if (prevChild) {
+		if (prevChild && !prevChild.replaced()) {
 			prevChild.switchName();
 
 			child = reshadow(this.time(), state, prevChild, this);

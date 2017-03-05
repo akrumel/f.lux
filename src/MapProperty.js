@@ -108,7 +108,16 @@ export default class MapProperty extends Property {
 
 		StateType.defineTypeEx(PropClass, ShadowType, typeCallback, initialState);
 	}
+
+	/**
+		Used by {@link StateType} to determine if a keyed property type.
+
+		@ignore
+	*/
+	static supportsKeyedChildProperties() { return true }
 }
 
 
 StateType.defineType(MapProperty, spec => spec.initialState({}).typeName("MapProperty") );
+
+

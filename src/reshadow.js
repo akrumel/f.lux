@@ -2,7 +2,7 @@
 
 /** @ignore */
 export default function reshadow(time, parentState, prevImpl, parentImpl) {
-	const state = prevImpl.isRoot() ?parentState :parentState[prevImpl.name()];
+	const state = prevImpl.isRoot() || prevImpl.isIsolated() ?parentState :parentState[prevImpl.name()];
 	const prevProperty = prevImpl.property() && prevImpl.property();
 
 	// handle cases where node did not actually change
@@ -19,12 +19,13 @@ export default function reshadow(time, parentState, prevImpl, parentImpl) {
 		// copy so can keep valid properties while shadowing invalid/new properties
 		const impl = prevImpl.createCopy(time, state, parentImpl);
 
-		// Attach the new property to its parents and invoke property end update life-cycle method
-		impl.setupPropertyAccess(prevImpl);
-
-		// Set the properties implmentation after attaching the implementation to the shadow state
+		// Set the properties implmentation
 		prevImpl.property().setImpl(impl);
 
+		// Attach the new property to its parents
+		impl.setupPropertyAccess(prevImpl);
+
+		// inform new impl that reshadowing is complete
 		impl.reshadowed(prevImpl);
 
 		// mark previous implementation dead after new implementation in place so property can query

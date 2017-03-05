@@ -4,6 +4,7 @@ import defaults from "lodash.defaults";
 import isArray from "lodash.isarray";
 import isPlainObject from "lodash.isplainobject";
 
+import Access from "./Access";
 import Shadow from "./Shadow";
 import ShadowImpl from "./ShadowImpl";
 
@@ -263,7 +264,8 @@ export default class StateType {
 			specified in the `type` {@link StateType} class variable for the `property` parameter.
 	*/
 	static implementationClassForProperty(property, defaultClass=ShadowImpl) {
-		var stateType = StateType.from(property);
+		const stateType = property.stateType();
+//		const stateType = StateType.from(property);
 
 		if (stateType && stateType._implementationClass) {
 			return stateType._implementationClass;
@@ -481,6 +483,12 @@ export default class StateType {
 		return this;
 	}
 
+	accessClass(Cls) {
+		this._AccessClass = Cls;
+
+		return this;
+	}
+
 	/**
 		Sets the {@link Shadow} class to be used for shadowing the property.
 
@@ -518,7 +526,11 @@ export default class StateType {
 		@return {StateType}
 	*/
 	clone() {
-		return Object.assign(new StateType(), this);
+		return Object.assign(
+				new StateType(),
+				this,
+				{ _properties: { ...this._properties } }
+			);
 	}
 
 	/**
@@ -539,6 +551,7 @@ export default class StateType {
 			propType = propSpecs[name];
 			propState = state[name];
 
+// if (propState===undefined) console.log("COMPUTE", name, propType)
 			// update state only if current undefined
 			state[name] = propState===undefined ?propType.computeInitialState() :propState;
 		}
@@ -583,6 +596,11 @@ export default class StateType {
 	}
 
 	/** @ignore */
+	getAccessClass() {
+		return this._AccessClass || Access;
+	}
+
+	/** @ignore */
 	getManagedType() {
 		return this._managedType;
 	}
@@ -595,6 +613,11 @@ export default class StateType {
 	*/
 	getTypeName() {
 		return this._PropertyClass.__fluxTypeName__;
+	}
+
+	/** @ignore */
+	hasJitProperties() {
+		return !!this._jitProperties;
 	}
 
 	/**
@@ -628,11 +651,6 @@ export default class StateType {
 		}
 
 		return state;
-	}
-
-	/** @ignore */
-	hasJitProperties() {
-		return !!this._jitProperties;
 	}
 
 	/** @ignore */

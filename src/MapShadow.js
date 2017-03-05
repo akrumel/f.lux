@@ -33,11 +33,13 @@ export default class MapShadow extends Shadow {
 	}
 
 	entries() {
-		return iterateOver(this.__().keys(), key => [ key, this[key] ] );
+		return iterateOver(this.__().keys(), key => [ key, this.get(key) ] );
 	}
 
 	get(key) {
-		return this[key];
+		const childImpl = this.__().get(key);
+
+		return childImpl && childImpl.shadow();
 	}
 
 	has(key) {
@@ -48,12 +50,20 @@ export default class MapShadow extends Shadow {
 		return iteratorFor(this.__().keys());
 	}
 
+	keysArray() {
+		return this.__().keys();
+	}
+
 	set(key, value) {
 		return this.__().set(key, value);
 	}
 
 	values() {
-		return iterateOver(this.__().keys(), key => this[key]);
+		return iterateOver(this.__().keys(), key => this.get(key));
+	}
+
+	valuesArray() {
+		return this.__().values().map( v => v.shadow() )
 	}
 
 	[Symbol.iterator]() { return this.entries() }
