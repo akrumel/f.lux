@@ -6,11 +6,11 @@ This step adds state to the application using the **default f.lux `Store` behavi
 
 ## Goals
 
-1. [Create a f.lux `Store` with initial state](#user-content-store)
-2. [Subscribe to store changes in `<Todos>`](#user-content-changes)
-3. [Implement `<AddTodo>` `addTodo()` function](#user-content-addtodo)
-4. [Implement `<TodoItem>` to display, edit, and delete todo items](#user-content-items)
-5. [Iterate all store todo items and create a `<TodoItem>` for each one](#user-content-iterate)
+1. [Create a f.lux `Store` with initial state](#store)
+2. [Subscribe to store changes in `<Todos>`](#changes)
+3. [Implement `<AddTodo>` `addTodo()` function](#addtodo)
+4. [Implement `<TodoItem>` to display, edit, and delete todo items](#items)
+5. [Iterate all store todo items and create a `<TodoItem>` for each one](#iterate)
 
 The [`examples/tutorial/step-1`](https://github.com/akrumel/f.lux/tree/master/examples/tutorial/step-1) directory contains the completed code for this step.
 

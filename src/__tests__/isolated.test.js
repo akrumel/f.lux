@@ -107,6 +107,7 @@ describe("isolated", () => {
 	})
 
 	test("delete isolated map", () => {
+		// Initial state explicit to null so shadow.delete("iso") will not cause a property regeneration.
 		const isoType = LifecycleProperty.type
 				.implementationClass(IsolatedObjectShadowImpl)
 				.initialState(null)
@@ -114,6 +115,7 @@ describe("isolated", () => {
 		const rootType = MapProperty.type.properties({ iso: isoType })
 		var first0, iso, shadow;
 
+		// explicitly set 'iso' initial state so something to delete
 		root = new MapProperty(rootType);
 		store = new Store(root, { iso: {} });
 
@@ -125,15 +127,18 @@ describe("isolated", () => {
 					iso = shadow.iso;
 					first0 = iso.get("first");
 
+					first0.$$().checkPropCount(1, 1, 0, 0, 0);
 					iso.$$().checkPropCount(1, 1, 0, 1, 0);
 
 					shadow.delete("iso");
 
+					first0.$$().checkPropCount(1, 1, 2, 0, 0);
 					iso.$$().checkPropCount(1, 1, 1, 1, 0);
 
 					return store.waitThen();
 				})
 			.then( () => {
+					first0.$$().checkPropCount(1, 1, 2, 0, 1);
 					iso.$$().checkPropCount(1, 1, 1, 1, 1);
 			})
 	})

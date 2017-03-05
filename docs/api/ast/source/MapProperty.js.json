@@ -1,28 +1,28 @@
 {
   "type": "File",
   "start": 0,
-  "end": 4109,
+  "end": 4264,
   "loc": {
     "start": {
       "line": 1,
       "column": 0
     },
     "end": {
-      "line": 115,
+      "line": 124,
       "column": 0
     }
   },
   "program": {
     "type": "Program",
     "start": 0,
-    "end": 4109,
+    "end": 4264,
     "loc": {
       "start": {
         "line": 1,
         "column": 0
       },
       "end": {
-        "line": 115,
+        "line": 124,
         "column": 0
       }
     },
@@ -117,7 +117,7 @@
       {
         "type": "ImportDeclaration",
         "start": 35,
-        "end": 69,
+        "end": 91,
         "loc": {
           "start": {
             "line": 3,
@@ -125,14 +125,14 @@
           },
           "end": {
             "line": 3,
-            "column": 34
+            "column": 56
           }
         },
         "specifiers": [
           {
             "type": "ImportDefaultSpecifier",
             "start": 42,
-            "end": 50,
+            "end": 61,
             "loc": {
               "start": {
                 "line": 3,
@@ -140,13 +140,13 @@
               },
               "end": {
                 "line": 3,
-                "column": 15
+                "column": 26
               }
             },
             "local": {
               "type": "Identifier",
               "start": 42,
-              "end": 50,
+              "end": 61,
               "loc": {
                 "start": {
                   "line": 3,
@@ -154,6 +154,75 @@
                 },
                 "end": {
                   "line": 3,
+                  "column": 26
+                },
+                "identifierName": "createPropertyClass"
+              },
+              "name": "createPropertyClass"
+            }
+          }
+        ],
+        "source": {
+          "type": "StringLiteral",
+          "start": 67,
+          "end": 90,
+          "loc": {
+            "start": {
+              "line": 3,
+              "column": 32
+            },
+            "end": {
+              "line": 3,
+              "column": 55
+            }
+          },
+          "extra": {
+            "rawValue": "./createPropertyClass",
+            "raw": "\"./createPropertyClass\""
+          },
+          "value": "./createPropertyClass"
+        }
+      },
+      {
+        "type": "ImportDeclaration",
+        "start": 92,
+        "end": 126,
+        "loc": {
+          "start": {
+            "line": 4,
+            "column": 0
+          },
+          "end": {
+            "line": 4,
+            "column": 34
+          }
+        },
+        "specifiers": [
+          {
+            "type": "ImportDefaultSpecifier",
+            "start": 99,
+            "end": 107,
+            "loc": {
+              "start": {
+                "line": 4,
+                "column": 7
+              },
+              "end": {
+                "line": 4,
+                "column": 15
+              }
+            },
+            "local": {
+              "type": "Identifier",
+              "start": 99,
+              "end": 107,
+              "loc": {
+                "start": {
+                  "line": 4,
+                  "column": 7
+                },
+                "end": {
+                  "line": 4,
                   "column": 15
                 },
                 "identifierName": "KeyedApi"
@@ -164,15 +233,15 @@
         ],
         "source": {
           "type": "StringLiteral",
-          "start": 56,
-          "end": 68,
+          "start": 113,
+          "end": 125,
           "loc": {
             "start": {
-              "line": 3,
+              "line": 4,
               "column": 21
             },
             "end": {
-              "line": 3,
+              "line": 4,
               "column": 33
             }
           },
@@ -185,77 +254,8 @@
       },
       {
         "type": "ImportDeclaration",
-        "start": 70,
-        "end": 116,
-        "loc": {
-          "start": {
-            "line": 4,
-            "column": 0
-          },
-          "end": {
-            "line": 4,
-            "column": 46
-          }
-        },
-        "specifiers": [
-          {
-            "type": "ImportDefaultSpecifier",
-            "start": 77,
-            "end": 91,
-            "loc": {
-              "start": {
-                "line": 4,
-                "column": 7
-              },
-              "end": {
-                "line": 4,
-                "column": 21
-              }
-            },
-            "local": {
-              "type": "Identifier",
-              "start": 77,
-              "end": 91,
-              "loc": {
-                "start": {
-                  "line": 4,
-                  "column": 7
-                },
-                "end": {
-                  "line": 4,
-                  "column": 21
-                },
-                "identifierName": "ObjectProperty"
-              },
-              "name": "ObjectProperty"
-            }
-          }
-        ],
-        "source": {
-          "type": "StringLiteral",
-          "start": 97,
-          "end": 115,
-          "loc": {
-            "start": {
-              "line": 4,
-              "column": 27
-            },
-            "end": {
-              "line": 4,
-              "column": 45
-            }
-          },
-          "extra": {
-            "rawValue": "./ObjectProperty",
-            "raw": "\"./ObjectProperty\""
-          },
-          "value": "./ObjectProperty"
-        }
-      },
-      {
-        "type": "ImportDeclaration",
-        "start": 117,
-        "end": 167,
+        "start": 127,
+        "end": 177,
         "loc": {
           "start": {
             "line": 5,
@@ -269,8 +269,8 @@
         "specifiers": [
           {
             "type": "ImportDefaultSpecifier",
-            "start": 124,
-            "end": 140,
+            "start": 134,
+            "end": 150,
             "loc": {
               "start": {
                 "line": 5,
@@ -283,8 +283,8 @@
             },
             "local": {
               "type": "Identifier",
-              "start": 124,
-              "end": 140,
+              "start": 134,
+              "end": 150,
               "loc": {
                 "start": {
                   "line": 5,
@@ -302,8 +302,8 @@
         ],
         "source": {
           "type": "StringLiteral",
-          "start": 146,
-          "end": 166,
+          "start": 156,
+          "end": 176,
           "loc": {
             "start": {
               "line": 5,
@@ -323,8 +323,8 @@
       },
       {
         "type": "ImportDeclaration",
-        "start": 168,
-        "end": 204,
+        "start": 178,
+        "end": 214,
         "loc": {
           "start": {
             "line": 6,
@@ -338,8 +338,8 @@
         "specifiers": [
           {
             "type": "ImportDefaultSpecifier",
-            "start": 175,
-            "end": 184,
+            "start": 185,
+            "end": 194,
             "loc": {
               "start": {
                 "line": 6,
@@ -352,8 +352,8 @@
             },
             "local": {
               "type": "Identifier",
-              "start": 175,
-              "end": 184,
+              "start": 185,
+              "end": 194,
               "loc": {
                 "start": {
                   "line": 6,
@@ -371,8 +371,8 @@
         ],
         "source": {
           "type": "StringLiteral",
-          "start": 190,
-          "end": 203,
+          "start": 200,
+          "end": 213,
           "loc": {
             "start": {
               "line": 6,
@@ -392,8 +392,8 @@
       },
       {
         "type": "ImportDeclaration",
-        "start": 205,
-        "end": 239,
+        "start": 215,
+        "end": 249,
         "loc": {
           "start": {
             "line": 7,
@@ -407,8 +407,8 @@
         "specifiers": [
           {
             "type": "ImportDefaultSpecifier",
-            "start": 212,
-            "end": 220,
+            "start": 222,
+            "end": 230,
             "loc": {
               "start": {
                 "line": 7,
@@ -421,8 +421,8 @@
             },
             "local": {
               "type": "Identifier",
-              "start": 212,
-              "end": 220,
+              "start": 222,
+              "end": 230,
               "loc": {
                 "start": {
                   "line": 7,
@@ -440,8 +440,8 @@
         ],
         "source": {
           "type": "StringLiteral",
-          "start": 226,
-          "end": 238,
+          "start": 236,
+          "end": 248,
           "loc": {
             "start": {
               "line": 7,
@@ -461,8 +461,8 @@
       },
       {
         "type": "ImportDeclaration",
-        "start": 240,
-        "end": 276,
+        "start": 250,
+        "end": 286,
         "loc": {
           "start": {
             "line": 8,
@@ -476,8 +476,8 @@
         "specifiers": [
           {
             "type": "ImportDefaultSpecifier",
-            "start": 247,
-            "end": 256,
+            "start": 257,
+            "end": 266,
             "loc": {
               "start": {
                 "line": 8,
@@ -490,8 +490,8 @@
             },
             "local": {
               "type": "Identifier",
-              "start": 247,
-              "end": 256,
+              "start": 257,
+              "end": 266,
               "loc": {
                 "start": {
                   "line": 8,
@@ -509,8 +509,8 @@
         ],
         "source": {
           "type": "StringLiteral",
-          "start": 262,
-          "end": 275,
+          "start": 272,
+          "end": 285,
           "loc": {
             "start": {
               "line": 8,
@@ -531,8 +531,8 @@
           {
             "type": "CommentBlock",
             "value": "*\n\tExposes a Map interface on a shadow property. The f.lux auto-shadowing process maps `objects` using\n\tthis {@link Property} subclass.\n\n\tThe default shadow class is {@link MapShadow}.\n\n\tUse `MapProperty` when you want to shadow an `object` and provide a\n\t[`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) interface\n\tfor manipulating and accessing `object` properties.\n\n\tThe `_keyed` instance variable exposes a {@link KeyedApi} instance for working with properties.\n\tReadonly properties cannot be updated using the shadow so the `this._keyed` is used set the value\n\tor remove it from the object. For example,\n\n\t```js\n\tthis._keyed.set(\"updated\", Date());\n\t```\n\twould set the `updated` shadow property with a string value for the current time.\n\n\t@see {@link KeyedApi}\n\t@see {@link MapShadow}\n",
-            "start": 279,
-            "end": 1118,
+            "start": 289,
+            "end": 1128,
             "loc": {
               "start": {
                 "line": 11,
@@ -548,36 +548,36 @@
       },
       {
         "type": "ExportDefaultDeclaration",
-        "start": 1119,
-        "end": 4015,
+        "start": 1129,
+        "end": 4168,
         "loc": {
           "start": {
             "line": 33,
             "column": 0
           },
           "end": {
-            "line": 111,
+            "line": 118,
             "column": 1
           }
         },
         "declaration": {
           "type": "ClassDeclaration",
-          "start": 1134,
-          "end": 4015,
+          "start": 1144,
+          "end": 4168,
           "loc": {
             "start": {
               "line": 33,
               "column": 15
             },
             "end": {
-              "line": 111,
+              "line": 118,
               "column": 1
             }
           },
           "id": {
             "type": "Identifier",
-            "start": 1140,
-            "end": 1151,
+            "start": 1150,
+            "end": 1161,
             "loc": {
               "start": {
                 "line": 33,
@@ -594,8 +594,8 @@
           },
           "superClass": {
             "type": "Identifier",
-            "start": 1160,
-            "end": 1168,
+            "start": 1170,
+            "end": 1178,
             "loc": {
               "start": {
                 "line": 33,
@@ -611,23 +611,23 @@
           },
           "body": {
             "type": "ClassBody",
-            "start": 1169,
-            "end": 4015,
+            "start": 1179,
+            "end": 4168,
             "loc": {
               "start": {
                 "line": 33,
                 "column": 50
               },
               "end": {
-                "line": 111,
+                "line": 118,
                 "column": 1
               }
             },
             "body": [
               {
                 "type": "ClassMethod",
-                "start": 1495,
-                "end": 1662,
+                "start": 1505,
+                "end": 1672,
                 "loc": {
                   "start": {
                     "line": 42,
@@ -641,8 +641,8 @@
                 "computed": false,
                 "key": {
                   "type": "Identifier",
-                  "start": 1495,
-                  "end": 1506,
+                  "start": 1505,
+                  "end": 1516,
                   "loc": {
                     "start": {
                       "line": 42,
@@ -666,8 +666,8 @@
                 "params": [
                   {
                     "type": "Identifier",
-                    "start": 1507,
-                    "end": 1516,
+                    "start": 1517,
+                    "end": 1526,
                     "loc": {
                       "start": {
                         "line": 42,
@@ -684,8 +684,8 @@
                 ],
                 "body": {
                   "type": "BlockStatement",
-                  "start": 1518,
-                  "end": 1662,
+                  "start": 1528,
+                  "end": 1672,
                   "loc": {
                     "start": {
                       "line": 42,
@@ -699,8 +699,8 @@
                   "body": [
                     {
                       "type": "ExpressionStatement",
-                      "start": 1522,
-                      "end": 1539,
+                      "start": 1532,
+                      "end": 1549,
                       "loc": {
                         "start": {
                           "line": 43,
@@ -713,8 +713,8 @@
                       },
                       "expression": {
                         "type": "CallExpression",
-                        "start": 1522,
-                        "end": 1538,
+                        "start": 1532,
+                        "end": 1548,
                         "loc": {
                           "start": {
                             "line": 43,
@@ -727,8 +727,8 @@
                         },
                         "callee": {
                           "type": "Super",
-                          "start": 1522,
-                          "end": 1527,
+                          "start": 1532,
+                          "end": 1537,
                           "loc": {
                             "start": {
                               "line": 43,
@@ -743,8 +743,8 @@
                         "arguments": [
                           {
                             "type": "Identifier",
-                            "start": 1528,
-                            "end": 1537,
+                            "start": 1538,
+                            "end": 1547,
                             "loc": {
                               "start": {
                                 "line": 43,
@@ -763,8 +763,8 @@
                     },
                     {
                       "type": "ExpressionStatement",
-                      "start": 1543,
-                      "end": 1576,
+                      "start": 1553,
+                      "end": 1586,
                       "loc": {
                         "start": {
                           "line": 45,
@@ -777,8 +777,8 @@
                       },
                       "expression": {
                         "type": "AssignmentExpression",
-                        "start": 1543,
-                        "end": 1575,
+                        "start": 1553,
+                        "end": 1585,
                         "loc": {
                           "start": {
                             "line": 45,
@@ -792,8 +792,8 @@
                         "operator": "=",
                         "left": {
                           "type": "MemberExpression",
-                          "start": 1543,
-                          "end": 1554,
+                          "start": 1553,
+                          "end": 1564,
                           "loc": {
                             "start": {
                               "line": 45,
@@ -806,8 +806,8 @@
                           },
                           "object": {
                             "type": "ThisExpression",
-                            "start": 1543,
-                            "end": 1547,
+                            "start": 1553,
+                            "end": 1557,
                             "loc": {
                               "start": {
                                 "line": 45,
@@ -821,8 +821,8 @@
                           },
                           "property": {
                             "type": "Identifier",
-                            "start": 1548,
-                            "end": 1554,
+                            "start": 1558,
+                            "end": 1564,
                             "loc": {
                               "start": {
                                 "line": 45,
@@ -840,8 +840,8 @@
                         },
                         "right": {
                           "type": "NewExpression",
-                          "start": 1557,
-                          "end": 1575,
+                          "start": 1567,
+                          "end": 1585,
                           "loc": {
                             "start": {
                               "line": 45,
@@ -854,8 +854,8 @@
                           },
                           "callee": {
                             "type": "Identifier",
-                            "start": 1561,
-                            "end": 1569,
+                            "start": 1571,
+                            "end": 1579,
                             "loc": {
                               "start": {
                                 "line": 45,
@@ -872,8 +872,8 @@
                           "arguments": [
                             {
                               "type": "ThisExpression",
-                              "start": 1570,
-                              "end": 1574,
+                              "start": 1580,
+                              "end": 1584,
                               "loc": {
                                 "start": {
                                   "line": 45,
@@ -891,8 +891,8 @@
                     },
                     {
                       "type": "ExpressionStatement",
-                      "start": 1580,
-                      "end": 1626,
+                      "start": 1590,
+                      "end": 1636,
                       "loc": {
                         "start": {
                           "line": 47,
@@ -905,8 +905,8 @@
                       },
                       "expression": {
                         "type": "CallExpression",
-                        "start": 1580,
-                        "end": 1625,
+                        "start": 1590,
+                        "end": 1635,
                         "loc": {
                           "start": {
                             "line": 47,
@@ -919,8 +919,8 @@
                         },
                         "callee": {
                           "type": "MemberExpression",
-                          "start": 1580,
-                          "end": 1607,
+                          "start": 1590,
+                          "end": 1617,
                           "loc": {
                             "start": {
                               "line": 47,
@@ -933,8 +933,8 @@
                           },
                           "object": {
                             "type": "ThisExpression",
-                            "start": 1580,
-                            "end": 1584,
+                            "start": 1590,
+                            "end": 1594,
                             "loc": {
                               "start": {
                                 "line": 47,
@@ -948,8 +948,8 @@
                           },
                           "property": {
                             "type": "Identifier",
-                            "start": 1585,
-                            "end": 1607,
+                            "start": 1595,
+                            "end": 1617,
                             "loc": {
                               "start": {
                                 "line": 47,
@@ -968,8 +968,8 @@
                         "arguments": [
                           {
                             "type": "Identifier",
-                            "start": 1608,
-                            "end": 1624,
+                            "start": 1618,
+                            "end": 1634,
                             "loc": {
                               "start": {
                                 "line": 47,
@@ -988,8 +988,8 @@
                     },
                     {
                       "type": "ExpressionStatement",
-                      "start": 1629,
-                      "end": 1659,
+                      "start": 1639,
+                      "end": 1669,
                       "loc": {
                         "start": {
                           "line": 48,
@@ -1002,8 +1002,8 @@
                       },
                       "expression": {
                         "type": "CallExpression",
-                        "start": 1629,
-                        "end": 1659,
+                        "start": 1639,
+                        "end": 1669,
                         "loc": {
                           "start": {
                             "line": 48,
@@ -1016,8 +1016,8 @@
                         },
                         "callee": {
                           "type": "MemberExpression",
-                          "start": 1629,
-                          "end": 1648,
+                          "start": 1639,
+                          "end": 1658,
                           "loc": {
                             "start": {
                               "line": 48,
@@ -1030,8 +1030,8 @@
                           },
                           "object": {
                             "type": "ThisExpression",
-                            "start": 1629,
-                            "end": 1633,
+                            "start": 1639,
+                            "end": 1643,
                             "loc": {
                               "start": {
                                 "line": 48,
@@ -1045,8 +1045,8 @@
                           },
                           "property": {
                             "type": "Identifier",
-                            "start": 1634,
-                            "end": 1648,
+                            "start": 1644,
+                            "end": 1658,
                             "loc": {
                               "start": {
                                 "line": 48,
@@ -1065,8 +1065,8 @@
                         "arguments": [
                           {
                             "type": "Identifier",
-                            "start": 1649,
-                            "end": 1658,
+                            "start": 1659,
+                            "end": 1668,
                             "loc": {
                               "start": {
                                 "line": 48,
@@ -1091,8 +1091,8 @@
                   {
                     "type": "CommentBlock",
                     "value": "*\n\t\tIf a {@link StateType} is not passed to this constructor then one is located using\n\t\t{@link StateType.from} thus ensuring the f.lux shadowing process is defined for this\n\t\tproperty.\n\n\t\t@param {StateType} [stateType] - a specialized {@link StateType} instance describing how f.lux should\n\t\t\tshadow this property.\n\t",
-                    "start": 1172,
-                    "end": 1493,
+                    "start": 1182,
+                    "end": 1503,
                     "loc": {
                       "start": {
                         "line": 34,
@@ -1109,8 +1109,8 @@
                   {
                     "type": "CommentBlock",
                     "value": "*\n\t\tFactory function for creating an `MapProperty` subclass suitable for using with new. The generated\n\t\tclass will have the `type` {@link StateType} descriptor set upon return.\n\n\t\tExample usage:\n\t\t```\n\t\tclass SomeShadow extends MapShadow {\n\t\t    // definition here\n\t\t}\n\n\t\texport default MapProperty.createClass(SomeShadow, type => {\n\t\t\t// configure type variable\n\t\t});\n\t\t```\n\n\t\t@param {Object|MapShadow} [shadowType={}] - `MapShadow` subclass or object literal api definition.\n\t\t\tIf object literal specified, each property and function is mapped onto a Shadow subclass.\n\t\t@param {function(type: StateType)} [typeCallback] - a callback function that will be passed the\n\t\t\t{@link StateType} spec for additional customization, such as setting autoshadow, initial state,\n\t\t\tor readonly.\n\t\t@param {Object} [initialState={}] - the initial state for the new property.\n\n\t\t@return {MapProperty} newly defined `MapProperty` subclass.\n\t",
-                    "start": 1665,
-                    "end": 2595,
+                    "start": 1675,
+                    "end": 2605,
                     "loc": {
                       "start": {
                         "line": 51,
@@ -1126,8 +1126,8 @@
               },
               {
                 "type": "ClassMethod",
-                "start": 2597,
-                "end": 2749,
+                "start": 2607,
+                "end": 2759,
                 "loc": {
                   "start": {
                     "line": 75,
@@ -1141,8 +1141,8 @@
                 "computed": false,
                 "key": {
                   "type": "Identifier",
-                  "start": 2604,
-                  "end": 2615,
+                  "start": 2614,
+                  "end": 2625,
                   "loc": {
                     "start": {
                       "line": 75,
@@ -1165,8 +1165,8 @@
                 "params": [
                   {
                     "type": "AssignmentPattern",
-                    "start": 2616,
-                    "end": 2629,
+                    "start": 2626,
+                    "end": 2639,
                     "loc": {
                       "start": {
                         "line": 75,
@@ -1179,8 +1179,8 @@
                     },
                     "left": {
                       "type": "Identifier",
-                      "start": 2616,
-                      "end": 2626,
+                      "start": 2626,
+                      "end": 2636,
                       "loc": {
                         "start": {
                           "line": 75,
@@ -1196,8 +1196,8 @@
                     },
                     "right": {
                       "type": "ObjectExpression",
-                      "start": 2627,
-                      "end": 2629,
+                      "start": 2637,
+                      "end": 2639,
                       "loc": {
                         "start": {
                           "line": 75,
@@ -1213,8 +1213,8 @@
                   },
                   {
                     "type": "Identifier",
-                    "start": 2631,
-                    "end": 2643,
+                    "start": 2641,
+                    "end": 2653,
                     "loc": {
                       "start": {
                         "line": 75,
@@ -1230,8 +1230,8 @@
                   },
                   {
                     "type": "AssignmentPattern",
-                    "start": 2645,
-                    "end": 2660,
+                    "start": 2655,
+                    "end": 2670,
                     "loc": {
                       "start": {
                         "line": 75,
@@ -1244,8 +1244,8 @@
                     },
                     "left": {
                       "type": "Identifier",
-                      "start": 2645,
-                      "end": 2657,
+                      "start": 2655,
+                      "end": 2667,
                       "loc": {
                         "start": {
                           "line": 75,
@@ -1261,8 +1261,8 @@
                     },
                     "right": {
                       "type": "ObjectExpression",
-                      "start": 2658,
-                      "end": 2660,
+                      "start": 2668,
+                      "end": 2670,
                       "loc": {
                         "start": {
                           "line": 75,
@@ -1279,8 +1279,8 @@
                 ],
                 "body": {
                   "type": "BlockStatement",
-                  "start": 2662,
-                  "end": 2749,
+                  "start": 2672,
+                  "end": 2759,
                   "loc": {
                     "start": {
                       "line": 75,
@@ -1294,8 +1294,8 @@
                   "body": [
                     {
                       "type": "ReturnStatement",
-                      "start": 2666,
-                      "end": 2746,
+                      "start": 2676,
+                      "end": 2756,
                       "loc": {
                         "start": {
                           "line": 76,
@@ -1308,8 +1308,8 @@
                       },
                       "argument": {
                         "type": "CallExpression",
-                        "start": 2673,
-                        "end": 2745,
+                        "start": 2683,
+                        "end": 2755,
                         "loc": {
                           "start": {
                             "line": 76,
@@ -1322,8 +1322,8 @@
                         },
                         "callee": {
                           "type": "Identifier",
-                          "start": 2673,
-                          "end": 2692,
+                          "start": 2683,
+                          "end": 2702,
                           "loc": {
                             "start": {
                               "line": 76,
@@ -1340,8 +1340,8 @@
                         "arguments": [
                           {
                             "type": "Identifier",
-                            "start": 2693,
-                            "end": 2703,
+                            "start": 2703,
+                            "end": 2713,
                             "loc": {
                               "start": {
                                 "line": 76,
@@ -1357,8 +1357,8 @@
                           },
                           {
                             "type": "Identifier",
-                            "start": 2705,
-                            "end": 2717,
+                            "start": 2715,
+                            "end": 2727,
                             "loc": {
                               "start": {
                                 "line": 76,
@@ -1374,8 +1374,8 @@
                           },
                           {
                             "type": "Identifier",
-                            "start": 2719,
-                            "end": 2731,
+                            "start": 2729,
+                            "end": 2741,
                             "loc": {
                               "start": {
                                 "line": 76,
@@ -1391,8 +1391,8 @@
                           },
                           {
                             "type": "Identifier",
-                            "start": 2733,
-                            "end": 2744,
+                            "start": 2743,
+                            "end": 2754,
                             "loc": {
                               "start": {
                                 "line": 76,
@@ -1417,8 +1417,8 @@
                   {
                     "type": "CommentBlock",
                     "value": "*\n\t\tFactory function for creating an `MapProperty` subclass suitable for using with new. The generated\n\t\tclass will have the `type` {@link StateType} descriptor set upon return.\n\n\t\tExample usage:\n\t\t```\n\t\tclass SomeShadow extends MapShadow {\n\t\t    // definition here\n\t\t}\n\n\t\texport default MapProperty.createClass(SomeShadow, type => {\n\t\t\t// configure type variable\n\t\t});\n\t\t```\n\n\t\t@param {Object|MapShadow} [shadowType={}] - `MapShadow` subclass or object literal api definition.\n\t\t\tIf object literal specified, each property and function is mapped onto a Shadow subclass.\n\t\t@param {function(type: StateType)} [typeCallback] - a callback function that will be passed the\n\t\t\t{@link StateType} spec for additional customization, such as setting autoshadow, initial state,\n\t\t\tor readonly.\n\t\t@param {Object} [initialState={}] - the initial state for the new property.\n\n\t\t@return {MapProperty} newly defined `MapProperty` subclass.\n\t",
-                    "start": 1665,
-                    "end": 2595,
+                    "start": 1675,
+                    "end": 2605,
                     "loc": {
                       "start": {
                         "line": 51,
@@ -1435,8 +1435,8 @@
                   {
                     "type": "CommentBlock",
                     "value": "*\n\t\tFactory function for setting up the {@link StateType} `type` class variable with an appropriately\n\t\tconfigured intial state.\n\n\t\tExample usage:\n\t\t```\n        export default class SomeProperty extends MapProperty {\n\t\t\t// implement property here\n        }\n\n        class SomeShadow extends MapShadow {\n\t\t\t// implement shadow api here\n        }\n\n        MapProperty.defineType(SomeProperty, SomeShadow, type => {\n\t\t\t// configure type variable\n        });\n\t\t```\n\n\t\t@param {MapProperty} PropClass - MapProperty subclass\n\t\t@param {Object|MapShadow} [ShadowType] - `MapShadow` subclass or object literal api definition.\n\t\t\tIf object literal specified, each property and function is mapped onto a Shadow subclass.\n\t\t@param {function(type: StateType)} [typeCallback] - a callback function that will be passed the\n\t\t\t{@link StateType} spec for additional customization, such as setting autoshadow, initial state, or\n\t\t\treadonly.\n\t\t@param {Object} [initialState={}] - the initial state for the new property.\n\t",
-                    "start": 2752,
-                    "end": 3757,
+                    "start": 2762,
+                    "end": 3767,
                     "loc": {
                       "start": {
                         "line": 79,
@@ -1452,8 +1452,8 @@
               },
               {
                 "type": "ClassMethod",
-                "start": 3759,
-                "end": 4013,
+                "start": 3769,
+                "end": 4023,
                 "loc": {
                   "start": {
                     "line": 106,
@@ -1467,8 +1467,8 @@
                 "computed": false,
                 "key": {
                   "type": "Identifier",
-                  "start": 3766,
-                  "end": 3776,
+                  "start": 3776,
+                  "end": 3786,
                   "loc": {
                     "start": {
                       "line": 106,
@@ -1491,8 +1491,8 @@
                 "params": [
                   {
                     "type": "Identifier",
-                    "start": 3777,
-                    "end": 3786,
+                    "start": 3787,
+                    "end": 3796,
                     "loc": {
                       "start": {
                         "line": 106,
@@ -1508,8 +1508,8 @@
                   },
                   {
                     "type": "Identifier",
-                    "start": 3788,
-                    "end": 3798,
+                    "start": 3798,
+                    "end": 3808,
                     "loc": {
                       "start": {
                         "line": 106,
@@ -1525,8 +1525,8 @@
                   },
                   {
                     "type": "Identifier",
-                    "start": 3800,
-                    "end": 3812,
+                    "start": 3810,
+                    "end": 3822,
                     "loc": {
                       "start": {
                         "line": 106,
@@ -1542,8 +1542,8 @@
                   },
                   {
                     "type": "AssignmentPattern",
-                    "start": 3814,
-                    "end": 3829,
+                    "start": 3824,
+                    "end": 3839,
                     "loc": {
                       "start": {
                         "line": 106,
@@ -1556,8 +1556,8 @@
                     },
                     "left": {
                       "type": "Identifier",
-                      "start": 3814,
-                      "end": 3826,
+                      "start": 3824,
+                      "end": 3836,
                       "loc": {
                         "start": {
                           "line": 106,
@@ -1573,8 +1573,8 @@
                     },
                     "right": {
                       "type": "ObjectExpression",
-                      "start": 3827,
-                      "end": 3829,
+                      "start": 3837,
+                      "end": 3839,
                       "loc": {
                         "start": {
                           "line": 106,
@@ -1591,8 +1591,8 @@
                 ],
                 "body": {
                   "type": "BlockStatement",
-                  "start": 3831,
-                  "end": 4013,
+                  "start": 3841,
+                  "end": 4023,
                   "loc": {
                     "start": {
                       "line": 106,
@@ -1606,8 +1606,8 @@
                   "body": [
                     {
                       "type": "ExpressionStatement",
-                      "start": 3835,
-                      "end": 3932,
+                      "start": 3845,
+                      "end": 3942,
                       "loc": {
                         "start": {
                           "line": 107,
@@ -1620,8 +1620,8 @@
                       },
                       "expression": {
                         "type": "CallExpression",
-                        "start": 3835,
-                        "end": 3931,
+                        "start": 3845,
+                        "end": 3941,
                         "loc": {
                           "start": {
                             "line": 107,
@@ -1634,8 +1634,8 @@
                         },
                         "callee": {
                           "type": "Identifier",
-                          "start": 3835,
-                          "end": 3841,
+                          "start": 3845,
+                          "end": 3851,
                           "loc": {
                             "start": {
                               "line": 107,
@@ -1652,8 +1652,8 @@
                         "arguments": [
                           {
                             "type": "ArrowFunctionExpression",
-                            "start": 3843,
-                            "end": 3929,
+                            "start": 3853,
+                            "end": 3939,
                             "loc": {
                               "start": {
                                 "line": 107,
@@ -1671,8 +1671,8 @@
                             "params": [
                               {
                                 "type": "Identifier",
-                                "start": 3843,
-                                "end": 3844,
+                                "start": 3853,
+                                "end": 3854,
                                 "loc": {
                                   "start": {
                                     "line": 107,
@@ -1689,8 +1689,8 @@
                             ],
                             "body": {
                               "type": "CallExpression",
-                              "start": 3848,
-                              "end": 3929,
+                              "start": 3858,
+                              "end": 3939,
                               "loc": {
                                 "start": {
                                   "line": 107,
@@ -1703,8 +1703,8 @@
                               },
                               "callee": {
                                 "type": "MemberExpression",
-                                "start": 3848,
-                                "end": 3852,
+                                "start": 3858,
+                                "end": 3862,
                                 "loc": {
                                   "start": {
                                     "line": 107,
@@ -1717,8 +1717,8 @@
                                 },
                                 "object": {
                                   "type": "Identifier",
-                                  "start": 3848,
-                                  "end": 3849,
+                                  "start": 3858,
+                                  "end": 3859,
                                   "loc": {
                                     "start": {
                                       "line": 107,
@@ -1734,8 +1734,8 @@
                                 },
                                 "property": {
                                   "type": "Identifier",
-                                  "start": 3850,
-                                  "end": 3852,
+                                  "start": 3860,
+                                  "end": 3862,
                                   "loc": {
                                     "start": {
                                       "line": 107,
@@ -1754,8 +1754,8 @@
                               "arguments": [
                                 {
                                   "type": "CallExpression",
-                                  "start": 3853,
-                                  "end": 3889,
+                                  "start": 3863,
+                                  "end": 3899,
                                   "loc": {
                                     "start": {
                                       "line": 107,
@@ -1768,8 +1768,8 @@
                                   },
                                   "callee": {
                                     "type": "MemberExpression",
-                                    "start": 3853,
-                                    "end": 3878,
+                                    "start": 3863,
+                                    "end": 3888,
                                     "loc": {
                                       "start": {
                                         "line": 107,
@@ -1782,8 +1782,8 @@
                                     },
                                     "object": {
                                       "type": "Identifier",
-                                      "start": 3853,
-                                      "end": 3864,
+                                      "start": 3863,
+                                      "end": 3874,
                                       "loc": {
                                         "start": {
                                           "line": 107,
@@ -1799,8 +1799,8 @@
                                     },
                                     "property": {
                                       "type": "Identifier",
-                                      "start": 3865,
-                                      "end": 3878,
+                                      "start": 3875,
+                                      "end": 3888,
                                       "loc": {
                                         "start": {
                                           "line": 107,
@@ -1819,8 +1819,8 @@
                                   "arguments": [
                                     {
                                       "type": "Identifier",
-                                      "start": 3879,
-                                      "end": 3888,
+                                      "start": 3889,
+                                      "end": 3898,
                                       "loc": {
                                         "start": {
                                           "line": 107,
@@ -1838,8 +1838,8 @@
                                 },
                                 {
                                   "type": "StringLiteral",
-                                  "start": 3891,
-                                  "end": 3928,
+                                  "start": 3901,
+                                  "end": 3938,
                                   "loc": {
                                     "start": {
                                       "line": 107,
@@ -1864,8 +1864,8 @@
                     },
                     {
                       "type": "ExpressionStatement",
-                      "start": 3936,
-                      "end": 4010,
+                      "start": 3946,
+                      "end": 4020,
                       "loc": {
                         "start": {
                           "line": 109,
@@ -1878,8 +1878,8 @@
                       },
                       "expression": {
                         "type": "CallExpression",
-                        "start": 3936,
-                        "end": 4009,
+                        "start": 3946,
+                        "end": 4019,
                         "loc": {
                           "start": {
                             "line": 109,
@@ -1892,8 +1892,8 @@
                         },
                         "callee": {
                           "type": "MemberExpression",
-                          "start": 3936,
-                          "end": 3958,
+                          "start": 3946,
+                          "end": 3968,
                           "loc": {
                             "start": {
                               "line": 109,
@@ -1906,8 +1906,8 @@
                           },
                           "object": {
                             "type": "Identifier",
-                            "start": 3936,
-                            "end": 3945,
+                            "start": 3946,
+                            "end": 3955,
                             "loc": {
                               "start": {
                                 "line": 109,
@@ -1923,8 +1923,8 @@
                           },
                           "property": {
                             "type": "Identifier",
-                            "start": 3946,
-                            "end": 3958,
+                            "start": 3956,
+                            "end": 3968,
                             "loc": {
                               "start": {
                                 "line": 109,
@@ -1943,8 +1943,8 @@
                         "arguments": [
                           {
                             "type": "Identifier",
-                            "start": 3959,
-                            "end": 3968,
+                            "start": 3969,
+                            "end": 3978,
                             "loc": {
                               "start": {
                                 "line": 109,
@@ -1960,8 +1960,8 @@
                           },
                           {
                             "type": "Identifier",
-                            "start": 3970,
-                            "end": 3980,
+                            "start": 3980,
+                            "end": 3990,
                             "loc": {
                               "start": {
                                 "line": 109,
@@ -1977,8 +1977,8 @@
                           },
                           {
                             "type": "Identifier",
-                            "start": 3982,
-                            "end": 3994,
+                            "start": 3992,
+                            "end": 4004,
                             "loc": {
                               "start": {
                                 "line": 109,
@@ -1994,8 +1994,8 @@
                           },
                           {
                             "type": "Identifier",
-                            "start": 3996,
-                            "end": 4008,
+                            "start": 4006,
+                            "end": 4018,
                             "loc": {
                               "start": {
                                 "line": 109,
@@ -2013,14 +2013,15 @@
                       }
                     }
                   ],
-                  "directives": []
+                  "directives": [],
+                  "trailingComments": null
                 },
                 "leadingComments": [
                   {
                     "type": "CommentBlock",
                     "value": "*\n\t\tFactory function for setting up the {@link StateType} `type` class variable with an appropriately\n\t\tconfigured intial state.\n\n\t\tExample usage:\n\t\t```\n        export default class SomeProperty extends MapProperty {\n\t\t\t// implement property here\n        }\n\n        class SomeShadow extends MapShadow {\n\t\t\t// implement shadow api here\n        }\n\n        MapProperty.defineType(SomeProperty, SomeShadow, type => {\n\t\t\t// configure type variable\n        });\n\t\t```\n\n\t\t@param {MapProperty} PropClass - MapProperty subclass\n\t\t@param {Object|MapShadow} [ShadowType] - `MapShadow` subclass or object literal api definition.\n\t\t\tIf object literal specified, each property and function is mapped onto a Shadow subclass.\n\t\t@param {function(type: StateType)} [typeCallback] - a callback function that will be passed the\n\t\t\t{@link StateType} spec for additional customization, such as setting autoshadow, initial state, or\n\t\t\treadonly.\n\t\t@param {Object} [initialState={}] - the initial state for the new property.\n\t",
-                    "start": 2752,
-                    "end": 3757,
+                    "start": 2762,
+                    "end": 3767,
                     "loc": {
                       "start": {
                         "line": 79,
@@ -2028,6 +2029,131 @@
                       },
                       "end": {
                         "line": 105,
+                        "column": 3
+                      }
+                    }
+                  }
+                ],
+                "trailingComments": [
+                  {
+                    "type": "CommentBlock",
+                    "value": "*\n\t\tUsed by {@link StateType} to determine if a keyed property type.\n\n\t\t@ignore\n\t",
+                    "start": 4026,
+                    "end": 4111,
+                    "loc": {
+                      "start": {
+                        "line": 112,
+                        "column": 1
+                      },
+                      "end": {
+                        "line": 116,
+                        "column": 3
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "ClassMethod",
+                "start": 4113,
+                "end": 4166,
+                "loc": {
+                  "start": {
+                    "line": 117,
+                    "column": 1
+                  },
+                  "end": {
+                    "line": 117,
+                    "column": 54
+                  }
+                },
+                "computed": false,
+                "key": {
+                  "type": "Identifier",
+                  "start": 4120,
+                  "end": 4148,
+                  "loc": {
+                    "start": {
+                      "line": 117,
+                      "column": 8
+                    },
+                    "end": {
+                      "line": 117,
+                      "column": 36
+                    },
+                    "identifierName": "supportsKeyedChildProperties"
+                  },
+                  "name": "supportsKeyedChildProperties"
+                },
+                "static": true,
+                "kind": "method",
+                "id": null,
+                "generator": false,
+                "expression": false,
+                "async": false,
+                "params": [],
+                "body": {
+                  "type": "BlockStatement",
+                  "start": 4151,
+                  "end": 4166,
+                  "loc": {
+                    "start": {
+                      "line": 117,
+                      "column": 39
+                    },
+                    "end": {
+                      "line": 117,
+                      "column": 54
+                    }
+                  },
+                  "body": [
+                    {
+                      "type": "ReturnStatement",
+                      "start": 4153,
+                      "end": 4164,
+                      "loc": {
+                        "start": {
+                          "line": 117,
+                          "column": 41
+                        },
+                        "end": {
+                          "line": 117,
+                          "column": 52
+                        }
+                      },
+                      "argument": {
+                        "type": "BooleanLiteral",
+                        "start": 4160,
+                        "end": 4164,
+                        "loc": {
+                          "start": {
+                            "line": 117,
+                            "column": 48
+                          },
+                          "end": {
+                            "line": 117,
+                            "column": 52
+                          }
+                        },
+                        "value": true
+                      }
+                    }
+                  ],
+                  "directives": []
+                },
+                "leadingComments": [
+                  {
+                    "type": "CommentBlock",
+                    "value": "*\n\t\tUsed by {@link StateType} to determine if a keyed property type.\n\n\t\t@ignore\n\t",
+                    "start": 4026,
+                    "end": 4111,
+                    "loc": {
+                      "start": {
+                        "line": 112,
+                        "column": 1
+                      },
+                      "end": {
+                        "line": 116,
                         "column": 3
                       }
                     }
@@ -2040,8 +2166,8 @@
             {
               "type": "CommentBlock",
               "value": "*\n\tExposes a Map interface on a shadow property. The f.lux auto-shadowing process maps `objects` using\n\tthis {@link Property} subclass.\n\n\tThe default shadow class is {@link MapShadow}.\n\n\tUse `MapProperty` when you want to shadow an `object` and provide a\n\t[`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) interface\n\tfor manipulating and accessing `object` properties.\n\n\tThe `_keyed` instance variable exposes a {@link KeyedApi} instance for working with properties.\n\tReadonly properties cannot be updated using the shadow so the `this._keyed` is used set the value\n\tor remove it from the object. For example,\n\n\t```js\n\tthis._keyed.set(\"updated\", Date());\n\t```\n\twould set the `updated` shadow property with a string value for the current time.\n\n\t@see {@link KeyedApi}\n\t@see {@link MapShadow}\n",
-              "start": 279,
-              "end": 1118,
+              "start": 289,
+              "end": 1128,
               "loc": {
                 "start": {
                   "line": 11,
@@ -2060,8 +2186,8 @@
           {
             "type": "CommentBlock",
             "value": "*\n\tExposes a Map interface on a shadow property. The f.lux auto-shadowing process maps `objects` using\n\tthis {@link Property} subclass.\n\n\tThe default shadow class is {@link MapShadow}.\n\n\tUse `MapProperty` when you want to shadow an `object` and provide a\n\t[`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) interface\n\tfor manipulating and accessing `object` properties.\n\n\tThe `_keyed` instance variable exposes a {@link KeyedApi} instance for working with properties.\n\tReadonly properties cannot be updated using the shadow so the `this._keyed` is used set the value\n\tor remove it from the object. For example,\n\n\t```js\n\tthis._keyed.set(\"updated\", Date());\n\t```\n\twould set the `updated` shadow property with a string value for the current time.\n\n\t@see {@link KeyedApi}\n\t@see {@link MapShadow}\n",
-            "start": 279,
-            "end": 1118,
+            "start": 289,
+            "end": 1128,
             "loc": {
               "start": {
                 "line": 11,
@@ -2077,57 +2203,57 @@
       },
       {
         "type": "ExpressionStatement",
-        "start": 4018,
-        "end": 4108,
+        "start": 4171,
+        "end": 4261,
         "loc": {
           "start": {
-            "line": 114,
+            "line": 121,
             "column": 0
           },
           "end": {
-            "line": 114,
+            "line": 121,
             "column": 90
           }
         },
         "expression": {
           "type": "CallExpression",
-          "start": 4018,
-          "end": 4107,
+          "start": 4171,
+          "end": 4260,
           "loc": {
             "start": {
-              "line": 114,
+              "line": 121,
               "column": 0
             },
             "end": {
-              "line": 114,
+              "line": 121,
               "column": 89
             }
           },
           "callee": {
             "type": "MemberExpression",
-            "start": 4018,
-            "end": 4038,
+            "start": 4171,
+            "end": 4191,
             "loc": {
               "start": {
-                "line": 114,
+                "line": 121,
                 "column": 0
               },
               "end": {
-                "line": 114,
+                "line": 121,
                 "column": 20
               }
             },
             "object": {
               "type": "Identifier",
-              "start": 4018,
-              "end": 4027,
+              "start": 4171,
+              "end": 4180,
               "loc": {
                 "start": {
-                  "line": 114,
+                  "line": 121,
                   "column": 0
                 },
                 "end": {
-                  "line": 114,
+                  "line": 121,
                   "column": 9
                 },
                 "identifierName": "StateType"
@@ -2136,15 +2262,15 @@
             },
             "property": {
               "type": "Identifier",
-              "start": 4028,
-              "end": 4038,
+              "start": 4181,
+              "end": 4191,
               "loc": {
                 "start": {
-                  "line": 114,
+                  "line": 121,
                   "column": 10
                 },
                 "end": {
-                  "line": 114,
+                  "line": 121,
                   "column": 20
                 },
                 "identifierName": "defineType"
@@ -2156,15 +2282,15 @@
           "arguments": [
             {
               "type": "Identifier",
-              "start": 4039,
-              "end": 4050,
+              "start": 4192,
+              "end": 4203,
               "loc": {
                 "start": {
-                  "line": 114,
+                  "line": 121,
                   "column": 21
                 },
                 "end": {
-                  "line": 114,
+                  "line": 121,
                   "column": 32
                 },
                 "identifierName": "MapProperty"
@@ -2173,15 +2299,15 @@
             },
             {
               "type": "ArrowFunctionExpression",
-              "start": 4052,
-              "end": 4105,
+              "start": 4205,
+              "end": 4258,
               "loc": {
                 "start": {
-                  "line": 114,
+                  "line": 121,
                   "column": 34
                 },
                 "end": {
-                  "line": 114,
+                  "line": 121,
                   "column": 87
                 }
               },
@@ -2192,15 +2318,15 @@
               "params": [
                 {
                   "type": "Identifier",
-                  "start": 4052,
-                  "end": 4056,
+                  "start": 4205,
+                  "end": 4209,
                   "loc": {
                     "start": {
-                      "line": 114,
+                      "line": 121,
                       "column": 34
                     },
                     "end": {
-                      "line": 114,
+                      "line": 121,
                       "column": 38
                     },
                     "identifierName": "spec"
@@ -2210,71 +2336,71 @@
               ],
               "body": {
                 "type": "CallExpression",
-                "start": 4060,
-                "end": 4105,
+                "start": 4213,
+                "end": 4258,
                 "loc": {
                   "start": {
-                    "line": 114,
+                    "line": 121,
                     "column": 42
                   },
                   "end": {
-                    "line": 114,
+                    "line": 121,
                     "column": 87
                   }
                 },
                 "callee": {
                   "type": "MemberExpression",
-                  "start": 4060,
-                  "end": 4090,
+                  "start": 4213,
+                  "end": 4243,
                   "loc": {
                     "start": {
-                      "line": 114,
+                      "line": 121,
                       "column": 42
                     },
                     "end": {
-                      "line": 114,
+                      "line": 121,
                       "column": 72
                     }
                   },
                   "object": {
                     "type": "CallExpression",
-                    "start": 4060,
-                    "end": 4081,
+                    "start": 4213,
+                    "end": 4234,
                     "loc": {
                       "start": {
-                        "line": 114,
+                        "line": 121,
                         "column": 42
                       },
                       "end": {
-                        "line": 114,
+                        "line": 121,
                         "column": 63
                       }
                     },
                     "callee": {
                       "type": "MemberExpression",
-                      "start": 4060,
-                      "end": 4077,
+                      "start": 4213,
+                      "end": 4230,
                       "loc": {
                         "start": {
-                          "line": 114,
+                          "line": 121,
                           "column": 42
                         },
                         "end": {
-                          "line": 114,
+                          "line": 121,
                           "column": 59
                         }
                       },
                       "object": {
                         "type": "Identifier",
-                        "start": 4060,
-                        "end": 4064,
+                        "start": 4213,
+                        "end": 4217,
                         "loc": {
                           "start": {
-                            "line": 114,
+                            "line": 121,
                             "column": 42
                           },
                           "end": {
-                            "line": 114,
+                            "line": 121,
                             "column": 46
                           },
                           "identifierName": "spec"
@@ -2283,15 +2409,15 @@
                       },
                       "property": {
                         "type": "Identifier",
-                        "start": 4065,
-                        "end": 4077,
+                        "start": 4218,
+                        "end": 4230,
                         "loc": {
                           "start": {
-                            "line": 114,
+                            "line": 121,
                             "column": 47
                           },
                           "end": {
-                            "line": 114,
+                            "line": 121,
                             "column": 59
                           },
                           "identifierName": "initialState"
@@ -2303,15 +2429,15 @@
                     "arguments": [
                       {
                         "type": "ObjectExpression",
-                        "start": 4078,
-                        "end": 4080,
+                        "start": 4231,
+                        "end": 4233,
                         "loc": {
                           "start": {
-                            "line": 114,
+                            "line": 121,
                             "column": 60
                           },
                           "end": {
-                            "line": 114,
+                            "line": 121,
                             "column": 62
                           }
                         },
@@ -2321,15 +2447,15 @@
                   },
                   "property": {
                     "type": "Identifier",
-                    "start": 4082,
-                    "end": 4090,
+                    "start": 4235,
+                    "end": 4243,
                     "loc": {
                       "start": {
-                        "line": 114,
+                        "line": 121,
                         "column": 64
                       },
                       "end": {
-                        "line": 114,
+                        "line": 121,
                         "column": 72
                       },
                       "identifierName": "typeName"
@@ -2341,15 +2467,15 @@
                 "arguments": [
                   {
                     "type": "StringLiteral",
-                    "start": 4091,
-                    "end": 4104,
+                    "start": 4244,
+                    "end": 4257,
                     "loc": {
                       "start": {
-                        "line": 114,
+                        "line": 121,
                         "column": 73
                       },
                       "end": {
-                        "line": 114,
+                        "line": 121,
                         "column": 86
                       }
                     },
@@ -2372,8 +2498,8 @@
     {
       "type": "CommentBlock",
       "value": "*\n\tExposes a Map interface on a shadow property. The f.lux auto-shadowing process maps `objects` using\n\tthis {@link Property} subclass.\n\n\tThe default shadow class is {@link MapShadow}.\n\n\tUse `MapProperty` when you want to shadow an `object` and provide a\n\t[`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) interface\n\tfor manipulating and accessing `object` properties.\n\n\tThe `_keyed` instance variable exposes a {@link KeyedApi} instance for working with properties.\n\tReadonly properties cannot be updated using the shadow so the `this._keyed` is used set the value\n\tor remove it from the object. For example,\n\n\t```js\n\tthis._keyed.set(\"updated\", Date());\n\t```\n\twould set the `updated` shadow property with a string value for the current time.\n\n\t@see {@link KeyedApi}\n\t@see {@link MapShadow}\n",
-      "start": 279,
-      "end": 1118,
+      "start": 289,
+      "end": 1128,
       "loc": {
         "start": {
           "line": 11,
@@ -2388,8 +2514,8 @@
     {
       "type": "CommentBlock",
       "value": "*\n\t\tIf a {@link StateType} is not passed to this constructor then one is located using\n\t\t{@link StateType.from} thus ensuring the f.lux shadowing process is defined for this\n\t\tproperty.\n\n\t\t@param {StateType} [stateType] - a specialized {@link StateType} instance describing how f.lux should\n\t\t\tshadow this property.\n\t",
-      "start": 1172,
-      "end": 1493,
+      "start": 1182,
+      "end": 1503,
       "loc": {
         "start": {
           "line": 34,
@@ -2404,8 +2530,8 @@
     {
       "type": "CommentBlock",
       "value": "*\n\t\tFactory function for creating an `MapProperty` subclass suitable for using with new. The generated\n\t\tclass will have the `type` {@link StateType} descriptor set upon return.\n\n\t\tExample usage:\n\t\t```\n\t\tclass SomeShadow extends MapShadow {\n\t\t    // definition here\n\t\t}\n\n\t\texport default MapProperty.createClass(SomeShadow, type => {\n\t\t\t// configure type variable\n\t\t});\n\t\t```\n\n\t\t@param {Object|MapShadow} [shadowType={}] - `MapShadow` subclass or object literal api definition.\n\t\t\tIf object literal specified, each property and function is mapped onto a Shadow subclass.\n\t\t@param {function(type: StateType)} [typeCallback] - a callback function that will be passed the\n\t\t\t{@link StateType} spec for additional customization, such as setting autoshadow, initial state,\n\t\t\tor readonly.\n\t\t@param {Object} [initialState={}] - the initial state for the new property.\n\n\t\t@return {MapProperty} newly defined `MapProperty` subclass.\n\t",
-      "start": 1665,
-      "end": 2595,
+      "start": 1675,
+      "end": 2605,
       "loc": {
         "start": {
           "line": 51,
@@ -2420,8 +2546,8 @@
     {
       "type": "CommentBlock",
       "value": "*\n\t\tFactory function for setting up the {@link StateType} `type` class variable with an appropriately\n\t\tconfigured intial state.\n\n\t\tExample usage:\n\t\t```\n        export default class SomeProperty extends MapProperty {\n\t\t\t// implement property here\n        }\n\n        class SomeShadow extends MapShadow {\n\t\t\t// implement shadow api here\n        }\n\n        MapProperty.defineType(SomeProperty, SomeShadow, type => {\n\t\t\t// configure type variable\n        });\n\t\t```\n\n\t\t@param {MapProperty} PropClass - MapProperty subclass\n\t\t@param {Object|MapShadow} [ShadowType] - `MapShadow` subclass or object literal api definition.\n\t\t\tIf object literal specified, each property and function is mapped onto a Shadow subclass.\n\t\t@param {function(type: StateType)} [typeCallback] - a callback function that will be passed the\n\t\t\t{@link StateType} spec for additional customization, such as setting autoshadow, initial state, or\n\t\t\treadonly.\n\t\t@param {Object} [initialState={}] - the initial state for the new property.\n\t",
-      "start": 2752,
-      "end": 3757,
+      "start": 2762,
+      "end": 3767,
       "loc": {
         "start": {
           "line": 79,
@@ -2429,6 +2555,22 @@
         },
         "end": {
           "line": 105,
+          "column": 3
+        }
+      }
+    },
+    {
+      "type": "CommentBlock",
+      "value": "*\n\t\tUsed by {@link StateType} to determine if a keyed property type.\n\n\t\t@ignore\n\t",
+      "start": 4026,
+      "end": 4111,
+      "loc": {
+        "start": {
+          "line": 112,
+          "column": 1
+        },
+        "end": {
+          "line": 116,
           "column": 3
         }
       }
@@ -2658,9 +2800,9 @@
         "postfix": false,
         "binop": null
       },
-      "value": "KeyedApi",
+      "value": "createPropertyClass",
       "start": 42,
-      "end": 50,
+      "end": 61,
       "loc": {
         "start": {
           "line": 3,
@@ -2668,7 +2810,7 @@
         },
         "end": {
           "line": 3,
-          "column": 15
+          "column": 26
         }
       }
     },
@@ -2685,16 +2827,16 @@
         "binop": null
       },
       "value": "from",
-      "start": 51,
-      "end": 55,
+      "start": 62,
+      "end": 66,
       "loc": {
         "start": {
           "line": 3,
-          "column": 16
+          "column": 27
         },
         "end": {
           "line": 3,
-          "column": 20
+          "column": 31
         }
       }
     },
@@ -2711,17 +2853,17 @@
         "binop": null,
         "updateContext": null
       },
-      "value": "./KeyedApi",
-      "start": 56,
-      "end": 68,
+      "value": "./createPropertyClass",
+      "start": 67,
+      "end": 90,
       "loc": {
         "start": {
           "line": 3,
-          "column": 21
+          "column": 32
         },
         "end": {
           "line": 3,
-          "column": 33
+          "column": 55
         }
       }
     },
@@ -2738,16 +2880,16 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 68,
-      "end": 69,
+      "start": 90,
+      "end": 91,
       "loc": {
         "start": {
           "line": 3,
-          "column": 33
+          "column": 55
         },
         "end": {
           "line": 3,
-          "column": 34
+          "column": 56
         }
       }
     },
@@ -2766,8 +2908,8 @@
         "updateContext": null
       },
       "value": "import",
-      "start": 70,
-      "end": 76,
+      "start": 92,
+      "end": 98,
       "loc": {
         "start": {
           "line": 4,
@@ -2791,9 +2933,9 @@
         "postfix": false,
         "binop": null
       },
-      "value": "ObjectProperty",
-      "start": 77,
-      "end": 91,
+      "value": "KeyedApi",
+      "start": 99,
+      "end": 107,
       "loc": {
         "start": {
           "line": 4,
@@ -2801,7 +2943,7 @@
         },
         "end": {
           "line": 4,
-          "column": 21
+          "column": 15
         }
       }
     },
@@ -2818,16 +2960,16 @@
         "binop": null
       },
       "value": "from",
-      "start": 92,
-      "end": 96,
+      "start": 108,
+      "end": 112,
       "loc": {
         "start": {
           "line": 4,
-          "column": 22
+          "column": 16
         },
         "end": {
           "line": 4,
-          "column": 26
+          "column": 20
         }
       }
     },
@@ -2844,17 +2986,17 @@
         "binop": null,
         "updateContext": null
       },
-      "value": "./ObjectProperty",
-      "start": 97,
-      "end": 115,
+      "value": "./KeyedApi",
+      "start": 113,
+      "end": 125,
       "loc": {
         "start": {
           "line": 4,
-          "column": 27
+          "column": 21
         },
         "end": {
           "line": 4,
-          "column": 45
+          "column": 33
         }
       }
     },
@@ -2871,16 +3013,16 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 115,
-      "end": 116,
+      "start": 125,
+      "end": 126,
       "loc": {
         "start": {
           "line": 4,
-          "column": 45
+          "column": 33
         },
         "end": {
           "line": 4,
-          "column": 46
+          "column": 34
         }
       }
     },
@@ -2899,8 +3041,8 @@
         "updateContext": null
       },
       "value": "import",
-      "start": 117,
-      "end": 123,
+      "start": 127,
+      "end": 133,
       "loc": {
         "start": {
           "line": 5,
@@ -2925,8 +3067,8 @@
         "binop": null
       },
       "value": "ObjectShadowImpl",
-      "start": 124,
-      "end": 140,
+      "start": 134,
+      "end": 150,
       "loc": {
         "start": {
           "line": 5,
@@ -2951,8 +3093,8 @@
         "binop": null
       },
       "value": "from",
-      "start": 141,
-      "end": 145,
+      "start": 151,
+      "end": 155,
       "loc": {
         "start": {
           "line": 5,
@@ -2978,8 +3120,8 @@
         "updateContext": null
       },
       "value": "./ObjectShadowImpl",
-      "start": 146,
-      "end": 166,
+      "start": 156,
+      "end": 176,
       "loc": {
         "start": {
           "line": 5,
@@ -3004,8 +3146,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 166,
-      "end": 167,
+      "start": 176,
+      "end": 177,
       "loc": {
         "start": {
           "line": 5,
@@ -3032,8 +3174,8 @@
         "updateContext": null
       },
       "value": "import",
-      "start": 168,
-      "end": 174,
+      "start": 178,
+      "end": 184,
       "loc": {
         "start": {
           "line": 6,
@@ -3058,8 +3200,8 @@
         "binop": null
       },
       "value": "MapShadow",
-      "start": 175,
-      "end": 184,
+      "start": 185,
+      "end": 194,
       "loc": {
         "start": {
           "line": 6,
@@ -3084,8 +3226,8 @@
         "binop": null
       },
       "value": "from",
-      "start": 185,
-      "end": 189,
+      "start": 195,
+      "end": 199,
       "loc": {
         "start": {
           "line": 6,
@@ -3111,8 +3253,8 @@
         "updateContext": null
       },
       "value": "./MapShadow",
-      "start": 190,
-      "end": 203,
+      "start": 200,
+      "end": 213,
       "loc": {
         "start": {
           "line": 6,
@@ -3137,8 +3279,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 203,
-      "end": 204,
+      "start": 213,
+      "end": 214,
       "loc": {
         "start": {
           "line": 6,
@@ -3165,8 +3307,8 @@
         "updateContext": null
       },
       "value": "import",
-      "start": 205,
-      "end": 211,
+      "start": 215,
+      "end": 221,
       "loc": {
         "start": {
           "line": 7,
@@ -3191,8 +3333,8 @@
         "binop": null
       },
       "value": "Property",
-      "start": 212,
-      "end": 220,
+      "start": 222,
+      "end": 230,
       "loc": {
         "start": {
           "line": 7,
@@ -3217,8 +3359,8 @@
         "binop": null
       },
       "value": "from",
-      "start": 221,
-      "end": 225,
+      "start": 231,
+      "end": 235,
       "loc": {
         "start": {
           "line": 7,
@@ -3244,8 +3386,8 @@
         "updateContext": null
       },
       "value": "./Property",
-      "start": 226,
-      "end": 238,
+      "start": 236,
+      "end": 248,
       "loc": {
         "start": {
           "line": 7,
@@ -3270,8 +3412,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 238,
-      "end": 239,
+      "start": 248,
+      "end": 249,
       "loc": {
         "start": {
           "line": 7,
@@ -3298,8 +3440,8 @@
         "updateContext": null
       },
       "value": "import",
-      "start": 240,
-      "end": 246,
+      "start": 250,
+      "end": 256,
       "loc": {
         "start": {
           "line": 8,
@@ -3324,8 +3466,8 @@
         "binop": null
       },
       "value": "StateType",
-      "start": 247,
-      "end": 256,
+      "start": 257,
+      "end": 266,
       "loc": {
         "start": {
           "line": 8,
@@ -3350,8 +3492,8 @@
         "binop": null
       },
       "value": "from",
-      "start": 257,
-      "end": 261,
+      "start": 267,
+      "end": 271,
       "loc": {
         "start": {
           "line": 8,
@@ -3377,8 +3519,8 @@
         "updateContext": null
       },
       "value": "./StateType",
-      "start": 262,
-      "end": 275,
+      "start": 272,
+      "end": 285,
       "loc": {
         "start": {
           "line": 8,
@@ -3403,8 +3545,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 275,
-      "end": 276,
+      "start": 285,
+      "end": 286,
       "loc": {
         "start": {
           "line": 8,
@@ -3419,8 +3561,8 @@
     {
       "type": "CommentBlock",
       "value": "*\n\tExposes a Map interface on a shadow property. The f.lux auto-shadowing process maps `objects` using\n\tthis {@link Property} subclass.\n\n\tThe default shadow class is {@link MapShadow}.\n\n\tUse `MapProperty` when you want to shadow an `object` and provide a\n\t[`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) interface\n\tfor manipulating and accessing `object` properties.\n\n\tThe `_keyed` instance variable exposes a {@link KeyedApi} instance for working with properties.\n\tReadonly properties cannot be updated using the shadow so the `this._keyed` is used set the value\n\tor remove it from the object. For example,\n\n\t```js\n\tthis._keyed.set(\"updated\", Date());\n\t```\n\twould set the `updated` shadow property with a string value for the current time.\n\n\t@see {@link KeyedApi}\n\t@see {@link MapShadow}\n",
-      "start": 279,
-      "end": 1118,
+      "start": 289,
+      "end": 1128,
       "loc": {
         "start": {
           "line": 11,
@@ -3447,8 +3589,8 @@
         "updateContext": null
       },
       "value": "export",
-      "start": 1119,
-      "end": 1125,
+      "start": 1129,
+      "end": 1135,
       "loc": {
         "start": {
           "line": 33,
@@ -3475,8 +3617,8 @@
         "updateContext": null
       },
       "value": "default",
-      "start": 1126,
-      "end": 1133,
+      "start": 1136,
+      "end": 1143,
       "loc": {
         "start": {
           "line": 33,
@@ -3503,8 +3645,8 @@
         "updateContext": null
       },
       "value": "class",
-      "start": 1134,
-      "end": 1139,
+      "start": 1144,
+      "end": 1149,
       "loc": {
         "start": {
           "line": 33,
@@ -3529,8 +3671,8 @@
         "binop": null
       },
       "value": "MapProperty",
-      "start": 1140,
-      "end": 1151,
+      "start": 1150,
+      "end": 1161,
       "loc": {
         "start": {
           "line": 33,
@@ -3557,8 +3699,8 @@
         "updateContext": null
       },
       "value": "extends",
-      "start": 1152,
-      "end": 1159,
+      "start": 1162,
+      "end": 1169,
       "loc": {
         "start": {
           "line": 33,
@@ -3583,8 +3725,8 @@
         "binop": null
       },
       "value": "Property",
-      "start": 1160,
-      "end": 1168,
+      "start": 1170,
+      "end": 1178,
       "loc": {
         "start": {
           "line": 33,
@@ -3608,8 +3750,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 1169,
-      "end": 1170,
+      "start": 1179,
+      "end": 1180,
       "loc": {
         "start": {
           "line": 33,
@@ -3624,8 +3766,8 @@
     {
       "type": "CommentBlock",
       "value": "*\n\t\tIf a {@link StateType} is not passed to this constructor then one is located using\n\t\t{@link StateType.from} thus ensuring the f.lux shadowing process is defined for this\n\t\tproperty.\n\n\t\t@param {StateType} [stateType] - a specialized {@link StateType} instance describing how f.lux should\n\t\t\tshadow this property.\n\t",
-      "start": 1172,
-      "end": 1493,
+      "start": 1182,
+      "end": 1503,
       "loc": {
         "start": {
           "line": 34,
@@ -3650,8 +3792,8 @@
         "binop": null
       },
       "value": "constructor",
-      "start": 1495,
-      "end": 1506,
+      "start": 1505,
+      "end": 1516,
       "loc": {
         "start": {
           "line": 42,
@@ -3675,8 +3817,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 1506,
-      "end": 1507,
+      "start": 1516,
+      "end": 1517,
       "loc": {
         "start": {
           "line": 42,
@@ -3701,8 +3843,8 @@
         "binop": null
       },
       "value": "stateType",
-      "start": 1507,
-      "end": 1516,
+      "start": 1517,
+      "end": 1526,
       "loc": {
         "start": {
           "line": 42,
@@ -3726,8 +3868,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 1516,
-      "end": 1517,
+      "start": 1526,
+      "end": 1527,
       "loc": {
         "start": {
           "line": 42,
@@ -3751,8 +3893,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 1518,
-      "end": 1519,
+      "start": 1528,
+      "end": 1529,
       "loc": {
         "start": {
           "line": 42,
@@ -3779,8 +3921,8 @@
         "updateContext": null
       },
       "value": "super",
-      "start": 1522,
-      "end": 1527,
+      "start": 1532,
+      "end": 1537,
       "loc": {
         "start": {
           "line": 43,
@@ -3804,8 +3946,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 1527,
-      "end": 1528,
+      "start": 1537,
+      "end": 1538,
       "loc": {
         "start": {
           "line": 43,
@@ -3830,8 +3972,8 @@
         "binop": null
       },
       "value": "stateType",
-      "start": 1528,
-      "end": 1537,
+      "start": 1538,
+      "end": 1547,
       "loc": {
         "start": {
           "line": 43,
@@ -3855,8 +3997,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 1537,
-      "end": 1538,
+      "start": 1547,
+      "end": 1548,
       "loc": {
         "start": {
           "line": 43,
@@ -3881,8 +4023,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 1538,
-      "end": 1539,
+      "start": 1548,
+      "end": 1549,
       "loc": {
         "start": {
           "line": 43,
@@ -3909,8 +4051,8 @@
         "updateContext": null
       },
       "value": "this",
-      "start": 1543,
-      "end": 1547,
+      "start": 1553,
+      "end": 1557,
       "loc": {
         "start": {
           "line": 45,
@@ -3935,8 +4077,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 1547,
-      "end": 1548,
+      "start": 1557,
+      "end": 1558,
       "loc": {
         "start": {
           "line": 45,
@@ -3961,8 +4103,8 @@
         "binop": null
       },
       "value": "_keyed",
-      "start": 1548,
-      "end": 1554,
+      "start": 1558,
+      "end": 1564,
       "loc": {
         "start": {
           "line": 45,
@@ -3988,8 +4130,8 @@
         "updateContext": null
       },
       "value": "=",
-      "start": 1555,
-      "end": 1556,
+      "start": 1565,
+      "end": 1566,
       "loc": {
         "start": {
           "line": 45,
@@ -4016,8 +4158,8 @@
         "updateContext": null
       },
       "value": "new",
-      "start": 1557,
-      "end": 1560,
+      "start": 1567,
+      "end": 1570,
       "loc": {
         "start": {
           "line": 45,
@@ -4042,8 +4184,8 @@
         "binop": null
       },
       "value": "KeyedApi",
-      "start": 1561,
-      "end": 1569,
+      "start": 1571,
+      "end": 1579,
       "loc": {
         "start": {
           "line": 45,
@@ -4067,8 +4209,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 1569,
-      "end": 1570,
+      "start": 1579,
+      "end": 1580,
       "loc": {
         "start": {
           "line": 45,
@@ -4095,8 +4237,8 @@
         "updateContext": null
       },
       "value": "this",
-      "start": 1570,
-      "end": 1574,
+      "start": 1580,
+      "end": 1584,
       "loc": {
         "start": {
           "line": 45,
@@ -4120,8 +4262,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 1574,
-      "end": 1575,
+      "start": 1584,
+      "end": 1585,
       "loc": {
         "start": {
           "line": 45,
@@ -4146,8 +4288,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 1575,
-      "end": 1576,
+      "start": 1585,
+      "end": 1586,
       "loc": {
         "start": {
           "line": 45,
@@ -4174,8 +4316,8 @@
         "updateContext": null
       },
       "value": "this",
-      "start": 1580,
-      "end": 1584,
+      "start": 1590,
+      "end": 1594,
       "loc": {
         "start": {
           "line": 47,
@@ -4200,8 +4342,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 1584,
-      "end": 1585,
+      "start": 1594,
+      "end": 1595,
       "loc": {
         "start": {
           "line": 47,
@@ -4226,8 +4368,8 @@
         "binop": null
       },
       "value": "setImplementationClass",
-      "start": 1585,
-      "end": 1607,
+      "start": 1595,
+      "end": 1617,
       "loc": {
         "start": {
           "line": 47,
@@ -4251,8 +4393,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 1607,
-      "end": 1608,
+      "start": 1617,
+      "end": 1618,
       "loc": {
         "start": {
           "line": 47,
@@ -4277,8 +4419,8 @@
         "binop": null
       },
       "value": "ObjectShadowImpl",
-      "start": 1608,
-      "end": 1624,
+      "start": 1618,
+      "end": 1634,
       "loc": {
         "start": {
           "line": 47,
@@ -4302,8 +4444,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 1624,
-      "end": 1625,
+      "start": 1634,
+      "end": 1635,
       "loc": {
         "start": {
           "line": 47,
@@ -4328,8 +4470,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 1625,
-      "end": 1626,
+      "start": 1635,
+      "end": 1636,
       "loc": {
         "start": {
           "line": 47,
@@ -4356,8 +4498,8 @@
         "updateContext": null
       },
       "value": "this",
-      "start": 1629,
-      "end": 1633,
+      "start": 1639,
+      "end": 1643,
       "loc": {
         "start": {
           "line": 48,
@@ -4382,8 +4524,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 1633,
-      "end": 1634,
+      "start": 1643,
+      "end": 1644,
       "loc": {
         "start": {
           "line": 48,
@@ -4408,8 +4550,8 @@
         "binop": null
       },
       "value": "setShadowClass",
-      "start": 1634,
-      "end": 1648,
+      "start": 1644,
+      "end": 1658,
       "loc": {
         "start": {
           "line": 48,
@@ -4433,8 +4575,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 1648,
-      "end": 1649,
+      "start": 1658,
+      "end": 1659,
       "loc": {
         "start": {
           "line": 48,
@@ -4459,8 +4601,8 @@
         "binop": null
       },
       "value": "MapShadow",
-      "start": 1649,
-      "end": 1658,
+      "start": 1659,
+      "end": 1668,
       "loc": {
         "start": {
           "line": 48,
@@ -4484,8 +4626,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 1658,
-      "end": 1659,
+      "start": 1668,
+      "end": 1669,
       "loc": {
         "start": {
           "line": 48,
@@ -4509,8 +4651,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 1661,
-      "end": 1662,
+      "start": 1671,
+      "end": 1672,
       "loc": {
         "start": {
           "line": 49,
@@ -4525,8 +4667,8 @@
     {
       "type": "CommentBlock",
       "value": "*\n\t\tFactory function for creating an `MapProperty` subclass suitable for using with new. The generated\n\t\tclass will have the `type` {@link StateType} descriptor set upon return.\n\n\t\tExample usage:\n\t\t```\n\t\tclass SomeShadow extends MapShadow {\n\t\t    // definition here\n\t\t}\n\n\t\texport default MapProperty.createClass(SomeShadow, type => {\n\t\t\t// configure type variable\n\t\t});\n\t\t```\n\n\t\t@param {Object|MapShadow} [shadowType={}] - `MapShadow` subclass or object literal api definition.\n\t\t\tIf object literal specified, each property and function is mapped onto a Shadow subclass.\n\t\t@param {function(type: StateType)} [typeCallback] - a callback function that will be passed the\n\t\t\t{@link StateType} spec for additional customization, such as setting autoshadow, initial state,\n\t\t\tor readonly.\n\t\t@param {Object} [initialState={}] - the initial state for the new property.\n\n\t\t@return {MapProperty} newly defined `MapProperty` subclass.\n\t",
-      "start": 1665,
-      "end": 2595,
+      "start": 1675,
+      "end": 2605,
       "loc": {
         "start": {
           "line": 51,
@@ -4551,8 +4693,8 @@
         "binop": null
       },
       "value": "static",
-      "start": 2597,
-      "end": 2603,
+      "start": 2607,
+      "end": 2613,
       "loc": {
         "start": {
           "line": 75,
@@ -4577,8 +4719,8 @@
         "binop": null
       },
       "value": "createClass",
-      "start": 2604,
-      "end": 2615,
+      "start": 2614,
+      "end": 2625,
       "loc": {
         "start": {
           "line": 75,
@@ -4602,8 +4744,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2615,
-      "end": 2616,
+      "start": 2625,
+      "end": 2626,
       "loc": {
         "start": {
           "line": 75,
@@ -4628,8 +4770,8 @@
         "binop": null
       },
       "value": "shadowType",
-      "start": 2616,
-      "end": 2626,
+      "start": 2626,
+      "end": 2636,
       "loc": {
         "start": {
           "line": 75,
@@ -4655,8 +4797,8 @@
         "updateContext": null
       },
       "value": "=",
-      "start": 2626,
-      "end": 2627,
+      "start": 2636,
+      "end": 2637,
       "loc": {
         "start": {
           "line": 75,
@@ -4680,8 +4822,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2627,
-      "end": 2628,
+      "start": 2637,
+      "end": 2638,
       "loc": {
         "start": {
           "line": 75,
@@ -4705,8 +4847,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2628,
-      "end": 2629,
+      "start": 2638,
+      "end": 2639,
       "loc": {
         "start": {
           "line": 75,
@@ -4731,8 +4873,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 2629,
-      "end": 2630,
+      "start": 2639,
+      "end": 2640,
       "loc": {
         "start": {
           "line": 75,
@@ -4757,8 +4899,8 @@
         "binop": null
       },
       "value": "typeCallback",
-      "start": 2631,
-      "end": 2643,
+      "start": 2641,
+      "end": 2653,
       "loc": {
         "start": {
           "line": 75,
@@ -4783,8 +4925,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 2643,
-      "end": 2644,
+      "start": 2653,
+      "end": 2654,
       "loc": {
         "start": {
           "line": 75,
@@ -4809,8 +4951,8 @@
         "binop": null
       },
       "value": "initialState",
-      "start": 2645,
-      "end": 2657,
+      "start": 2655,
+      "end": 2667,
       "loc": {
         "start": {
           "line": 75,
@@ -4836,8 +4978,8 @@
         "updateContext": null
       },
       "value": "=",
-      "start": 2657,
-      "end": 2658,
+      "start": 2667,
+      "end": 2668,
       "loc": {
         "start": {
           "line": 75,
@@ -4861,8 +5003,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2658,
-      "end": 2659,
+      "start": 2668,
+      "end": 2669,
       "loc": {
         "start": {
           "line": 75,
@@ -4886,8 +5028,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2659,
-      "end": 2660,
+      "start": 2669,
+      "end": 2670,
       "loc": {
         "start": {
           "line": 75,
@@ -4911,8 +5053,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2660,
-      "end": 2661,
+      "start": 2670,
+      "end": 2671,
       "loc": {
         "start": {
           "line": 75,
@@ -4936,8 +5078,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2662,
-      "end": 2663,
+      "start": 2672,
+      "end": 2673,
       "loc": {
         "start": {
           "line": 75,
@@ -4964,8 +5106,8 @@
         "updateContext": null
       },
       "value": "return",
-      "start": 2666,
-      "end": 2672,
+      "start": 2676,
+      "end": 2682,
       "loc": {
         "start": {
           "line": 76,
@@ -4990,8 +5132,8 @@
         "binop": null
       },
       "value": "createPropertyClass",
-      "start": 2673,
-      "end": 2692,
+      "start": 2683,
+      "end": 2702,
       "loc": {
         "start": {
           "line": 76,
@@ -5015,8 +5157,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2692,
-      "end": 2693,
+      "start": 2702,
+      "end": 2703,
       "loc": {
         "start": {
           "line": 76,
@@ -5041,8 +5183,8 @@
         "binop": null
       },
       "value": "shadowType",
-      "start": 2693,
-      "end": 2703,
+      "start": 2703,
+      "end": 2713,
       "loc": {
         "start": {
           "line": 76,
@@ -5067,8 +5209,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 2703,
-      "end": 2704,
+      "start": 2713,
+      "end": 2714,
       "loc": {
         "start": {
           "line": 76,
@@ -5093,8 +5235,8 @@
         "binop": null
       },
       "value": "initialState",
-      "start": 2705,
-      "end": 2717,
+      "start": 2715,
+      "end": 2727,
       "loc": {
         "start": {
           "line": 76,
@@ -5119,8 +5261,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 2717,
-      "end": 2718,
+      "start": 2727,
+      "end": 2728,
       "loc": {
         "start": {
           "line": 76,
@@ -5145,8 +5287,8 @@
         "binop": null
       },
       "value": "typeCallback",
-      "start": 2719,
-      "end": 2731,
+      "start": 2729,
+      "end": 2741,
       "loc": {
         "start": {
           "line": 76,
@@ -5171,8 +5313,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 2731,
-      "end": 2732,
+      "start": 2741,
+      "end": 2742,
       "loc": {
         "start": {
           "line": 76,
@@ -5197,8 +5339,8 @@
         "binop": null
       },
       "value": "MapProperty",
-      "start": 2733,
-      "end": 2744,
+      "start": 2743,
+      "end": 2754,
       "loc": {
         "start": {
           "line": 76,
@@ -5222,8 +5364,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2744,
-      "end": 2745,
+      "start": 2754,
+      "end": 2755,
       "loc": {
         "start": {
           "line": 76,
@@ -5248,8 +5390,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 2745,
-      "end": 2746,
+      "start": 2755,
+      "end": 2756,
       "loc": {
         "start": {
           "line": 76,
@@ -5273,8 +5415,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2748,
-      "end": 2749,
+      "start": 2758,
+      "end": 2759,
       "loc": {
         "start": {
           "line": 77,
@@ -5289,8 +5431,8 @@
     {
       "type": "CommentBlock",
       "value": "*\n\t\tFactory function for setting up the {@link StateType} `type` class variable with an appropriately\n\t\tconfigured intial state.\n\n\t\tExample usage:\n\t\t```\n        export default class SomeProperty extends MapProperty {\n\t\t\t// implement property here\n        }\n\n        class SomeShadow extends MapShadow {\n\t\t\t// implement shadow api here\n        }\n\n        MapProperty.defineType(SomeProperty, SomeShadow, type => {\n\t\t\t// configure type variable\n        });\n\t\t```\n\n\t\t@param {MapProperty} PropClass - MapProperty subclass\n\t\t@param {Object|MapShadow} [ShadowType] - `MapShadow` subclass or object literal api definition.\n\t\t\tIf object literal specified, each property and function is mapped onto a Shadow subclass.\n\t\t@param {function(type: StateType)} [typeCallback] - a callback function that will be passed the\n\t\t\t{@link StateType} spec for additional customization, such as setting autoshadow, initial state, or\n\t\t\treadonly.\n\t\t@param {Object} [initialState={}] - the initial state for the new property.\n\t",
-      "start": 2752,
-      "end": 3757,
+      "start": 2762,
+      "end": 3767,
       "loc": {
         "start": {
           "line": 79,
@@ -5315,8 +5457,8 @@
         "binop": null
       },
       "value": "static",
-      "start": 3759,
-      "end": 3765,
+      "start": 3769,
+      "end": 3775,
       "loc": {
         "start": {
           "line": 106,
@@ -5341,8 +5483,8 @@
         "binop": null
       },
       "value": "defineType",
-      "start": 3766,
-      "end": 3776,
+      "start": 3776,
+      "end": 3786,
       "loc": {
         "start": {
           "line": 106,
@@ -5366,8 +5508,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 3776,
-      "end": 3777,
+      "start": 3786,
+      "end": 3787,
       "loc": {
         "start": {
           "line": 106,
@@ -5392,8 +5534,8 @@
         "binop": null
       },
       "value": "PropClass",
-      "start": 3777,
-      "end": 3786,
+      "start": 3787,
+      "end": 3796,
       "loc": {
         "start": {
           "line": 106,
@@ -5418,8 +5560,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 3786,
-      "end": 3787,
+      "start": 3796,
+      "end": 3797,
       "loc": {
         "start": {
           "line": 106,
@@ -5444,8 +5586,8 @@
         "binop": null
       },
       "value": "ShadowType",
-      "start": 3788,
-      "end": 3798,
+      "start": 3798,
+      "end": 3808,
       "loc": {
         "start": {
           "line": 106,
@@ -5470,8 +5612,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 3798,
-      "end": 3799,
+      "start": 3808,
+      "end": 3809,
       "loc": {
         "start": {
           "line": 106,
@@ -5496,8 +5638,8 @@
         "binop": null
       },
       "value": "typeCallback",
-      "start": 3800,
-      "end": 3812,
+      "start": 3810,
+      "end": 3822,
       "loc": {
         "start": {
           "line": 106,
@@ -5522,8 +5664,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 3812,
-      "end": 3813,
+      "start": 3822,
+      "end": 3823,
       "loc": {
         "start": {
           "line": 106,
@@ -5548,8 +5690,8 @@
         "binop": null
       },
       "value": "initialState",
-      "start": 3814,
-      "end": 3826,
+      "start": 3824,
+      "end": 3836,
       "loc": {
         "start": {
           "line": 106,
@@ -5575,8 +5717,8 @@
         "updateContext": null
       },
       "value": "=",
-      "start": 3826,
-      "end": 3827,
+      "start": 3836,
+      "end": 3837,
       "loc": {
         "start": {
           "line": 106,
@@ -5600,8 +5742,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 3827,
-      "end": 3828,
+      "start": 3837,
+      "end": 3838,
       "loc": {
         "start": {
           "line": 106,
@@ -5625,8 +5767,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 3828,
-      "end": 3829,
+      "start": 3838,
+      "end": 3839,
       "loc": {
         "start": {
           "line": 106,
@@ -5650,8 +5792,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 3829,
-      "end": 3830,
+      "start": 3839,
+      "end": 3840,
       "loc": {
         "start": {
           "line": 106,
@@ -5675,8 +5817,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 3831,
-      "end": 3832,
+      "start": 3841,
+      "end": 3842,
       "loc": {
         "start": {
           "line": 106,
@@ -5701,8 +5843,8 @@
         "binop": null
       },
       "value": "assert",
-      "start": 3835,
-      "end": 3841,
+      "start": 3845,
+      "end": 3851,
       "loc": {
         "start": {
           "line": 107,
@@ -5726,8 +5868,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 3841,
-      "end": 3842,
+      "start": 3851,
+      "end": 3852,
       "loc": {
         "start": {
           "line": 107,
@@ -5752,8 +5894,8 @@
         "binop": null
       },
       "value": "a",
-      "start": 3843,
-      "end": 3844,
+      "start": 3853,
+      "end": 3854,
       "loc": {
         "start": {
           "line": 107,
@@ -5778,8 +5920,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 3845,
-      "end": 3847,
+      "start": 3855,
+      "end": 3857,
       "loc": {
         "start": {
           "line": 107,
@@ -5804,8 +5946,8 @@
         "binop": null
       },
       "value": "a",
-      "start": 3848,
-      "end": 3849,
+      "start": 3858,
+      "end": 3859,
       "loc": {
         "start": {
           "line": 107,
@@ -5830,8 +5972,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 3849,
-      "end": 3850,
+      "start": 3859,
+      "end": 3860,
       "loc": {
         "start": {
           "line": 107,
@@ -5856,8 +5998,8 @@
         "binop": null
       },
       "value": "is",
-      "start": 3850,
-      "end": 3852,
+      "start": 3860,
+      "end": 3862,
       "loc": {
         "start": {
           "line": 107,
@@ -5881,8 +6023,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 3852,
-      "end": 3853,
+      "start": 3862,
+      "end": 3863,
       "loc": {
         "start": {
           "line": 107,
@@ -5907,8 +6049,8 @@
         "binop": null
       },
       "value": "MapProperty",
-      "start": 3853,
-      "end": 3864,
+      "start": 3863,
+      "end": 3874,
       "loc": {
         "start": {
           "line": 107,
@@ -5933,8 +6075,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 3864,
-      "end": 3865,
+      "start": 3874,
+      "end": 3875,
       "loc": {
         "start": {
           "line": 107,
@@ -5959,8 +6101,8 @@
         "binop": null
       },
       "value": "isPrototypeOf",
-      "start": 3865,
-      "end": 3878,
+      "start": 3875,
+      "end": 3888,
       "loc": {
         "start": {
           "line": 107,
@@ -5984,8 +6126,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 3878,
-      "end": 3879,
+      "start": 3888,
+      "end": 3889,
       "loc": {
         "start": {
           "line": 107,
@@ -6010,8 +6152,8 @@
         "binop": null
       },
       "value": "PropClass",
-      "start": 3879,
-      "end": 3888,
+      "start": 3889,
+      "end": 3898,
       "loc": {
         "start": {
           "line": 107,
@@ -6035,8 +6177,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 3888,
-      "end": 3889,
+      "start": 3898,
+      "end": 3899,
       "loc": {
         "start": {
           "line": 107,
@@ -6061,8 +6203,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 3889,
-      "end": 3890,
+      "start": 3899,
+      "end": 3900,
       "loc": {
         "start": {
           "line": 107,
@@ -6088,8 +6230,8 @@
         "updateContext": null
       },
       "value": "PropClass must subclass MapProperty",
-      "start": 3891,
-      "end": 3928,
+      "start": 3901,
+      "end": 3938,
       "loc": {
         "start": {
           "line": 107,
@@ -6113,8 +6255,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 3928,
-      "end": 3929,
+      "start": 3938,
+      "end": 3939,
       "loc": {
         "start": {
           "line": 107,
@@ -6138,8 +6280,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 3930,
-      "end": 3931,
+      "start": 3940,
+      "end": 3941,
       "loc": {
         "start": {
           "line": 107,
@@ -6164,8 +6306,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 3931,
-      "end": 3932,
+      "start": 3941,
+      "end": 3942,
       "loc": {
         "start": {
           "line": 107,
@@ -6190,8 +6332,8 @@
         "binop": null
       },
       "value": "StateType",
-      "start": 3936,
-      "end": 3945,
+      "start": 3946,
+      "end": 3955,
       "loc": {
         "start": {
           "line": 109,
@@ -6216,8 +6358,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 3945,
-      "end": 3946,
+      "start": 3955,
+      "end": 3956,
       "loc": {
         "start": {
           "line": 109,
@@ -6242,8 +6384,8 @@
         "binop": null
       },
       "value": "defineTypeEx",
-      "start": 3946,
-      "end": 3958,
+      "start": 3956,
+      "end": 3968,
       "loc": {
         "start": {
           "line": 109,
@@ -6267,8 +6409,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 3958,
-      "end": 3959,
+      "start": 3968,
+      "end": 3969,
       "loc": {
         "start": {
           "line": 109,
@@ -6293,8 +6435,8 @@
         "binop": null
       },
       "value": "PropClass",
-      "start": 3959,
-      "end": 3968,
+      "start": 3969,
+      "end": 3978,
       "loc": {
         "start": {
           "line": 109,
@@ -6319,8 +6461,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 3968,
-      "end": 3969,
+      "start": 3978,
+      "end": 3979,
       "loc": {
         "start": {
           "line": 109,
@@ -6345,8 +6487,8 @@
         "binop": null
       },
       "value": "ShadowType",
-      "start": 3970,
-      "end": 3980,
+      "start": 3980,
+      "end": 3990,
       "loc": {
         "start": {
           "line": 109,
@@ -6371,8 +6513,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 3980,
-      "end": 3981,
+      "start": 3990,
+      "end": 3991,
       "loc": {
         "start": {
           "line": 109,
@@ -6397,8 +6539,8 @@
         "binop": null
       },
       "value": "typeCallback",
-      "start": 3982,
-      "end": 3994,
+      "start": 3992,
+      "end": 4004,
       "loc": {
         "start": {
           "line": 109,
@@ -6423,8 +6565,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 3994,
-      "end": 3995,
+      "start": 4004,
+      "end": 4005,
       "loc": {
         "start": {
           "line": 109,
@@ -6449,8 +6591,8 @@
         "binop": null
       },
       "value": "initialState",
-      "start": 3996,
-      "end": 4008,
+      "start": 4006,
+      "end": 4018,
       "loc": {
         "start": {
           "line": 109,
@@ -6474,8 +6616,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 4008,
-      "end": 4009,
+      "start": 4018,
+      "end": 4019,
       "loc": {
         "start": {
           "line": 109,
@@ -6500,8 +6642,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 4009,
-      "end": 4010,
+      "start": 4019,
+      "end": 4020,
       "loc": {
         "start": {
           "line": 109,
@@ -6525,8 +6667,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 4012,
-      "end": 4013,
+      "start": 4022,
+      "end": 4023,
       "loc": {
         "start": {
           "line": 110,
@@ -6535,6 +6677,205 @@
         "end": {
           "line": 110,
           "column": 2
+        }
+      }
+    },
+    {
+      "type": "CommentBlock",
+      "value": "*\n\t\tUsed by {@link StateType} to determine if a keyed property type.\n\n\t\t@ignore\n\t",
+      "start": 4026,
+      "end": 4111,
+      "loc": {
+        "start": {
+          "line": 112,
+          "column": 1
+        },
+        "end": {
+          "line": 116,
+          "column": 3
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "static",
+      "start": 4113,
+      "end": 4119,
+      "loc": {
+        "start": {
+          "line": 117,
+          "column": 1
+        },
+        "end": {
+          "line": 117,
+          "column": 7
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "supportsKeyedChildProperties",
+      "start": 4120,
+      "end": 4148,
+      "loc": {
+        "start": {
+          "line": 117,
+          "column": 8
+        },
+        "end": {
+          "line": 117,
+          "column": 36
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "(",
+        "beforeExpr": true,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "start": 4148,
+      "end": 4149,
+      "loc": {
+        "start": {
+          "line": 117,
+          "column": 36
+        },
+        "end": {
+          "line": 117,
+          "column": 37
+        }
+      }
+    },
+    {
+      "type": {
+        "label": ")",
+        "beforeExpr": false,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "start": 4149,
+      "end": 4150,
+      "loc": {
+        "start": {
+          "line": 117,
+          "column": 37
+        },
+        "end": {
+          "line": 117,
+          "column": 38
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "{",
+        "beforeExpr": true,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "start": 4151,
+      "end": 4152,
+      "loc": {
+        "start": {
+          "line": 117,
+          "column": 39
+        },
+        "end": {
+          "line": 117,
+          "column": 40
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "return",
+        "keyword": "return",
+        "beforeExpr": true,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "value": "return",
+      "start": 4153,
+      "end": 4159,
+      "loc": {
+        "start": {
+          "line": 117,
+          "column": 41
+        },
+        "end": {
+          "line": 117,
+          "column": 47
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "true",
+        "keyword": "true",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "value": "true",
+      "start": 4160,
+      "end": 4164,
+      "loc": {
+        "start": {
+          "line": 117,
+          "column": 48
+        },
+        "end": {
+          "line": 117,
+          "column": 52
         }
       }
     },
@@ -6550,15 +6891,40 @@
         "postfix": false,
         "binop": null
       },
-      "start": 4014,
-      "end": 4015,
+      "start": 4165,
+      "end": 4166,
       "loc": {
         "start": {
-          "line": 111,
+          "line": 117,
+          "column": 53
+        },
+        "end": {
+          "line": 117,
+          "column": 54
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "}",
+        "beforeExpr": false,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "start": 4167,
+      "end": 4168,
+      "loc": {
+        "start": {
+          "line": 118,
           "column": 0
         },
         "end": {
-          "line": 111,
+          "line": 118,
           "column": 1
         }
       }
@@ -6576,15 +6942,15 @@
         "binop": null
       },
       "value": "StateType",
-      "start": 4018,
-      "end": 4027,
+      "start": 4171,
+      "end": 4180,
       "loc": {
         "start": {
-          "line": 114,
+          "line": 121,
           "column": 0
         },
         "end": {
-          "line": 114,
+          "line": 121,
           "column": 9
         }
       }
@@ -6602,15 +6968,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 4027,
-      "end": 4028,
+      "start": 4180,
+      "end": 4181,
       "loc": {
         "start": {
-          "line": 114,
+          "line": 121,
           "column": 9
         },
         "end": {
-          "line": 114,
+          "line": 121,
           "column": 10
         }
       }
@@ -6628,15 +6994,15 @@
         "binop": null
       },
       "value": "defineType",
-      "start": 4028,
-      "end": 4038,
+      "start": 4181,
+      "end": 4191,
       "loc": {
         "start": {
-          "line": 114,
+          "line": 121,
           "column": 10
         },
         "end": {
-          "line": 114,
+          "line": 121,
           "column": 20
         }
       }
@@ -6653,15 +7019,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 4038,
-      "end": 4039,
+      "start": 4191,
+      "end": 4192,
       "loc": {
         "start": {
-          "line": 114,
+          "line": 121,
           "column": 20
         },
         "end": {
-          "line": 114,
+          "line": 121,
           "column": 21
         }
       }
@@ -6679,15 +7045,15 @@
         "binop": null
       },
       "value": "MapProperty",
-      "start": 4039,
-      "end": 4050,
+      "start": 4192,
+      "end": 4203,
       "loc": {
         "start": {
-          "line": 114,
+          "line": 121,
           "column": 21
         },
         "end": {
-          "line": 114,
+          "line": 121,
           "column": 32
         }
       }
@@ -6705,15 +7071,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 4050,
-      "end": 4051,
+      "start": 4203,
+      "end": 4204,
       "loc": {
         "start": {
-          "line": 114,
+          "line": 121,
           "column": 32
         },
         "end": {
-          "line": 114,
+          "line": 121,
           "column": 33
         }
       }
@@ -6731,15 +7097,15 @@
         "binop": null
       },
       "value": "spec",
-      "start": 4052,
-      "end": 4056,
+      "start": 4205,
+      "end": 4209,
       "loc": {
         "start": {
-          "line": 114,
+          "line": 121,
           "column": 34
         },
         "end": {
-          "line": 114,
+          "line": 121,
           "column": 38
         }
       }
@@ -6757,15 +7123,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 4057,
-      "end": 4059,
+      "start": 4210,
+      "end": 4212,
       "loc": {
         "start": {
-          "line": 114,
+          "line": 121,
           "column": 39
         },
         "end": {
-          "line": 114,
+          "line": 121,
           "column": 41
         }
       }
@@ -6783,15 +7149,15 @@
         "binop": null
       },
       "value": "spec",
-      "start": 4060,
-      "end": 4064,
+      "start": 4213,
+      "end": 4217,
       "loc": {
         "start": {
-          "line": 114,
+          "line": 121,
           "column": 42
         },
         "end": {
-          "line": 114,
+          "line": 121,
           "column": 46
         }
       }
@@ -6809,15 +7175,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 4064,
-      "end": 4065,
+      "start": 4217,
+      "end": 4218,
       "loc": {
         "start": {
-          "line": 114,
+          "line": 121,
           "column": 46
         },
         "end": {
-          "line": 114,
+          "line": 121,
           "column": 47
         }
       }
@@ -6835,15 +7201,15 @@
         "binop": null
       },
       "value": "initialState",
-      "start": 4065,
-      "end": 4077,
+      "start": 4218,
+      "end": 4230,
       "loc": {
         "start": {
-          "line": 114,
+          "line": 121,
           "column": 47
         },
         "end": {
-          "line": 114,
+          "line": 121,
           "column": 59
         }
       }
@@ -6860,15 +7226,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 4077,
-      "end": 4078,
+      "start": 4230,
+      "end": 4231,
       "loc": {
         "start": {
-          "line": 114,
+          "line": 121,
           "column": 59
         },
         "end": {
-          "line": 114,
+          "line": 121,
           "column": 60
         }
       }
@@ -6885,15 +7251,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 4078,
-      "end": 4079,
+      "start": 4231,
+      "end": 4232,
       "loc": {
         "start": {
-          "line": 114,
+          "line": 121,
           "column": 60
         },
         "end": {
-          "line": 114,
+          "line": 121,
           "column": 61
         }
       }
@@ -6910,15 +7276,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 4079,
-      "end": 4080,
+      "start": 4232,
+      "end": 4233,
       "loc": {
         "start": {
-          "line": 114,
+          "line": 121,
           "column": 61
         },
         "end": {
-          "line": 114,
+          "line": 121,
           "column": 62
         }
       }
@@ -6935,15 +7301,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 4080,
-      "end": 4081,
+      "start": 4233,
+      "end": 4234,
       "loc": {
         "start": {
-          "line": 114,
+          "line": 121,
           "column": 62
         },
         "end": {
-          "line": 114,
+          "line": 121,
           "column": 63
         }
       }
@@ -6961,15 +7327,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 4081,
-      "end": 4082,
+      "start": 4234,
+      "end": 4235,
       "loc": {
         "start": {
-          "line": 114,
+          "line": 121,
           "column": 63
         },
         "end": {
-          "line": 114,
+          "line": 121,
           "column": 64
         }
       }
@@ -6987,15 +7353,15 @@
         "binop": null
       },
       "value": "typeName",
-      "start": 4082,
-      "end": 4090,
+      "start": 4235,
+      "end": 4243,
       "loc": {
         "start": {
-          "line": 114,
+          "line": 121,
           "column": 64
         },
         "end": {
-          "line": 114,
+          "line": 121,
           "column": 72
         }
       }
@@ -7012,15 +7378,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 4090,
-      "end": 4091,
+      "start": 4243,
+      "end": 4244,
       "loc": {
         "start": {
-          "line": 114,
+          "line": 121,
           "column": 72
         },
         "end": {
-          "line": 114,
+          "line": 121,
           "column": 73
         }
       }
@@ -7039,15 +7405,15 @@
         "updateContext": null
       },
       "value": "MapProperty",
-      "start": 4091,
-      "end": 4104,
+      "start": 4244,
+      "end": 4257,
       "loc": {
         "start": {
-          "line": 114,
+          "line": 121,
           "column": 73
         },
         "end": {
-          "line": 114,
+          "line": 121,
           "column": 86
         }
       }
@@ -7064,15 +7430,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 4104,
-      "end": 4105,
+      "start": 4257,
+      "end": 4258,
       "loc": {
         "start": {
-          "line": 114,
+          "line": 121,
           "column": 86
         },
         "end": {
-          "line": 114,
+          "line": 121,
           "column": 87
         }
       }
@@ -7089,15 +7455,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 4106,
-      "end": 4107,
+      "start": 4259,
+      "end": 4260,
       "loc": {
         "start": {
-          "line": 114,
+          "line": 121,
           "column": 88
         },
         "end": {
-          "line": 114,
+          "line": 121,
           "column": 89
         }
       }
@@ -7115,15 +7481,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 4107,
-      "end": 4108,
+      "start": 4260,
+      "end": 4261,
       "loc": {
         "start": {
-          "line": 114,
+          "line": 121,
           "column": 89
         },
         "end": {
-          "line": 114,
+          "line": 121,
           "column": 90
         }
       }
@@ -7141,15 +7507,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 4109,
-      "end": 4109,
+      "start": 4264,
+      "end": 4264,
       "loc": {
         "start": {
-          "line": 115,
+          "line": 124,
           "column": 0
         },
         "end": {
-          "line": 115,
+          "line": 124,
           "column": 0
         }
       }

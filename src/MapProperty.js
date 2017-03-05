@@ -1,7 +1,7 @@
 import { assert } from "akutils";
 
+import createPropertyClass from "./createPropertyClass";
 import KeyedApi from "./KeyedApi";
-import ObjectProperty from "./ObjectProperty";
 import ObjectShadowImpl from "./ObjectShadowImpl";
 import MapShadow from "./MapShadow";
 import Property from "./Property";

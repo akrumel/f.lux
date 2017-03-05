@@ -7,10 +7,10 @@ This step will will explore using the f.lux time travel debugger and experiment 
 
 ## Goals
 
-1. [Setting up the f.lux `Logger`](#user-content-logger)
-2. [Logging](#user-content-logging)
-3. [Time travel](#user-content-timetravel)
-4. [Fun with shadow properties](#user-content-fun)
+1. [Setting up the f.lux `Logger`](#logger)
+2. [Logging](#logging)
+3. [Time travel](#timetravel)
+4. [Fun with shadow properties](#fun)
 
 
 The [`examples/tutorial/step-5`](https://github.com/akrumel/f.lux/tree/master/examples/tutorial/step-4) directory contains the completed code for this step.
@@ -169,7 +169,7 @@ Working with the f.lux store shadow state can be a handy way to debug problems o
 
 2. `flog.store._.todos.addTodo("Hello")`
 
-    You should see a todo item in the UI with the description "Hello". We accessed the `todos` shadow array, `TodosListProperty` type, and invoked the `addTodo()` method we defined in [Step 2: Properties](step-2.md#user-content-todos).
+    You should see a todo item in the UI with the description "Hello". We accessed the `todos` shadow array, `TodosListProperty` type, and invoked the `addTodo()` method we defined in [Step 2: Properties](step-2.md#todos).
     
 3. `flog.store._.todos[0].completed = true`
 

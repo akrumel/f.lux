@@ -40,6 +40,12 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IndexedProperty.js~IndexedProperty.html">IndexedProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IndexedShadow.js~IndexedShadow.html">IndexedShadow</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IndexedShadowImpl.js~IndexedShadowImpl.html">IndexedShadowImpl</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IsolatedAccess.js~IsolatedAccess.html">IsolatedAccess</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IsolatedApi.js~IsolatedApi.html">IsolatedApi</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IsolatedObjectShadowImpl.js~IsolatedObjectShadowImpl.html">IsolatedObjectShadowImpl</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IsolatedProperty.js~IsolatedProperty.html">IsolatedProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IsolatedShadow.js~IsolatedShadow.html">IsolatedShadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IsolatedShadowImpl.js~IsolatedShadowImpl.html">IsolatedShadowImpl</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/KeyedApi.js~KeyedApi.html">KeyedApi</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/MapProperty.js~MapProperty.html">MapProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/MapShadow.js~MapShadow.html">MapShadow</a></span></span></li>
@@ -60,6 +66,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/TransientsProperty.js~TransientsProperty.html">TransientsProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/TransientsProperty.js~TransientsShadow.html">TransientsShadow</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createPropertyClass">createPropertyClass</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">__tests__</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/__tests__/LifecycleProperty.js~LifecycleProperty.html">LifecycleProperty</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">collection</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html">CollectionProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html">CollectionShadow</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/ModelAccess.js~ModelAccess.html">ModelAccess</a></span></span></li>
@@ -106,6 +113,7 @@ import { assert, isObject } from &quot;akutils&quot;;
 
 
 import ArrayProperty from &quot;./MapProperty&quot;;
+import IsolatedApi from &quot;./IsolatedApi&quot;;
 import MapProperty from &quot;./MapProperty&quot;;
 import Property from &quot;./Property&quot;;
 import ShadowImpl from &quot;./ShadowImpl&quot;;
@@ -293,9 +301,9 @@ export default class Store {
 
 		@param {Property} root - the top-level `Property` used to shadow the application state
 		@param {Object|Array} [state=root.initialState()] - the initial application state
-		@param {boolean} [useTransients=true] - `true` to enable transient state
+		@param {boolean} [useTransients=false] - `true` to enable transient state
 	*/
-	constructor(root, state, useTransients=true) {
+	constructor(root, state, useTransients=false) {
 		invariant(root instanceof Property || Array.isArray(root) || isObject(root),
 			&quot;Store root must be one of: Property subclass, object, or array&quot;);
 
@@ -309,8 +317,9 @@ export default class Store {
 		}
 
 		this._useTransients = useTransients;
-		this._subscribers = [];
+		this._isolated = new IsolatedApi(this);
 		this._listeners = [];
+		this._subscribers = [];
 
 		// dispatcher queues for pending actions and waitFor() requests
 		this._updateAction = null;
@@ -468,6 +477,10 @@ export default class Store {
 		return rootImpl.findByPath(path);
 	}
 
+	isolated() {
+		return this._isolated;
+	}
+
 	/**
 		Changes the top-level `Property` and application state.
 
@@ -615,6 +628,15 @@ export default class Store {
 		this._updateAction = action;
 
 		this.schedule();
+	}
+
+	/**
+		Gets if an update action has been registered with the store.
+
+		@return {boolean}
+	*/
+	isScheduled() {
+		return !!this._updateAction;
 	}
 
 	/**

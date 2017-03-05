@@ -40,6 +40,12 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IndexedProperty.js~IndexedProperty.html">IndexedProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IndexedShadow.js~IndexedShadow.html">IndexedShadow</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IndexedShadowImpl.js~IndexedShadowImpl.html">IndexedShadowImpl</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IsolatedAccess.js~IsolatedAccess.html">IsolatedAccess</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IsolatedApi.js~IsolatedApi.html">IsolatedApi</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IsolatedObjectShadowImpl.js~IsolatedObjectShadowImpl.html">IsolatedObjectShadowImpl</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IsolatedProperty.js~IsolatedProperty.html">IsolatedProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IsolatedShadow.js~IsolatedShadow.html">IsolatedShadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IsolatedShadowImpl.js~IsolatedShadowImpl.html">IsolatedShadowImpl</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/KeyedApi.js~KeyedApi.html">KeyedApi</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/MapProperty.js~MapProperty.html">MapProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/MapShadow.js~MapShadow.html">MapShadow</a></span></span></li>
@@ -60,6 +66,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/TransientsProperty.js~TransientsProperty.html">TransientsProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/TransientsProperty.js~TransientsShadow.html">TransientsShadow</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createPropertyClass">createPropertyClass</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">__tests__</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/__tests__/LifecycleProperty.js~LifecycleProperty.html">LifecycleProperty</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">collection</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html">CollectionProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html">CollectionShadow</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/ModelAccess.js~ModelAccess.html">ModelAccess</a></span></span></li>
@@ -117,7 +124,7 @@
   
   
   <div class="flat-list" data-ice="extendsChain"><h4>Extends:</h4><div><span><a href="class/src/ShadowImpl.js~ShadowImpl.html">ShadowImpl</a></span> &#x2192; ObjectShadowImpl</div></div>
-  
+  <div class="flat-list" data-ice="directSubclass"><h4>Direct Subclass:</h4><div><span><a href="class/src/IsolatedShadowImpl.js~IsolatedShadowImpl.html">IsolatedShadowImpl</a></span></div></div>
   
   
   
@@ -603,7 +610,7 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/ObjectShadowImpl.js~ObjectShadowImpl.html#instance-method-extend">extend</a></span></span><span data-ice="signature">(sources: ...<span>*</span>)</span>
+          <span data-ice="name"><span><a href="class/src/ObjectShadowImpl.js~ObjectShadowImpl.html#instance-method-extend">extend</a></span></span><span data-ice="signature">(sources: <span>*</span>)</span>
         </p>
       </div>
       <div>
@@ -1286,33 +1293,6 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/ShadowImpl.js~ShadowImpl.html#instance-member-[_parent]">[_parent]</a></span></span><span data-ice="signature">: <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
           <span data-ice="name"><span><a href="class/src/ShadowImpl.js~ShadowImpl.html#instance-member-[_preventUpdates]">[_preventUpdates]</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
         </p>
       </div>
@@ -1448,33 +1428,6 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/ShadowImpl.js~ShadowImpl.html#instance-member-[_root]">[_root]</a></span></span><span data-ice="signature">: <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
           <span data-ice="name"><span><a href="class/src/ShadowImpl.js~ShadowImpl.html#instance-member-[_scheduled]">[_scheduled]</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
         </p>
       </div>
@@ -1563,34 +1516,6 @@
         
         
         
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/src/ShadowImpl.js~ShadowImpl.html#instance-method-[_changeRoot]">[_changeRoot]</a></span></span><span data-ice="signature">(newRoot: <span>*</span>)</span>
-        </p>
-      </div>
-      <div>
-        
-        
-        <div data-ice="description"><p>Called during reshadowing when reusing a property.</p>
-</div>
       </div>
     </td>
     <td>
@@ -2004,7 +1929,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Creates a deep clone of the current property state.</p>
+</div>
       </div>
     </td>
     <td>
@@ -2083,7 +2009,7 @@ will not overwrite any existing values.</p>
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/ShadowImpl.js~ShadowImpl.html#instance-method-defineChildProperties">defineChildProperties</a></span></span><span data-ice="signature">()</span>
+          <span data-ice="name"><span><a href="class/src/ShadowImpl.js~ShadowImpl.html#instance-method-defineChildProperties">defineChildProperties</a></span></span><span data-ice="signature">(prev: <span><a href="class/src/ShadowImpl.js~ShadowImpl.html">ShadowImpl</a></span>, inCtor: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>)</span>
         </p>
       </div>
       <div>
@@ -2117,7 +2043,8 @@ will not overwrite any existing values.</p>
       <div>
         
         
-        
+        <div data-ice="description"><p>Invoked on shadow getter access to obtain the get value.</p>
+</div>
       </div>
     </td>
     <td>
@@ -2144,7 +2071,8 @@ will not overwrite any existing values.</p>
       <div>
         
         
-        
+        <div data-ice="description"><p>Invoked on shadow property assignment to perform the replacement f.lux action.</p>
+</div>
       </div>
     </td>
     <td>
@@ -2336,7 +2264,8 @@ will not overwrite any existing values.</p>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets if the property has an child properties (not whether child properties are supported).</p>
+</div>
       </div>
     </td>
     <td>
@@ -2421,6 +2350,33 @@ will not overwrite any existing values.</p>
         
         <div data-ice="description"><p>Gets if the property represents live data.</p>
 </div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          <span data-ice="name"><span><a href="class/src/ShadowImpl.js~ShadowImpl.html#instance-method-isIsolated">isIsolated</a></span></span><span data-ice="signature">(): <span>*</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
       </div>
     </td>
     <td>
@@ -2856,34 +2812,6 @@ will not overwrite any existing values.</p>
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/ShadowImpl.js~ShadowImpl.html#instance-method-onParentChange">onParentChange</a></span></span><span data-ice="signature">(parent: <span>*</span>, prevParent: <span>*</span>)</span>
-        </p>
-      </div>
-      <div>
-        
-        
-        <div data-ice="description"><p>Provides subclasses a chance to perform setup operations when the parent changes.</p>
-</div>
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
           <span data-ice="name"><span><a href="class/src/ShadowImpl.js~ShadowImpl.html#instance-method-onReplaced">onReplaced</a></span></span><span data-ice="signature">()</span>
         </p>
       </div>
@@ -2918,7 +2846,7 @@ will not overwrite any existing values.</p>
       <div>
         
         
-        <div data-ice="description"><p>Map properties so can reuse valid properties.</p>
+        <div data-ice="description"><p>Property has just been reshadowed.</p>
 </div>
       </div>
     </td>
@@ -2949,6 +2877,33 @@ will not overwrite any existing values.</p>
         <div data-ice="description"><p>Hook for when this property is no longer represented in the system state due to a state
 update - not a replacement.</p>
 </div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          <span data-ice="name"><span><a href="class/src/ShadowImpl.js~ShadowImpl.html#instance-method-owner">owner</a></span></span><span data-ice="signature">(): <span>*</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
       </div>
     </td>
     <td>
@@ -3551,13 +3506,14 @@ model state. The actual Property.toJSON() method returns the model JSON represen
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/ShadowImpl.js~ShadowImpl.html#instance-method-updatesAllowed">updatesAllowed</a></span></span><span data-ice="signature">(): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/ShadowImpl.js~ShadowImpl.html#instance-method-updatesAllowed">updatesAllowed</a></span></span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Gets if shadow property is allowing state updates.</p>
+</div>
       </div>
     </td>
     <td>
@@ -3606,13 +3562,14 @@ model state. The actual Property.toJSON() method returns the model JSON represen
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/ShadowImpl.js~ShadowImpl.html#instance-method-willShadow">willShadow</a></span></span><span data-ice="signature">(parentWillUnshadow: <span>*</span>)</span>
+          <span data-ice="name"><span><a href="class/src/ShadowImpl.js~ShadowImpl.html#instance-method-willShadow">willShadow</a></span></span><span data-ice="signature">(parentWillUnshadow: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Invoked by the shadowing process to invoke appropriate <span><a href="class/src/Property.js~Property.html">Property</a></span> life-cycle methods.</p>
+</div>
       </div>
     </td>
     <td>
@@ -3738,7 +3695,7 @@ model state. The actual Property.toJSON() method returns the model JSON represen
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber257">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber254">source</a></span></span>
     </span>
   </h3>
 
@@ -3867,7 +3824,7 @@ model state. The actual Property.toJSON() method returns the model JSON represen
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber59">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber56">source</a></span></span>
     </span>
   </h3>
 
@@ -3910,7 +3867,7 @@ model state. The actual Property.toJSON() method returns the model JSON represen
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber276">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber273">source</a></span></span>
     </span>
   </h3>
 
@@ -3956,7 +3913,7 @@ model state. The actual Property.toJSON() method returns the model JSON represen
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber254">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber251">source</a></span></span>
     </span>
   </h3>
 
@@ -4016,7 +3973,7 @@ model state. The actual Property.toJSON() method returns the model JSON represen
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber272">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber269">source</a></span></span>
     </span>
   </h3>
 
@@ -4072,7 +4029,7 @@ model state. The actual Property.toJSON() method returns the model JSON represen
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber44">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber41">source</a></span></span>
     </span>
   </h3>
 
@@ -4127,7 +4084,7 @@ model state. The actual Property.toJSON() method returns the model JSON represen
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber285">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber282">source</a></span></span>
     </span>
   </h3>
 
@@ -4183,7 +4140,7 @@ model state. The actual Property.toJSON() method returns the model JSON represen
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber108">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber105">source</a></span></span>
     </span>
   </h3>
 
@@ -4238,7 +4195,7 @@ model state. The actual Property.toJSON() method returns the model JSON represen
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber200">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber197">source</a></span></span>
     </span>
   </h3>
 
@@ -4300,7 +4257,7 @@ such as an asyncrhonous save or a websocket based update.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber312">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber289">source</a></span></span>
     </span>
   </h3>
 
@@ -4366,7 +4323,7 @@ such as an asyncrhonous save or a websocket based update.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber355">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber318">source</a></span></span>
     </span>
   </h3>
 
@@ -4450,7 +4407,7 @@ such as an asyncrhonous save or a websocket based update.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber117">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber114">source</a></span></span>
     </span>
   </h3>
 
@@ -4509,7 +4466,7 @@ such as an asyncrhonous save or a websocket based update.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber128">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber125">source</a></span></span>
     </span>
   </h3>
 
@@ -4560,11 +4517,11 @@ such as an asyncrhonous save or a websocket based update.</p>
     
     
     
-    <span data-ice="name">extend</span><span data-ice="signature">(sources: ...<span>*</span>)</span>
+    <span data-ice="name">extend</span><span data-ice="signature">(sources: <span>*</span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber132">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber129">source</a></span></span>
     </span>
   </h3>
 
@@ -4585,7 +4542,7 @@ such as an asyncrhonous save or a websocket based update.</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">sources</td>
-      <td data-ice="type">...<span>*</span></td>
+      <td data-ice="type"><span>*</span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"></td>
     </tr>
@@ -4623,7 +4580,7 @@ such as an asyncrhonous save or a websocket based update.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber149">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber146">source</a></span></span>
     </span>
   </h3>
 
@@ -4694,7 +4651,7 @@ such as an asyncrhonous save or a websocket based update.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber292">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber343">source</a></span></span>
     </span>
   </h3>
 
@@ -4766,7 +4723,7 @@ such as an asyncrhonous save or a websocket based update.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber156">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber153">source</a></span></span>
     </span>
   </h3>
 
@@ -4837,7 +4794,7 @@ such as an asyncrhonous save or a websocket based update.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber296">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber347">source</a></span></span>
     </span>
   </h3>
 
@@ -4893,7 +4850,7 @@ such as an asyncrhonous save or a websocket based update.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber163">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber160">source</a></span></span>
     </span>
   </h3>
 
@@ -4950,7 +4907,7 @@ such as an asyncrhonous save or a websocket based update.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber305">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber356">source</a></span></span>
     </span>
   </h3>
 
@@ -5007,7 +4964,7 @@ such as an asyncrhonous save or a websocket based update.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber225">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber222">source</a></span></span>
     </span>
   </h3>
 
@@ -5080,7 +5037,7 @@ sources, such as an asyncrhonous save or a websocket based update.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber51">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber48">source</a></span></span>
     </span>
   </h3>
 
@@ -5135,15 +5092,14 @@ sources, such as an asyncrhonous save or a websocket based update.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber33">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber30">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>Map properties so can reuse valid properties. Reusing properties allows for React components
-to do &apos;===&apos; to see if a property has changed.</p>
+  <div data-ice="description"><p>Property has just been reshadowed.</p>
 </div>
 
   <div data-ice="override"><h4>Override:</h4><span><a href="class/src/ShadowImpl.js~ShadowImpl.html#instance-method-onReshadow">ShadowImpl#onReshadow</a></span></div>
@@ -5196,7 +5152,7 @@ to do &apos;===&apos; to see if a property has changed.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber72">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber69">source</a></span></span>
     </span>
   </h3>
 
@@ -5255,7 +5211,7 @@ to do &apos;===&apos; to see if a property has changed.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber83">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber80">source</a></span></span>
     </span>
   </h3>
 
@@ -5314,7 +5270,7 @@ to do &apos;===&apos; to see if a property has changed.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber170">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber167">source</a></span></span>
     </span>
   </h3>
 
@@ -5391,7 +5347,7 @@ to do &apos;===&apos; to see if a property has changed.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber184">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber181">source</a></span></span>
     </span>
   </h3>
 
@@ -5446,7 +5402,7 @@ to do &apos;===&apos; to see if a property has changed.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber92">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber89">source</a></span></span>
     </span>
   </h3>
 
@@ -5503,7 +5459,7 @@ model state. The actual Property.toJSON() method returns the model JSON represen
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber191">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/ObjectShadowImpl.js.html#lineNumber188">source</a></span></span>
     </span>
   </h3>
 

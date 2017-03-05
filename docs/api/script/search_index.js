@@ -126,9 +126,51 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
+    "f.lux/src/isolatedaccess.js~isolatedaccess",
+    "class/src/IsolatedAccess.js~IsolatedAccess.html",
+    "<span>IsolatedAccess</span> <span class=\"search-result-import-path\">f.lux/src/IsolatedAccess.js</span>",
+    "class"
+  ],
+  [
+    "f.lux/src/isolatedapi.js~isolatedapi",
+    "class/src/IsolatedApi.js~IsolatedApi.html",
+    "<span>IsolatedApi</span> <span class=\"search-result-import-path\">f.lux/src/IsolatedApi.js</span>",
+    "class"
+  ],
+  [
+    "f.lux/src/isolatedobjectshadowimpl.js~isolatedobjectshadowimpl",
+    "class/src/IsolatedObjectShadowImpl.js~IsolatedObjectShadowImpl.html",
+    "<span>IsolatedObjectShadowImpl</span> <span class=\"search-result-import-path\">f.lux/src/IsolatedObjectShadowImpl.js</span>",
+    "class"
+  ],
+  [
+    "f.lux/src/isolatedproperty.js~isolatedproperty",
+    "class/src/IsolatedProperty.js~IsolatedProperty.html",
+    "<span>IsolatedProperty</span> <span class=\"search-result-import-path\">f.lux/src/IsolatedProperty.js</span>",
+    "class"
+  ],
+  [
+    "f.lux/src/isolatedshadow.js~isolatedshadow",
+    "class/src/IsolatedShadow.js~IsolatedShadow.html",
+    "<span>IsolatedShadow</span> <span class=\"search-result-import-path\">f.lux/src/IsolatedShadow.js</span>",
+    "class"
+  ],
+  [
+    "f.lux/src/isolatedshadowimpl.js~isolatedshadowimpl",
+    "class/src/IsolatedShadowImpl.js~IsolatedShadowImpl.html",
+    "<span>IsolatedShadowImpl</span> <span class=\"search-result-import-path\">f.lux/src/IsolatedShadowImpl.js</span>",
+    "class"
+  ],
+  [
     "f.lux/src/keyedapi.js~keyedapi",
     "class/src/KeyedApi.js~KeyedApi.html",
     "<span>KeyedApi</span> <span class=\"search-result-import-path\">f.lux/src/KeyedApi.js</span>",
+    "class"
+  ],
+  [
+    "f.lux/src/__tests__/lifecycleproperty.js~lifecycleproperty",
+    "class/src/__tests__/LifecycleProperty.js~LifecycleProperty.html",
+    "<span>LifecycleProperty</span> <span class=\"search-result-import-path\">f.lux/src/__tests__/LifecycleProperty.js</span>",
     "class"
   ],
   [
@@ -1422,6 +1464,366 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/isolatedaccess.js",
+    "file/src/IsolatedAccess.js.html",
+    "src/IsolatedAccess.js",
+    "file"
+  ],
+  [
+    "src/isolatedaccess.js~isolatedaccess#create$forchild",
+    "class/src/IsolatedAccess.js~IsolatedAccess.html#instance-method-create$ForChild",
+    "src/IsolatedAccess.js~IsolatedAccess#create$ForChild",
+    "method"
+  ],
+  [
+    "src/isolatedapi.js",
+    "file/src/IsolatedApi.js.html",
+    "src/IsolatedApi.js",
+    "file"
+  ],
+  [
+    "src/isolatedapi.js~isolatedapi#all",
+    "class/src/IsolatedApi.js~IsolatedApi.html#instance-method-all",
+    "src/IsolatedApi.js~IsolatedApi#all",
+    "method"
+  ],
+  [
+    "src/isolatedapi.js~isolatedapi#constructor",
+    "class/src/IsolatedApi.js~IsolatedApi.html#instance-constructor-constructor",
+    "src/IsolatedApi.js~IsolatedApi#constructor",
+    "method"
+  ],
+  [
+    "src/isolatedapi.js~isolatedapi#count",
+    "class/src/IsolatedApi.js~IsolatedApi.html#instance-method-count",
+    "src/IsolatedApi.js~IsolatedApi#count",
+    "method"
+  ],
+  [
+    "src/isolatedapi.js~isolatedapi#entries",
+    "class/src/IsolatedApi.js~IsolatedApi.html#instance-method-entries",
+    "src/IsolatedApi.js~IsolatedApi#entries",
+    "method"
+  ],
+  [
+    "src/isolatedapi.js~isolatedapi#get",
+    "class/src/IsolatedApi.js~IsolatedApi.html#instance-method-get",
+    "src/IsolatedApi.js~IsolatedApi#get",
+    "method"
+  ],
+  [
+    "src/isolatedapi.js~isolatedapi#invalidated",
+    "class/src/IsolatedApi.js~IsolatedApi.html#instance-method-invalidated",
+    "src/IsolatedApi.js~IsolatedApi#invalidated",
+    "method"
+  ],
+  [
+    "src/isolatedapi.js~isolatedapi#obsolete",
+    "class/src/IsolatedApi.js~IsolatedApi.html#instance-method-obsolete",
+    "src/IsolatedApi.js~IsolatedApi#obsolete",
+    "method"
+  ],
+  [
+    "src/isolatedapi.js~isolatedapi#records",
+    "class/src/IsolatedApi.js~IsolatedApi.html#instance-member-records",
+    "src/IsolatedApi.js~IsolatedApi#records",
+    "member"
+  ],
+  [
+    "src/isolatedapi.js~isolatedapi#remove",
+    "class/src/IsolatedApi.js~IsolatedApi.html#instance-method-remove",
+    "src/IsolatedApi.js~IsolatedApi#remove",
+    "method"
+  ],
+  [
+    "src/isolatedapi.js~isolatedapi#removeallfor",
+    "class/src/IsolatedApi.js~IsolatedApi.html#instance-method-removeAllFor",
+    "src/IsolatedApi.js~IsolatedApi#removeAllFor",
+    "method"
+  ],
+  [
+    "src/isolatedapi.js~isolatedapi#set",
+    "class/src/IsolatedApi.js~IsolatedApi.html#instance-method-set",
+    "src/IsolatedApi.js~IsolatedApi#set",
+    "method"
+  ],
+  [
+    "src/isolatedapi.js~isolatedapi#store",
+    "class/src/IsolatedApi.js~IsolatedApi.html#instance-member-store",
+    "src/IsolatedApi.js~IsolatedApi#store",
+    "member"
+  ],
+  [
+    "src/isolatedapi.js~isolatedapi#update",
+    "class/src/IsolatedApi.js~IsolatedApi.html#instance-method-update",
+    "src/IsolatedApi.js~IsolatedApi#update",
+    "method"
+  ],
+  [
+    "src/isolatedapi.js~isolatedapi#willunshadow",
+    "class/src/IsolatedApi.js~IsolatedApi.html#instance-method-willUnshadow",
+    "src/IsolatedApi.js~IsolatedApi#willUnshadow",
+    "method"
+  ],
+  [
+    "src/isolatedobjectshadowimpl.js",
+    "file/src/IsolatedObjectShadowImpl.js.html",
+    "src/IsolatedObjectShadowImpl.js",
+    "file"
+  ],
+  [
+    "src/isolatedobjectshadowimpl.js~isolatedobjectshadowimpl#childcount",
+    "class/src/IsolatedObjectShadowImpl.js~IsolatedObjectShadowImpl.html#instance-method-childCount",
+    "src/IsolatedObjectShadowImpl.js~IsolatedObjectShadowImpl#childCount",
+    "method"
+  ],
+  [
+    "src/isolatedobjectshadowimpl.js~isolatedobjectshadowimpl#children",
+    "class/src/IsolatedObjectShadowImpl.js~IsolatedObjectShadowImpl.html#instance-method-children",
+    "src/IsolatedObjectShadowImpl.js~IsolatedObjectShadowImpl#children",
+    "method"
+  ],
+  [
+    "src/isolatedobjectshadowimpl.js~isolatedobjectshadowimpl#clear",
+    "class/src/IsolatedObjectShadowImpl.js~IsolatedObjectShadowImpl.html#instance-method-clear",
+    "src/IsolatedObjectShadowImpl.js~IsolatedObjectShadowImpl#clear",
+    "method"
+  ],
+  [
+    "src/isolatedobjectshadowimpl.js~isolatedobjectshadowimpl#defaults",
+    "class/src/IsolatedObjectShadowImpl.js~IsolatedObjectShadowImpl.html#instance-method-defaults",
+    "src/IsolatedObjectShadowImpl.js~IsolatedObjectShadowImpl#defaults",
+    "method"
+  ],
+  [
+    "src/isolatedobjectshadowimpl.js~isolatedobjectshadowimpl#definechildproperties",
+    "class/src/IsolatedObjectShadowImpl.js~IsolatedObjectShadowImpl.html#instance-method-defineChildProperties",
+    "src/IsolatedObjectShadowImpl.js~IsolatedObjectShadowImpl#defineChildProperties",
+    "method"
+  ],
+  [
+    "src/isolatedobjectshadowimpl.js~isolatedobjectshadowimpl#delete",
+    "class/src/IsolatedObjectShadowImpl.js~IsolatedObjectShadowImpl.html#instance-method-delete",
+    "src/IsolatedObjectShadowImpl.js~IsolatedObjectShadowImpl#delete",
+    "method"
+  ],
+  [
+    "src/isolatedobjectshadowimpl.js~isolatedobjectshadowimpl#entries",
+    "class/src/IsolatedObjectShadowImpl.js~IsolatedObjectShadowImpl.html#instance-method-entries",
+    "src/IsolatedObjectShadowImpl.js~IsolatedObjectShadowImpl#entries",
+    "method"
+  ],
+  [
+    "src/isolatedobjectshadowimpl.js~isolatedobjectshadowimpl#extend",
+    "class/src/IsolatedObjectShadowImpl.js~IsolatedObjectShadowImpl.html#instance-method-extend",
+    "src/IsolatedObjectShadowImpl.js~IsolatedObjectShadowImpl#extend",
+    "method"
+  ],
+  [
+    "src/isolatedobjectshadowimpl.js~isolatedobjectshadowimpl#get",
+    "class/src/IsolatedObjectShadowImpl.js~IsolatedObjectShadowImpl.html#instance-method-get",
+    "src/IsolatedObjectShadowImpl.js~IsolatedObjectShadowImpl#get",
+    "method"
+  ],
+  [
+    "src/isolatedobjectshadowimpl.js~isolatedobjectshadowimpl#has",
+    "class/src/IsolatedObjectShadowImpl.js~IsolatedObjectShadowImpl.html#instance-method-has",
+    "src/IsolatedObjectShadowImpl.js~IsolatedObjectShadowImpl#has",
+    "method"
+  ],
+  [
+    "src/isolatedobjectshadowimpl.js~isolatedobjectshadowimpl#haschildren",
+    "class/src/IsolatedObjectShadowImpl.js~IsolatedObjectShadowImpl.html#instance-method-hasChildren",
+    "src/IsolatedObjectShadowImpl.js~IsolatedObjectShadowImpl#hasChildren",
+    "method"
+  ],
+  [
+    "src/isolatedobjectshadowimpl.js~isolatedobjectshadowimpl#isolated",
+    "class/src/IsolatedObjectShadowImpl.js~IsolatedObjectShadowImpl.html#instance-method-isolated",
+    "src/IsolatedObjectShadowImpl.js~IsolatedObjectShadowImpl#isolated",
+    "method"
+  ],
+  [
+    "src/isolatedobjectshadowimpl.js~isolatedobjectshadowimpl#keys",
+    "class/src/IsolatedObjectShadowImpl.js~IsolatedObjectShadowImpl.html#instance-method-keys",
+    "src/IsolatedObjectShadowImpl.js~IsolatedObjectShadowImpl#keys",
+    "method"
+  ],
+  [
+    "src/isolatedobjectshadowimpl.js~isolatedobjectshadowimpl#merge",
+    "class/src/IsolatedObjectShadowImpl.js~IsolatedObjectShadowImpl.html#instance-method-merge",
+    "src/IsolatedObjectShadowImpl.js~IsolatedObjectShadowImpl#merge",
+    "method"
+  ],
+  [
+    "src/isolatedobjectshadowimpl.js~isolatedobjectshadowimpl#set",
+    "class/src/IsolatedObjectShadowImpl.js~IsolatedObjectShadowImpl.html#instance-method-set",
+    "src/IsolatedObjectShadowImpl.js~IsolatedObjectShadowImpl#set",
+    "method"
+  ],
+  [
+    "src/isolatedobjectshadowimpl.js~isolatedobjectshadowimpl#size",
+    "class/src/IsolatedObjectShadowImpl.js~IsolatedObjectShadowImpl.html#instance-method-size",
+    "src/IsolatedObjectShadowImpl.js~IsolatedObjectShadowImpl#size",
+    "method"
+  ],
+  [
+    "src/isolatedobjectshadowimpl.js~isolatedobjectshadowimpl#values",
+    "class/src/IsolatedObjectShadowImpl.js~IsolatedObjectShadowImpl.html#instance-method-values",
+    "src/IsolatedObjectShadowImpl.js~IsolatedObjectShadowImpl#values",
+    "method"
+  ],
+  [
+    "src/isolatedproperty.js",
+    "file/src/IsolatedProperty.js.html",
+    "src/IsolatedProperty.js",
+    "file"
+  ],
+  [
+    "src/isolatedproperty.js~isolatedproperty#[_id]",
+    "class/src/IsolatedProperty.js~IsolatedProperty.html#instance-member-[_id]",
+    "src/IsolatedProperty.js~IsolatedProperty#[_id]",
+    "member"
+  ],
+  [
+    "src/isolatedproperty.js~isolatedproperty#[_key]",
+    "class/src/IsolatedProperty.js~IsolatedProperty.html#instance-member-[_key]",
+    "src/IsolatedProperty.js~IsolatedProperty#[_key]",
+    "member"
+  ],
+  [
+    "src/isolatedproperty.js~isolatedproperty#[_owner]",
+    "class/src/IsolatedProperty.js~IsolatedProperty.html#instance-member-[_owner]",
+    "src/IsolatedProperty.js~IsolatedProperty#[_owner]",
+    "member"
+  ],
+  [
+    "src/isolatedproperty.js~isolatedproperty#constructor",
+    "class/src/IsolatedProperty.js~IsolatedProperty.html#instance-constructor-constructor",
+    "src/IsolatedProperty.js~IsolatedProperty#constructor",
+    "method"
+  ],
+  [
+    "src/isolatedproperty.js~isolatedproperty#create$",
+    "class/src/IsolatedProperty.js~IsolatedProperty.html#instance-method-create$",
+    "src/IsolatedProperty.js~IsolatedProperty#create$",
+    "method"
+  ],
+  [
+    "src/isolatedproperty.js~isolatedproperty#dotpath",
+    "class/src/IsolatedProperty.js~IsolatedProperty.html#instance-method-dotPath",
+    "src/IsolatedProperty.js~IsolatedProperty#dotPath",
+    "method"
+  ],
+  [
+    "src/isolatedproperty.js~isolatedproperty#isactive",
+    "class/src/IsolatedProperty.js~IsolatedProperty.html#instance-method-isActive",
+    "src/IsolatedProperty.js~IsolatedProperty#isActive",
+    "method"
+  ],
+  [
+    "src/isolatedproperty.js~isolatedproperty#isisolated",
+    "class/src/IsolatedProperty.js~IsolatedProperty.html#instance-method-isIsolated",
+    "src/IsolatedProperty.js~IsolatedProperty#isIsolated",
+    "method"
+  ],
+  [
+    "src/isolatedproperty.js~isolatedproperty#isreadonly",
+    "class/src/IsolatedProperty.js~IsolatedProperty.html#instance-method-isReadonly",
+    "src/IsolatedProperty.js~IsolatedProperty#isReadonly",
+    "method"
+  ],
+  [
+    "src/isolatedproperty.js~isolatedproperty#isroot",
+    "class/src/IsolatedProperty.js~IsolatedProperty.html#instance-method-isRoot",
+    "src/IsolatedProperty.js~IsolatedProperty#isRoot",
+    "method"
+  ],
+  [
+    "src/isolatedproperty.js~isolatedproperty#isolationid",
+    "class/src/IsolatedProperty.js~IsolatedProperty.html#instance-method-isolationId",
+    "src/IsolatedProperty.js~IsolatedProperty#isolationId",
+    "method"
+  ],
+  [
+    "src/isolatedproperty.js~isolatedproperty#key",
+    "class/src/IsolatedProperty.js~IsolatedProperty.html#instance-method-key",
+    "src/IsolatedProperty.js~IsolatedProperty#key",
+    "method"
+  ],
+  [
+    "src/isolatedproperty.js~isolatedproperty#owner",
+    "class/src/IsolatedProperty.js~IsolatedProperty.html#instance-method-owner",
+    "src/IsolatedProperty.js~IsolatedProperty#owner",
+    "method"
+  ],
+  [
+    "src/isolatedproperty.js~isolatedproperty#parent",
+    "class/src/IsolatedProperty.js~IsolatedProperty.html#instance-method-parent",
+    "src/IsolatedProperty.js~IsolatedProperty#parent",
+    "method"
+  ],
+  [
+    "src/isolatedproperty.js~isolatedproperty#propertychildinvalidated",
+    "class/src/IsolatedProperty.js~IsolatedProperty.html#instance-method-propertyChildInvalidated",
+    "src/IsolatedProperty.js~IsolatedProperty#propertyChildInvalidated",
+    "method"
+  ],
+  [
+    "src/isolatedproperty.js~isolatedproperty#propertywillunshadow",
+    "class/src/IsolatedProperty.js~IsolatedProperty.html#instance-method-propertyWillUnshadow",
+    "src/IsolatedProperty.js~IsolatedProperty#propertyWillUnshadow",
+    "method"
+  ],
+  [
+    "src/isolatedproperty.js~isolatedproperty#setkey",
+    "class/src/IsolatedProperty.js~IsolatedProperty.html#instance-method-setKey",
+    "src/IsolatedProperty.js~IsolatedProperty#setKey",
+    "method"
+  ],
+  [
+    "src/isolatedproperty.js~isolatedproperty#setowner",
+    "class/src/IsolatedProperty.js~IsolatedProperty.html#instance-method-setOwner",
+    "src/IsolatedProperty.js~IsolatedProperty#setOwner",
+    "method"
+  ],
+  [
+    "src/isolatedproperty.js~isolatedproperty.createclass",
+    "class/src/IsolatedProperty.js~IsolatedProperty.html#static-method-createClass",
+    "src/IsolatedProperty.js~IsolatedProperty.createClass",
+    "method"
+  ],
+  [
+    "src/isolatedproperty.js~isolatedproperty.definetype",
+    "class/src/IsolatedProperty.js~IsolatedProperty.html#static-method-defineType",
+    "src/IsolatedProperty.js~IsolatedProperty.defineType",
+    "method"
+  ],
+  [
+    "src/isolatedshadow.js",
+    "file/src/IsolatedShadow.js.html",
+    "src/IsolatedShadow.js",
+    "file"
+  ],
+  [
+    "src/isolatedshadowimpl.js",
+    "file/src/IsolatedShadowImpl.js.html",
+    "src/IsolatedShadowImpl.js",
+    "file"
+  ],
+  [
+    "src/isolatedshadowimpl.js~isolatedshadowimpl#isroot",
+    "class/src/IsolatedShadowImpl.js~IsolatedShadowImpl.html#instance-method-isRoot",
+    "src/IsolatedShadowImpl.js~IsolatedShadowImpl#isRoot",
+    "method"
+  ],
+  [
+    "src/isolatedshadowimpl.js~isolatedshadowimpl#obsolete",
+    "class/src/IsolatedShadowImpl.js~IsolatedShadowImpl.html#instance-method-obsolete",
+    "src/IsolatedShadowImpl.js~IsolatedShadowImpl#obsolete",
+    "method"
+  ],
+  [
     "src/keyedapi.js",
     "file/src/KeyedApi.js.html",
     "src/KeyedApi.js",
@@ -1632,6 +2034,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/mapshadow.js~mapshadow#keysarray",
+    "class/src/MapShadow.js~MapShadow.html#instance-method-keysArray",
+    "src/MapShadow.js~MapShadow#keysArray",
+    "method"
+  ],
+  [
     "src/mapshadow.js~mapshadow#set",
     "class/src/MapShadow.js~MapShadow.html#instance-method-set",
     "src/MapShadow.js~MapShadow#set",
@@ -1647,6 +2055,12 @@ window.esdocSearchIndex = [
     "src/mapshadow.js~mapshadow#values",
     "class/src/MapShadow.js~MapShadow.html#instance-method-values",
     "src/MapShadow.js~MapShadow#values",
+    "method"
+  ],
+  [
+    "src/mapshadow.js~mapshadow#valuesarray",
+    "class/src/MapShadow.js~MapShadow.html#instance-method-valuesArray",
+    "src/MapShadow.js~MapShadow#valuesArray",
     "method"
   ],
   [
@@ -2088,6 +2502,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/property.js~property#isisolated",
+    "class/src/Property.js~Property.html#instance-method-isIsolated",
+    "src/Property.js~Property#isIsolated",
+    "method"
+  ],
+  [
     "src/property.js~property#isreadonly",
     "class/src/Property.js~Property.html#instance-method-isReadonly",
     "src/Property.js~Property#isReadonly",
@@ -2109,6 +2529,12 @@ window.esdocSearchIndex = [
     "src/property.js~property#nextstate",
     "class/src/Property.js~Property.html#instance-method-nextState",
     "src/Property.js~Property#nextState",
+    "method"
+  ],
+  [
+    "src/property.js~property#owner",
+    "class/src/Property.js~Property.html#instance-method-owner",
+    "src/Property.js~Property#owner",
     "method"
   ],
   [
@@ -2574,12 +3000,6 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
-    "src/shadowimpl.js~shadowimpl#[_changeroot]",
-    "class/src/ShadowImpl.js~ShadowImpl.html#instance-method-[_changeRoot]",
-    "src/ShadowImpl.js~ShadowImpl#[_changeRoot]",
-    "method"
-  ],
-  [
     "src/shadowimpl.js~shadowimpl#[_changed]",
     "class/src/ShadowImpl.js~ShadowImpl.html#instance-member-[_changed]",
     "src/ShadowImpl.js~ShadowImpl#[_changed]",
@@ -2640,12 +3060,6 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
-    "src/shadowimpl.js~shadowimpl#[_parent]",
-    "class/src/ShadowImpl.js~ShadowImpl.html#instance-member-[_parent]",
-    "src/ShadowImpl.js~ShadowImpl#[_parent]",
-    "member"
-  ],
-  [
     "src/shadowimpl.js~shadowimpl#[_preventupdates]",
     "class/src/ShadowImpl.js~ShadowImpl.html#instance-member-[_preventUpdates]",
     "src/ShadowImpl.js~ShadowImpl#[_preventUpdates]",
@@ -2673,12 +3087,6 @@ window.esdocSearchIndex = [
     "src/shadowimpl.js~shadowimpl#[_replaced]",
     "class/src/ShadowImpl.js~ShadowImpl.html#instance-member-[_replaced]",
     "src/ShadowImpl.js~ShadowImpl#[_replaced]",
-    "member"
-  ],
-  [
-    "src/shadowimpl.js~shadowimpl#[_root]",
-    "class/src/ShadowImpl.js~ShadowImpl.html#instance-member-[_root]",
-    "src/ShadowImpl.js~ShadowImpl#[_root]",
     "member"
   ],
   [
@@ -2874,6 +3282,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/shadowimpl.js~shadowimpl#isisolated",
+    "class/src/ShadowImpl.js~ShadowImpl.html#instance-method-isIsolated",
+    "src/ShadowImpl.js~ShadowImpl#isIsolated",
+    "method"
+  ],
+  [
     "src/shadowimpl.js~shadowimpl#isleaf",
     "class/src/ShadowImpl.js~ShadowImpl.html#instance-method-isLeaf",
     "src/ShadowImpl.js~ShadowImpl#isLeaf",
@@ -2964,12 +3378,6 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "src/shadowimpl.js~shadowimpl#onparentchange",
-    "class/src/ShadowImpl.js~ShadowImpl.html#instance-method-onParentChange",
-    "src/ShadowImpl.js~ShadowImpl#onParentChange",
-    "method"
-  ],
-  [
     "src/shadowimpl.js~shadowimpl#onreplaced",
     "class/src/ShadowImpl.js~ShadowImpl.html#instance-method-onReplaced",
     "src/ShadowImpl.js~ShadowImpl#onReplaced",
@@ -2985,6 +3393,12 @@ window.esdocSearchIndex = [
     "src/shadowimpl.js~shadowimpl#onupdate",
     "class/src/ShadowImpl.js~ShadowImpl.html#instance-method-onUpdate",
     "src/ShadowImpl.js~ShadowImpl#onUpdate",
+    "method"
+  ],
+  [
+    "src/shadowimpl.js~shadowimpl#owner",
+    "class/src/ShadowImpl.js~ShadowImpl.html#instance-method-owner",
+    "src/ShadowImpl.js~ShadowImpl#owner",
     "method"
   ],
   [
@@ -3136,6 +3550,12 @@ window.esdocSearchIndex = [
     "file/src/StateType.js.html",
     "src/StateType.js",
     "file"
+  ],
+  [
+    "src/statetype.js~statetype#accessclass",
+    "class/src/StateType.js~StateType.html#instance-method-accessClass",
+    "src/StateType.js~StateType#accessClass",
+    "method"
   ],
   [
     "src/statetype.js~statetype#addproperty",
@@ -3321,6 +3741,18 @@ window.esdocSearchIndex = [
     "src/store.js~store#findbypath",
     "class/src/Store.js~Store.html#instance-method-findByPath",
     "src/Store.js~Store#findByPath",
+    "method"
+  ],
+  [
+    "src/store.js~store#isscheduled",
+    "class/src/Store.js~Store.html#instance-method-isScheduled",
+    "src/Store.js~Store#isScheduled",
+    "method"
+  ],
+  [
+    "src/store.js~store#isolated",
+    "class/src/Store.js~Store.html#instance-method-isolated",
+    "src/Store.js~Store#isolated",
     "method"
   ],
   [
@@ -3664,6 +4096,108 @@ window.esdocSearchIndex = [
     "class/src/TransientsProperty.js~TransientsShadow.html#instance-method-values",
     "src/TransientsProperty.js~TransientsShadow#values",
     "method"
+  ],
+  [
+    "src/__tests__/lifecycleproperty.js",
+    "file/src/__tests__/LifecycleProperty.js.html",
+    "src/__tests__/LifecycleProperty.js",
+    "file"
+  ],
+  [
+    "src/__tests__/lifecycleproperty.js~lifecycleproperty#checkpropcount",
+    "class/src/__tests__/LifecycleProperty.js~LifecycleProperty.html#instance-method-checkPropCount",
+    "src/__tests__/LifecycleProperty.js~LifecycleProperty#checkPropCount",
+    "method"
+  ],
+  [
+    "src/__tests__/lifecycleproperty.js~lifecycleproperty#childinvalidatedcount",
+    "class/src/__tests__/LifecycleProperty.js~LifecycleProperty.html#instance-member-childInvalidatedCount",
+    "src/__tests__/LifecycleProperty.js~LifecycleProperty#childInvalidatedCount",
+    "member"
+  ],
+  [
+    "src/__tests__/lifecycleproperty.js~lifecycleproperty#constructor",
+    "class/src/__tests__/LifecycleProperty.js~LifecycleProperty.html#instance-constructor-constructor",
+    "src/__tests__/LifecycleProperty.js~LifecycleProperty#constructor",
+    "method"
+  ],
+  [
+    "src/__tests__/lifecycleproperty.js~lifecycleproperty#didshadowcount",
+    "class/src/__tests__/LifecycleProperty.js~LifecycleProperty.html#instance-member-didShadowCount",
+    "src/__tests__/LifecycleProperty.js~LifecycleProperty#didShadowCount",
+    "member"
+  ],
+  [
+    "src/__tests__/lifecycleproperty.js~lifecycleproperty#didupdatecount",
+    "class/src/__tests__/LifecycleProperty.js~LifecycleProperty.html#instance-member-didUpdateCount",
+    "src/__tests__/LifecycleProperty.js~LifecycleProperty#didUpdateCount",
+    "member"
+  ],
+  [
+    "src/__tests__/lifecycleproperty.js~lifecycleproperty#propertychildinvalidated",
+    "class/src/__tests__/LifecycleProperty.js~LifecycleProperty.html#instance-method-propertyChildInvalidated",
+    "src/__tests__/LifecycleProperty.js~LifecycleProperty#propertyChildInvalidated",
+    "method"
+  ],
+  [
+    "src/__tests__/lifecycleproperty.js~lifecycleproperty#propertydidshadow",
+    "class/src/__tests__/LifecycleProperty.js~LifecycleProperty.html#instance-method-propertyDidShadow",
+    "src/__tests__/LifecycleProperty.js~LifecycleProperty#propertyDidShadow",
+    "method"
+  ],
+  [
+    "src/__tests__/lifecycleproperty.js~lifecycleproperty#propertydidupdate",
+    "class/src/__tests__/LifecycleProperty.js~LifecycleProperty.html#instance-method-propertyDidUpdate",
+    "src/__tests__/LifecycleProperty.js~LifecycleProperty#propertyDidUpdate",
+    "method"
+  ],
+  [
+    "src/__tests__/lifecycleproperty.js~lifecycleproperty#propertywillshadow",
+    "class/src/__tests__/LifecycleProperty.js~LifecycleProperty.html#instance-method-propertyWillShadow",
+    "src/__tests__/LifecycleProperty.js~LifecycleProperty#propertyWillShadow",
+    "method"
+  ],
+  [
+    "src/__tests__/lifecycleproperty.js~lifecycleproperty#propertywillunshadow",
+    "class/src/__tests__/LifecycleProperty.js~LifecycleProperty.html#instance-method-propertyWillUnshadow",
+    "src/__tests__/LifecycleProperty.js~LifecycleProperty#propertyWillUnshadow",
+    "method"
+  ],
+  [
+    "src/__tests__/lifecycleproperty.js~lifecycleproperty#willshadowcount",
+    "class/src/__tests__/LifecycleProperty.js~LifecycleProperty.html#instance-member-willShadowCount",
+    "src/__tests__/LifecycleProperty.js~LifecycleProperty#willShadowCount",
+    "member"
+  ],
+  [
+    "src/__tests__/lifecycleproperty.js~lifecycleproperty#willunshadowcount",
+    "class/src/__tests__/LifecycleProperty.js~LifecycleProperty.html#instance-member-willUnshadowCount",
+    "src/__tests__/LifecycleProperty.js~LifecycleProperty#willUnshadowCount",
+    "member"
+  ],
+  [
+    "src/__tests__/mapshadow.test.js",
+    "file/src/__tests__/MapShadow.test.js.html",
+    "src/__tests__/MapShadow.test.js",
+    "file"
+  ],
+  [
+    "src/__tests__/statetype.test.js",
+    "file/src/__tests__/StateType.test.js.html",
+    "src/__tests__/StateType.test.js",
+    "file"
+  ],
+  [
+    "src/__tests__/isolated.test.js",
+    "file/src/__tests__/isolated.test.js.html",
+    "src/__tests__/isolated.test.js",
+    "file"
+  ],
+  [
+    "src/__tests__/lifecycle.test.js",
+    "file/src/__tests__/lifecycle.test.js.html",
+    "src/__tests__/lifecycle.test.js",
+    "file"
   ],
   [
     "src/collection.js",

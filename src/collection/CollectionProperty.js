@@ -450,6 +450,13 @@ export default class CollectionProperty extends Property {
 	}
 
 	/**
+		Used by {@link StateType} to determine if a keyed property type.
+
+		@ignore
+	*/
+	static supportsKeyedChildProperties() { return true }
+
+	/**
 		Override the base functionality method, and not designed life-cycle method propertyWillUpdate(), so
 		subclasses can do the normal override without using super.propertyWillUpdate() to preserve functionality.
 

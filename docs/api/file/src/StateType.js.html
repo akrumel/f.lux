@@ -40,6 +40,12 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IndexedProperty.js~IndexedProperty.html">IndexedProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IndexedShadow.js~IndexedShadow.html">IndexedShadow</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IndexedShadowImpl.js~IndexedShadowImpl.html">IndexedShadowImpl</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IsolatedAccess.js~IsolatedAccess.html">IsolatedAccess</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IsolatedApi.js~IsolatedApi.html">IsolatedApi</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IsolatedObjectShadowImpl.js~IsolatedObjectShadowImpl.html">IsolatedObjectShadowImpl</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IsolatedProperty.js~IsolatedProperty.html">IsolatedProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IsolatedShadow.js~IsolatedShadow.html">IsolatedShadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IsolatedShadowImpl.js~IsolatedShadowImpl.html">IsolatedShadowImpl</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/KeyedApi.js~KeyedApi.html">KeyedApi</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/MapProperty.js~MapProperty.html">MapProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/MapShadow.js~MapShadow.html">MapShadow</a></span></span></li>
@@ -60,6 +66,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/TransientsProperty.js~TransientsProperty.html">TransientsProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/TransientsProperty.js~TransientsShadow.html">TransientsShadow</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createPropertyClass">createPropertyClass</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">__tests__</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/__tests__/LifecycleProperty.js~LifecycleProperty.html">LifecycleProperty</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">collection</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html">CollectionProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html">CollectionShadow</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/ModelAccess.js~ModelAccess.html">ModelAccess</a></span></span></li>
@@ -106,6 +113,7 @@ import defaults from &quot;lodash.defaults&quot;;
 import isArray from &quot;lodash.isarray&quot;;
 import isPlainObject from &quot;lodash.isplainobject&quot;;
 
+import Access from &quot;./Access&quot;;
 import Shadow from &quot;./Shadow&quot;;
 import ShadowImpl from &quot;./ShadowImpl&quot;;
 
@@ -365,7 +373,8 @@ export default class StateType {
 			specified in the `type` {@link StateType} class variable for the `property` parameter.
 	*/
 	static implementationClassForProperty(property, defaultClass=ShadowImpl) {
-		var stateType = StateType.from(property);
+		const stateType = property.stateType();
+//		const stateType = StateType.from(property);
 
 		if (stateType &amp;&amp; stateType._implementationClass) {
 			return stateType._implementationClass;
@@ -583,6 +592,12 @@ export default class StateType {
 		return this;
 	}
 
+	accessClass(Cls) {
+		this._AccessClass = Cls;
+
+		return this;
+	}
+
 	/**
 		Sets the {@link Shadow} class to be used for shadowing the property.
 
@@ -620,7 +635,11 @@ export default class StateType {
 		@return {StateType}
 	*/
 	clone() {
-		return Object.assign(new StateType(), this);
+		return Object.assign(
+				new StateType(),
+				this,
+				{ _properties: { ...this._properties } }
+			);
 	}
 
 	/**
@@ -632,15 +651,15 @@ export default class StateType {
 	computeInitialState() {
 		const state = cloneDeep(this._initialState);
 		const propSpecs = this._properties;
+		var propType, propState;
 
 		if (!isPlainObject(state) || !propSpecs) { return state; }
-
-		var propType, propState;
 
 		for (let name in propSpecs) {
 			propType = propSpecs[name];
 			propState = state[name];
 
+// if (propState===undefined) console.log(&quot;COMPUTE&quot;, name, propType)
 			// update state only if current undefined
 			state[name] = propState===undefined ?propType.computeInitialState() :propState;
 		}
@@ -685,6 +704,11 @@ export default class StateType {
 	}
 
 	/** @ignore */
+	getAccessClass() {
+		return this._AccessClass || Access;
+	}
+
+	/** @ignore */
 	getManagedType() {
 		return this._managedType;
 	}
@@ -697,6 +721,11 @@ export default class StateType {
 	*/
 	getTypeName() {
 		return this._PropertyClass.__fluxTypeName__;
+	}
+
+	/** @ignore */
+	hasJitProperties() {
+		return !!this._jitProperties;
 	}
 
 	/**
@@ -730,11 +759,6 @@ export default class StateType {
 		}
 
 		return state;
-	}
-
-	/** @ignore */
-	hasJitProperties() {
-		return !!this._jitProperties;
 	}
 
 	/** @ignore */
@@ -800,12 +824,16 @@ export default class StateType {
 }
 
 
-function isKeyedPrototype(obj) {
+/**
+	Helper function to determine if a Property supports child properties.
+
+	@ignore
+*/
+export function isKeyedPrototype(obj) {
 	const ObjectProperty = require(&quot;./ObjectProperty&quot;).default;
 	const Property = require(&quot;./Property&quot;).default;
 
-	return ObjectProperty === obj || ObjectProperty.isPrototypeOf(obj) ||
-		(Property.isPrototypeOf(obj) &amp;&amp; obj.supportsKeyedChildProperties &amp;&amp; obj.supportsKeyedChildProperties());
+	return Property.isPrototypeOf(obj) &amp;&amp; obj.supportsKeyedChildProperties &amp;&amp; obj.supportsKeyedChildProperties();
 }
 </code></pre>
 

@@ -542,10 +542,9 @@ export default class StateType {
 	computeInitialState() {
 		const state = cloneDeep(this._initialState);
 		const propSpecs = this._properties;
+		var propType, propState;
 
 		if (!isPlainObject(state) || !propSpecs) { return state; }
-
-		var propType, propState;
 
 		for (let name in propSpecs) {
 			propType = propSpecs[name];
@@ -716,10 +715,14 @@ export default class StateType {
 }
 
 
-function isKeyedPrototype(obj) {
+/**
+	Helper function to determine if a Property supports child properties.
+
+	@ignore
+*/
+export function isKeyedPrototype(obj) {
 	const ObjectProperty = require("./ObjectProperty").default;
 	const Property = require("./Property").default;
 
-	return ObjectProperty === obj || ObjectProperty.isPrototypeOf(obj) ||
-		(Property.isPrototypeOf(obj) && obj.supportsKeyedChildProperties && obj.supportsKeyedChildProperties());
+	return Property.isPrototypeOf(obj) && obj.supportsKeyedChildProperties && obj.supportsKeyedChildProperties();
 }

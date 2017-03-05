@@ -16,10 +16,10 @@ Here is an application screenshot containing the toolbar:
 
 ## Goals
 
-1. [`UiProperty`](#user-content-uiproperty)
-2. [Update `ToodRootProperty`](#user-content-root)
-3. [`<FilterSelector>` and `<SortSelector>`](#user-content-selectors)
-4. [Update `<Todos>`](#user-content-todos)
+1. [`UiProperty`](#uiproperty)
+2. [Update `ToodRootProperty`](#root)
+3. [`<FilterSelector>` and `<SortSelector>`](#selectors)
+4. [Update `<Todos>`](#todos)
 
 The [`examples/tutorial/step-3`](https://github.com/akrumel/f.lux/tree/master/examples/tutorial/step-3) directory contains the completed code for this step.
 

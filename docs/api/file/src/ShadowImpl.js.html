@@ -40,6 +40,12 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IndexedProperty.js~IndexedProperty.html">IndexedProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IndexedShadow.js~IndexedShadow.html">IndexedShadow</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IndexedShadowImpl.js~IndexedShadowImpl.html">IndexedShadowImpl</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IsolatedAccess.js~IsolatedAccess.html">IsolatedAccess</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IsolatedApi.js~IsolatedApi.html">IsolatedApi</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IsolatedObjectShadowImpl.js~IsolatedObjectShadowImpl.html">IsolatedObjectShadowImpl</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IsolatedProperty.js~IsolatedProperty.html">IsolatedProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IsolatedShadow.js~IsolatedShadow.html">IsolatedShadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IsolatedShadowImpl.js~IsolatedShadowImpl.html">IsolatedShadowImpl</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/KeyedApi.js~KeyedApi.html">KeyedApi</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/MapProperty.js~MapProperty.html">MapProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/MapShadow.js~MapShadow.html">MapShadow</a></span></span></li>
@@ -60,6 +66,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/TransientsProperty.js~TransientsProperty.html">TransientsProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/TransientsProperty.js~TransientsShadow.html">TransientsShadow</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createPropertyClass">createPropertyClass</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">__tests__</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/__tests__/LifecycleProperty.js~LifecycleProperty.html">LifecycleProperty</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">collection</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html">CollectionProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html">CollectionShadow</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/ModelAccess.js~ModelAccess.html">ModelAccess</a></span></span></li>
@@ -135,7 +142,7 @@ const _invalid = Symbol(&apos;invalid&apos;);
 const _name = Symbol(&apos;name&apos;);
 const _nextName = Symbol(&apos;nextName&apos;);
 const _path = Symbol(&apos;path&apos;);
-const _parent = Symbol(&apos;parent&apos;);
+
 // flag marks this property as obsolete and thus no longer to effect updates on the
 // next data model
 const _preventUpdates = Symbol(&apos;preventUpdates&apos;);
@@ -143,7 +150,6 @@ const _previousTime = Symbol(&apos;previousTime&apos;);
 const _property = Symbol(&apos;property&apos;);
 const _readonly = Symbol(&apos;readonly&apos;);
 const _replaced = Symbol(&apos;replaced&apos;);
-const _root = Symbol(&apos;root&apos;);
 const _scheduled = Symbol(&apos;scheduled&apos;);
 const _shadow = Symbol(&apos;shadow&apos;);
 const _state = Symbol(&apos;state&apos;);
@@ -155,14 +161,17 @@ const _defineProperty = Symbol(&apos;defineProperty&apos;);
 const _modelForUpdate = Symbol(&apos;modelForUpdate&apos;);
 const _scheduleUpdate = Symbol(&apos;scheduleUpdate&apos;);
 const _setupShadow = Symbol(&apos;setupShadow&apos;);
-const _changeRoot = Symbol(&apos;changeRoot&apos;);
 
 
 /*
 	Todos:
+		* Isolated support
+			-
+
 		* Reduce memory footprint:
 			1) investigate _time and _previousTime really needed
 			2) investigate getting access from property (reduce object creation and memory footprint)
+
 		* Investigate replacing impl with Proxy
 */
 
@@ -182,7 +191,6 @@ export default class ShadowImpl {
 	constructor(time, property, name, state, parent, shader, prev) {
 		this[_property] = property;
 		this[_name] = name;
-		this[_parent] = parent;
 		this[_state] = state;
 		this[_time] = time;
 
@@ -194,12 +202,10 @@ export default class ShadowImpl {
 		// didShadow() is being called multiple times which is causing a problem with property
 		// initialization that should only occur once.
 		this[_didShadowCalled] = false;
-
-		this[_root] = parent ?parent[_root] :this;
 	}
 
 	access() {
-		const parent = this[_parent];
+		const parent = this.parent();
 
 		if (!this[_access]) {
 			if (parent &amp;&amp; parent.access().create$ForChild) {
@@ -212,51 +218,6 @@ export default class ShadowImpl {
 
 		return this[_access];
 	}
-
-	cache() {
-		if (!this[_cache]) {
-			this[_cache] = {};
-		}
-
-		return this[_cache];
-	}
-
-	name() {
-		return this[_name];
-	}
-
-	parent() {
-		return this[_parent];
-	}
-
-	property() {
-		return this[_property];
-	}
-
-	readonly() {
-		return this[_readonly] === undefined ?this[_property].isReadonly() :this[_readonly];
-	}
-
-	root() {
-		return this[_root];
-	}
-
-	state() {
-		return this[_state];
-	}
-
-	store() {
-		return this[_property].store();
-	}
-
-	time() {
-		return this[_time];
-	}
-
-
-	//------------------------------------------------------------------------------------------------------
-	// Public API - should be no reason to override
-	//------------------------------------------------------------------------------------------------------
 
 	/**
 		Replace the value of this property. This will result in this property tree being recreated.
@@ -311,25 +272,38 @@ export default class ShadowImpl {
 
 		debug( d =&gt; d(`changeParent(): ${this.dotPath()}`) );
 
-		var prevParent = this[_parent];
-		this[_parent] = newParent;
-
-		this[_changeRoot](newParent[_root]);
-
 		// clear cache
 		delete this[_cache];
 
 		// setup access through shadows
 		this[_defineProperty]();
+	}
 
-		//give subclasses a chance to perform setup operations on the new parent/tree
-		this.onParentChange(newParent, prevParent);
+	cache() {
+		if (!this[_cache]) {
+			this[_cache] = {};
+		}
+
+		return this[_cache];
+	}
+
+	/**
+		Create a copy of the internals during reshadowing when the property has not changed during the
+		update process but some descendant has been modified.
+	*/
+	createCopy(time, newModel, parentImpl) {
+		const property = this[_property];
+		const ImplClass = property.implementationClass();
+		const name = this.nextName();
+		const shader = this.shader(newModel);
+
+		return new ImplClass(time, property, name, newModel, parentImpl, shader, this);
 	}
 
 	didShadow(time, newRoot) {
 		const storeRootImpl = this.store().rootImpl;
 
-		if (this[_time] == time &amp;&amp; !this[_didShadowCalled] &amp;&amp; storeRootImpl === this[_root]) {
+		if (this[_time] == time &amp;&amp; !this[_didShadowCalled] &amp;&amp; storeRootImpl === this.root()) {
 			this[_didShadowCalled] = true;
 
 			if (this.isRoot()) {
@@ -381,8 +355,8 @@ export default class ShadowImpl {
 			this[_futureState] = nextState;
 
 			// update the parent&apos;s future state to reference the state returned by the action
-			if (!this.isRoot()) {
-				const parentNextData = this[_parent][_modelForUpdate]();
+			if (!this.isRoot() &amp;&amp; !this.isIsolated()) {
+				const parentNextData = this.parent()[_modelForUpdate]();
 
 				// do nothing if parentNextData is not assignable
 				if (parentNextData &amp;&amp; !isPrimitive(parentNextData)) {
@@ -393,7 +367,7 @@ export default class ShadowImpl {
 			this.invalidate(null, this);
 
 			this.store().onPostStateUpdate(action, this);
-			this[_root][_scheduleUpdate]();
+			this.root()[_scheduleUpdate]();
 		}
 	}
 
@@ -414,7 +388,7 @@ export default class ShadowImpl {
 	}
 
 	ensureMounted() {
-		if (this.isRoot() || this.__getCalled__) { return }
+		if (this.isRoot() || this.isIsolated() || this.__getCalled__) { return }
 
 		result(this.store().shadow, this.dotPath())
 	}
@@ -445,6 +419,8 @@ export default class ShadowImpl {
 			source - the shadow implementation that triggered the invalidation
 	*/
 	invalidate(childImpl, source=this) {
+		const owner = this.owner();
+
 		if (childImpl) {
 			this[_property].onChildInvalidated(childImpl.property(), source.property());
 		}
@@ -452,8 +428,8 @@ export default class ShadowImpl {
 		if (this.isValid() &amp;&amp; this.isActive()) {
 			this[_invalid] = true;
 
-			if (this[_parent]) {
-				this[_parent].invalidate(this, source);
+			if (owner) {
+				owner.invalidate(this, source);
 			}
 		}
 	}
@@ -465,12 +441,16 @@ export default class ShadowImpl {
 		return !this[_dead];
 	}
 
+	isIsolated() {
+		return this.property().isIsolated();
+	}
+
 	isLeaf() {
 		return !this.hasChildren();
 	}
 
 	isRoot() {
-		return this[_root] === this;
+		return this.property().isRoot();
 	}
 
 	/**
@@ -483,6 +463,10 @@ export default class ShadowImpl {
 
 	latest() {
 		return this.store().findByPath(this.path());
+	}
+
+	name() {
+		return this[_name];
 	}
 
 	/**
@@ -520,10 +504,10 @@ export default class ShadowImpl {
 			const children = this.children();
 
 			for (let i=0, len=children.length; i&lt;len; i++) {
-				let pi = children[i];
+				let child = children[i];
 
-				if (pi) {
-					pi.obsoleteTree();
+				if (child) {
+					child.obsoleteTree();
 				}
 			}
 		}
@@ -539,6 +523,18 @@ export default class ShadowImpl {
 		}
 	}
 
+	owner() {
+		const ownerProperty = this[_property].owner();
+
+		return ownerProperty &amp;&amp; ownerProperty.__();
+	}
+
+	parent() {
+		const parentProperty = this.property().parent();
+
+		return parentProperty &amp;&amp; parentProperty.__();
+	}
+
 	/**
 		Gets an array with the property names/indices from the root to this property.
 	*/
@@ -548,10 +544,18 @@ export default class ShadowImpl {
 		if (this.isRoot()) {
 			return [];
 		} else if (!cache.path) {
-			cache.path = this[_parent].path().concat(this[_name]);
+			cache.path = this.parent().path().concat(this[_name]);
 		}
 
 		return cache.path;
+	}
+
+	property() {
+		return this[_property];
+	}
+
+	readonly() {
+		return this[_readonly] === undefined ?this[_property].isReadonly() :this[_readonly];
 	}
 
 	replaced() {
@@ -575,6 +579,18 @@ export default class ShadowImpl {
 		this.onReshadow(prev);
 	}
 
+	root() {
+		if (this[_property].isRoot()) { return this }
+
+		const cache = this.cache();
+
+		if (!cache.root) {
+			cache.root = this.owner().root();
+		}
+
+		return cache.root;
+	}
+
 	/**
 		Sets the readonly flag which will prevent a &apos;set&apos; function being set in defineProeprty().
 
@@ -593,11 +609,10 @@ export default class ShadowImpl {
 	setupPropertyAccess(prev) {
 		const property = this[_property];
 
-		if (this.isRoot()) {
+		if (this.isRoot() || this.isIsolated()) {
 			this[_setupShadow](prev);
-
 		} else {
-			this[_defineProperty](prev, !!prev);
+			this[_defineProperty](prev);
 		}
 	}
 
@@ -614,7 +629,7 @@ export default class ShadowImpl {
 	shadow() {
 		if (!this.isMapped()) { throw new Error(`Property implementation not mapped: ${this.dotPath()}`) }
 
-		return this[_shadow];
+		return this[_setupShadow]()
 	}
 
 	/**
@@ -633,6 +648,14 @@ export default class ShadowImpl {
 		return cache.slashPath;
 	}
 
+	state() {
+		return this[_state];
+	}
+
+	store() {
+		return this[_property].store();
+	}
+
 	/**
 		Transfers the nextName to the name attribute.
 	*/
@@ -641,6 +664,10 @@ export default class ShadowImpl {
 			this[_name] = this[_nextName];
 			delete this[_nextName];
 		}
+	}
+
+	time() {
+		return this[_time];
 	}
 
 	/**
@@ -737,6 +764,11 @@ export default class ShadowImpl {
 		this[_nextName] = name;
 	}
 
+	/**
+		Gets if shadow property is allowing state updates.
+
+		@return {boolean} `false` if the property or its parent has been replaced, `true` otherwise.
+	*/
 	updatesAllowed() {
 		return !this[_preventUpdates] &amp;&amp; !this[_replaced];
 	}
@@ -763,6 +795,13 @@ export default class ShadowImpl {
 		}
 	}
 
+	/**
+		Invoked by the shadowing process to invoke appropriate {@link Property} life-cycle methods.
+		The method name is a reflection that shadow state tree invocation chain for `willShadow()`
+		occurs when the {@link Store} is going to shadow that state.
+
+		@param {boolean} parentWillUnshadow - `true` when parent property is unshadowing.
+	*/
 	willShadow(parentWillUnshadow) {
 		var willUnshadow = parentWillUnshadow || false;
 
@@ -797,18 +836,38 @@ export default class ShadowImpl {
 	//	Methods with base implementations that subclasses may need to override - no need to call super
 	//------------------------------------------------------------------------------------------------------
 
+	/**
+		Creates a deep clone of the current property state.
+	*/
 	copyState() {
 		return cloneDeep(this.state());
 	}
 
+	/**
+		Invoked on shadow getter access to obtain the get value.
+
+		The default implementation returns the shadow.
+
+		@return the shadow or other f.lux representative value for the shadow proeprty.
+	*/
 	definePropertyGetValue(state) {
 		return this[_createShadow]();
 	}
 
+	/**
+		Invoked on shadow property assignment to perform the replacement f.lux action.
+
+		The default implementation is to assign the new value with no checking.
+
+		@param newValue - the new state value
+	*/
 	definePropertySetValue(newValue) {
 		this.assign(newValue);
 	}
 
+	/**
+		Gets if the property has an child properties (not whether child properties are supported).
+	*/
 	hasChildren() {
 		return this.childCount() != 0;
 	}
@@ -828,17 +887,7 @@ export default class ShadowImpl {
 	}
 
 	/**
-		Provides subclasses a chance to perform setup operations when the parent changes.
-
-		Note: unlike other onXyz() methods, this one invokes defineProperty() so you may
-		      want to invoke this version if that is a desired behavior.
-	*/
-	onParentChange(parent, prevParent) {
-	}
-
-	/**
-		Map properties so can reuse valid properties. Reusing properties allows for React components
-		to do &apos;===&apos; to see if a property has changed.
+		Property has just been reshadowed.
 	*/
 	onReshadow(prev) { }
 
@@ -902,24 +951,19 @@ export default class ShadowImpl {
 	}
 
 	/**
-		Create a copy of the internals during reshadowing when the property has not changed during the
-		update process but some descendant has been modified.
-	*/
-	createCopy(time, newModel, parentImpl) {
-		const property = this[_property];
-		const ImplClass = property.implementationClass();
-		const name = this.nextName();
-		const shader = this.shader(newModel);
-
-		return new ImplClass(time, property, name, newModel, parentImpl, shader, this);
-	}
-
-	/**
 		Gets a child implementation matching a property name or undefined if no such property exists.
 	*/
 	getChild(name) {
 		return undefined;
 	}
+
+	/**
+		Maps all child properties onto this property using Object.defineProperty().
+
+		@param {ShadowImpl} prev - the previous property shadow implementation instance.
+		@param {boolean} inCtor - `true` if call occuring during shadowing process.
+	*/
+	defineChildProperties(prev, inCtor) { }
 
 	/**
 		Gets if defineChildProperties() has been invoked.
@@ -937,31 +981,10 @@ export default class ShadowImpl {
 		throw new Error(&quot;ShadowImpl subclasses with children must implement keys()&quot;);
 	}
 
-	/**
-		Maps all child properties onto this property using Object.defineProperty().
-	*/
-	defineChildProperties() { }
-
 
 	//------------------------------------------------------------------------------------------------------
 	//	Private functions - should not be called by code outside this file.
 	//------------------------------------------------------------------------------------------------------
-
-	/**
-		Called during reshadowing when reusing a property. The function sets the root reference for this property
-		and its descendants
-	*/
-	[_changeRoot](newRoot) {
-		this[_root] = newRoot;
-
-		if (this.hasChildren()) {
-			const children = this.children();
-
-			for (let i=0, len=children.length; i&lt;len; i++) {
-				children[i][_changeRoot](newRoot);
-			}
-		}
-	}
 
 	[_createShadow]() {
 		if (!this[_shadow]) {
@@ -999,11 +1022,11 @@ export default class ShadowImpl {
 		Maps the getter and setter (if appropriate) onto the parent property.
 	*/
 	[_defineProperty](prev) {
-		if (this.isRoot()) { return }
+		if (this.isRoot() || this.isIsolated()) { return }
 
 		// names with a leading &apos;_&apos; are not enumerable (way of hiding them)
 		const enumerable = !(isString(this[_name]) &amp;&amp; this[_name].startsWith(&apos;_&apos;));
-		const parentShadow = this[_parent].shadow();
+		const parentShadow = this.parent().shadow();
 		const state = this.state();
 		const set = this.readonly()
 			?undefined
@@ -1032,7 +1055,7 @@ export default class ShadowImpl {
 					set: set
 				});
 		} catch(error) {
-			console.warn(`_defineProperty() Error: name=${this[_name]}, parent=${this[_parent].dotPath()}`, error.stack);
+			console.warn(`_defineProperty() Error: name=${this[_name]}, parent=${this.parent().dotPath()}`, error.stack);
 			debugger
 		}
 
@@ -1048,11 +1071,11 @@ export default class ShadowImpl {
 	*/
 	[_modelForUpdate]() {
 		if (!this[_futureState]) {
-			if (this.isRoot()) {
+			if (this.isRoot() || this.isIsolated()) {
 				// next data will be a shallow copy of current model
 				this[_futureState] = clone(this.state());
 			} else {
-				const parentNextState = this[_parent][_modelForUpdate]();
+				const parentNextState = this.parent()[_modelForUpdate]();
 
 				// Primitive parent models do not support adding properties
 				if (isPrimitive(parentNextState)) {
@@ -1076,7 +1099,7 @@ export default class ShadowImpl {
 	*/
 	[_scheduleUpdate]() {
 		if (!this.isRoot()) {
-			return this[_root][_scheduleUpdate]();
+			return this.root()[_scheduleUpdate]();
 		}
 
 		if (!this[_scheduled] &amp;&amp; !this.isValid() &amp;&amp; !this[_dead]) {

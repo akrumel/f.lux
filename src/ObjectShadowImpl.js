@@ -325,7 +325,7 @@ export default class ObjectShadowImpl extends ShadowImpl {
 		if (prevChild && !prevChild.replaced()) {
 			child = reshadow(this.time(), state, prevChild, this);
 		} else {
-			child = elementShader.shadowProperty(this.time(), name, state, this, this.store());
+			child = elementShader.shadowProperty(this.time(), name, state, this);
 		}
 
 		if (child) {

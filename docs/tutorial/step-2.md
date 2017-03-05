@@ -7,11 +7,11 @@ This step creates f.lux `Property` classes for the root shadow state object, tod
 
 ## Goals
 
-1. [Todo property](#user-content-todo)
-2. [Todo list property](#user-content-todos)
-3. [Define the root property](#user-content-root)
-4. [Update UI to use `TodoListProperty` and `TodoProperty`](#user-content-ui)
-5. [Track todo item update time](#user-content-update)
+1. [Todo property](#todo)
+2. [Todo list property](#todos)
+3. [Define the root property](#root)
+4. [Update UI to use `TodoListProperty` and `TodoProperty`](#ui)
+5. [Track todo item update time](#update)
 
 The [`examples/tutorial/step-2`](https://github.com/akrumel/f.lux/tree/master/examples/tutorial/step-2) directory contains the completed code for this step.
 

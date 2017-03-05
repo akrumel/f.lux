@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">src/IsolatedProperty.js | F.lux API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/akrumel/f.lux" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Access.js~Access.html">Access</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ArrayProperty.js~ArrayProperty.html">ArrayProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ArrayShadow.js~ArrayShadow.html">ArrayShadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/AutoShader.js~AutoShader.html">AutoShader</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IndexedApi.js~IndexedApi.html">IndexedApi</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IndexedProperty.js~IndexedProperty.html">IndexedProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IndexedShadow.js~IndexedShadow.html">IndexedShadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IndexedShadowImpl.js~IndexedShadowImpl.html">IndexedShadowImpl</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IsolatedAccess.js~IsolatedAccess.html">IsolatedAccess</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IsolatedApi.js~IsolatedApi.html">IsolatedApi</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IsolatedObjectShadowImpl.js~IsolatedObjectShadowImpl.html">IsolatedObjectShadowImpl</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IsolatedProperty.js~IsolatedProperty.html">IsolatedProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IsolatedShadow.js~IsolatedShadow.html">IsolatedShadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IsolatedShadowImpl.js~IsolatedShadowImpl.html">IsolatedShadowImpl</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/KeyedApi.js~KeyedApi.html">KeyedApi</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/MapProperty.js~MapProperty.html">MapProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/MapShadow.js~MapShadow.html">MapShadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ObjectProperty.js~ObjectProperty.html">ObjectProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ObjectShadowImpl.js~ObjectShadowImpl.html">ObjectShadowImpl</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/PrimitiveProperty.js~PrimitiveProperty.html">PrimitiveProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/PrimitiveShadowImpl.js~PrimitiveShadowImpl.html">PrimitiveShadowImpl</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Property.js~Property.html">Property</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/PropertyFactoryShader.js~PropertyFactoryShader.html">PropertyFactoryShader</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Shader.js~Shader.html">Shader</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Shadow.js~Shadow.html">Shadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ShadowImpl.js~ShadowImpl.html">ShadowImpl</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/StateType.js~StateType.html">StateType</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Store.js~Store.html">Store</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/TransientProperty.js~TransientLock.html">TransientLock</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/TransientProperty.js~TransientProperty.html">TransientProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/TransientProperty.js~TransientShadow.html">TransientShadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/TransientsProperty.js~TransientsProperty.html">TransientsProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/TransientsProperty.js~TransientsShadow.html">TransientsShadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createPropertyClass">createPropertyClass</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">__tests__</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/__tests__/LifecycleProperty.js~LifecycleProperty.html">LifecycleProperty</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">collection</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html">CollectionProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html">CollectionShadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/ModelAccess.js~ModelAccess.html">ModelAccess</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/ModelProperty.js~ModelProperty.html">ModelProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/PojoEndpointProperty.js~PojoEndpointProperty.html">PojoEndpointProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/PojoQueryBuilder.js~PojoQueryBuilder.html">PojoQueryBuilder</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/RestEndpointProperty.js~RestEndpointProperty.html">RestEndpointProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/RestQueryBuilder.js~RestQueryBuilder.html">RestQueryBuilder</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/ShadowModelAccess.js~ShadowModelAccess.html">ShadowModelAccess</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-extendOptions">extendOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getOptions">getOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-setOptions">setOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-DEFAULTS_OPTION">DEFAULTS_OPTION</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-MERGE_OPTION">MERGE_OPTION</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-NONE_OPTION">NONE_OPTION</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-REPLACE_OPTION">REPLACE_OPTION</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-AllOp">AllOp</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ChangeEvent">ChangeEvent</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-CreateOp">CreateOp</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-DeletedEvent">DeletedEvent</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-DestroyOp">DestroyOp</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ErrorEvent">ErrorEvent</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FetchOp">FetchOp</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FetchedEvent">FetchedEvent</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FindOp">FindOp</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FoundEvent">FoundEvent</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-SavedEvent">SavedEvent</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-UpdateOp">UpdateOp</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">decorators</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-automount">automount</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-mixin">mixin</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-shadow">shadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-shadowBound">shadowBound</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-shadowPropertyHelper">shadowPropertyHelper</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">listeners</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/listeners/Logger.js~Logger.html">Logger</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createConsoleLogger">createConsoleLogger</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/IsolatedProperty.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import { assert, uuid } from &quot;akutils&quot;;
+
+import IsolatedAccess from &quot;./IsolatedAccess&quot;;
+import IsolatedShadow from &quot;./IsolatedShadow&quot;;
+import IsolatedShadowImpl from &quot;./IsolatedShadowImpl&quot;;
+import KeyedApi from &quot;./KeyedApi&quot;;
+import MapProperty from &quot;./MapProperty&quot;;
+import Property from &quot;./Property&quot;;
+import StateType from &quot;./StateType&quot;;
+
+
+// child property names
+export const _dataKey = &quot;data&quot;;
+
+// private instance variable symbols
+const _id = Symbol(&quot;id&quot;);
+const _key = Symbol(&quot;key&quot;);
+const _owner = Symbol(&quot;owner&quot;);
+
+
+/**
+
+*/
+export default class IsolatedProperty extends Property {
+	/**
+		If a {@link StateType} is not passed to this constructor then one is located using
+		{@link StateType.from} thus ensuring the f.lux shadowing process is defined for this
+		property.
+
+		@param {StateType} [stateType] - a specialized {@link StateType} instance describing how f.lux should
+			shadow this property.
+	*/
+	constructor(stateType) {
+		super(stateType);
+
+		assert( a =&gt; a.is(stateType.getManagedType(), &quot;Managed type must be set&quot;) );
+
+		this._keyed = new KeyedApi(this);
+
+		this.setImplementationClass(IsolatedShadowImpl);
+		this.setShadowClass(IsolatedShadow);
+
+		const managedType = this.stateType().getManagedType();
+		const shader = this.shader();
+
+		shader.addProperty(_dataKey, managedType);
+
+		this[_id] = uuid(&quot;_&quot;);
+	}
+
+	/**
+		Factory function for creating an `MapProperty` subclass suitable for using with new. The generated
+		class will have the `type` {@link StateType} descriptor set upon return.
+
+		Example usage:
+		```
+		class SomeShadow extends MapShadow {
+		    // definition here
+		}
+
+		export default MapProperty.createClass(SomeShadow, type =&gt; {
+			// configure type variable
+		});
+		```
+
+		@param {Object|IsolatedShadow} [shadowType={}] - `MapShadow` subclass or object literal api definition.
+			If object literal specified, each property and function is mapped onto a Shadow subclass.
+		@param {function(type: StateType)} [typeCallback] - a callback function that will be passed the
+			{@link StateType} spec for additional customization, such as setting autoshadow, initial state,
+			or readonly.
+		@param {Object} [initialState={}] - the initial state for the new property.
+
+		@return {MapProperty} newly defined `MapProperty` subclass.
+	*/
+	static createClass(shadowType={}, typeCallback, initialState={}) {
+		return createPropertyClass(shadowType, initialState, typeCallback, IsolatedProperty);
+	}
+
+	/**
+		Factory function for setting up the {@link StateType} `type` class variable with an appropriately
+		configured intial state.
+
+		Example usage:
+		```
+        export default class SomeProperty extends MapProperty {
+			// implement property here
+        }
+
+        class SomeShadow extends MapShadow {
+			// implement shadow api here
+        }
+
+        IsolatedProperty.defineType(SomeProperty, SomeShadow, type =&gt; {
+			// configure type variable
+        });
+		```
+
+		@param {MapProperty} PropClass - MapProperty subclass
+		@param {Object|MapShadow} [ShadowType] - `MapShadow` subclass or object literal api definition.
+			If object literal specified, each property and function is mapped onto a Shadow subclass.
+		@param {function(type: StateType)} [typeCallback] - a callback function that will be passed the
+			{@link StateType} spec for additional customization, such as setting autoshadow, initial state, or
+			readonly.
+		@param {Object} [initialState={}] - the initial state for the new property.
+	*/
+	static defineType(PropClass, ShadowType, typeCallback, initialState={}) {
+		assert( a =&gt; a.is(IsolatedProperty.isPrototypeOf(PropClass), &quot;PropClass must subclass IsolatedProperty&quot;) );
+
+		StateType.defineTypeEx(PropClass, ShadowType, typeCallback, initialState);
+	}
+
+
+	//------------------------------------------------------------------------------------------------------
+	// Life-cycle methods
+	//------------------------------------------------------------------------------------------------------
+
+	propertyChildInvalidated(childProperty, sourceProperty) {
+		this.store().isolated().invalidated(this);
+	}
+
+	propertyWillUnshadow() {
+		this.store().isolated().willUnshadow(this);
+	}
+
+
+	//------------------------------------------------------------------------------------------------------
+	// Isolated specific methods
+	//------------------------------------------------------------------------------------------------------
+
+	/**
+		Gets the ID used by the store to track this isolated property.
+
+		@return {string}
+	*/
+	isolationId() {
+		return this[_id];
+	}
+
+	key() {
+		return this[_key];
+	}
+
+	/**
+		Gets the property managing this isolated object.
+
+		@return {Property}
+	*/
+	owner() {
+		return this[_owner];
+	}
+
+	setKey(key) {
+		this[_key] = key;
+	}
+
+	/**
+		Sets the property that owns/contains this isolated property.
+
+		@param {Property} owner - the object containing/managing this isolated property.
+	*/
+	setOwner(owner) {
+		assert( a =&gt; a.not(this[_owner], &quot;Owner already set&quot;) );
+
+		this[_owner] = owner;
+	}
+
+
+	//------------------------------------------------------------------------------------------------------
+	// Property class overrides - no need to call super
+	//
+	// These are mostly proxies to the owner property
+	//------------------------------------------------------------------------------------------------------
+
+	/**
+		Creates the object to be assigned to the shadow.$ property. Subclasses can override this method
+		to setup a chain of specialized accessors (`$()`). See {@link Access} for details on setting up
+		specialized accessors. This is an advanced feature and rarely required.
+
+		@return {Access} a property accessor instance.
+	*/
+	create$(impl) {
+		return new IsolatedAccess(impl);
+	}
+
+	/**
+		An isolated property returns owner&apos;s `dotPath()` value.
+
+		@return {string} path with each component joined by a `.`
+
+		@see https://lodash.com/docs/4.17.4#result
+	*/
+	dotPath() {
+console.log(&quot;ISO path&quot;, this[_owner].path())
+		return this[_owner].dotPath();
+	}
+
+	/**
+		An isolated property returns owner&apos;s `isActive()` value.
+
+		@return {boolean}
+	*/
+	isActive() {
+		return this[_owner].isActive();
+	}
+
+	/**
+		Gets if property is an actual isolated property managed by the store.
+
+		@return {boolean}
+	*/
+	isIsolated() {
+		return true;
+	}
+
+	/**
+		An isolated property is never a root.
+
+		@return {boolean} `false`
+	*/
+	isRoot() {
+		return false;
+	}
+
+	/**
+		An isolated property returns owner property for the parent.
+
+		@return {[]}
+	*/
+	parent() {
+		return this[_owner];
+	}
+
+
+	//------------------------------------------------------------------------------------------------------
+	// Property class overrides - the tricky ones
+	//
+	// Developer Note: Use great caution when overriding these methods as not their original intent
+	//------------------------------------------------------------------------------------------------------
+
+	/**
+		An isolated property returns owner&apos;s `isReadonly()` value.
+
+		@return {boolean}
+	*/
+	isReadonly() {
+		const explicit = this.readonlyExplicit();
+		const readonly = explicit !== undefined ?explicit :this.stateType()._readonly;
+
+		// use readonly flag if explicitly set otherwise use value from owner
+		return readonly === undefined
+			? this[_owner].isReadonly()
+			: readonly;
+	}
+}
+
+
+StateType.defineType(IsolatedProperty, spec =&gt; {
+	spec.initialState({})
+		.typeName(&quot;IsolatedProperty&quot;)
+});</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.2)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

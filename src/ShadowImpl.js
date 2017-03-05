@@ -503,7 +503,7 @@ export default class ShadowImpl {
 		if (this.isRoot() || this.isIsolated()) {
 			this[_setupShadow](prev);
 		} else {
-			this[_defineProperty](prev, !!prev);
+			this[_defineProperty](prev);
 		}
 	}
 
@@ -655,6 +655,11 @@ export default class ShadowImpl {
 		this[_nextName] = name;
 	}
 
+	/**
+		Gets if shadow property is allowing state updates.
+
+		@return {boolean} `false` if the property or its parent has been replaced, `true` otherwise.
+	*/
 	updatesAllowed() {
 		return !this[_preventUpdates] && !this[_replaced];
 	}
@@ -681,6 +686,13 @@ export default class ShadowImpl {
 		}
 	}
 
+	/**
+		Invoked by the shadowing process to invoke appropriate {@link Property} life-cycle methods.
+		The method name is a reflection that shadow state tree invocation chain for `willShadow()`
+		occurs when the {@link Store} is going to shadow that state.
+
+		@param {boolean} parentWillUnshadow - `true` when parent property is unshadowing.
+	*/
 	willShadow(parentWillUnshadow) {
 		var willUnshadow = parentWillUnshadow || false;
 
@@ -715,18 +727,38 @@ export default class ShadowImpl {
 	//	Methods with base implementations that subclasses may need to override - no need to call super
 	//------------------------------------------------------------------------------------------------------
 
+	/**
+		Creates a deep clone of the current property state.
+	*/
 	copyState() {
 		return cloneDeep(this.state());
 	}
 
+	/**
+		Invoked on shadow getter access to obtain the get value.
+
+		The default implementation returns the shadow.
+
+		@return the shadow or other f.lux representative value for the shadow proeprty.
+	*/
 	definePropertyGetValue(state) {
 		return this[_createShadow]();
 	}
 
+	/**
+		Invoked on shadow property assignment to perform the replacement f.lux action.
+
+		The default implementation is to assign the new value with no checking.
+
+		@param newValue - the new state value
+	*/
 	definePropertySetValue(newValue) {
 		this.assign(newValue);
 	}
 
+	/**
+		Gets if the property has an child properties (not whether child properties are supported).
+	*/
 	hasChildren() {
 		return this.childCount() != 0;
 	}
@@ -817,6 +849,14 @@ export default class ShadowImpl {
 	}
 
 	/**
+		Maps all child properties onto this property using Object.defineProperty().
+
+		@param {ShadowImpl} prev - the previous property shadow implementation instance.
+		@param {boolean} inCtor - `true` if call occuring during shadowing process.
+	*/
+	defineChildProperties(prev, inCtor) { }
+
+	/**
 		Gets if defineChildProperties() has been invoked.
 	*/
 	isMapped() {
@@ -831,11 +871,6 @@ export default class ShadowImpl {
 	keys() {
 		throw new Error("ShadowImpl subclasses with children must implement keys()");
 	}
-
-	/**
-		Maps all child properties onto this property using Object.defineProperty().
-	*/
-	defineChildProperties() { }
 
 
 	//------------------------------------------------------------------------------------------------------

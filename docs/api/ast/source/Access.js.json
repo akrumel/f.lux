@@ -1927,224 +1927,16 @@
                 "trailingComments": [
                   {
                     "type": "CommentBlock",
-                    "value": "*\n\t\tGets if the shadow property has experienced a mutation action. This method will return `true` and\n\t\t{@link Access#isActive} may also return true if the f.lux store has not yet been transitioned to\n\t\tthe next state.\n\n\t\t@return {boolean} `true` if the state has not been changed.\n\t",
-                    "start": 2308,
-                    "end": 2595,
-                    "loc": {
-                      "start": {
-                        "line": 96,
-                        "column": 1
-                      },
-                      "end": {
-                        "line": 102,
-                        "column": 3
-                      }
-                    }
-                  }
-                ]
-              },
-              {
-                "type": "ClassMethod",
-                "start": 2597,
-                "end": 2643,
-                "loc": {
-                  "start": {
-                    "line": 103,
-                    "column": 1
-                  },
-                  "end": {
-                    "line": 105,
-                    "column": 2
-                  }
-                },
-                "computed": false,
-                "key": {
-                  "type": "Identifier",
-                  "start": 2597,
-                  "end": 2604,
-                  "loc": {
-                    "start": {
-                      "line": 103,
-                      "column": 1
-                    },
-                    "end": {
-                      "line": 103,
-                      "column": 8
-                    },
-                    "identifierName": "isValid"
-                  },
-                  "name": "isValid",
-                  "leadingComments": null
-                },
-                "static": false,
-                "kind": "method",
-                "id": null,
-                "generator": false,
-                "expression": false,
-                "async": false,
-                "params": [],
-                "body": {
-                  "type": "BlockStatement",
-                  "start": 2607,
-                  "end": 2643,
-                  "loc": {
-                    "start": {
-                      "line": 103,
-                      "column": 11
-                    },
-                    "end": {
-                      "line": 105,
-                      "column": 2
-                    }
-                  },
-                  "body": [
-                    {
-                      "type": "ReturnStatement",
-                      "start": 2611,
-                      "end": 2640,
-                      "loc": {
-                        "start": {
-                          "line": 104,
-                          "column": 2
-                        },
-                        "end": {
-                          "line": 104,
-                          "column": 31
-                        }
-                      },
-                      "argument": {
-                        "type": "CallExpression",
-                        "start": 2618,
-                        "end": 2639,
-                        "loc": {
-                          "start": {
-                            "line": 104,
-                            "column": 9
-                          },
-                          "end": {
-                            "line": 104,
-                            "column": 30
-                          }
-                        },
-                        "callee": {
-                          "type": "MemberExpression",
-                          "start": 2618,
-                          "end": 2637,
-                          "loc": {
-                            "start": {
-                              "line": 104,
-                              "column": 9
-                            },
-                            "end": {
-                              "line": 104,
-                              "column": 28
-                            }
-                          },
-                          "object": {
-                            "type": "MemberExpression",
-                            "start": 2618,
-                            "end": 2629,
-                            "loc": {
-                              "start": {
-                                "line": 104,
-                                "column": 9
-                              },
-                              "end": {
-                                "line": 104,
-                                "column": 20
-                              }
-                            },
-                            "object": {
-                              "type": "ThisExpression",
-                              "start": 2618,
-                              "end": 2622,
-                              "loc": {
-                                "start": {
-                                  "line": 104,
-                                  "column": 9
-                                },
-                                "end": {
-                                  "line": 104,
-                                  "column": 13
-                                }
-                              }
-                            },
-                            "property": {
-                              "type": "Identifier",
-                              "start": 2623,
-                              "end": 2628,
-                              "loc": {
-                                "start": {
-                                  "line": 104,
-                                  "column": 14
-                                },
-                                "end": {
-                                  "line": 104,
-                                  "column": 19
-                                },
-                                "identifierName": "_impl"
-                              },
-                              "name": "_impl"
-                            },
-                            "computed": true
-                          },
-                          "property": {
-                            "type": "Identifier",
-                            "start": 2630,
-                            "end": 2637,
-                            "loc": {
-                              "start": {
-                                "line": 104,
-                                "column": 21
-                              },
-                              "end": {
-                                "line": 104,
-                                "column": 28
-                              },
-                              "identifierName": "isValid"
-                            },
-                            "name": "isValid"
-                          },
-                          "computed": false
-                        },
-                        "arguments": []
-                      }
-                    }
-                  ],
-                  "directives": [],
-                  "trailingComments": null
-                },
-                "leadingComments": [
-                  {
-                    "type": "CommentBlock",
-                    "value": "*\n\t\tGets if the shadow property has experienced a mutation action. This method will return `true` and\n\t\t{@link Access#isActive} may also return true if the f.lux store has not yet been transitioned to\n\t\tthe next state.\n\n\t\t@return {boolean} `true` if the state has not been changed.\n\t",
-                    "start": 2308,
-                    "end": 2595,
-                    "loc": {
-                      "start": {
-                        "line": 96,
-                        "column": 1
-                      },
-                      "end": {
-                        "line": 102,
-                        "column": 3
-                      }
-                    }
-                  }
-                ],
-                "trailingComments": [
-                  {
-                    "type": "CommentBlock",
                     "value": "*\n\t\tGets if the property allows for assignment through the shadow state, ie `todo.desc = \"go skiing\"`. The\n\t\treadonly attribute is hierarchically determined through the parent property if not explicitly set.\n\n\t\t@return {boolean} - true if assignment is not allowed\n\t",
-                    "start": 2646,
-                    "end": 2916,
+                    "start": 2308,
+                    "end": 2578,
                     "loc": {
                       "start": {
-                        "line": 107,
+                        "line": 96,
                         "column": 1
                       },
                       "end": {
-                        "line": 112,
+                        "line": 101,
                         "column": 3
                       }
                     }
@@ -2153,30 +1945,30 @@
               },
               {
                 "type": "ClassMethod",
-                "start": 2918,
-                "end": 2974,
+                "start": 2580,
+                "end": 2636,
                 "loc": {
                   "start": {
-                    "line": 113,
+                    "line": 102,
                     "column": 1
                   },
                   "end": {
-                    "line": 115,
+                    "line": 104,
                     "column": 2
                   }
                 },
                 "computed": false,
                 "key": {
                   "type": "Identifier",
-                  "start": 2918,
-                  "end": 2928,
+                  "start": 2580,
+                  "end": 2590,
                   "loc": {
                     "start": {
-                      "line": 113,
+                      "line": 102,
                       "column": 1
                     },
                     "end": {
-                      "line": 113,
+                      "line": 102,
                       "column": 11
                     },
                     "identifierName": "isReadonly"
@@ -2193,115 +1985,115 @@
                 "params": [],
                 "body": {
                   "type": "BlockStatement",
-                  "start": 2931,
-                  "end": 2974,
+                  "start": 2593,
+                  "end": 2636,
                   "loc": {
                     "start": {
-                      "line": 113,
+                      "line": 102,
                       "column": 14
                     },
                     "end": {
-                      "line": 115,
+                      "line": 104,
                       "column": 2
                     }
                   },
                   "body": [
                     {
                       "type": "ReturnStatement",
-                      "start": 2935,
-                      "end": 2971,
+                      "start": 2597,
+                      "end": 2633,
                       "loc": {
                         "start": {
-                          "line": 114,
+                          "line": 103,
                           "column": 2
                         },
                         "end": {
-                          "line": 114,
+                          "line": 103,
                           "column": 38
                         }
                       },
                       "argument": {
                         "type": "CallExpression",
-                        "start": 2942,
-                        "end": 2970,
+                        "start": 2604,
+                        "end": 2632,
                         "loc": {
                           "start": {
-                            "line": 114,
+                            "line": 103,
                             "column": 9
                           },
                           "end": {
-                            "line": 114,
+                            "line": 103,
                             "column": 37
                           }
                         },
                         "callee": {
                           "type": "MemberExpression",
-                          "start": 2942,
-                          "end": 2968,
+                          "start": 2604,
+                          "end": 2630,
                           "loc": {
                             "start": {
-                              "line": 114,
+                              "line": 103,
                               "column": 9
                             },
                             "end": {
-                              "line": 114,
+                              "line": 103,
                               "column": 35
                             }
                           },
                           "object": {
                             "type": "CallExpression",
-                            "start": 2942,
-                            "end": 2957,
+                            "start": 2604,
+                            "end": 2619,
                             "loc": {
                               "start": {
-                                "line": 114,
+                                "line": 103,
                                 "column": 9
                               },
                               "end": {
-                                "line": 114,
+                                "line": 103,
                                 "column": 24
                               }
                             },
                             "callee": {
                               "type": "MemberExpression",
-                              "start": 2942,
-                              "end": 2955,
+                              "start": 2604,
+                              "end": 2617,
                               "loc": {
                                 "start": {
-                                  "line": 114,
+                                  "line": 103,
                                   "column": 9
                                 },
                                 "end": {
-                                  "line": 114,
+                                  "line": 103,
                                   "column": 22
                                 }
                               },
                               "object": {
                                 "type": "ThisExpression",
-                                "start": 2942,
-                                "end": 2946,
+                                "start": 2604,
+                                "end": 2608,
                                 "loc": {
                                   "start": {
-                                    "line": 114,
+                                    "line": 103,
                                     "column": 9
                                   },
                                   "end": {
-                                    "line": 114,
+                                    "line": 103,
                                     "column": 13
                                   }
                                 }
                               },
                               "property": {
                                 "type": "Identifier",
-                                "start": 2947,
-                                "end": 2955,
+                                "start": 2609,
+                                "end": 2617,
                                 "loc": {
                                   "start": {
-                                    "line": 114,
+                                    "line": 103,
                                     "column": 14
                                   },
                                   "end": {
-                                    "line": 114,
+                                    "line": 103,
                                     "column": 22
                                   },
                                   "identifierName": "property"
@@ -2314,15 +2106,15 @@
                           },
                           "property": {
                             "type": "Identifier",
-                            "start": 2958,
-                            "end": 2968,
+                            "start": 2620,
+                            "end": 2630,
                             "loc": {
                               "start": {
-                                "line": 114,
+                                "line": 103,
                                 "column": 25
                               },
                               "end": {
-                                "line": 114,
+                                "line": 103,
                                 "column": 35
                               },
                               "identifierName": "isReadonly"
@@ -2342,11 +2134,219 @@
                   {
                     "type": "CommentBlock",
                     "value": "*\n\t\tGets if the property allows for assignment through the shadow state, ie `todo.desc = \"go skiing\"`. The\n\t\treadonly attribute is hierarchically determined through the parent property if not explicitly set.\n\n\t\t@return {boolean} - true if assignment is not allowed\n\t",
-                    "start": 2646,
-                    "end": 2916,
+                    "start": 2308,
+                    "end": 2578,
                     "loc": {
                       "start": {
-                        "line": 107,
+                        "line": 96,
+                        "column": 1
+                      },
+                      "end": {
+                        "line": 101,
+                        "column": 3
+                      }
+                    }
+                  }
+                ],
+                "trailingComments": [
+                  {
+                    "type": "CommentBlock",
+                    "value": "*\n\t\tGets if the shadow property has experienced a mutation action. This method will return `true` and\n\t\t{@link Access#isActive} may also return true if the f.lux store has not yet been transitioned to\n\t\tthe next state.\n\n\t\t@return {boolean} `true` if the state has not been changed.\n\t",
+                    "start": 2639,
+                    "end": 2926,
+                    "loc": {
+                      "start": {
+                        "line": 106,
+                        "column": 1
+                      },
+                      "end": {
+                        "line": 112,
+                        "column": 3
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "ClassMethod",
+                "start": 2928,
+                "end": 2974,
+                "loc": {
+                  "start": {
+                    "line": 113,
+                    "column": 1
+                  },
+                  "end": {
+                    "line": 115,
+                    "column": 2
+                  }
+                },
+                "computed": false,
+                "key": {
+                  "type": "Identifier",
+                  "start": 2928,
+                  "end": 2935,
+                  "loc": {
+                    "start": {
+                      "line": 113,
+                      "column": 1
+                    },
+                    "end": {
+                      "line": 113,
+                      "column": 8
+                    },
+                    "identifierName": "isValid"
+                  },
+                  "name": "isValid",
+                  "leadingComments": null
+                },
+                "static": false,
+                "kind": "method",
+                "id": null,
+                "generator": false,
+                "expression": false,
+                "async": false,
+                "params": [],
+                "body": {
+                  "type": "BlockStatement",
+                  "start": 2938,
+                  "end": 2974,
+                  "loc": {
+                    "start": {
+                      "line": 113,
+                      "column": 11
+                    },
+                    "end": {
+                      "line": 115,
+                      "column": 2
+                    }
+                  },
+                  "body": [
+                    {
+                      "type": "ReturnStatement",
+                      "start": 2942,
+                      "end": 2971,
+                      "loc": {
+                        "start": {
+                          "line": 114,
+                          "column": 2
+                        },
+                        "end": {
+                          "line": 114,
+                          "column": 31
+                        }
+                      },
+                      "argument": {
+                        "type": "CallExpression",
+                        "start": 2949,
+                        "end": 2970,
+                        "loc": {
+                          "start": {
+                            "line": 114,
+                            "column": 9
+                          },
+                          "end": {
+                            "line": 114,
+                            "column": 30
+                          }
+                        },
+                        "callee": {
+                          "type": "MemberExpression",
+                          "start": 2949,
+                          "end": 2968,
+                          "loc": {
+                            "start": {
+                              "line": 114,
+                              "column": 9
+                            },
+                            "end": {
+                              "line": 114,
+                              "column": 28
+                            }
+                          },
+                          "object": {
+                            "type": "MemberExpression",
+                            "start": 2949,
+                            "end": 2960,
+                            "loc": {
+                              "start": {
+                                "line": 114,
+                                "column": 9
+                              },
+                              "end": {
+                                "line": 114,
+                                "column": 20
+                              }
+                            },
+                            "object": {
+                              "type": "ThisExpression",
+                              "start": 2949,
+                              "end": 2953,
+                              "loc": {
+                                "start": {
+                                  "line": 114,
+                                  "column": 9
+                                },
+                                "end": {
+                                  "line": 114,
+                                  "column": 13
+                                }
+                              }
+                            },
+                            "property": {
+                              "type": "Identifier",
+                              "start": 2954,
+                              "end": 2959,
+                              "loc": {
+                                "start": {
+                                  "line": 114,
+                                  "column": 14
+                                },
+                                "end": {
+                                  "line": 114,
+                                  "column": 19
+                                },
+                                "identifierName": "_impl"
+                              },
+                              "name": "_impl"
+                            },
+                            "computed": true
+                          },
+                          "property": {
+                            "type": "Identifier",
+                            "start": 2961,
+                            "end": 2968,
+                            "loc": {
+                              "start": {
+                                "line": 114,
+                                "column": 21
+                              },
+                              "end": {
+                                "line": 114,
+                                "column": 28
+                              },
+                              "identifierName": "isValid"
+                            },
+                            "name": "isValid"
+                          },
+                          "computed": false
+                        },
+                        "arguments": []
+                      }
+                    }
+                  ],
+                  "directives": [],
+                  "trailingComments": null
+                },
+                "leadingComments": [
+                  {
+                    "type": "CommentBlock",
+                    "value": "*\n\t\tGets if the shadow property has experienced a mutation action. This method will return `true` and\n\t\t{@link Access#isActive} may also return true if the f.lux store has not yet been transitioned to\n\t\tthe next state.\n\n\t\t@return {boolean} `true` if the state has not been changed.\n\t",
+                    "start": 2639,
+                    "end": 2926,
+                    "loc": {
+                      "start": {
+                        "line": 106,
                         "column": 1
                       },
                       "end": {
@@ -6769,28 +6769,28 @@
     },
     {
       "type": "CommentBlock",
-      "value": "*\n\t\tGets if the shadow property has experienced a mutation action. This method will return `true` and\n\t\t{@link Access#isActive} may also return true if the f.lux store has not yet been transitioned to\n\t\tthe next state.\n\n\t\t@return {boolean} `true` if the state has not been changed.\n\t",
+      "value": "*\n\t\tGets if the property allows for assignment through the shadow state, ie `todo.desc = \"go skiing\"`. The\n\t\treadonly attribute is hierarchically determined through the parent property if not explicitly set.\n\n\t\t@return {boolean} - true if assignment is not allowed\n\t",
       "start": 2308,
-      "end": 2595,
+      "end": 2578,
       "loc": {
         "start": {
           "line": 96,
           "column": 1
         },
         "end": {
-          "line": 102,
+          "line": 101,
           "column": 3
         }
       }
     },
     {
       "type": "CommentBlock",
-      "value": "*\n\t\tGets if the property allows for assignment through the shadow state, ie `todo.desc = \"go skiing\"`. The\n\t\treadonly attribute is hierarchically determined through the parent property if not explicitly set.\n\n\t\t@return {boolean} - true if assignment is not allowed\n\t",
-      "start": 2646,
-      "end": 2916,
+      "value": "*\n\t\tGets if the shadow property has experienced a mutation action. This method will return `true` and\n\t\t{@link Access#isActive} may also return true if the f.lux store has not yet been transitioned to\n\t\tthe next state.\n\n\t\t@return {boolean} `true` if the state has not been changed.\n\t",
+      "start": 2639,
+      "end": 2926,
       "loc": {
         "start": {
-          "line": 107,
+          "line": 106,
           "column": 1
         },
         "end": {
@@ -10672,16 +10672,16 @@
     },
     {
       "type": "CommentBlock",
-      "value": "*\n\t\tGets if the shadow property has experienced a mutation action. This method will return `true` and\n\t\t{@link Access#isActive} may also return true if the f.lux store has not yet been transitioned to\n\t\tthe next state.\n\n\t\t@return {boolean} `true` if the state has not been changed.\n\t",
+      "value": "*\n\t\tGets if the property allows for assignment through the shadow state, ie `todo.desc = \"go skiing\"`. The\n\t\treadonly attribute is hierarchically determined through the parent property if not explicitly set.\n\n\t\t@return {boolean} - true if assignment is not allowed\n\t",
       "start": 2308,
-      "end": 2595,
+      "end": 2578,
       "loc": {
         "start": {
           "line": 96,
           "column": 1
         },
         "end": {
-          "line": 102,
+          "line": 101,
           "column": 3
         }
       }
@@ -10698,17 +10698,17 @@
         "postfix": false,
         "binop": null
       },
-      "value": "isValid",
-      "start": 2597,
-      "end": 2604,
+      "value": "isReadonly",
+      "start": 2580,
+      "end": 2590,
       "loc": {
         "start": {
-          "line": 103,
+          "line": 102,
           "column": 1
         },
         "end": {
-          "line": 103,
-          "column": 8
+          "line": 102,
+          "column": 11
         }
       }
     },
@@ -10724,16 +10724,16 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2604,
-      "end": 2605,
+      "start": 2590,
+      "end": 2591,
       "loc": {
         "start": {
-          "line": 103,
-          "column": 8
+          "line": 102,
+          "column": 11
         },
         "end": {
-          "line": 103,
-          "column": 9
+          "line": 102,
+          "column": 12
         }
       }
     },
@@ -10749,16 +10749,16 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2605,
-      "end": 2606,
+      "start": 2591,
+      "end": 2592,
       "loc": {
         "start": {
-          "line": 103,
-          "column": 9
+          "line": 102,
+          "column": 12
         },
         "end": {
-          "line": 103,
-          "column": 10
+          "line": 102,
+          "column": 13
         }
       }
     },
@@ -10774,16 +10774,16 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2607,
-      "end": 2608,
+      "start": 2593,
+      "end": 2594,
       "loc": {
         "start": {
-          "line": 103,
-          "column": 11
+          "line": 102,
+          "column": 14
         },
         "end": {
-          "line": 103,
-          "column": 12
+          "line": 102,
+          "column": 15
         }
       }
     },
@@ -10802,15 +10802,15 @@
         "updateContext": null
       },
       "value": "return",
-      "start": 2611,
-      "end": 2617,
+      "start": 2597,
+      "end": 2603,
       "loc": {
         "start": {
-          "line": 104,
+          "line": 103,
           "column": 2
         },
         "end": {
-          "line": 104,
+          "line": 103,
           "column": 8
         }
       }
@@ -10830,94 +10830,16 @@
         "updateContext": null
       },
       "value": "this",
-      "start": 2618,
-      "end": 2622,
+      "start": 2604,
+      "end": 2608,
       "loc": {
         "start": {
-          "line": 104,
+          "line": 103,
           "column": 9
         },
         "end": {
-          "line": 104,
+          "line": 103,
           "column": 13
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "[",
-        "beforeExpr": true,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "start": 2622,
-      "end": 2623,
-      "loc": {
-        "start": {
-          "line": 104,
-          "column": 13
-        },
-        "end": {
-          "line": 104,
-          "column": 14
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "name",
-        "beforeExpr": false,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null
-      },
-      "value": "_impl",
-      "start": 2623,
-      "end": 2628,
-      "loc": {
-        "start": {
-          "line": 104,
-          "column": 14
-        },
-        "end": {
-          "line": 104,
-          "column": 19
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "]",
-        "beforeExpr": false,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "start": 2628,
-      "end": 2629,
-      "loc": {
-        "start": {
-          "line": 104,
-          "column": 19
-        },
-        "end": {
-          "line": 104,
-          "column": 20
         }
       }
     },
@@ -10934,16 +10856,16 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 2629,
-      "end": 2630,
+      "start": 2608,
+      "end": 2609,
       "loc": {
         "start": {
-          "line": 104,
-          "column": 20
+          "line": 103,
+          "column": 13
         },
         "end": {
-          "line": 104,
-          "column": 21
+          "line": 103,
+          "column": 14
         }
       }
     },
@@ -10959,17 +10881,17 @@
         "postfix": false,
         "binop": null
       },
-      "value": "isValid",
-      "start": 2630,
-      "end": 2637,
+      "value": "property",
+      "start": 2609,
+      "end": 2617,
       "loc": {
         "start": {
-          "line": 104,
-          "column": 21
+          "line": 103,
+          "column": 14
         },
         "end": {
-          "line": 104,
-          "column": 28
+          "line": 103,
+          "column": 22
         }
       }
     },
@@ -10985,16 +10907,16 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2637,
-      "end": 2638,
+      "start": 2617,
+      "end": 2618,
       "loc": {
         "start": {
-          "line": 104,
-          "column": 28
+          "line": 103,
+          "column": 22
         },
         "end": {
-          "line": 104,
-          "column": 29
+          "line": 103,
+          "column": 23
         }
       }
     },
@@ -11010,16 +10932,118 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2638,
-      "end": 2639,
+      "start": 2618,
+      "end": 2619,
       "loc": {
         "start": {
-          "line": 104,
-          "column": 29
+          "line": 103,
+          "column": 23
         },
         "end": {
-          "line": 104,
-          "column": 30
+          "line": 103,
+          "column": 24
+        }
+      }
+    },
+    {
+      "type": {
+        "label": ".",
+        "beforeExpr": false,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "start": 2619,
+      "end": 2620,
+      "loc": {
+        "start": {
+          "line": 103,
+          "column": 24
+        },
+        "end": {
+          "line": 103,
+          "column": 25
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "isReadonly",
+      "start": 2620,
+      "end": 2630,
+      "loc": {
+        "start": {
+          "line": 103,
+          "column": 25
+        },
+        "end": {
+          "line": 103,
+          "column": 35
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "(",
+        "beforeExpr": true,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "start": 2630,
+      "end": 2631,
+      "loc": {
+        "start": {
+          "line": 103,
+          "column": 35
+        },
+        "end": {
+          "line": 103,
+          "column": 36
+        }
+      }
+    },
+    {
+      "type": {
+        "label": ")",
+        "beforeExpr": false,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "start": 2631,
+      "end": 2632,
+      "loc": {
+        "start": {
+          "line": 103,
+          "column": 36
+        },
+        "end": {
+          "line": 103,
+          "column": 37
         }
       }
     },
@@ -11036,16 +11060,16 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 2639,
-      "end": 2640,
+      "start": 2632,
+      "end": 2633,
       "loc": {
         "start": {
-          "line": 104,
-          "column": 30
+          "line": 103,
+          "column": 37
         },
         "end": {
-          "line": 104,
-          "column": 31
+          "line": 103,
+          "column": 38
         }
       }
     },
@@ -11061,27 +11085,27 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2642,
-      "end": 2643,
+      "start": 2635,
+      "end": 2636,
       "loc": {
         "start": {
-          "line": 105,
+          "line": 104,
           "column": 1
         },
         "end": {
-          "line": 105,
+          "line": 104,
           "column": 2
         }
       }
     },
     {
       "type": "CommentBlock",
-      "value": "*\n\t\tGets if the property allows for assignment through the shadow state, ie `todo.desc = \"go skiing\"`. The\n\t\treadonly attribute is hierarchically determined through the parent property if not explicitly set.\n\n\t\t@return {boolean} - true if assignment is not allowed\n\t",
-      "start": 2646,
-      "end": 2916,
+      "value": "*\n\t\tGets if the shadow property has experienced a mutation action. This method will return `true` and\n\t\t{@link Access#isActive} may also return true if the f.lux store has not yet been transitioned to\n\t\tthe next state.\n\n\t\t@return {boolean} `true` if the state has not been changed.\n\t",
+      "start": 2639,
+      "end": 2926,
       "loc": {
         "start": {
-          "line": 107,
+          "line": 106,
           "column": 1
         },
         "end": {
@@ -11102,9 +11126,9 @@
         "postfix": false,
         "binop": null
       },
-      "value": "isReadonly",
-      "start": 2918,
-      "end": 2928,
+      "value": "isValid",
+      "start": 2928,
+      "end": 2935,
       "loc": {
         "start": {
           "line": 113,
@@ -11112,7 +11136,7 @@
         },
         "end": {
           "line": 113,
-          "column": 11
+          "column": 8
         }
       }
     },
@@ -11128,16 +11152,16 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2928,
-      "end": 2929,
+      "start": 2935,
+      "end": 2936,
       "loc": {
         "start": {
           "line": 113,
-          "column": 11
+          "column": 8
         },
         "end": {
           "line": 113,
-          "column": 12
+          "column": 9
         }
       }
     },
@@ -11153,16 +11177,16 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2929,
-      "end": 2930,
+      "start": 2936,
+      "end": 2937,
       "loc": {
         "start": {
           "line": 113,
-          "column": 12
+          "column": 9
         },
         "end": {
           "line": 113,
-          "column": 13
+          "column": 10
         }
       }
     },
@@ -11178,16 +11202,16 @@
         "postfix": false,
         "binop": null
       },
-      "start": 2931,
-      "end": 2932,
+      "start": 2938,
+      "end": 2939,
       "loc": {
         "start": {
           "line": 113,
-          "column": 14
+          "column": 11
         },
         "end": {
           "line": 113,
-          "column": 15
+          "column": 12
         }
       }
     },
@@ -11206,8 +11230,8 @@
         "updateContext": null
       },
       "value": "return",
-      "start": 2935,
-      "end": 2941,
+      "start": 2942,
+      "end": 2948,
       "loc": {
         "start": {
           "line": 114,
@@ -11234,8 +11258,8 @@
         "updateContext": null
       },
       "value": "this",
-      "start": 2942,
-      "end": 2946,
+      "start": 2949,
+      "end": 2953,
       "loc": {
         "start": {
           "line": 114,
@@ -11249,9 +11273,9 @@
     },
     {
       "type": {
-        "label": ".",
-        "beforeExpr": false,
-        "startsExpr": false,
+        "label": "[",
+        "beforeExpr": true,
+        "startsExpr": true,
         "rightAssociative": false,
         "isLoop": false,
         "isAssign": false,
@@ -11260,8 +11284,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 2946,
-      "end": 2947,
+      "start": 2953,
+      "end": 2954,
       "loc": {
         "start": {
           "line": 114,
@@ -11285,9 +11309,9 @@
         "postfix": false,
         "binop": null
       },
-      "value": "property",
-      "start": 2947,
-      "end": 2955,
+      "value": "_impl",
+      "start": 2954,
+      "end": 2959,
       "loc": {
         "start": {
           "line": 114,
@@ -11295,38 +11319,13 @@
         },
         "end": {
           "line": 114,
-          "column": 22
+          "column": 19
         }
       }
     },
     {
       "type": {
-        "label": "(",
-        "beforeExpr": true,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null
-      },
-      "start": 2955,
-      "end": 2956,
-      "loc": {
-        "start": {
-          "line": 114,
-          "column": 22
-        },
-        "end": {
-          "line": 114,
-          "column": 23
-        }
-      }
-    },
-    {
-      "type": {
-        "label": ")",
+        "label": "]",
         "beforeExpr": false,
         "startsExpr": false,
         "rightAssociative": false,
@@ -11334,18 +11333,19 @@
         "isAssign": false,
         "prefix": false,
         "postfix": false,
-        "binop": null
+        "binop": null,
+        "updateContext": null
       },
-      "start": 2956,
-      "end": 2957,
+      "start": 2959,
+      "end": 2960,
       "loc": {
         "start": {
           "line": 114,
-          "column": 23
+          "column": 19
         },
         "end": {
           "line": 114,
-          "column": 24
+          "column": 20
         }
       }
     },
@@ -11362,16 +11362,16 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 2957,
-      "end": 2958,
+      "start": 2960,
+      "end": 2961,
       "loc": {
         "start": {
           "line": 114,
-          "column": 24
+          "column": 20
         },
         "end": {
           "line": 114,
-          "column": 25
+          "column": 21
         }
       }
     },
@@ -11387,17 +11387,17 @@
         "postfix": false,
         "binop": null
       },
-      "value": "isReadonly",
-      "start": 2958,
+      "value": "isValid",
+      "start": 2961,
       "end": 2968,
       "loc": {
         "start": {
           "line": 114,
-          "column": 25
+          "column": 21
         },
         "end": {
           "line": 114,
-          "column": 35
+          "column": 28
         }
       }
     },
@@ -11418,11 +11418,11 @@
       "loc": {
         "start": {
           "line": 114,
-          "column": 35
+          "column": 28
         },
         "end": {
           "line": 114,
-          "column": 36
+          "column": 29
         }
       }
     },
@@ -11443,11 +11443,11 @@
       "loc": {
         "start": {
           "line": 114,
-          "column": 36
+          "column": 29
         },
         "end": {
           "line": 114,
-          "column": 37
+          "column": 30
         }
       }
     },
@@ -11469,11 +11469,11 @@
       "loc": {
         "start": {
           "line": 114,
-          "column": 37
+          "column": 30
         },
         "end": {
           "line": 114,
-          "column": 38
+          "column": 31
         }
       }
     },

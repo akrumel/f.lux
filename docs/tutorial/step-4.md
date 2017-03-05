@@ -7,12 +7,12 @@ This step will will demonstrate using the `f.lux-react` module streamline access
 
 ## Goals
 
-1. [`<Provider>`](#user-content-provider)
-2. [`<AddTodo>`](#user-content-addtodo)
-3. [Simplify `<Todos>` Top-Level Component](#user-content-todos)
-4. [`<Header>`](#user-content-header)
-5. [`<TodosList>`](#user-content-todolist)
-6. [`<Toolbar>`](#user-content-toolbar)
+1. [`<Provider>`](#provider)
+2. [`<AddTodo>`](#addtodo)
+3. [Simplify `<Todos>` Top-Level Component](#todos)
+4. [`<Header>`](#header)
+5. [`<TodosList>`](#todolist)
+6. [`<Toolbar>`](#toolbar)
 
 
 The [`examples/tutorial/step-4`](https://github.com/akrumel/f.lux/tree/master/examples/tutorial/step-4) directory contains the completed code for this step.

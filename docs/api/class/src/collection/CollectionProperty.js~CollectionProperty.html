@@ -40,6 +40,12 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IndexedProperty.js~IndexedProperty.html">IndexedProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IndexedShadow.js~IndexedShadow.html">IndexedShadow</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IndexedShadowImpl.js~IndexedShadowImpl.html">IndexedShadowImpl</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IsolatedAccess.js~IsolatedAccess.html">IsolatedAccess</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IsolatedApi.js~IsolatedApi.html">IsolatedApi</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IsolatedObjectShadowImpl.js~IsolatedObjectShadowImpl.html">IsolatedObjectShadowImpl</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IsolatedProperty.js~IsolatedProperty.html">IsolatedProperty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IsolatedShadow.js~IsolatedShadow.html">IsolatedShadow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/IsolatedShadowImpl.js~IsolatedShadowImpl.html">IsolatedShadowImpl</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/KeyedApi.js~KeyedApi.html">KeyedApi</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/MapProperty.js~MapProperty.html">MapProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/MapShadow.js~MapShadow.html">MapShadow</a></span></span></li>
@@ -60,6 +66,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/TransientsProperty.js~TransientsProperty.html">TransientsProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/TransientsProperty.js~TransientsShadow.html">TransientsShadow</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createPropertyClass">createPropertyClass</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">__tests__</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/__tests__/LifecycleProperty.js~LifecycleProperty.html">LifecycleProperty</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">collection</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/CollectionProperty.js~CollectionProperty.html">CollectionProperty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/CollectionShadow.js~CollectionShadow.html">CollectionShadow</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/collection/ModelAccess.js~ModelAccess.html">ModelAccess</a></span></span></li>
@@ -2303,6 +2310,34 @@ endpoint.</p>
         <p>
           
           
+          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-isIsolated">isIsolated</a></span></span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Gets if property is an actual isolated property managed by the store.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
           <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-isReadonly">isReadonly</a></span></span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
         </p>
       </div>
@@ -2395,6 +2430,34 @@ endpoint.</p>
         
         <div data-ice="description"><p>Gets what the actual state for this property will be after the <span><a href="class/src/Store.js~Store.html">Store</a></span> updates all pending
 actions.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          <span data-ice="name"><span><a href="class/src/Property.js~Property.html#instance-method-owner">owner</a></span></span><span data-ice="signature">(): <span><a href="class/src/Property.js~Property.html">Property</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Gets the object containing or managing this property.</p>
 </div>
       </div>
     </td>
@@ -3431,7 +3494,7 @@ property.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber737">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber744">source</a></span></span>
     </span>
   </h3>
 
@@ -3487,7 +3550,7 @@ property.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber746">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber753">source</a></span></span>
     </span>
   </h3>
 
@@ -3586,7 +3649,7 @@ property.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber778">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber785">source</a></span></span>
     </span>
   </h3>
 
@@ -3633,7 +3696,7 @@ property.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber794">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber801">source</a></span></span>
     </span>
   </h3>
 
@@ -3719,7 +3782,7 @@ be found in the <code>state</code> parameter.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber843">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber850">source</a></span></span>
     </span>
   </h3>
 
@@ -3799,7 +3862,7 @@ with a newly retrieved model.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1359">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1366">source</a></span></span>
     </span>
   </h3>
 
@@ -3870,7 +3933,7 @@ with a newly retrieved model.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber755">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber762">source</a></span></span>
     </span>
   </h3>
 
@@ -3914,7 +3977,7 @@ with a newly retrieved model.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber864">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber871">source</a></span></span>
     </span>
   </h3>
 
@@ -3988,7 +4051,7 @@ with a newly retrieved model.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber880">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber887">source</a></span></span>
     </span>
   </h3>
 
@@ -4062,7 +4125,7 @@ with a newly retrieved model.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1367">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1374">source</a></span></span>
     </span>
   </h3>
 
@@ -4135,7 +4198,7 @@ subclass doXXX() apis. The default implementation simply returns the &apos;id&ap
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber942">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber949">source</a></span></span>
     </span>
   </h3>
 
@@ -4236,7 +4299,7 @@ returned by the endpoint.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber645">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber652">source</a></span></span>
     </span>
   </h3>
 
@@ -4316,7 +4379,7 @@ returned from the endpoint.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1026">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1033">source</a></span></span>
     </span>
   </h3>
 
@@ -4391,7 +4454,7 @@ is not found then one is requested from the endpoint.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1067">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1074">source</a></span></span>
     </span>
   </h3>
 
@@ -4466,7 +4529,7 @@ looks for one remotely through the endpoint.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber500">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber507">source</a></span></span>
     </span>
   </h3>
 
@@ -4522,7 +4585,7 @@ looks for one remotely through the endpoint.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1080">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1087">source</a></span></span>
     </span>
   </h3>
 
@@ -4595,7 +4658,7 @@ looks for one remotely through the endpoint.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber689">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber696">source</a></span></span>
     </span>
   </h3>
 
@@ -4667,7 +4730,7 @@ looks for one remotely through the endpoint.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber476">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber483">source</a></span></span>
     </span>
   </h3>
 
@@ -4723,7 +4786,7 @@ looks for one remotely through the endpoint.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1089">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1096">source</a></span></span>
     </span>
   </h3>
 
@@ -4779,7 +4842,7 @@ looks for one remotely through the endpoint.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1096">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1103">source</a></span></span>
     </span>
   </h3>
 
@@ -4835,7 +4898,7 @@ looks for one remotely through the endpoint.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1103">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1110">source</a></span></span>
     </span>
   </h3>
 
@@ -4907,7 +4970,7 @@ looks for one remotely through the endpoint.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1113">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1120">source</a></span></span>
     </span>
   </h3>
 
@@ -4980,7 +5043,7 @@ to the endpoint.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber680">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber687">source</a></span></span>
     </span>
   </h3>
 
@@ -5052,7 +5115,7 @@ to the endpoint.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1352">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1359">source</a></span></span>
     </span>
   </h3>
 
@@ -5107,7 +5170,7 @@ to the endpoint.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1145">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1152">source</a></span></span>
     </span>
   </h3>
 
@@ -5179,7 +5242,7 @@ to the endpoint.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1161">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1168">source</a></span></span>
     </span>
   </h3>
 
@@ -5251,7 +5314,7 @@ to the endpoint.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1171">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1178">source</a></span></span>
     </span>
   </h3>
 
@@ -5323,7 +5386,7 @@ to the endpoint.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1184">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1191">source</a></span></span>
     </span>
   </h3>
 
@@ -5395,7 +5458,7 @@ to the endpoint.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1124">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1131">source</a></span></span>
     </span>
   </h3>
 
@@ -5468,7 +5531,7 @@ to the endpoint.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber698">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber705">source</a></span></span>
     </span>
   </h3>
 
@@ -5524,7 +5587,7 @@ to the endpoint.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1193">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1200">source</a></span></span>
     </span>
   </h3>
 
@@ -5585,7 +5648,7 @@ to the endpoint.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1207">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1214">source</a></span></span>
     </span>
   </h3>
 
@@ -5630,7 +5693,7 @@ endpoint.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber705">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber712">source</a></span></span>
     </span>
   </h3>
 
@@ -5674,7 +5737,7 @@ endpoint.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1225">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1232">source</a></span></span>
     </span>
   </h3>
 
@@ -5758,7 +5821,7 @@ with a newly retrieved model.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber485">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber492">source</a></span></span>
     </span>
   </h3>
 
@@ -5819,7 +5882,7 @@ with a newly retrieved model.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber763">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber770">source</a></span></span>
     </span>
   </h3>
 
@@ -5879,7 +5942,7 @@ with a newly retrieved model.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1317">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1324">source</a></span></span>
     </span>
   </h3>
 
@@ -5939,7 +6002,7 @@ with a newly retrieved model.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber718">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber725">source</a></span></span>
     </span>
   </h3>
 
@@ -6000,7 +6063,7 @@ with a newly retrieved model.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1339">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber1346">source</a></span></span>
     </span>
   </h3>
 
@@ -6069,7 +6132,7 @@ with a newly retrieved model.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber523">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber530">source</a></span></span>
     </span>
   </h3>
 
@@ -6137,7 +6200,7 @@ and support deleting previous backups</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber545">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/collection/CollectionProperty.js.html#lineNumber552">source</a></span></span>
     </span>
   </h3>
 
