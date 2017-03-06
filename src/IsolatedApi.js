@@ -94,13 +94,13 @@ export default class IsolatedApi {
 
 	_record(owner) {
 		const records = this.records;
-		const pid = owner.pid();
+		const rid = owner.dotPath();
 
-		if (!records[pid]) {
-			records[pid] = new OwnerRecord(this, owner);
+		if (!records[rid]) {
+			records[rid] = new OwnerRecord(this, owner);
 		}
 
-		return records[pid];
+		return records[rid];
 	}
 }
 
