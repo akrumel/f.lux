@@ -265,7 +265,6 @@ export default class StateType {
 	*/
 	static implementationClassForProperty(property, defaultClass=ShadowImpl) {
 		const stateType = property.stateType();
-//		const stateType = StateType.from(property);
 
 		if (stateType && stateType._implementationClass) {
 			return stateType._implementationClass;
@@ -301,6 +300,18 @@ export default class StateType {
 		this._autoshadow = false;
 
 		return this
+	}
+
+	get isolated() {
+		this._isolated = true;
+
+		return this;
+	}
+
+	get isolatedOff() {
+		this._isolated = false;
+
+		return this;
 	}
 
 	/**
@@ -544,13 +555,12 @@ export default class StateType {
 		const propSpecs = this._properties;
 		var propType, propState;
 
-		if (!isPlainObject(state) || !propSpecs) { return state; }
+		if (!isPlainObject(state) || !propSpecs || this.isIsolated()) { return state; }
 
 		for (let name in propSpecs) {
 			propType = propSpecs[name];
 			propState = state[name];
 
-// if (propState===undefined) console.log("COMPUTE", name, propType)
 			// update state only if current undefined
 			state[name] = propState===undefined ?propType.computeInitialState() :propState;
 		}
@@ -592,6 +602,11 @@ export default class StateType {
 	/** @ignore */
 	isAutomount() {
 		return false;
+	}
+
+	/** @ignore */
+	isIsolated() {
+		return !!this._isolated;
 	}
 
 	/** @ignore */

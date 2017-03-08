@@ -26,6 +26,33 @@ export default class AutoShader {
 
 		const state = parentState[name];
 		const parentProperty = parentImpl.property();
+		const stateType = this.typeFor(state);
+		// var PropertyClass;
+
+		// if (Array.isArray(state)) {
+		// 	PropertyClass = require("./ArrayProperty").default;
+		// } else if (isPlainObject(state)) {
+		// 	PropertyClass = require("./MapProperty").default;
+		// } else {
+		// 	PropertyClass = require("./PrimitiveProperty").default;
+		// }
+
+		// const stateType = new StateType().propertyClass(PropertyClass);
+
+		// if (this.readonly) {
+		// 	stateType.readonly;
+		// }
+
+		const shader = new PropertyFactoryShader(stateType, parentProperty);
+
+		return shader.shadowProperty(time, name, parentState, parentImpl);
+	}
+
+	shouldAutomount() {
+		return this.automount;
+	}
+
+	typeFor(state) {
 		var PropertyClass;
 
 		if (Array.isArray(state)) {
@@ -42,12 +69,6 @@ export default class AutoShader {
 			stateType.readonly;
 		}
 
-		const shader = new PropertyFactoryShader(stateType, parentProperty);
-
-		return shader.shadowProperty(time, name, parentState, parentImpl);
-	}
-
-	shouldAutomount() {
-		return this.automount;
+		return stateType;
 	}
 }

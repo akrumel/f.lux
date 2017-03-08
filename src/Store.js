@@ -208,7 +208,6 @@ export default class Store {
 		}
 
 		this._useTransients = useTransients;
-		this._isolated = new IsolatedApi(this);
 		this._listeners = [];
 		this._subscribers = [];
 
@@ -332,7 +331,7 @@ export default class Store {
 			`false` implies the root object is the same but child properties have been updated.
 		@param {number} [time=tick()] - the f.lux time for the change.
 	*/
-	changeState(state, newRoot=false, time=tick()) {
+	changeState(state, isoState, newRoot=false, time=tick()) {
 		this._updateTime = time;
 
 		// all pending callbacks are obsolete now
@@ -343,11 +342,18 @@ export default class Store {
 			this._rootImpl.willShadow(newRoot);
 		}
 
+		this._isolated = new IsolatedApi(this);
+
 		// proxy/shadow the state
 		this._rootImpl = this._root.shader(state).shadowProperty(time, "/", state);
 
 		// get the final state after merging any property initial states
 		this._state = this._rootImpl.state();
+
+		// reset the isolated state
+		if (isoState) {
+			this._isolated.restore(isoState);
+		}
 
 		// invoke did shadow/update lifecycle methods
 		this._rootImpl.didShadow(time, newRoot);
@@ -364,8 +370,23 @@ export default class Store {
 	*/
 	findByPath(path) {
 		const rootImpl = this._root.__();
+		const impl = rootImpl.findByPath(path);
 
-		return rootImpl.findByPath(path);
+		return impl && impl._();
+	}
+
+	/**
+		Gets the Property based on array of property keys.
+
+		@param {Array} path - array of property keys from the root to the desired property.
+
+		@return {Property} the Property if exists.
+	*/
+	findPropertyByPath(path) {
+		const rootImpl = this._root.__();
+		const impl = rootImpl.findByPath(path);
+
+		return impl && impl.property();
 	}
 
 	isolated() {
@@ -393,7 +414,7 @@ export default class Store {
 				root.setStore(this);
 				this._root = root;
 
-				this.changeState(state, true);
+				this.changeState(state, null, true);
 			});
 		} else {
 			// set the root property and set it's store to this object
@@ -403,7 +424,7 @@ export default class Store {
 			}
 
 			this._setupTransients();
-			this.changeState(state, root !== currRoot);
+			this.changeState(state, null, root !== currRoot);
 		}
 	}
 
@@ -457,11 +478,14 @@ export default class Store {
 
 	/** @ignore */
 	onPostUpdate(time, currState, prevState) {
+		if (this._listeners.length === 0) { return }
+
 		const listeners = this._listeners;
+		const isoState = this._isolated.serialize();
 
 		for (let i=0, l; l = listeners[i]; i++) {
 			if (l.onPostUpdate) {
-				l.onPostUpdate(this, time, currState, prevState);
+				l.onPostUpdate(this, time, currState, prevState, isoState);
 			}
 		}
 	}

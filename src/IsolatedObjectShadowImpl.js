@@ -57,7 +57,7 @@ export default class IsolatedObjectShadowImpl extends ShadowImpl {
 		const isoShadow = isoProp && isoProp._();
 
 		if (isoProp && isoProp.isActive()) {
-			return isoProp._().data.__()
+			return isoProp._().data.__();
 		} else {
 			return undefined;
 		}
@@ -93,12 +93,7 @@ export default class IsolatedObjectShadowImpl extends ShadowImpl {
 		Sets a subproperty value. Replaces current state property if one has an identical name.
 	*/
 	set(k, v) {
-		const managedType = this.property().stateType().getManagedType();
-		const isoType = IsolatedProperty.type
-				.initialState({ data: v })
-				.managedType(managedType);
-
-		this.isolated().set(k, isoType, this.property());
+		this.isolated().set(k, v, this.property());
 		this.update( state => ({ name: `set(${k})`, nextState: state }) );
 
 		return this;
@@ -152,7 +147,22 @@ export default class IsolatedObjectShadowImpl extends ShadowImpl {
 		Maps all child properties onto this property using Object.defineProperty().
 	*/
 	defineChildProperties(prev, inCtor) {
-		this.isolated().update(this.property());
+		const isolated = this.isolated();
+		const property = this.property();
+
+		isolated.update(property);
+
+		// get keys after isolated update() since it will alter iso properties
+		// explicitly build list based on shader children since this will usually be
+		// a much smaller number of items than the number of children
+		const shader = this.shader();
+		const keys = shader.keys().filter( k => isolated.has(k, property) );
+
+		shader.shadowUndefinedProperties(keys, this, (name, shader) => {
+				this.set(name, shader.stateType().computeInitialState());
+			}, keys);
+
+		isolated.update(property);
 	}
 
 
@@ -162,5 +172,9 @@ export default class IsolatedObjectShadowImpl extends ShadowImpl {
 
 	merge(state) {
 		console.warn("merge() not supported")
+	}
+
+	onObsolete() {
+		this.isolated().removeOwner(this.property());
 	}
 }

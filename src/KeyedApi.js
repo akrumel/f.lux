@@ -75,14 +75,6 @@ export default class KeyedApi {
 	// Map and other useful data structure functions
 	//------------------------------------------------------------------------------------------------------
 
-	/*
-		Converting map size property to a function in keeping with current design philosophy of minimizing
-		internal object properties in favor of methods.
-	*/
-	size() {
-		return this.impl().size();
-	}
-
 	clear() {
 		if (this.isActive()) {
 			this.impl().clear();
@@ -154,6 +146,14 @@ export default class KeyedApi {
 		if (this.isActive()) {
 			this.impl().set(key, value);
 		}
+	}
+
+	/*
+		Converting map size property to a function in keeping with current design philosophy of minimizing
+		internal object properties in favor of methods.
+	*/
+	size() {
+		return this.impl().size();
 	}
 
 	valuesArray() {

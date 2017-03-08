@@ -1,6 +1,7 @@
 import { assert } from "akutils";
 
 import createPropertyClass from "./createPropertyClass";
+import IsolatedObjectShadowImpl from "./IsolatedObjectShadowImpl";
 import KeyedApi from "./KeyedApi";
 import ObjectShadowImpl from "./ObjectShadowImpl";
 import MapShadow from "./MapShadow";
@@ -44,7 +45,12 @@ export default class MapProperty extends Property {
 
 		this._keyed = new KeyedApi(this);
 
-		this.setImplementationClass(ObjectShadowImpl);
+		if (this.stateType().isIsolated()) {
+			this.setImplementationClass(IsolatedObjectShadowImpl);
+		} else {
+			this.setImplementationClass(ObjectShadowImpl);
+		}
+
 		this.setShadowClass(MapShadow)
 	}
 

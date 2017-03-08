@@ -25,13 +25,8 @@ export default class PropertyFactoryShader {
 			parent - the parent Property instance
 	*/
 	constructor(stateType, parent) {
-		this.stateType = stateType;
-		this.parent = parent;
-	}
-
-	setElementType(stateType) {
-		// ignoring since assuming set in StateType._setupShader() and also contained in the stateType var
-		this.elementType = stateType;
+		this._stateType = stateType;
+		this._parent = parent;
 	}
 
 	addProperty(name, stateType) {
@@ -44,8 +39,13 @@ export default class PropertyFactoryShader {
 		this.propertyShaderDefn[name] = stateType;
 	}
 
+	setElementType(stateType) {
+		// ignoring since assuming set in StateType._setupShader() and also contained in the stateType var
+		this.elementType = stateType;
+	}
+
 	shadowProperty(time, name, parentState, parentImpl) {
-		assert( a => a.is(parentState || !this.parent, noParentStateErrorMsg(name, parentImpl)) );
+		assert( a => a.is(parentState || !this._parent, noParentStateErrorMsg(name, parentImpl)) );
 
 		// this should never happen but lets be safe
 		if (!isSomething(parentState)) {
@@ -54,11 +54,11 @@ export default class PropertyFactoryShader {
 			return null;
 		}
 
-		const property = this.stateType.createProperty();
+		const property = this._stateType.createProperty();
 		const shader = property.shader();
 
 		// set the proprety's parent property
-		property.setParent(this.parent);
+		property.setParent(this._parent);
 
 		this._configureShader(shader);
 
@@ -66,9 +66,13 @@ export default class PropertyFactoryShader {
 	}
 
 	shouldAutomount() {
-		const PropertyClass = this.stateType._PropertyClass;
+		const PropertyClass = this._stateType._PropertyClass;
 
 		return PropertyClass.constructor.shouldAutomount && PropertyClass.constructor.shouldAutomount();
+	}
+
+	stateType() {
+		return this._stateType;
 	}
 
 	_configureShader(shader) {

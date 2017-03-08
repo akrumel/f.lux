@@ -33,7 +33,7 @@ export default class IsolatedProperty extends Property {
 	constructor(stateType) {
 		super(stateType);
 
-		assert( a => a.is(stateType.getManagedType(), "Managed type must be set") );
+//		assert( a => a.is(stateType.getManagedType(), "Managed type must be set") );
 
 		this._keyed = new KeyedApi(this);
 
@@ -43,7 +43,7 @@ export default class IsolatedProperty extends Property {
 		const managedType = this.stateType().getManagedType();
 		const shader = this.shader();
 
-		shader.addProperty(_dataKey, managedType);
+//		shader.addProperty(_dataKey, managedType);
 
 		this[_id] = uuid("_");
 	}
@@ -109,6 +109,13 @@ export default class IsolatedProperty extends Property {
 		StateType.defineTypeEx(PropClass, ShadowType, typeCallback, initialState);
 	}
 
+	/**
+		Used by {@link StateType} to determine if a keyed property type.
+
+		@ignore
+	*/
+	static supportsKeyedChildProperties() { return true }
+
 
 	//------------------------------------------------------------------------------------------------------
 	// Life-cycle methods
@@ -116,10 +123,6 @@ export default class IsolatedProperty extends Property {
 
 	propertyChildInvalidated(childProperty, sourceProperty) {
 		this.store().isolated().invalidated(this);
-	}
-
-	propertyWillUnshadow() {
-		this.store().isolated().willUnshadow(this);
 	}
 
 
@@ -190,7 +193,6 @@ export default class IsolatedProperty extends Property {
 		@see https://lodash.com/docs/4.17.4#result
 	*/
 	dotPath() {
-console.log("ISO path", this[_owner].path())
 		return this[_owner].dotPath();
 	}
 
@@ -200,7 +202,7 @@ console.log("ISO path", this[_owner].path())
 		@return {boolean}
 	*/
 	isActive() {
-		return this[_owner].isActive();
+		return this[_owner].isActive() && super.isActive();
 	}
 
 	/**

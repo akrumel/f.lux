@@ -12,9 +12,7 @@ export default class IsolatedShadowImpl extends ObjectShadowImpl {
 		return false;
 	}
 
-	obsolete(callback) {
-		this.store().isolated().obsolete(this.property());
-
-		super.obsolete(callback);
+	onInvalidated() {
+		this.store().isolated().invalidated(this.property());
 	}
 }

@@ -322,6 +322,8 @@ export default class ShadowImpl {
 			if (owner) {
 				owner.invalidate(this, source);
 			}
+
+			this.onInvalidated();
 		}
 	}
 
@@ -388,6 +390,8 @@ export default class ShadowImpl {
 		}
 
 		this[_dead] = true;
+
+		this.onObsolete();
 	}
 
 	obsoleteChildren() {
@@ -776,6 +780,16 @@ export default class ShadowImpl {
 	isUpdatable() {
 		return true;
 	}
+
+	/**
+		Property has been invalidated.
+	*/
+	onInvalidated() { }
+
+	/**
+		Property has been removed from the shadow state.
+	*/
+	onObsolete() { }
 
 	/**
 		Property has just been reshadowed.

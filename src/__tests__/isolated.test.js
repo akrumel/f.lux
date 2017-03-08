@@ -131,7 +131,6 @@ describe("isolated", () => {
 					iso.$$().checkPropCount(1, 1, 0, 1, 0);
 
 					shadow.delete("iso");
-
 					first0.$$().checkPropCount(1, 1, 2, 0, 0);
 					iso.$$().checkPropCount(1, 1, 1, 1, 0);
 
@@ -141,6 +140,22 @@ describe("isolated", () => {
 					first0.$$().checkPropCount(1, 1, 2, 0, 1);
 					iso.$$().checkPropCount(1, 1, 1, 1, 1);
 			})
+	})
+
+	test("serialize/restore", () => {
+		const isolated = store.isolated();
+		const state = isolated.serialize();
+		const expectedState = { root: { first: { a: 1, b: 2 } } };
+		const restoreState = { root: { next: { z: 'a' } } };
+
+		expect(state).toEqual(expectedState);
+
+		isolated.restore(restoreState);
+
+		const next = store._.get("next");
+
+		expect(isolated.serialize()).toEqual(restoreState);
+		expect(next.z).toBe('a');
 	})
 })
 

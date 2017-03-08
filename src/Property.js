@@ -565,6 +565,17 @@ export default class Property {
 	}
 
 	/**
+		Gets the {@link Shader} instance for this property.
+	*/
+	shader(state) {
+		if (!this[_shader]) {
+			this[_shader] = this[_stateType].shader(this);
+		}
+
+		return this[_shader];
+	}
+
+	/**
 		Returns the Shadow subclass used to virtualize the state property.
 
 		Returns - Shadow class
@@ -580,17 +591,6 @@ export default class Property {
 	*/
 	slashPath() {
 		return this[_impl] ?this[_impl].slashPath() :null;
-	}
-
-	/**
-		Gets the {@link Shader} instance for this property.
-	*/
-	shader(state) {
-		if (!this[_shader]) {
-			this[_shader] = this[_stateType].shader(this);
-		}
-
-		return this[_shader];
 	}
 
 	/**

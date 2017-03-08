@@ -174,7 +174,7 @@ export default class Logger {
 	}
 
 	@autobind
-	onPostUpdate(store, time, currState, prevState) {
+	onPostUpdate(store, time, currState, prevState, isoState) {
 		const activeIdx = this.frames.indexOf(this.activeFrame);
 
 		// remove all frames after current active frame (time travel occured)
@@ -186,7 +186,7 @@ export default class Logger {
 		this.activeFrame.active = false;
 
 		// complete the current frame and mark active then create a new current frame
-		this.currFrame.completed(time, currState);
+		this.currFrame.completed(time, currState, isoState);
 		this.frames.push(this.currFrame);
 		this.truncateFrames();
 
@@ -264,7 +264,7 @@ export class LogFrame {
 	activate() {
 		invariant(has(this, state), "LogFrame does not have a state");
 
-		this.store.changeState(this.state, true);
+		this.store.changeState(this.state, this.isoState, true);
 		this.active = true;
 	}
 
@@ -279,9 +279,10 @@ export class LogFrame {
 		this.captureTime = new Date();
 	}
 
-	completed(time, currState) {
+	completed(time, currState, isoState) {
 		this.time = time;
 		this.state = currState;
+		this.isoState = isoState;
 		this.active = true;
 		this.captureTime = new Date();
 	}

@@ -2,72 +2,123 @@ import { assert } from "akutils";
 
 import IsolatedProperty from "./IsolatedProperty";
 import reshadow from "./reshadow";
+import tick from "./tick";
 
+
+const _findRecord = Symbol("findRecord");
+const _makeRecord = Symbol("makeRecord");
+
+const _records = Symbol("records")
+const _store = Symbol("store")
 /*
 	Questions:
 	 	* How integrate with time travel debugging
 */
 export default class IsolatedApi {
 	constructor(store) {
-		this.store = store;
-		this.records = {};
+		this[_store] = store;
+		this[_records] = {};
 	}
 
 	all(owner) {
-		const record = this._record(owner);
+		const record = this[_findRecord](owner);
 
-		return record.all();
+		return record ?record.all() :[];
 	}
 
 	count(owner) {
-		const record = this._record(owner);
+		const record = this[_findRecord](owner);
 
-		return record.count();
+		return record ?record.count() :0;
 	}
 
 	entries(owner) {
-		const record = this._record(owner);
+		const record = this[_findRecord](owner);
 
-		return record.entries();
+		return record ?record.entries() :{};
 	}
 
 	get(key, owner) {
-		const record = this._record(owner);
+		const record = this[_findRecord](owner);
 
 		return record && record.get(key);
 	}
 
-	invalidated(iso) {
-		const record = this._record(iso.owner());
+	has(key, owner) {
+		const record = this[_findRecord](owner);
 
-		record.invalidated(iso);
+		return record && !!record.get(key);
 	}
 
-	obsolete(iso) {
-		const owner = iso.owner();
-		const record = this._findRecord(owner);
+	invalidated(iso) {
+		const record = this[_findRecord](iso.owner());
 
-		record && record.obsolete(iso);
+		record && record.invalidated(iso);
+	}
+
+	keys(owner) {
+		const record = this[_findRecord](owner);
+
+		return record ?record.keys() :[];
 	}
 
 	remove(key, owner) {
-		const record = this._record(owner);
+		const record = this[_findRecord](owner);
 
 		record && record.remove(key);
 	}
 
 	removeAllFor(owner) {
-		const record = this._record(owner);
+		const record = this[_findRecord](owner);
 
 		record && record.removeAll();
 	}
 
-	set(key, isoType, owner) {
-		const record = this._record(owner);
+	removeOwner(owner) {
+		delete this[_records][owner.dotPath()];
+	}
 
-		assert( a => a.is(isoType.getManagedType(), "Managed type required for isolated objects") );
+	restore(state) {
+		this[_records] = {};
 
-		record.set(key, isoType);
+		if (!state) { return }
+
+		const store = this[_store];
+		const keys = Object.keys(state);
+		const time = tick();
+		var key, owner, path, record;
+
+		for (let i=0, len=keys.length; i<len; i++) {
+			key = keys[i];
+			path = key === "root" ?[] :key.split(".");
+			owner = store.findPropertyByPath(path);
+
+			if (!owner) { continue }
+
+			record = this[_records][key] = OwnerRecord.restore(owner, state[key], time);
+
+			record.update();
+		}
+	}
+
+	serialize() {
+		const keys = Object.keys(this[_records]);
+		const state = {};
+		var key, owner, path;
+
+		for (let i=0, len=keys.length; i<len; i++) {
+			key = keys[i];
+
+			state[key] = this[_records][key].serialize();
+		}
+
+		return state;
+	}
+
+	set(key, data, owner, time=tick()) {
+		const record = this[_makeRecord](owner);
+
+		record.set(key, data);
 	}
 
 	/**
@@ -77,27 +128,21 @@ export default class IsolatedApi {
 		@param {Property} owner - the property managing isolated properties.
 	*/
 	update(owner) {
-		const record = this._record(owner);
+		const record = this[_findRecord](owner);
 
 		record && record.update();
 	}
 
-	willUnshadow(iso) {
-		const record = this._record(iso.owner());
-
-		record.willUnshadow(iso);
+	[_findRecord](owner) {
+		return this[_records][owner.dotPath()];
 	}
 
-	_findRecord(owner) {
-		return this.records[owner.pid()];
-	}
-
-	_record(owner) {
-		const records = this.records;
+	[_makeRecord](owner) {
+		const records = this[_records];
 		const rid = owner.dotPath();
 
 		if (!records[rid]) {
-			records[rid] = new OwnerRecord(this, owner);
+			records[rid] = new OwnerRecord(owner);
 		}
 
 		return records[rid];
@@ -106,11 +151,25 @@ export default class IsolatedApi {
 
 
 class OwnerRecord {
-	constructor(api, owner) {
+	constructor(owner) {
 		this._owner = owner;
 		this._invalidated = false;
 		this._kv = { };
 		this._nextKv = { };
+	}
+
+	static restore(owner, state, time) {
+		const record = new OwnerRecord(owner);
+		const keys = Object.keys(state);
+		var key;
+
+		for (let i=0, len=keys.length; i<len; i++) {
+			key = keys[i];
+
+			record.set(key, state[key], time);
+		}
+
+		return record;
 	}
 
 	all() {
@@ -133,8 +192,8 @@ class OwnerRecord {
 		this._invalidated = true;
 	}
 
-	obsolete(iso) {
-
+	keys() {
+		return Object.keys(this._kv);
 	}
 
 	remove(key) {
@@ -156,13 +215,31 @@ class OwnerRecord {
 		}
 	}
 
-	set(key, isoType) {
+	serialize() {
+		const kv = this._kv;
+		const keys = Object.keys(kv);
+		const state = {};
+		var iso, key;
+
+		for (let i=0, len=keys.length; i<len; i++) {
+			key = keys[i];
+			iso = kv[key];
+			state[key] = iso.state().data;
+		}
+
+		return state;
+	}
+
+	set(key, data, time) {
 		const owner = this._owner;
 		const prevIso = this._kv[key];
+		const ownerShader = owner.shader();
+		const dataType = ownerShader.typeFor(key, true);
 		const name = `<iso:${owner.dotPath()}:${key}>`;
+		const isoType = IsolatedProperty.type.properties({ data: dataType })
+		const iso = new IsolatedProperty(isoType);
 
-		// create and record the new isolated property
-		const iso = this._nextKv[key] = new IsolatedProperty(isoType);
+		this._nextKv[key] = { iso, data };
 
 		iso.setKey(key);
 		iso.setOwner(owner);
@@ -175,7 +252,7 @@ class OwnerRecord {
 	}
 
 	update() {
-		if (!this.invalidated && this._died.length === 0) { return }
+		if (!this._invalidated && Object.keys(this._nextKv).length === 0) { return }
 
 		const kv = this._kv;
 		const nextKv = this._nextKv;
@@ -197,21 +274,17 @@ class OwnerRecord {
 			}
 		}
 
-		// shadow the new iso properties (not replacements)
+		// shadow the new iso properties
 		for (let name in nextKv) {
-			const nextIso = nextKv[name];
-			const state = nextIso.initialState();
-			const nextImpl = nextIso.shader().shadowProperty(time, name, state);
+			const next = nextKv[name];
+			const { iso: nextIso, data } = next;
+			const nextImpl = nextIso.shader().shadowProperty(time, name, { data });
 
 			this._kv[name] = nextIso;
 		}
 
 		this._nextKv = {};
 		this._invalidated = false;
-	}
-
-	willUnshadow(iso) {
-
 	}
 }
 

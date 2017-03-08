@@ -56,7 +56,8 @@
     "testPathIgnorePatterns": [
       "/node_modules/",
       "/docs/",
-      "/examples/"
+      "/examples/",
+      "/lib/"
     ]
   },
   "scripts": {
