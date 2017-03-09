@@ -202,7 +202,7 @@ export default class IsolatedProperty extends Property {
 		@return {boolean}
 	*/
 	isActive() {
-		return this[_owner].isActive() && super.isActive();
+		return this[_owner] && this[_owner].isActive() && super.isActive();
 	}
 
 	/**

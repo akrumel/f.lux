@@ -233,10 +233,10 @@ class OwnerRecord {
 	set(key, data, time) {
 		const owner = this._owner;
 		const prevIso = this._kv[key];
+		const name = `<iso:${owner.dotPath()}:${key}>`;
 		const ownerShader = owner.shader();
 		const dataType = ownerShader.typeFor(key, true);
-		const name = `<iso:${owner.dotPath()}:${key}>`;
-		const isoType = IsolatedProperty.type.properties({ data: dataType })
+		const isoType = IsolatedProperty.type.properties({ data: dataType });
 		const iso = new IsolatedProperty(isoType);
 
 		this._nextKv[key] = { iso, data };
