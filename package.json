@@ -62,8 +62,8 @@
   },
   "scripts": {
     "clean": "rimraf lib dist es coverage",
-    "build:commonjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib",
-    "build": "npm run build:commonjs",
+    "build:commonjs": "cross-env BABEL_ENV=commonjs babel src --ignore '**/__tests__' --out-dir lib",
+    "build": "npm run clean & npm run build:commonjs",
     "docs": "./node_modules/.bin/esdoc",
     "test": "jest"
   }
