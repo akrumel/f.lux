@@ -1,4 +1,5 @@
 import { assert } from "akutils";
+import isPlainObject from "lodash.isplainobject";
 
 import IsolatedProperty from "./IsolatedProperty";
 import reshadow from "./reshadow";
@@ -78,6 +79,10 @@ export default class IsolatedApi {
 		delete this[_records][owner.dotPath()];
 	}
 
+	reset() {
+		this[_records] = {};
+	}
+
 	restore(state) {
 		this[_records] = {};
 
@@ -134,7 +139,21 @@ export default class IsolatedApi {
 	}
 
 	[_findRecord](owner) {
-		return this[_records][owner.dotPath()];
+		const records = this[_records];
+		var record = records[owner.dotPath()];
+		var state;
+
+		// create new record if owner state has keys implying a reset()
+		if (!record && owner.isActive() && isPlainObject(state=owner.state()) ) {
+			const stateKeys = Object.keys(owner.state());
+			const rid = owner.dotPath();
+
+			if (stateKeys.length) {
+				record = records[rid] = new OwnerRecord(owner);
+			}
+		}
+
+		return record;
 	}
 
 	[_makeRecord](owner) {
@@ -156,6 +175,22 @@ class OwnerRecord {
 		this._invalidated = false;
 		this._kv = { };
 		this._nextKv = { };
+
+		// create k/v entries for each existing key
+		const state = owner.state();
+		const keys = Object.keys(state);
+		const time = owner.__().time();
+		var key;
+
+		if (keys.length) {
+			for (let i=0, len=keys.length; i<len; i++) {
+				key = keys[i];
+
+				this.set(key, state[keys], time);
+			}
+
+			this.update();
+		}
 	}
 
 	static restore(owner, state, time) {
@@ -278,8 +313,11 @@ class OwnerRecord {
 		for (let name in nextKv) {
 			const next = nextKv[name];
 			const { iso: nextIso, data } = next;
-			const nextImpl = nextIso.shader().shadowProperty(time, name, { data });
+//			const nextImpl = nextIso.shader().shadowProperty(time, name, { data });
+const state = this._owner.state()[name]
+const nextImpl = nextIso.shader().shadowProperty(time, name, state);
 
+// console.log("api update - add", name, state, this._owner.state())
 			this._kv[name] = nextIso;
 		}
 

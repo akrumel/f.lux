@@ -142,20 +142,28 @@ describe("isolated", () => {
 			})
 	})
 
-	test("serialize/restore", () => {
-		const isolated = store.isolated();
-		const state = isolated.serialize();
-		const expectedState = { root: { first: { a: 1, b: 2 } } };
-		const restoreState = { root: { next: { z: 'a' } } };
+	test("store.changeState()", () => {
+		const expectedState = { first: { data: { a: 1, b: 2 }} };
+		const nextExpectedState = { next: { data: { foo: "bar" }} };
+		const state = store.state;
 
 		expect(state).toEqual(expectedState);
 
-		isolated.restore(restoreState);
+		store.changeState({ ...state }, true);
 
+		const first = store._.get("first");
+
+		expect(store._.keysArray()).toEqual([ "first" ]);
+		expect(first).toBeDefined();
+
+		store.changeState({ ...nextExpectedState }, true);
+
+		const firstNext = store._.get("first");
 		const next = store._.get("next");
 
-		expect(isolated.serialize()).toEqual(restoreState);
-		expect(next.z).toBe('a');
+		expect(firstNext).toBeUndefined();
+		expect(next).toBeDefined();
+		expect(next.foo).toEqual("bar");
 	})
 })
 

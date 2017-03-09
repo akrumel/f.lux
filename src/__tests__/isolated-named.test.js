@@ -21,7 +21,9 @@ describe("isolated named properties", () => {
 	})
 
 	test("initial state", () => {
-		expect(store.state).toEqual({});
+		const expectedState = { info: { data: {}} };
+
+		expect(store.state).toEqual(expectedState);
 		expect(shadow.get("info")).toBeDefined();
 	})
 })

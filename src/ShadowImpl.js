@@ -29,6 +29,7 @@ const _date = Symbol('date');
 const _dead = Symbol('dead');
 const _didShadowCalled = Symbol('didShadowCalled');
 const _futureState = Symbol('futureState');
+const _hasFutureState = Symbol('hasFutureStatee');
 const _invalid = Symbol('invalid');
 const _name = Symbol('name');
 const _nextName = Symbol('nextName');
@@ -192,7 +193,7 @@ export default class ShadowImpl {
 	}
 
 	didShadow(time, newRoot) {
-		const storeRootImpl = this.store().rootImpl;
+		const storeRootImpl = this.store().__;
 
 		if (this[_time] == time && !this[_didShadowCalled] && storeRootImpl === this.root()) {
 			this[_didShadowCalled] = true;
@@ -244,10 +245,11 @@ export default class ShadowImpl {
 
 			// set the next model data
 			this[_futureState] = nextState;
+			this[_hasFutureState] = true;
 
 			// update the parent's future state to reference the state returned by the action
-			if (!this.isRoot() && !this.isIsolated()) {
-				const parentNextData = this.parent()[_modelForUpdate]();
+			if (!this.isRoot()) {
+				const parentNextData = this.owner()[_modelForUpdate]();
 
 				// do nothing if parentNextData is not assignable
 				if (parentNextData && !isPrimitive(parentNextData)) {
@@ -374,7 +376,7 @@ export default class ShadowImpl {
 		not be altered.
 	*/
 	nextState() {
-		return this.hasPendingChanges() || !this.isValid() ?this[_futureState] :this.state();
+		return this[_hasFutureState] ?this[_futureState] :this.state();
 	}
 
 	/**
@@ -975,12 +977,12 @@ export default class ShadowImpl {
 		and the store informed of the change.
 	*/
 	[_modelForUpdate]() {
-		if (!this[_futureState]) {
-			if (this.isRoot() || this.isIsolated()) {
+		if (!this[_hasFutureState]) {
+			if (this.isRoot()) {
 				// next data will be a shallow copy of current model
 				this[_futureState] = clone(this.state());
 			} else {
-				const parentNextState = this.parent()[_modelForUpdate]();
+				const parentNextState = this.owner()[_modelForUpdate]();
 
 				// Primitive parent models do not support adding properties
 				if (isPrimitive(parentNextState)) {
@@ -994,6 +996,8 @@ export default class ShadowImpl {
 				parentNextState[this.nextName()] = this[_futureState]
 			}
 		}
+
+		this[_hasFutureState] = true;
 
 		return this[_futureState];
 	}
@@ -1011,7 +1015,7 @@ export default class ShadowImpl {
 			// flag never gets cleared
 			this[_scheduled] = true;
 
-			this.store().dispatchUpdate( time => reshadow(time, this[_futureState], this) );
+			this.store().dispatchUpdate( time => reshadow(time, this.nextState(), this) );
 		}
 	}
 }

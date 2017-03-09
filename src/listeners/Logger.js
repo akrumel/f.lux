@@ -264,7 +264,7 @@ export class LogFrame {
 	activate() {
 		invariant(has(this, state), "LogFrame does not have a state");
 
-		this.store.changeState(this.state, this.isoState, true);
+		this.store.changeState(this.state, true, this.time);
 		this.active = true;
 	}
 

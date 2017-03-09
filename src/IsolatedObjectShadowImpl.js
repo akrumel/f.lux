@@ -1,6 +1,4 @@
 import omit from "lodash.omit";
-import isEqual from "lodash.isequal";
-import isPlainObject from "lodash.isplainobject";
 
 import IsolatedProperty from "./IsolatedProperty";
 import ShadowImpl from "./ShadowImpl";
@@ -26,7 +24,8 @@ export default class IsolatedObjectShadowImpl extends ShadowImpl {
 	*/
 	delete(k) {
 		this.isolated().remove(k, this.property());
-		this.update( state => ({ name: `delete(${k})`, nextState: state }) );
+		this.update( state => ({ name: `delete(${k})`, nextState: omit(state, k) }) );
+//		this.update( state => ({ name: `delete(${k})`, nextState: state }) );
 	}
 
 	/*
@@ -94,7 +93,8 @@ export default class IsolatedObjectShadowImpl extends ShadowImpl {
 	*/
 	set(k, v) {
 		this.isolated().set(k, v, this.property());
-		this.update( state => ({ name: `set(${k})`, nextState: state }) );
+
+		this.update( state => ({ name: `set(${k})`, nextState: { ...state, [k]: { data: v }} }) );
 
 		return this;
 	}

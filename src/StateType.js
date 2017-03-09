@@ -555,7 +555,7 @@ export default class StateType {
 		const propSpecs = this._properties;
 		var propType, propState;
 
-		if (!isPlainObject(state) || !propSpecs || this.isIsolated()) { return state; }
+		if (!isPlainObject(state) || !propSpecs) { return state; }
 
 		for (let name in propSpecs) {
 			propType = propSpecs[name];

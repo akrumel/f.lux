@@ -1,7 +1,7 @@
 import has from "lodash.has";
-import omit from "lodash.omit";
 import isEqual from "lodash.isequal";
 import isPlainObject from "lodash.isplainobject";
+import omit from "lodash.omit";
 
 import ShadowImpl from "./ShadowImpl";
 import reshadow from "./reshadow";

@@ -207,9 +207,10 @@ export default class Store {
 			state = root.initialState();
 		}
 
-		this._useTransients = useTransients;
+		this._isolated = new IsolatedApi(this);
 		this._listeners = [];
 		this._subscribers = [];
+		this._useTransients = useTransients;
 
 		// dispatcher queues for pending actions and waitFor() requests
 		this._updateAction = null;
@@ -263,7 +264,7 @@ export default class Store {
 		@see Store#rootImpl
 	*/
 	get __() {
-		return this._rootImpl;
+		return this.rootImpl;
 	}
 
 	/**
@@ -283,7 +284,7 @@ export default class Store {
 		@return {ShadowImpl}
 	*/
 	get rootImpl() {
-		return this._rootImpl;
+		return this._rootImpl || this._root.__();
 	}
 
 	/**
@@ -331,7 +332,7 @@ export default class Store {
 			`false` implies the root object is the same but child properties have been updated.
 		@param {number} [time=tick()] - the f.lux time for the change.
 	*/
-	changeState(state, isoState, newRoot=false, time=tick()) {
+	changeState(state, newRoot=false, time=tick()) {
 		this._updateTime = time;
 
 		// all pending callbacks are obsolete now
@@ -342,18 +343,13 @@ export default class Store {
 			this._rootImpl.willShadow(newRoot);
 		}
 
-		this._isolated = new IsolatedApi(this);
+		this._isolated.reset();
 
 		// proxy/shadow the state
 		this._rootImpl = this._root.shader(state).shadowProperty(time, "/", state);
 
 		// get the final state after merging any property initial states
 		this._state = this._rootImpl.state();
-
-		// reset the isolated state
-		if (isoState) {
-			this._isolated.restore(isoState);
-		}
 
 		// invoke did shadow/update lifecycle methods
 		this._rootImpl.didShadow(time, newRoot);
@@ -414,7 +410,7 @@ export default class Store {
 				root.setStore(this);
 				this._root = root;
 
-				this.changeState(state, null, true);
+				this.changeState(state, true);
 			});
 		} else {
 			// set the root property and set it's store to this object
@@ -424,7 +420,7 @@ export default class Store {
 			}
 
 			this._setupTransients();
-			this.changeState(state, null, root !== currRoot);
+			this.changeState(state, root !== currRoot);
 		}
 	}
 
