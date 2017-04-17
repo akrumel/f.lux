@@ -524,7 +524,12 @@ export default class ShadowImpl {
 		Gets the user facing property represented by this implementation object.
 	*/
 	shadow() {
-		if (!this.isMapped()) { throw new Error(`Property implementation not mapped: ${this.dotPath()}`) }
+		// Not ok to map this property if parent is not yet mapped
+		if (!this.isMapped() && this.parent() && !this.parent().isMapped()) {
+			throw new Error(`Property implementation not mapped: ${this.dotPath()}`);
+		}
+
+//		if (!this.isMapped()) { throw new Error(`Property implementation not mapped: ${this.dotPath()}`) }
 
 		return this[_setupShadow]()
 	}

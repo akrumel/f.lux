@@ -85,6 +85,13 @@ export default class CollectionShadow extends Shadow {
 	}
 
 	/**
+		Gets if the collection has synced or had its data restored.
+	*/
+	get filled() {
+		return this.synced || this.restored;
+	}
+
+	/**
 		Gets the endpoint ID, which for {@link RestEndpointProperty} is its URL.
 
 		@return {string}

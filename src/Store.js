@@ -222,6 +222,28 @@ export default class Store {
 	}
 
 	/**
+		Gets the {@link OfflineDataStore} used by properties to work offline.
+
+		@return {OfflineDataStore}
+
+		@experimantal
+	*/
+	offlineStore() {
+		return this._offlineStore;
+	}
+
+	/**
+		Gets the {@link OfflineDataStore} used by properties to work offline.
+
+		@param {OfflineDataStore} - the shared offline storage instance
+
+		@experimantal
+	*/
+	setOfflineStore(offline) {
+		this._offlineStore = offline;
+	}
+
+	/**
 		Adds a callback to be invoked after each application state change. The `callback` has the form:
 		```
 		callback(store, shadow, prevShadow)

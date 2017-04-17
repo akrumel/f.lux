@@ -30,17 +30,18 @@ const debug = appDebug(DebugKey);
 const _endpoint = "_endpoint";
 const _id2cid = "_id2cid";
 const _idName = "idName";
-const _lastPageSize = 'lastPageSize';
-const _limit = '_limit';
+const _lastPageSize = "lastPageSize";
+const _limit = "_limit";
 const _models = "_models";
-const _nextOffset = 'nextOffset';
-const _paging = '_paging';
+const _nextOffset = "nextOffset";
+const _offlineKey = "offlineKey";
+const _paging = "_paging";
+const _restored = "restored";
 const _synced = "synced";
 
 const _autocheckpoint = Symbol("autocheckpoint");
-const _fetching = Symbol('fetching');
+const _fetching = Symbol("fetching");
 const _middleware = Symbol("middleware");
-const _offlineState = Symbol('offlineState');
 
 /**
 	Event emitted on collection changes.
@@ -123,7 +124,7 @@ import { DEFAULTS_OPTION, MERGE_OPTION, NONE_OPTION, REPLACE_OPTION, REPLACE_ALL
 	<ul>
 		<li>`add(state, mergeOp)`</li>
 		<li>`all()`</li>
-		<li>`clear()</li>
+		<li>`clear()`</li>
 		<li>`create(model)`</li>
 		<li>`destroy(id)`</li>
 		<li>`fetch(filter, mergeOp)`</li>
@@ -214,6 +215,15 @@ import { DEFAULTS_OPTION, MERGE_OPTION, NONE_OPTION, REPLACE_OPTION, REPLACE_ALL
 		</ul>
 	</div>
 
+
+	## Offline support
+
+	Collections support offline first capability. To enable, you must:
+
+	<ul>
+		<li></li>
+		<li></li>
+	</ul>
 
 	## Query filters
 
@@ -374,6 +384,9 @@ export default class CollectionProperty extends Property {
 		this._keyed.addPropertyType(_nextOffset, PrimitiveProperty.type.initialState(0).autoshadowOff.readonly);
 		this._keyed.addPropertyType(_paging, PrimitiveProperty.type.initialState(false).autoshadowOff.readonly);
 
+		// this._keyed.addPropertyType(_offlineKey, PrimitiveProperty.type.initialState(null).readonlyOff);
+		// this._keyed.addPropertyType(_restored, PrimitiveProperty.type.initialState(false).autoshadowOff.readonly);
+
 		// '_models' property contains ModelProperty objects which in turn keep their model state in
 		// the 'data' whose type is specified by the stateType.getManagedType() value (default is
 		// MapProperty.type)
@@ -462,10 +475,26 @@ export default class CollectionProperty extends Property {
 
 		@ignore
 	*/
+	onPropertyDidShadow() {
+		// need to call parent classes version
+		super.onPropertyDidShadow();
+
+		if (!this._().restored) {
+			this.restore().catch( error => null );
+		}
+	}
+
+	/**
+		Override the base functionality method, and not designed life-cycle method propertyWillUpdate(), so
+		subclasses can do the normal override without using super.propertyWillUpdate() to preserve functionality.
+
+		@ignore
+	*/
 	onPropertyDidUpdate() {
 		// need to call parent classes version
 		super.onPropertyDidUpdate();
 
+		this.storeData().catch( error => null );
 		this.emit(ChangeEvent, this._(), this);
 	}
 
@@ -491,45 +520,6 @@ export default class CollectionProperty extends Property {
 	*/
 	setAutocheckpoint(auto) {
 		this[_autocheckpoint] = auto;
-	}
-
-	//------------------------------------------------------------------------------------------------------
-	// Offline data support API
-	//------------------------------------------------------------------------------------------------------
-
-	/**
-		Gets an object capable of providing a persisted version of this collection.
-
-		@return {Object}
-
-		@experimental
-	*/
-	getOfflineState() {
-		return this[_offlineState];
-	}
-
-	/**
-		Sets an object capable of providing a persisted version of this collection. The object must minimally
-		expose a single method with the form:
-
-		```
-		function restore()
-		```
-
-		Method sets the collection state for offline access. Typically invoked by application logic after
-		a failed `fetch()` to the endpoint.
-
-		An object is used as the offline state management entity because it will normally perform other
-		duties such as registering for {@link ChangeEvent} to persistently store collection state on changes
-		and support deleting previous backups
-
-		@param {Object} offline - the object containing the `restore()` function.
-
-		@experimental
-	*/
-	setOfflineState(offline) {
-		/** @ignore */
-		this[_offlineState] = offline;
 	}
 
 
@@ -768,10 +758,124 @@ export default class CollectionProperty extends Property {
 		Sets the {@link CollectionProperty#endpoint}.
 	*/
 	setEndpoint(endPoint) {
+		const store = this.store();
+
 		this.setFetching(false);
 		this.resetPaging();
 		this.removeAllModels();
 		this._keyed.addProperty(_endpoint, endPoint);
+
+		store && store.waitFor( () => this.restore().catch( error => null ) );
+	}
+
+
+	//------------------------------------------------------------------------------------------------------
+	// Experimental offline support APIs
+	//------------------------------------------------------------------------------------------------------
+
+	/**
+		Removes offline data for this collection.
+
+		@experimental
+	*/
+	clearStoredData() {
+		const epId = this.endpointId;
+		const offlineKey = this._keyed.get(_offlineKey);
+		const offline = this.store().offlineStore();
+		const dataId = epId && encodeURIComponent(epId);
+
+		if (dataId && offlineKey && offline) {
+			return offline.setOfflineData(offlineKey, dataId, null);
+		}
+	}
+
+	/**
+		Restores the collection to the last offline stored state. Method does not restore state if the
+		collection contains any items or the `synced` flag is set.
+
+		@return {Promise}
+
+		@experimental
+	*/
+	restore() {
+		if (!this.isActive()) { return Store.resolve(null) }
+
+		const epId = this.endpointId;
+		const offlineKey = this._keyed.get(_offlineKey);
+		const synced = this._keyed.get(_synced);
+		const offline = this.store().offlineStore();
+		const dataId = encodeURIComponent(epId);
+
+		// Must have an EP, offline data key, and collection is empty
+		if (!epId || !offlineKey || !offline || this.size || this.synced) { return Store.resolve(null) }
+
+		return offline.getOfflineData(offlineKey, dataId)
+			.then( data => {
+					const nextState = {
+						...data,
+						[_paging]: false,
+						[_restored]: true,
+						[_synced]: false
+					};
+
+					// ensure have data, same EP, still active, and collection is empty
+					if (!data || this.endpointId !== epId || !this.isActive() || this.size) {
+						return
+					}
+
+					this.update( state => {
+							return {
+								name: "restore()",
+								nextState,
+								replace: true
+							};
+						});
+
+						return this.collection.nextState();
+				})
+			.catch( error => {
+				debug( d => d(`Restore Error: ${error.message || error}`, error) );
+
+				return Store.reject(error);
+			})
+	}
+
+	/**
+		Saves the current collection state for offline access. Method invoked on collection content changes.
+
+		@return {Promise}
+
+		@experimental
+	*/
+	storeData() {
+		const state = this.state();
+		const epId = this.endpointId;
+		const offlineKey = this._keyed.get(_offlineKey);
+		const offline = this.store().offlineStore();
+		const dataId = epId && encodeURIComponent(epId);
+		const canStore =
+			dataId &&
+			offlineKey &&
+			offline &&
+			(
+				this.size ||
+				state[_synced]
+			)
+
+		// Must have an EP, offline data key
+		if (!canStore) { return Store.resolve(null) }
+
+		return offline.setOfflineData(offlineKey, dataId, state)
+			.then( () => {
+					debug(`Collection backup successful - ${ this.collection.endpointId }, size=${this.size}`);
+
+					return this;
+				})
+			.catch( error => {
+					debug(`Collection backup error: collection=${ this.collection.endpointId }, error=${error}`);
+
+					return Store.reject(error);
+				});
 	}
 
 
@@ -1214,6 +1318,7 @@ export default class CollectionProperty extends Property {
 	removeAllModels() {
 		if (!this.isActive()) { return }
 
+		this._keyed.set(_restored, false);
 		this._keyed.set(_synced, false);
 		this._()[_models].clear();
 		this._()[_id2cid].clear();
@@ -1428,6 +1533,10 @@ StateType.defineType(CollectionProperty, spec => {
 	spec.initialState({})
 		.autoshadowOff
 		.managedType(MapProperty.type)
+		.properties({
+			[_offlineKey]: PrimitiveProperty.type.initialState(null).readonlyOff,
+			[_restored]: PrimitiveProperty.type.initialState(false).readonly,
+		})
 		.typeName("CollectionProperty");
 });
 

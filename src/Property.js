@@ -612,7 +612,7 @@ export default class Property {
 	*/
 	store() {
 		if (!this[_store] && this[_parent]) {
-			this[_store] = this[_parent][_store];
+			this[_store] = this[_parent].store();
 		}
 
 		return this[_store];

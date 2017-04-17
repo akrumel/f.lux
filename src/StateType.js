@@ -187,13 +187,16 @@ export default class StateType {
 	static defineType(PropertyClass, typeCallback) {
 		assert( a => a.not(PropertyClass.hasOwnProperty("type"), `'type' variable already defined`) );
 
-		if (PropertyClass.hasOwnProperty("type")) { return }
+		if (PropertyClass.hasOwnProperty("type")) {
+			return
+		}
 
 		/*
 			Create the basis for the returned 'type'. The type getter needs to return a copy to permit
 			modifying the shadowing behavior.
 		*/
-		const type = new StateType();
+		const baseType = PropertyClass.type;
+		const type = baseType || new StateType();
 
 		type.propertyClass(PropertyClass);
 
@@ -252,8 +255,10 @@ export default class StateType {
 		*/
 		const proto = Object.getPrototypeOf(prop);
 
-		return ctor.type ||
-			StateType.from(ctor === proto.constructor ?Object.getPrototypeOf(proto) :proto);
+		return proto && (
+				ctor.type ||
+				StateType.from(ctor === proto.constructor ?Object.getPrototypeOf(proto) :proto)
+			);
 	}
 
 	/**
