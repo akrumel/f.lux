@@ -441,8 +441,8 @@ export default class Store {
 				this._root = root;
 			}
 
-			this._setupTransients();
 			this.changeState(state, root !== currRoot);
+			this._setupTransients();
 		}
 	}
 

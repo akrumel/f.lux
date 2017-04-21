@@ -789,6 +789,15 @@ export default class CollectionProperty extends Property {
 		}
 	}
 
+	clearAllStoredData() {
+		const offlineKey = this._keyed.get(_offlineKey);
+		const offline = this.store().offlineStore();
+
+		if (offlineKey && offline) {
+			return offline.deleteBackups(offlineKey);
+		}
+	}
+
 	/**
 		Restores the collection to the last offline stored state. Method does not restore state if the
 		collection contains any items or the `synced` flag is set.

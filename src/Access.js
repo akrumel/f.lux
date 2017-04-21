@@ -122,9 +122,9 @@ export default class Access {
 		@return {Shadow}
 	*/
 	latest() {
-		const impl = this[_impl].latest();
+		const impl = this[_impl];
 
-		return impl && impl.shadow();
+		return impl && impl.latest();
 	}
 
 	/** @ignore */

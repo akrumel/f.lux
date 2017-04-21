@@ -96,6 +96,13 @@ export default class ShadowImpl {
 		this[_didShadowCalled] = false;
 	}
 
+	/**
+		Alias for {@link ShadowImpl.shadow}.
+	*/
+	_() {
+		return this.shadow();
+	}
+
 	access() {
 		const parent = this.parent();
 
@@ -481,7 +488,7 @@ export default class ShadowImpl {
 
 		const cache = this.cache();
 
-		if (!cache.root) {
+		if (!cache.root || !cache.root.isActive()) {
 			cache.root = this.owner().root();
 		}
 
