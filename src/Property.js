@@ -622,9 +622,9 @@ export default class Property {
 		Triggers a reshadow of the properties shadow state. This is handy when a calculated state value changes
 		while concrete state values remain unchanged.
 	*/
-	touch() {
+	touch(reason="Property.touch()") {
 		if (this.isActive()) {
-			this[_impl].update( state => ( { name: "Property.touch()", nextState: state } ) );
+			this[_impl].update( state => ( { name: reason, nextState: state } ) );
 		}
 	}
 

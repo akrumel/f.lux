@@ -78,6 +78,17 @@ export default class CollectionShadow extends Shadow {
 	}
 
 	/**
+		Gets the endpoint for accessing the remote data source.
+
+		@return {Object}
+	*/
+	get endpointId() {
+		const ep = this._endpoint;
+
+		return ep && ep.id;
+	}
+
+	/**
 		Gets if a fetching operation that will replace ALL models is in progress.
 	*/
 	get fetching() {
@@ -127,7 +138,11 @@ export default class CollectionShadow extends Shadow {
 		Gets if a paging operation ({@link CollectionProperty#fetchNext}) call is in progress.
 	*/
 	get paging() {
-		return this.$$().isPaging(this);
+		return this.$$().isPaging();
+	}
+
+	get restoring() {
+		return this.$$().isRestoring();
 	}
 
 	/**
@@ -447,6 +462,13 @@ export default class CollectionShadow extends Shadow {
 	*/
 	has(id) {
 		return this.$$().hasModel(id, this);
+	}
+
+	/**
+		Gets if the collection is paging, fetching, or restoring data.
+	*/
+	isBusy() {
+		return this.paging || this.fetching || this.restoring;
 	}
 
 	/**

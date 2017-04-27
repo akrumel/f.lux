@@ -79,16 +79,6 @@ export default class ModelProperty extends ObjectProperty {
 		this.clearCheckpoint();
 	}
 
-	resetDataToCheckpoint() {
-		const dataProp = this.data && this.data.$$();
-
-		dataProp && dataProp.resetToCheckpoint();
-
-		if (this._()) {
-			this._().dirty = false;
-		}
-	}
-
 	@shadowBound
 	defaults(data) {
 		const id = this.collection.extractId(data);
@@ -114,11 +104,6 @@ export default class ModelProperty extends ObjectProperty {
 		return this.collection.destroy(this.cid);
 	}
 
-	@shadowBound
-	isWaiting() {
-		return this._() && this._().waiting;
-	}
-
 	isDirty() {
 		return this._() && this._().dirty;
 	}
@@ -132,6 +117,11 @@ export default class ModelProperty extends ObjectProperty {
 		const id = this.collection.extractId(this.data);
 
 		return !id;
+	}
+
+	@shadowBound
+	isWaiting() {
+		return this._() && this._().waiting;
 	}
 
 	@shadowBound
@@ -151,6 +141,16 @@ export default class ModelProperty extends ObjectProperty {
 		// is coming from a source of truth, such as data returned from a save
 		if (!currDirty) {
 			this.clearDirty();
+		}
+	}
+
+	resetDataToCheckpoint() {
+		const dataProp = this.data && this.data.$$();
+
+		dataProp && dataProp.resetToCheckpoint();
+
+		if (this._()) {
+			this._().dirty = false;
 		}
 	}
 

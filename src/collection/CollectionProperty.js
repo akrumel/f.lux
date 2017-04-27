@@ -16,6 +16,7 @@ import MapProperty from "../MapProperty";
 import ObjectShadowImpl from "../ObjectShadowImpl";
 import PrimitiveProperty from "../PrimitiveProperty";
 import Property from "../Property";
+import Shadow from "../Shadow";
 import StateType from "../StateType";
 import Store from "../Store";
 
@@ -42,6 +43,7 @@ const _synced = "synced";
 const _autocheckpoint = Symbol("autocheckpoint");
 const _fetching = Symbol("fetching");
 const _middleware = Symbol("middleware");
+const _restoring = Symbol("restoring");
 
 /**
 	Event emitted on collection changes.
@@ -470,6 +472,23 @@ export default class CollectionProperty extends Property {
 	static supportsKeyedChildProperties() { return true }
 
 	/**
+		Override the base functionality method, and not designed life-cycle method propertyChildInvalidated(), so
+		subclasses can do the normal override without using super.propertyWillUpdate() to preserve functionality.
+
+		@ignore
+	*/
+	onChildInvalidated(childProperty, sourceProperty) {
+		// need to call parent classes version
+		super.onChildInvalidated(childProperty, sourceProperty);
+
+		const childName = childProperty.name();
+
+		if (childName === _models) {
+			this.cancelRestore();
+		}
+	}
+
+	/**
 		Override the base functionality method, and not designed life-cycle method propertyWillUpdate(), so
 		subclasses can do the normal override without using super.propertyWillUpdate() to preserve functionality.
 
@@ -648,13 +667,14 @@ export default class CollectionProperty extends Property {
 
 		const filter = this.endpoint.queryBuilder();
 		const time = this.pagingTime = Date.now();
+		const replaceAll = !this._()[_nextOffset];
 
 		this._keyed.set(_paging, true);
 
 		filter.equals("offset", this._()[_nextOffset]);
 		filter.equals("limit", this._()[_limit]);
 
-		return this.fetch(filter, mergeOp, false, (error, models) => {
+		return this.fetch(filter, mergeOp, replaceAll, (error, models) => {
 				// bail if paging times do not match (offset likely reset)
 				if (time !== this.pagingTime) { return }
 
@@ -677,7 +697,7 @@ export default class CollectionProperty extends Property {
 	isPaging(state=this._()) {
 		// use pagingTime instance variable (instant) and _paging state variable (tied to state) to
 		// return the most conservative value
-		return this.pagingTime || state[_paging];
+		return !!this.pagingTime || state[_paging];
 	}
 
 	/**
@@ -686,7 +706,7 @@ export default class CollectionProperty extends Property {
 	hasMorePages(state=this._()) {
 		return this.isConnected() &&
 			!state[_synced] &&
-			(!state[_lastPageSize] || this._()[_lastPageSize] >= this._()[_limit]);
+			(state[_lastPageSize] == null || this._()[_lastPageSize] >= this._()[_limit]);
 	}
 
 	/**
@@ -774,6 +794,16 @@ export default class CollectionProperty extends Property {
 	//------------------------------------------------------------------------------------------------------
 
 	/**
+		Cancels outstanding data restoration from offline storage.
+	*/
+	cancelRestore() {
+		if (this[_restoring]) {
+			this[_restoring] = false;
+			this.touch("CollectionProperty.cancelRestore()");
+		}
+	}
+
+	/**
 		Removes offline data for this collection.
 
 		@experimental
@@ -799,6 +829,13 @@ export default class CollectionProperty extends Property {
 	}
 
 	/**
+		Gets if the collection is in the process of restoring data from offline storage.
+	*/
+	isRestoring() {
+		return this[_restoring];
+	}
+
+	/**
 		Restores the collection to the last offline stored state. Method does not restore state if the
 		collection contains any items or the `synced` flag is set.
 
@@ -815,22 +852,30 @@ export default class CollectionProperty extends Property {
 		const offline = this.store().offlineStore();
 		const dataId = encodeURIComponent(epId);
 
-		// Must have an EP, offline data key, and collection is empty
-		if (!epId || !offlineKey || !offline || this.size || this.synced) { return Store.resolve(null) }
+		// Must have an EP, offline data key, not synced, not restoring, and collection is empty
+		if (!epId || !offlineKey || !offline || this.size || this.synced || this[_restoring]) {
+			return Store.resolve(null)
+		}
+
+		this[_restoring] = true;
+		this.touch("Collection[_restoring] = true");
 
 		return offline.getOfflineData(offlineKey, dataId)
 			.then( data => {
 					const nextState = {
 						...data,
-						[_paging]: false,
+						[_paging]: !!this.pagingTime, // could be a paging in process
 						[_restored]: true,
 						[_synced]: false
 					};
 
 					// ensure have data, same EP, still active, and collection is empty
-					if (!data || this.endpointId !== epId || !this.isActive() || this.size) {
-						return
+					if (!data || this.endpointId !== epId || !this.isActive() || this.size || !this[_restoring]) {
+						return this.cancelRestore();
 					}
+
+					// disable cancelRestore()
+					this[_restoring] = false;
 
 					this.update( state => {
 							return {
@@ -840,9 +885,18 @@ export default class CollectionProperty extends Property {
 							};
 						});
 
-						return this.collection.nextState();
+					// restore flag
+					this[_restoring] = true;
+
+					// reset flag after store updates state
+					this.store().waitFor( () => this[_restoring] = false );
+
+					return this.nextState();
 				})
 			.catch( error => {
+				this[_restoring] = false;
+				this.touch("Collection[_restoring] = false");
+
 				debug( d => d(`Restore Error: ${error.message || error}`, error) );
 
 				return Store.reject(error);
@@ -1062,7 +1116,7 @@ export default class CollectionProperty extends Property {
 	fetch(filter=null, mergeOp=REPLACE_OPTION, replaceAll=true, callback) {
 		if (!this.isConnected()) { return Store.reject(`Collection ${this.slashPath()} is not connected`) }
 
-		const syncOp = !filter;
+		var syncOp = !filter;
 		const epId = this.endpointId;
 
 		if (replaceAll) {
@@ -1090,6 +1144,9 @@ export default class CollectionProperty extends Property {
 
 							// invoke the callback before processing models
 							callback && callback(null, models);
+
+							// callback could have changed the sync flag
+							syncOp = syncOp || this.nextState()[_synced];
 
 							if (replaceAll) {
 								this.setModels(models, syncOp);
@@ -1447,8 +1504,7 @@ export default class CollectionProperty extends Property {
 	*/
 	setFetching(fetching) {
 		this[_fetching] = fetching;
-		this.touch();
-//		this._keyed.set(_fetching, fetching);
+		this.touch(`CollectionProperty.setFetching(${fetching})`);
 	}
 
 	/**
@@ -1488,7 +1544,9 @@ export default class CollectionProperty extends Property {
 	extractId(model) {
 		var idName = this._()[_idName];
 
-		return isPlainObject(model) ?model[idName] :model;
+		return isPlainObject(model)
+			?model[idName]
+			:model instanceof Shadow ?model.toJSON()[idName] :model;
 	}
 
 	/** @ignore */
