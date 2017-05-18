@@ -27,6 +27,7 @@
     "lodash.isstring": "^4.0.1",
     "lodash.omit": "^4.2.1",
     "lodash.range": "^3.1.4",
+    "lodash.reduce": "^4.6.0",
     "lodash.result": "^4.3.0",
     "lodash.sortby": "^4.4.2",
     "lodash.topairs": "^4.1.0",
