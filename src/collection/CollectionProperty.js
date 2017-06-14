@@ -45,6 +45,8 @@ const _fetching = Symbol("fetching");
 const _middleware = Symbol("middleware");
 const _restoring = Symbol("restoring");
 
+export const SerializeVersion = 1;
+
 /**
 	Event emitted on collection changes.
 */
@@ -863,14 +865,20 @@ export default class CollectionProperty extends Property {
 		return offline.getOfflineData(offlineKey, dataId)
 			.then( data => {
 					const nextState = {
-						...data,
+						...data.state,
 						[_paging]: !!this.pagingTime, // could be a paging in process
 						[_restored]: true,
 						[_synced]: false
 					};
 
-					// ensure have data, same EP, still active, and collection is empty
-					if (!data || this.endpointId !== epId || !this.isActive() || this.size || !this[_restoring]) {
+					// ensure have data, same EP, still active, and collection is empty, versions match
+					if (!data ||
+						this.endpointId !== epId ||
+						!this.isActive() ||
+						this.size ||
+						!this[_restoring] ||
+						data.version !== SerializeVersion)
+					{
 						return this.cancelRestore();
 					}
 
@@ -924,11 +932,15 @@ export default class CollectionProperty extends Property {
 				this.size ||
 				state[_synced]
 			)
+		const data = {
+			state,
+			version: SerializeVersion
+		}
 
 		// Must have an EP, offline data key
 		if (!canStore) { return Store.resolve(null) }
 
-		return offline.setOfflineData(offlineKey, dataId, state)
+		return offline.setOfflineData(offlineKey, dataId, data, SerializeVersion)
 			.then( () => {
 					debug(`Collection backup successful - ${ this.collection.endpointId }, size=${this.size}`);
 
