@@ -1,5 +1,7 @@
 import has from "lodash.has";
 
+import Symbol from "es6-symbol";
+
 
 const _impl = Symbol('impl');
 

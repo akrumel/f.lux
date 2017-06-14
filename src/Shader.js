@@ -1,4 +1,5 @@
 import { isSomething } from "akutils";
+import Symbol from "es6-symbol";
 import invariant from "invariant";
 
 import AutoShader from "./AutoShader";

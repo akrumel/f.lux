@@ -1,3 +1,4 @@
+import Symbol from "es6-symbol";
 import has from "lodash.has";
 import sortBy from "lodash.sortby";
 

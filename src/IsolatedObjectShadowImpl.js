@@ -1,3 +1,4 @@
+import Symbol from "es6-symbol";
 import omit from "lodash.omit";
 
 import IsolatedProperty from "./IsolatedProperty";

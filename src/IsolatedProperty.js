@@ -1,4 +1,5 @@
 import { assert, uuid } from "akutils";
+import Symbol from "es6-symbol";
 
 import IsolatedAccess from "./IsolatedAccess";
 import IsolatedShadow from "./IsolatedShadow";

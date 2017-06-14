@@ -1,3 +1,4 @@
+import Symbol from "es6-symbol";
 import flatten from "lodash.flatten";
 import range from "lodash.range";
 

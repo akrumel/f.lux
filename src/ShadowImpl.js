@@ -1,5 +1,7 @@
+import Symbol from "es6-symbol";
 import clone from "lodash.clone";
 import cloneDeep from "lodash.clonedeep";
+import isObject from "lodash.isobject";
 import isString from "lodash.isstring";
 import result from "lodash.result";
 
@@ -930,7 +932,7 @@ export default class ShadowImpl {
 			// freeze shadows in dev mode to provide check not assigning to non-shadowed property
 			// this can have performance penalties so skip in production mode
 			if (process.env.NODE_ENV !== 'production') {
-				!Object.isFrozen(shadow) && Object.freeze(shadow);
+				isObject(shadow) && !Object.isFrozen(shadow) && Object.freeze(shadow);
 			}
 		}
 

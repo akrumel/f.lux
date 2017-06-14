@@ -1,4 +1,5 @@
 import { assert } from "akutils";
+import Symbol from "es6-symbol";
 
 import ObjectProperty from "./ObjectProperty";
 import PrimitiveProperty from "./PrimitiveProperty";

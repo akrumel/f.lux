@@ -1,4 +1,5 @@
 import { assert } from "akutils";
+import Symbol from "es6-symbol";
 import invariant from "invariant";
 import result from "lodash.result";
 

@@ -1,3 +1,4 @@
+import Symbol from "es6-symbol";
 import has from "lodash.has";
 import isEqual from "lodash.isequal";
 import isPlainObject from "lodash.isplainobject";

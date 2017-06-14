@@ -5,6 +5,7 @@ import {
 	iteratorFor,
 	iterateOver,
 } from "akutils";
+import Symbol from "es6-symbol";
 import isPlainObject from "lodash.isplainobject";
 
 import Emitter from "component-emitter";
@@ -563,10 +564,10 @@ export default class CollectionProperty extends Property {
 	use(op, mw) {
 		op = Array.isArray(op) ?op :[ op ];
 
-		assert( a => { for (const o of op) a.has(this[_middleware], o) });
+		assert( a => { for (let i=0,len=op.length; i<len; i++) a.has(this[_middleware], op[i]) })
 
-		for (const mwop of op) {
-			this[_middleware][mwop].push(mw);
+		for (let i=0, len=op.length; i<len; i++) {
+			this[_middleware][op[i]].push(mw);
 		}
 	}
 

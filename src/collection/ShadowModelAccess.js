@@ -1,3 +1,5 @@
+import Symbol from "es6-symbol";
+
 import Access from "../Access";
 
 

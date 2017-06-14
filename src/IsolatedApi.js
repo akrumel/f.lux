@@ -1,4 +1,5 @@
 import { assert } from "akutils";
+import Symbol from "es6-symbol";
 import isPlainObject from "lodash.isplainobject";
 
 import IsolatedProperty from "./IsolatedProperty";

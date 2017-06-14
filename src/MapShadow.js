@@ -2,6 +2,7 @@ import {
 	iteratorFor,
 	iterateOver,
 } from "akutils";
+import Symbol from "es6-symbol";
 
 import Shadow from "./Shadow";
 

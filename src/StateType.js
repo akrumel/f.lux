@@ -1,4 +1,5 @@
 import { assert } from "akutils";
+import Symbol from "es6-symbol";
 import cloneDeep from "lodash.clonedeep";
 import defaults from "lodash.defaults";
 import isArray from "lodash.isarray";
