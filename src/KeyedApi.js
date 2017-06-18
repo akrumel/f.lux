@@ -160,11 +160,12 @@ export default class KeyedApi {
 	valuesArray() {
 		if (!this.isActive()) { return doneIterator; }
 
+		const shadow = this.shadow()
 		const keys = this.keysArray();
 		const values = [];
 
 		for (let i=0, len=keys.length; i<len; i++) {
-			values.push( this[keys[i]] );
+			values.push(shadow[keys[i]]);
 		}
 
 		return values;

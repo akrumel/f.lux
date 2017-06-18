@@ -818,7 +818,7 @@ export default class CollectionProperty extends Property {
 		const dataId = epId && encodeURIComponent(epId);
 
 		if (dataId && offlineKey && offline) {
-			return offline.setOfflineData(offlineKey, dataId, null);
+			return offline.setOfflineData(offlineKey, dataId, null, this);
 		}
 	}
 
@@ -827,7 +827,7 @@ export default class CollectionProperty extends Property {
 		const offline = this.store().offlineStore();
 
 		if (offlineKey && offline) {
-			return offline.deleteBackups(offlineKey);
+			return offline.deleteBackups(offlineKey, this);
 		}
 	}
 
@@ -863,7 +863,7 @@ export default class CollectionProperty extends Property {
 		this[_restoring] = true;
 		this.touch("Collection[_restoring] = true");
 
-		return offline.getOfflineData(offlineKey, dataId)
+		return offline.getOfflineData(offlineKey, dataId, this)
 			.then( data => {
 					const nextState = {
 						...data.state,
@@ -941,7 +941,7 @@ export default class CollectionProperty extends Property {
 		// Must have an EP, offline data key
 		if (!canStore) { return Store.resolve(null) }
 
-		return offline.setOfflineData(offlineKey, dataId, data, SerializeVersion)
+		return offline.setOfflineData(offlineKey, dataId, data, this)
 			.then( () => {
 					debug(`Collection backup successful - ${ this.collection.endpointId }, size=${this.size}`);
 

@@ -194,7 +194,7 @@ export default class Store {
 		@param {Object|Array} [state=root.initialState()] - the initial application state
 		@param {boolean} [useTransients=false] - `true` to enable transient state
 	*/
-	constructor(root, state, useTransients=false) {
+	constructor(root, state, useTransients=false, offline=null) {
 		invariant(root instanceof Property || Array.isArray(root) || isObject(root),
 			"Store root must be one of: Property subclass, object, or array");
 
@@ -211,6 +211,7 @@ export default class Store {
 		this._listeners = [];
 		this._subscribers = [];
 		this._useTransients = useTransients;
+		this._offlineStore = offline;
 
 		// dispatcher queues for pending actions and waitFor() requests
 		this._updateAction = null;

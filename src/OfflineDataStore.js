@@ -8,15 +8,15 @@
 	define the expected API.
 */
 export default class OfflineDataStore {
-	deleteBackups(storageKey) {
+	deleteBackups(storageKey, prop) {
 		throw new Error("Subclasses must implement deleteBackups()");
 	}
 
-	getOfflineData(storageKey, dataKey) {
+	getOfflineData(storageKey, dataKey, prop) {
 		throw new Error("Subclasses must implement getOfflineData()");
 	}
 
-	setOfflineData(storageKey, dataKey, state) {
+	setOfflineData(storageKey, dataKey, state, prop) {
 		throw new Error("Subclasses must implement setOfflineData()");
 	}
 }
