@@ -25,7 +25,7 @@ import CollectionShadow from "./CollectionShadow";
 import ModelProperty from "./ModelProperty";
 
 
-import appDebug, { CollectionPropertyKey as DebugKey } from "../debug";
+import appDebug, { CollectionPropertyKey as DebugKey, warn } from "../debug";
 const debug = appDebug(DebugKey);
 
 
@@ -839,6 +839,18 @@ export default class CollectionProperty extends Property {
 	}
 
 	/**
+		Sets a flag for whether to keep previous values for the paging tracking properties (`lastPageSize`
+		and `nextOffset`) from restored data. Default is to reset them to the default values for when a
+		collection is created.
+
+		The reasoning behind restting the tracking properties is that models added since last persistent
+		operation would make them invalid.
+	*/
+	setPreservePagingOnRestore(preserve) {
+		this.preservePagingOnRestore = preserve;
+	}
+
+	/**
 		Restores the collection to the last offline stored state. Method does not restore state if the
 		collection contains any items or the `synced` flag is set.
 
@@ -865,13 +877,6 @@ export default class CollectionProperty extends Property {
 
 		return offline.getOfflineData(offlineKey, dataId, this)
 			.then( data => {
-					const nextState = {
-						...data.state,
-						[_paging]: !!this.pagingTime, // could be a paging in process
-						[_restored]: true,
-						[_synced]: false
-					};
-
 					// ensure have data, same EP, still active, and collection is empty, versions match
 					if (!data ||
 						this.endpointId !== epId ||
@@ -881,6 +886,18 @@ export default class CollectionProperty extends Property {
 						data.version !== SerializeVersion)
 					{
 						return this.cancelRestore();
+					}
+
+					const nextState = {
+						...data.state,
+						[_paging]: !!this.pagingTime, // could be a paging in process
+						[_restored]: true,
+						[_synced]: false,
+					};
+
+					if (!this.preservePagingOnRestore) {
+						nextState[_lastPageSize] = null;
+						nextState[_nextOffset] = 0;
 					}
 
 					// disable cancelRestore()
@@ -906,7 +923,7 @@ export default class CollectionProperty extends Property {
 				this[_restoring] = false;
 				this.touch("Collection[_restoring] = false");
 
-				debug( d => d(`Restore Error: ${error.message || error}`, error) );
+				warn(`Restore Error: epId=${this.endpointId}, ${error.message || error}`, error);
 
 				return Store.reject(error);
 			})
