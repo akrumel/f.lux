@@ -16,18 +16,19 @@ const HelpMsg = `f.lux logger commands:
 \thelp          - f.lux logger commands
 \tindex         - active index of store state frames
 \tmaxFrames     - # of store updates to cache (default=50)
-\nnext          - alias for forward
+\tnext          - alias for forward
 \tprint         - print logs to console
 \tprintNoState  - print logs to console without state objects
 \tsize          - # of store state frames available
 \tstore         - gets the f.lux store
 \nFunctions:
-\tclearTrap(name)                    - clears a trap set by 'setTrap()'
-\tgoto(idx)                          - move to a specific store state frame
-\tsetMaxFrames(maxFrames)            - set the maximum number of store states to maintain (default=50)
-\tsetTrap(cond, value, name=uuid)    - sets a debugger trap and returns name. condition argument may be
-\t                                     a function taking next state or a string path to get a value
-\ttail(count=10, printState=true)    - prints last 'count' store updates
+\tclearTrap(name)                     - clears a trap set by 'setTrap()'
+\tgoto(idx)                           - move to a specific store state frame
+\tsetMaxFrames(maxFrames)             - set the maximum number of store states to maintain (default=50)
+\tsetTrap(cond, value, name=uuid)     - sets a debugger trap and returns name. condition argument may be
+\t                                      a function taking next state or a string path to get a value
+\ttail(count=10, printState=true)     - prints last 'count' store updates
+\ttrapAction(path, action, name=uuid) - sets a debugger trap and returns name.
 \n
 f.lux log available at window.`;
 
@@ -61,6 +62,16 @@ export default class Logger {
 
 		this.frames = [ this.activeFrame ];
 		this.currFrame = new LogFrame(this.store, this.nextFrameId++);
+	}
+
+	clearActionTrap(name) {
+		if (!this.actionTraps) { return }
+
+		delete this.actionTraps[name];
+
+		if (Object.keys(this.traps).length === 0) {
+			this.actionTraps = null;
+		}
 	}
 
 	clearTrap(name) {
@@ -118,6 +129,14 @@ export default class Logger {
 		return name;
 	}
 
+	trapAction(path, action, name=uuid()) {
+		this.actionTraps = this.actionTraps || {};
+
+		this.actionTraps[name] = { action, path };
+
+		return name;
+	}
+
 	tail(count=10, printState=true) {
 		const frames = this.frames;
 		const start = frames.length>count ?frames.length - count :0;
@@ -168,6 +187,17 @@ export default class Logger {
 					debugger;
 
 					this.clearTrap(t.name);
+				}
+			}
+		}
+
+		//this.actionTraps[name] = { action, path };
+		if (this.actionTraps) {
+			const actionTraps = Object.values(this.actionTraps);
+
+			for (let i=0, t; t=actionTraps[i]; i++) {
+				if (action.name.startsWith(t.action) && impl.dotPath().startsWith(t.path) ) {
+					debugger;
 				}
 			}
 		}
@@ -343,6 +373,14 @@ export class FrameAction {
 		this.impl = impl;
 	}
 
+	dotPath() {
+		return this.impl.dotPath();
+	}
+
+	name() {
+		return this.action.name;
+	}
+
 	print(printState=true) {
 		const { action, impl } = this;
 
@@ -406,6 +444,10 @@ export function createConsoleLogger(logger) {
 			logger.clearTrap(name);
 		},
 
+		clearActionTrap(name) {
+			logger.clearActionTrap(name);
+		},
+
 		setActionFilter(filter) {
 			logger.setActionFilter(filter);
 		},
@@ -420,6 +462,10 @@ export function createConsoleLogger(logger) {
 
 		tail(count, printState) {
 			logger.tail(count, printState);
+		},
+
+		trapAction(path, action, name) {
+			return logger.trapAction(path, action, name);
 		},
 
 		goto(idx) {
