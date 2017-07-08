@@ -1003,14 +1003,14 @@ export default class CollectionProperty extends Property {
 
 		// just add the model
 		if (!id || !this.hasModel(id) || mergeOp === REPLACE_OPTION) {
-			let modelDefn = ModelProperty.modelDefinitionFor(state, this);
-			let models = this._()[_models];
+			const modelDefn = ModelProperty.modelDefinitionFor(state, this);
+			const models = this._()[_models];
 
 			models.set(modelDefn.cid, modelDefn);
 
 			modelId = modelDefn.id;
 		} else {
-			let currModel = this._getModel(id);
+			const currModel = this._getModel(id);
 
 			switch (mergeOp) {
 				case NONE_OPTION:
@@ -1271,8 +1271,8 @@ export default class CollectionProperty extends Property {
 
 		@return {Object} the model or undefined if one is not found
 	*/
-	getModel(id) {
-		const model = this._getModel(id);
+	getModel(id, state=this._()) {
+		const model = this._getModel(id, state);
 
 		return model && model.data;
 	}
@@ -1284,9 +1284,7 @@ export default class CollectionProperty extends Property {
 
 		@return {boolean}
 	*/
-	hasModel(id) {
-		const state = this._();
-
+	hasModel(id, state=this._()) {
 		return state[_id2cid].has(id) || state[_models].has(id);
 	}
 
@@ -1307,8 +1305,8 @@ export default class CollectionProperty extends Property {
 	/**
 		Gets if a model has never been persisted to the endpoint.
 	*/
-	isNew(id) {
-		const model = this._getModel(id);
+	isNew(id, state=this._()) {
+		const model = this._getModel(id, state);
 
 		return !model || model.isNew();
 	}
@@ -1616,8 +1614,7 @@ export default class CollectionProperty extends Property {
 
 		@ignore
 	*/
-	_getModel(id) {
-		const state = this._();
+	_getModel(id, state=this._()) {
 		const id2cid = state[_id2cid];
 		var cid = id2cid.has(id) ?id2cid.get(id) :id;
 
@@ -1631,9 +1628,9 @@ StateType.defineType(CollectionProperty, spec => {
 		.autoshadowOff
 		.managedType(MapProperty.type)
 		.properties({
-			[_offlineKey]: PrimitiveProperty.type.initialState(null).readonlyOff,
-			[_restored]: PrimitiveProperty.type.initialState(false).readonly,
-		})
+				[_offlineKey]: PrimitiveProperty.type.initialState(null).readonlyOff,
+				[_restored]: PrimitiveProperty.type.initialState(false).readonly,
+			})
 		.typeName("CollectionProperty");
 });
 
