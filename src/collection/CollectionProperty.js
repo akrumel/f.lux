@@ -992,7 +992,7 @@ export default class CollectionProperty extends Property {
 			`REPLACE_OPTION` and specifies how to combine an existing model with a matching ID
 			with a newly retrieved model.
 
-		@return the object's ID. And ID is assigned if the 'id' parameter was not set and it could not
+		@return the object's ID. An ID is assigned if the 'id' parameter was not set and it could not
 			be found in the `state` parameter.
 	*/
 	addModel(state, mergeOp=REPLACE_OPTION) {
