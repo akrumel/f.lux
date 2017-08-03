@@ -31,6 +31,7 @@ const _date = Symbol('date');
 const _dead = Symbol('dead');
 const _didShadowCalled = Symbol('didShadowCalled');
 const _futureState = Symbol('futureState');
+const _getSetter = Symbol('getSetter');
 const _hasFutureState = Symbol('hasFutureStatee');
 const _invalid = Symbol('invalid');
 const _name = Symbol('name');
@@ -909,34 +910,13 @@ export default class ShadowImpl {
 
 	[_createShadow]() {
 		if (!this[_shadow]) {
-			let ShadowClass = this[_property].shadowClass();
+			const ShadowClass = this[_property].shadowClass();
 
 			this[_shadow] = new ShadowClass(this);
 			extendProperty(this[_property], this, this[_shadow]);
 		}
 
 		return this[_shadow];
-	}
-
-	[_setupShadow](prev, inCtor) {
-		if (!this.__getCalled__) {
-			let state = this.state();
-
-			debug( d => d(`_setupShadow(): ${this.dotPath()}, time=${this[_time]}`) );
-
-			this.__getCalled__ = true;
-			var shadow = this.__getResonse__ = this.definePropertyGetValue(state);
-
-			this.defineChildProperties(prev, inCtor);
-
-			// freeze shadows in dev mode to provide check not assigning to non-shadowed property
-			// this can have performance penalties so skip in production mode
-			if (process.env.NODE_ENV !== 'production') {
-				isObject(shadow) && !Object.isFrozen(shadow) && Object.freeze(shadow);
-			}
-		}
-
-		return this.__getResonse__;
 	}
 
 	/**
@@ -949,19 +929,8 @@ export default class ShadowImpl {
 		const enumerable = !(isString(this[_name]) && this[_name].startsWith('_'));
 		const parentShadow = this.parent().shadow();
 		const state = this.state();
-		const set = this.readonly()
-			?undefined
-			:newValue => {
-					if (!this.isActive())  {
-						if (process.env.NODE_ENV !== 'production') {
-							console.error(`Attempting to set value on inactive property: ${this.dotPath()}`, newValue);
-						}
+		const set = this[_getSetter]();
 
-						return
-					}
-
-					return this.definePropertySetValue(newValue);
-				}
 
 		try {
 			Object.defineProperty(parentShadow, this[_name], {
@@ -973,7 +942,7 @@ export default class ShadowImpl {
 								return state;
 							}
 						},
-					set: set
+					set
 				});
 		} catch(error) {
 			console.warn(`_defineProperty() Error: name=${this[_name]}, parent=${this.parent().dotPath()}`, error.stack);
@@ -981,6 +950,39 @@ export default class ShadowImpl {
 		}
 
 		this.automountChildren(prev);
+	}
+
+	[_getSetter]() {
+		if (this.readonly()) { return }
+
+		const parentShadowCls = this.parent().property().shadowClass();
+		const propDescriptor = Object.getOwnPropertyDescriptor(parentShadowCls.prototype, this[_name]);
+
+		// support shadow defined setters to override our canned setter to enable easy definition of
+		// complex setting behaviors, such as validation or side effects for internal object correctness.
+		// Shadow defined getters are not supported since the canned getter generates and attaches the
+		// shadow instance that manipulates the actual state.
+		if (process.env.NODE_ENV !== 'production') {
+			if (propDescriptor && propDescriptor.get && !parentShadowCls.__getter__warning__printed__) {
+				console.warn(`Shadow class defined getter ignored: ${parentShadowCls.name}`);
+				parentShadowCls.__getter__warning__printed__ = true;
+			}
+		}
+
+		// use shadow class setter if defined, otherwise define one
+		if (propDescriptor && propDescriptor.set) {
+			return propDescriptor.set;
+		} else {
+			return newValue => {
+					if (!this.isActive())  {
+						if (process.env.NODE_ENV !== 'production') {
+							console.error(`Attempting to set value on inactive property: ${this.dotPath()}`, newValue);
+						}
+					} else {
+						return this.definePropertySetValue(newValue);
+					}
+				}
+		}
 	}
 
 	/**
@@ -1031,6 +1033,27 @@ export default class ShadowImpl {
 
 			this.store().dispatchUpdate( time => reshadow(time, this.nextState(), this) );
 		}
+	}
+
+	[_setupShadow](prev, inCtor) {
+		if (!this.__getCalled__) {
+			const state = this.state();
+
+			debug( d => d(`_setupShadow(): ${this.dotPath()}, time=${this[_time]}`) );
+
+			this.__getCalled__ = true;
+			var shadow = this.__getResonse__ = this.definePropertyGetValue(state);
+
+			this.defineChildProperties(prev, inCtor);
+
+			// freeze shadows in dev mode to provide check not assigning to non-shadowed property
+			// this can have performance penalties so skip in production mode
+			if (process.env.NODE_ENV !== 'production') {
+				isObject(shadow) && !Object.isFrozen(shadow) && Object.freeze(shadow);
+			}
+		}
+
+		return this.__getResonse__;
 	}
 }
 
