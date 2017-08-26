@@ -137,7 +137,7 @@ export default class KeyedApi {
 	}
 
 	keysArray() {
-		if (!this.isActive()) { return doneIterator }
+		if (!this.isActive()) { return [] }
 
 		// use Object.keys() so do not get non-enumerable properties
 		return Object.keys(this.shadow());
@@ -158,7 +158,7 @@ export default class KeyedApi {
 	}
 
 	valuesArray() {
-		if (!this.isActive()) { return doneIterator; }
+		if (!this.isActive()) { return []; }
 
 		const shadow = this.shadow()
 		const keys = this.keysArray();

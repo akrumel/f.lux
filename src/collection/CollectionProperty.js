@@ -775,6 +775,7 @@ export default class CollectionProperty extends Property {
 	clearEndpoint() {
 		this.removeAllModels();
 		this.removeProperty(_endpoint);
+		this.setFetching(false);
 	}
 
 	/**
@@ -1517,13 +1518,6 @@ export default class CollectionProperty extends Property {
 		}
 	}
 
-	/**
-		Sets the property name containing the model ID. Default is `id`.
-	*/
-	setIdName(idName) {
-		this._()[_idName] = idName;
-	}
-
 
 	/**
 		TODO: make private
@@ -1531,8 +1525,24 @@ export default class CollectionProperty extends Property {
 		@ignore
 	*/
 	setFetching(fetching) {
+		const nextEp = this.__() && this.__().nextState()._endpoint;
+		const nextId = nextEp && nextEp.url;
+
+		// setting instance variable is immediate so make sure not setting fetching=true when endpoint
+		// will change next tick
+		if (fetching && nextId != this.endpointId) {
+			return;
+		}
+
 		this[_fetching] = fetching;
 		this.touch(`CollectionProperty.setFetching(${fetching})`);
+	}
+
+	/**
+		Sets the property name containing the model ID. Default is `id`.
+	*/
+	setIdName(idName) {
+		this._()[_idName] = idName;
 	}
 
 	/**
