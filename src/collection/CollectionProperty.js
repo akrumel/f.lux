@@ -22,6 +22,7 @@ import StateType from "../StateType";
 import Store from "../Store";
 
 import CollectionShadow from "./CollectionShadow";
+import hashcode from "./hashcode";
 import ModelProperty from "./ModelProperty";
 
 
@@ -42,8 +43,10 @@ const _restored = "restored";
 const _synced = "synced";
 
 const _autocheckpoint = Symbol("autocheckpoint");
+const _fetchingError = Symbol("fetchingError");
 const _fetching = Symbol("fetching");
 const _middleware = Symbol("middleware");
+const _modelsHash = Symbol("modelsHash");
 const _restoring = Symbol("restoring");
 
 export const SerializeVersion = 1;
@@ -709,6 +712,7 @@ export default class CollectionProperty extends Property {
 	hasMorePages(state=this._()) {
 		return this.isConnected() &&
 			!state[_synced] &&
+			!state[_restored] &&
 			(state[_lastPageSize] == null || this._()[_lastPageSize] >= this._()[_limit]);
 	}
 
@@ -916,7 +920,13 @@ export default class CollectionProperty extends Property {
 					this[_restoring] = true;
 
 					// reset flag after store updates state
-					this.store().waitFor( () => this[_restoring] = false );
+					this.store().waitFor( () => {
+						// mark models
+						this[_modelsHash] = hashcode(JSON.stringify(this[_models]));
+
+						this[_restoring] = false
+					});
+
 
 					return this.nextState();
 				})
@@ -943,6 +953,7 @@ export default class CollectionProperty extends Property {
 		const offlineKey = this._keyed.get(_offlineKey);
 		const offline = this.store().offlineStore();
 		const dataId = epId && encodeURIComponent(epId);
+		const modelsHash = hashcode(JSON.stringify(this._()[_models]));
 		const canStore =
 			dataId &&
 			offlineKey &&
@@ -950,23 +961,29 @@ export default class CollectionProperty extends Property {
 			(
 				this.size ||
 				state[_synced]
-			)
+			);
 		const data = {
 			state,
 			version: SerializeVersion
 		}
 
 		// Must have an EP, offline data key
-		if (!canStore) { return Store.resolve(null) }
+		if (!canStore || this[_modelsHash] === modelsHash) {
+			return Store.resolve(null)
+		}
+
+		debug( d => "storeData() - models changed", this.endpontId );
+
+		this[_modelsHash] = modelsHash;
 
 		return offline.setOfflineData(offlineKey, dataId, data, this)
 			.then( () => {
-					debug(`Collection backup successful - ${ this.collection.endpointId }, size=${this.size}`);
+					debug( d => `Collection backup successful - ${ this.collection.endpointId }, size=${this.size}` );
 
 					return this;
 				})
 			.catch( error => {
-					debug(`Collection backup error: collection=${ this.collection.endpointId }, error=${error}`);
+					debug( d => `Collection backup error: collection=${ this.collection.endpointId }, error=${error}` );
 
 					return Store.reject(error);
 				});
@@ -1201,7 +1218,7 @@ export default class CollectionProperty extends Property {
 				.catch( error => {
 						// change fetching flag only if same endpoint
 						if (replaceAll && epId === this.endpointId) {
-							this.setFetching(false);
+							this.setFetching(false, error);
 						}
 
 						// invoke the callback with the error
@@ -1211,7 +1228,7 @@ export default class CollectionProperty extends Property {
 					});
 		} catch(error) {
 			if (replaceAll) {
-				this.setFetching(false);
+				this.setFetching(false, error);
 			}
 
 			// invoke the callback with the error
@@ -1276,6 +1293,15 @@ export default class CollectionProperty extends Property {
 		const model = this._getModel(id, state);
 
 		return model && model.data;
+	}
+
+	/**
+		Gets if the last fetch operation resulted in an error.
+
+		@return {boolean}
+	*/
+	hadSyncError() {
+		return !!this[_fetchingError];
 	}
 
 	/**
@@ -1524,7 +1550,7 @@ export default class CollectionProperty extends Property {
 
 		@ignore
 	*/
-	setFetching(fetching) {
+	setFetching(fetching, error) {
 		const nextEp = this.__() && this.__().nextState()._endpoint;
 		const nextId = nextEp && nextEp.url;
 
@@ -1535,6 +1561,8 @@ export default class CollectionProperty extends Property {
 		}
 
 		this[_fetching] = fetching;
+		this[_fetchingError] = !fetching && error;
+
 		this.touch(`CollectionProperty.setFetching(${fetching})`);
 	}
 
