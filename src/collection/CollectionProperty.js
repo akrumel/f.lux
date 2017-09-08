@@ -1263,7 +1263,7 @@ export default class CollectionProperty extends Property {
 							// ensure endpoint did not change
 							if (epId !== this.endpointId) { return null }
 
-							return this.endpoint.doFind(id) ;
+							return this.endpoint.doFind(id);
 						})
 					.then( state => {
 							// ensure endpoint did not change

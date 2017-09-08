@@ -8,6 +8,10 @@
 	define the expected API.
 */
 export default class OfflineDataStore {
+	clear() {
+		throw new Error("Subclasses must implement clear()");
+	}
+
 	deleteBackups(storageKey, prop) {
 		throw new Error("Subclasses must implement deleteBackups()");
 	}
