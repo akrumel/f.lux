@@ -1269,8 +1269,16 @@ export default class CollectionProperty extends Property {
 							// ensure endpoint did not change
 							if (epId !== this.endpointId) { return null }
 
-							this.addModel(state, NONE_OPTION);
-							this.store().waitFor( () => this.emit(FoundEvent, this._(), this) );
+							if (!isPlainObject(state)) {
+								throw new Error(`Endpoint returned non object`);
+							}
+
+							this.addModel(state, REPLACE_OPTION);
+
+							return this.store().waitThen();
+						})
+					.then( () => {
+							this.emit(FoundEvent, this._(), this);
 
 							return this.getModel(id);
 						})
