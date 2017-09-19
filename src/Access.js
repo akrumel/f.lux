@@ -252,7 +252,7 @@ export default class Access {
 		this[_impl].update( next => {
 			var result = callback(next);
 
-			result = has(result, "nextState") ?result :{ nextState: nexresultt };
+			result = has(result, "nextState") ?result :{ nextState: result };
 
 			// mark as a replacement (expensive but conservative) since very unlikely a caller through the access
 			// variable will have made all the book keeping updates and no way of knowing how deep their changes
