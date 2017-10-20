@@ -616,10 +616,16 @@ export default class CollectionShadow extends Shadow {
 	/*
 		Sorts using the same arguments as [Lodash sortBy()](https://lodash.com/docs#sortBy).
 	*/
-	sortBy(...iteratee) {
+	sortBy(iteratee) {
 		const values = this.valuesArray();
 
-		return sortBy.apply(null, [values, ...iteratee]);
+		return sortBy.apply(null, [values, iteratee]);
+	}
+
+	sort(comparator) {
+		const values = this.valuesArray();
+
+		return values.sort(comparator);
 	}
 
 	/**

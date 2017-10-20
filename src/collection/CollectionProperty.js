@@ -1248,14 +1248,14 @@ export default class CollectionProperty extends Property {
 
 		@return {Promise} reolves with the model or undefined if one is not found
 	*/
-	find(id) {
+	find(id, force=false) {
 		if (!this.isConnected()) { return Store.reject(`Collection ${this.slashPath()} is not connected`) }
 
 		try {
 			const model = this._getModel(id);
 			const epId = this.endpointId;
 
-			if (model) {
+			if (model && !force) {
 				return Store.resolve(model.data);
 			} else {
 				return this._on(FindOp)

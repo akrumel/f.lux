@@ -154,6 +154,10 @@ export default class IndexedShadow extends Shadow {
 		return acc;
 	}
 
+	slice(begin, end) {
+		return this.valuesArray().slice(begin, end);
+	}
+
 	some(pred, context) {
 		for (let i=0, len=this.length; i<len; i++) {
 			if (pred.call(context, this[i], i, this)) {

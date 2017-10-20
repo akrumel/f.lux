@@ -583,15 +583,6 @@ export default class Store {
 		_setTimeout( () => this._exec() )
 	}
 
-	// obsolete (2/14/17)
-	// update(callback) {
-	// 	invariant(callback, "Store.update() requires a callback function");
-
-	// 	callback();
-
-	// 	this._exec();
-	// }
-
 	/**
 		Executes all pending updates and waitFor() requests synchronously (immediately) and then invokes
 		an optional callback once the shadow state is updated.
@@ -630,6 +621,19 @@ export default class Store {
 		Returns a `Promise` that is resolved following the next state change.
 
 		@return {Promise}
+	*/
+	wait() {
+		return new Promise( (resolve, reject) => {
+			this.waitFor(resolve);
+		})
+	}
+
+	/**
+		Returns a `Promise` that is resolved following the next state change.
+
+		@return {Promise}
+
+		@deprecated - use {@link #wait}
 	*/
 	waitThen() {
 		return new Promise( (resolve, reject) => {

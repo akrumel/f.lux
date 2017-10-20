@@ -155,6 +155,11 @@ export default class ModelProperty extends ObjectProperty {
 	}
 
 	@shadowBound
+	refresh() {
+		return this.collection.find(this.cid, true);
+	}
+
+	@shadowBound
 	remove() {
 		return this.collection.remove(this.cid);
 	}
