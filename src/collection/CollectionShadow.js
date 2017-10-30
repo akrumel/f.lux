@@ -1,4 +1,5 @@
 import Symbol from "es6-symbol";
+import flatten from "lodash.flatten";
 import has from "lodash.has";
 import sortBy from "lodash.sortby";
 import { iteratorFor } from "akutils";
@@ -616,10 +617,11 @@ export default class CollectionShadow extends Shadow {
 	/*
 		Sorts using the same arguments as [Lodash sortBy()](https://lodash.com/docs#sortBy).
 	*/
-	sortBy(iteratee) {
+	sortBy(...iteratee) {
 		const values = this.valuesArray();
 
-		return sortBy.apply(null, [values, iteratee]);
+		// use flatten in case caller incloses sort criteria in an array
+		return sortBy.apply(null, [values, flatten(iteratee)]);
 	}
 
 	sort(comparator) {

@@ -1,4 +1,5 @@
 import Symbol from "es6-symbol";
+import flatten from "lodash.flatten";
 import has from "lodash.has";
 import sortBy from "lodash.sortby";
 
@@ -177,7 +178,8 @@ export default class IndexedShadow extends Shadow {
 	sortBy(...iteratee) {
 		const values = this.valuesArray();
 
-		return sortBy.apply(null, [values, ...iteratee]);
+		// use flatten in case caller incloses sort criteria in an array
+		return sortBy.apply(null, [values, flatten(iteratee)]);
 	}
 
 	/*
