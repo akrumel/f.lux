@@ -114,9 +114,7 @@ export default class ModelProperty extends ObjectProperty {
 	*/
 	@shadowBound
 	isNew() {
-		const id = this.collection.extractId(this.data);
-
-		return !id;
+		return this._() && !this.collection.extractId(this.data);
 	}
 
 	@shadowBound
