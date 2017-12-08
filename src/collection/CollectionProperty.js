@@ -978,12 +978,12 @@ export default class CollectionProperty extends Property {
 
 		return offline.setOfflineData(offlineKey, dataId, data, this)
 			.then( () => {
-					debug( d => `Collection backup successful - ${ this.collection.endpointId }, size=${this.size}` );
+					debug( d => `Collection backup successful - ${ this.endpointId }, size=${this.size}` );
 
 					return this;
 				})
 			.catch( error => {
-					debug( d => `Collection backup error: collection=${ this.collection.endpointId }, error=${error}` );
+					debug( d => `Collection backup error: collection=${ this.endpointId }, error=${error}` );
 
 					return Store.reject(error);
 				});
@@ -1023,6 +1023,10 @@ export default class CollectionProperty extends Property {
 		if (!id || !this.hasModel(id) || mergeOp === REPLACE_OPTION) {
 			const modelDefn = ModelProperty.modelDefinitionFor(state, this);
 			const models = this._()[_models];
+
+			if (id && this.hasModel(id)) {
+				this.remove(id);
+			}
 
 			models.set(modelDefn.cid, modelDefn);
 
