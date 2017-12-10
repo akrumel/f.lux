@@ -52,11 +52,19 @@ export class TransientsShadow extends Shadow {
 		return iterateOver(this.__().keys(), key => [ key, this[key] ] );
 	}
 
+	get(id) {
+		if (this.__().has(id)) {
+			return this[id].$$();
+		} else {
+			return this.$$().getFromCache(id);
+		}
+	}
+
 	/**
 		Gets if the {@link Store#transients} object contains a transient object.
 	*/
 	has(id) {
-		return this.__().has(id);
+		return this.__().has(id) || this.$$().isCached(id);
 	}
 
 	/**
@@ -84,6 +92,7 @@ export class TransientsShadow extends Shadow {
 		var trans = new TransientProperty(id, property);
 
 		this.$$()._keyed.addProperty(id, trans);
+		this.$$().addToCache(id, trans);
 
 		return trans;
 	}
@@ -124,6 +133,23 @@ export default class TransientsProperty extends ObjectProperty {
 		super(type);
 
 		this.setShadowClass(TransientsShadow);
+		this.cache = {};
+	}
+
+	propertyDidUpdate() {
+		this.cache = {};
+	}
+
+	addToCache(id, transProp) {
+		this.cache[id] = transProp;
+	}
+
+	getFromCache(id) {
+		return this.cache[id];
+	}
+
+	isCached(id) {
+		return !!this.cache[id];
 	}
 }
 
