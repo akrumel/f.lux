@@ -274,4 +274,8 @@ export default class Access {
 	waitFor(callback) {
 		this.store().waitFor( () => callback && callback(this.latest()) );
 	}
+
+	wait() {
+		return this.store().wait().then( () => this.latest() );
+	}
 }

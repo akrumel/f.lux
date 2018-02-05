@@ -6,6 +6,7 @@ import RestQueryBuilder from "./RestQueryBuilder";
 import ObjectProperty from "../ObjectProperty";
 import PrimitiveProperty from "../PrimitiveProperty";
 import shadow from "../decorators/shadow";
+import shadowBound from "../decorators/shadowBound";
 import StateType from "../StateType";
 import Store from "../Store";
 
@@ -20,11 +21,12 @@ export default class RestEndpointProperty extends ObjectProperty {
 		super(stateType);
 
 		this._keyed.addPropertyType("url", PrimitiveProperty.type);
+		this.findCache = {};
 	}
 
 	static createFor(url) {
 		const type = RestEndpointProperty.type
-			.initialState({ url: url.endsWith("/") ?url :`${url}/` })
+			.initialState({ url: url.endsWith("/") || url.indexOf("?") !== -1 ?url :`${url}/` })
 
 		return new RestEndpointProperty(type);
 	}
@@ -122,18 +124,28 @@ export default class RestEndpointProperty extends ObjectProperty {
 			})
 	}
 
-	@shadow
+	@shadowBound
 	doFind(id) {
 		const uri = URI(`${id}`).absoluteTo(this.id);
 
-		return fetch(uri.toString(), getOptions("GET"))
-			.then( response => {
-					if (!response.ok) {
-						return rejectOnError(response, uri.toString());
-					}
+		if (!this.findCache[uri]) {
+			this.findCache[uri] = fetch(uri.toString(), getOptions("GET"))
+				.then( response => {
+						if (!response.ok) {
+							return rejectOnError(response, uri.toString());
+						}
 
-					return response.json();
-				});
+						delete this.findCache[uri];
+						return response.json();
+					})
+				.catch( error => {
+					delete this.findCache[uri];
+
+					throw error;
+				})
+		}
+
+		return this.findCache[uri];
 	}
 
 	@shadow
