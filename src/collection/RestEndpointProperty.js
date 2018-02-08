@@ -126,13 +126,13 @@ export default class RestEndpointProperty extends ObjectProperty {
 
 	@shadowBound
 	doFind(id) {
-		const uri = URI(`${id}`).absoluteTo(this.id);
+		const uri = URI.joinPaths(this.id, `${id}`).absoluteTo(this.id).toString();
 
 		if (!this.findCache[uri]) {
-			this.findCache[uri] = fetch(uri.toString(), getOptions("GET"))
+			this.findCache[uri] = fetch(uri, getOptions("GET"))
 				.then( response => {
 						if (!response.ok) {
-							return rejectOnError(response, uri.toString());
+							return rejectOnError(response, uri);
 						}
 
 						delete this.findCache[uri];
