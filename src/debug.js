@@ -43,6 +43,8 @@ export const CollectionRestEndpointPropertyKey = 'f.lux:collection:restEnpointPr
 export const CollectionPojoEndpointPropertyKey = 'f.lux:collection:pojoEnpointProperty';
 
 /** @ignore */
+export const ReferenceKey = 'f.lux:reference';
+/** @ignore */
 export const ShadowImplKey = 'f.lux:shadowImpl';
 /** @ignore */
 export const StoreKey = 'f.lux:store';

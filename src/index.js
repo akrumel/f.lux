@@ -10,6 +10,7 @@ export { default as ObjectProperty } from "./ObjectProperty";
 export { default as OfflineDataStore } from "./OfflineDataStore";
 export { default as PrimitiveProperty } from "./PrimitiveProperty";
 export { default as Property } from "./Property";
+export { default as ReferenceProperty } from "./ReferenceProperty";
 export { default as Shader } from "./Shader";
 export { default as Shadow } from "./Shadow";
 export { default as ShadowImpl } from "./ShadowImpl";

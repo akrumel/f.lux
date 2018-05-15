@@ -381,6 +381,17 @@ export default class Store {
 	}
 
 	/**
+		Gets the shadow state property based on dotted path (`value.$().dotPath()`).
+
+		@param {string} path - dotted path from the root to the desired property.
+
+		@return {Shadow} the shadow state property if property exists.
+	*/
+	findByDotPath(path) {
+		return this.findByPath(path.split("."));
+	}
+
+	/**
 		Gets the shadow state property based on array of property keys.
 
 		@param {Array} path - array of property keys from the root to the desired property.
