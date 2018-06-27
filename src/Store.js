@@ -584,12 +584,37 @@ export default class Store {
 		return !!this._updateAction;
 	}
 
+	isPaused() {
+		return !!this.pauseId;
+	}
+
+	pause() {
+		if (this.pauseId) { clearTimeout(this.pauseId) }
+
+		this.pauseId = setTimeout(
+				() => {
+					this.pauseId = null;
+					this._exec();
+				},
+				500
+			);
+	}
+
+	resume() {
+		if (this.pauseId) {
+			clearTimeout(this.pauseId);
+			this.pauseId = null;
+
+			this._exec();
+		}
+	}
+
 	/**
 		Schedules pending tasks to execute. This method should not need to be called by code external to the class.
 	*/
 	schedule() {
-		// Nothing to do if no registered pendingActions
-		if (!this._updateAction && !this._waitFor.length) { return; }
+		// Nothing to do if paused or no registered pendingActions
+		if (this.pauseId || (!this._updateAction && !this._waitFor.length)) { return; }
 
 		_setTimeout( () => this._exec() )
 	}
