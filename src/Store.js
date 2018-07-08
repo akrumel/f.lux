@@ -596,7 +596,7 @@ export default class Store {
 					this.pauseId = null;
 					this._exec();
 				},
-				500
+				1000
 			);
 	}
 
