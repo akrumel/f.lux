@@ -453,6 +453,8 @@ export default class CollectionShadow extends Shadow {
 				result[groupId] = [ value ];
 			}
 		}
+
+		return result;
 	}
 
 	/**
