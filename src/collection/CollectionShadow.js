@@ -148,6 +148,13 @@ export default class CollectionShadow extends Shadow {
 	}
 
 	/**
+		Disconnects the collection from the remote data source.
+	*/
+	clearEndpoint() {
+		return this.$$().clearEndpoint();
+	}
+
+	/**
 		Fetches the next set of models from the endpoint. This method differs from
 		{@link CollectionProperty#fetch} by passing `offset` and `limit` filter criteria to the
 		endpoint.
