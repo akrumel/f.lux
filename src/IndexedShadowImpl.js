@@ -138,7 +138,7 @@ export default class IndexedShadowImpl extends ShadowImpl {
 	}
 
 	childAt(idx) {
-		return this[_impls][i];
+		return this[_impls][idx];
 	}
 
 	// This method does not change this object's state.
