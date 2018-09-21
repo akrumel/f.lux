@@ -1546,7 +1546,8 @@ export default class CollectionProperty extends Property {
 						let currModel = model.$().latest();
 
 						if (currModel) {
-							currModel.waiting = false
+							currModel.waiting = false;
+							currModel.data.$$().touch();
 						}
 
 						return this.onError(error, `Save ${id} - cid=${currModel.cid}`)
