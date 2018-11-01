@@ -65,7 +65,6 @@ export default class ReferenceProperty extends ObjectProperty {
 	constructor() {
 		super();
 
-		// this.setShadowClass(ReferenceShadow);
 		this[_locks] = [];
 	}
 

@@ -598,7 +598,8 @@ export default class CollectionProperty extends Property {
 	}
 
 	/**
-		Experimental feature to update values with any modifications from the server.
+		Experimental feature to update values with any modifications from the server. Assumes immutable server
+		objects.
 
 		Question: should this be delegated to the endpoint?
 

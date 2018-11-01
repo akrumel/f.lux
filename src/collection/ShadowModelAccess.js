@@ -47,16 +47,16 @@ export default class ShadowModelAccess extends Access {
 		return this.$$().id;
 	}
 
-	isWaiting() {
-		return this.$$().isWaiting();
-	}
-
 	isDirty() {
 		return this.$$().isDirty();
 	}
 
 	isNew() {
 		return this.$$().isNew();
+	}
+
+	isWaiting() {
+		return this.$$().isWaiting();
 	}
 
 	refresh() {

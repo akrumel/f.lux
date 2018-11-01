@@ -1,7 +1,7 @@
 import IndexedShadow from "./IndexedShadow";
 
 /**
-	Default shadow api for the `ArratProperty`. Exposes the {@link Array} interface.
+	Default shadow api for the `ArrayProperty`. Exposes the {@link Array} interface.
 
 	@see {@link ArratProperty}
 */
