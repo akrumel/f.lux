@@ -779,7 +779,7 @@ export default class CollectionProperty extends Property {
 	*/
 	clearEndpoint() {
 		this.removeAllModels();
-		this.removeProperty(_endpoint);
+		this._keyed.removeProperty(_endpoint);
 		this.setFetching(false);
 	}
 
