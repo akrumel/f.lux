@@ -55,6 +55,23 @@ export default class ModelProperty extends ObjectProperty {
 		return this._() && this._().id;
 	}
 
+	//------------------------------------------------------------------------------------------------------
+	// Experimental checkpoint API
+	//------------------------------------------------------------------------------------------------------
+
+	/**
+		Clears validation errors from the model.
+	*/
+	@shadow
+	clearValidationErrors() {
+		this.data.$$().clearValidationErrors();
+	}
+
+	@shadow
+	setValidationErrors(errors) {
+		return this.data.$$().setValidationErrors(errors);
+	}
+
 	@shadow
 	changeId(id) {
 		if (this._() && this._().id !== id) {
@@ -190,6 +207,16 @@ export default class ModelProperty extends ObjectProperty {
 			state.id = id;
 		}
 	}
+
+
+	@shadowBound
+	setWaiting(waiting) {
+		if (this._()) {
+			this._().waiting = waiting;
+			this.data.$$().touch();
+		}
+	}
+
 
 	//------------------------------------------------------------------------------------------------------
 	// Property subclasses may want to override success methods

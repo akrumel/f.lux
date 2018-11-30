@@ -23,6 +23,7 @@ import Store from "../Store";
 
 import CollectionShadow from "./CollectionShadow";
 import hashcode from "./hashcode";
+import isPrimitive from "./isPrimitive";
 import ModelProperty from "./ModelProperty";
 
 
@@ -40,6 +41,7 @@ const _nextOffset = "nextOffset";
 const _offlineKey = "offlineKey";
 const _paging = "_paging";
 const _restored = "restored";
+const _saveShallow = "saveShallow";
 const _synced = "synced";
 
 const _autocheckpoint = Symbol("autocheckpoint");
@@ -382,6 +384,7 @@ export default class CollectionProperty extends Property {
 
 		this._keyed.addPropertyType(_idName, PrimitiveProperty.type.initialState("id").autoshadow);
 		this._keyed.addProperty(_id2cid, new MapProperty());
+		this._keyed.addPropertyType(_saveShallow, PrimitiveProperty.type.initialState(true).autoshadowOff);
 		this._keyed.addPropertyType(_synced, PrimitiveProperty.type.initialState(false).autoshadowOff.readonly);
 
 		// pagingTime instance variable used for ensuring overlapping paging requests do not mess up offset
@@ -1124,7 +1127,7 @@ export default class CollectionProperty extends Property {
 
 			return this._on(DestroyOp)
 				.then( () => {
-						model.waiting = true;
+						model.setWaiting(true);
 
 						return this.endpoint.doDelete(model.id)
 					})
@@ -1143,7 +1146,8 @@ export default class CollectionProperty extends Property {
 						const currModel = model.$().latest();
 
 						if (currModel) {
-							currModel.waiting = false
+							currModel.setWaiting(false);
+							currModel.setValidationErrors(error.validationErrors);
 						}
 
 						return this.onError(error, `Destroy model: ${id}`)
@@ -1478,7 +1482,19 @@ export default class CollectionProperty extends Property {
 		if (!model) { return Store.reject(`Collection ${this.slashPath()} model not found: id=${id}`) }
 
 		try {
-			const shadowState = shadow.__().nextState();
+			const shallow = this._()[_saveShallow];
+			const nextState = shadow.__().nextState();
+			const shadowState = shallow
+				?Object.keys(nextState)
+					.filter( k => isPrimitive(nextState[k]))
+					.reduce(
+							(acc, k) => {
+								acc[k] = nextState[k];
+								return acc;
+							},
+							{}
+						)
+				:nextState;
 			const opName = this.isNewModel(shadow) ?CreateOp :UpdateOp;
 			const epId = this.endpointId;
 
@@ -1487,7 +1503,7 @@ export default class CollectionProperty extends Property {
 						// ensure endpoint did not change
 						if (epId !== this.endpointId) { return null }
 
-						model.waiting = true;
+						model.setWaiting(true);
 
 						if (this.isNewModel(shadow)) {
 							return this.endpoint.doCreate(shadow, shadowState);
@@ -1502,7 +1518,8 @@ export default class CollectionProperty extends Property {
 						const currModel = model.$().latest();
 						const savedId = this.extractId(savedState);
 
-						currModel.waiting = false;
+						currModel.setWaiting(false);
+						currModel.clearValidationErrors();
 
 						// Put an entry in id->cid mapping
 						if (savedId != id) {
@@ -1544,11 +1561,11 @@ export default class CollectionProperty extends Property {
 						return model && model.data;
 					})
 				.catch( error => {
-						let currModel = model.$().latest();
+						const currModel = model.$().latest();
 
 						if (currModel) {
-							currModel.waiting = false;
-							currModel.data.$$().touch();
+							currModel.setWaiting(false);
+							currModel.setValidationErrors(error.validationErrors);
 						}
 
 						return this.onError(error, `Save ${id} - cid=${currModel.cid}`)

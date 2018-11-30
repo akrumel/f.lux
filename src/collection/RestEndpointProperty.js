@@ -176,11 +176,21 @@ function rejectOnError(response, url) {
 
 	error.url = url;
 	error.status = response.status;
-	error.response = response;
+	error.response = response.clone();
 
-	debug( d => response.text( text =>  d(`Response Error - url=${url}, text=${ text }`, response) ) );
+	debug( d => response.clone().text( text =>  d(`Response Error - url=${url}, text=${ text }`, response) ) );
 
-	return Store.reject(error);
+	if (response.status === 422) {
+		return response.json()
+			.then( data => {
+				error.validationErrors = data;
+
+				throw error;
+			})
+
+		} else {
+			return Store.reject(error);
+		}
 }
 
 

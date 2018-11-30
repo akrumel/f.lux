@@ -139,6 +139,61 @@ export default class Property {
 		this.clearCheckpoint();
 	}
 
+	//------------------------------------------------------------------------------------------------------
+	// Experimental checkpoint API
+	//------------------------------------------------------------------------------------------------------
+
+	/**
+		Clears validation errors from the model.
+	*/
+	clearValidationErrors() {
+		if (this._validationErrors) {
+			delete this._validationErrors;
+			this.touch();
+		}
+	}
+
+	hasValidationErrors() {
+		return this._validationErrors && this._validationErrors.length;
+	}
+
+	/**
+		Experimental feature for validation errors. Errors is an array with each element having the form:
+		<ul>
+			<li>message: error description</li>
+			<li>path: path to property causing error</li>
+			<li>type: library specific reason for error</li>
+		</ul>
+	*/
+	setValidationErrors(errors) {
+		if (errors) {
+			if (!Array.isArray(errors)) {
+				return console.warn("Validation errors must be an array", errors);
+			} else if (!errors.length) {
+				return this.clearValidationErrors();
+			}
+
+			const changed = !(this._validationErrors &&
+				errors.length === this._validationErrors.length &&
+				this._validationErrors.every( e => errors.some( er => er.path === e.path )));
+
+			if (changed) {
+				this._validationErrors = errors;
+				this.touch();
+			}
+		} else {
+			this.clearValidationErrors();
+		}
+
+	}
+
+	/**
+		Gets the validation errors or an empty array if non are set.
+	*/
+	validationErrors() {
+		return this._validationErrors ?Object.assign(this._validationErrors) :[];
+	}
+
 	/**
 		Gets the actual shadow property exposed to application code.
 
