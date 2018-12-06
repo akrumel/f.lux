@@ -1284,7 +1284,7 @@ export default class CollectionProperty extends Property {
 
 							this.addModel(state, REPLACE_OPTION);
 
-							return this.store().waitThen();
+							return this.store().wait();
 						})
 					.then( () => {
 							this.emit(FoundEvent, this._(), this);
@@ -1293,6 +1293,46 @@ export default class CollectionProperty extends Property {
 						})
 					.catch( error => this.onError(error, `Find model ${id}`) );
 			}
+		} catch(error) {
+			return this.onError(error, `Find model ${id}`);
+		}
+	}
+
+	/**
+		Fetches all the models from the endpoint and adds them to the collection.
+
+		@param [filter] - filter object created using the endpoint.
+
+		@return {Promise} resolves with the json models from the endpoint
+	*/
+	search(filter) {
+		if (!this.isConnected()) { return Store.reject(`Collection ${this.slashPath()} is not connected`) }
+
+		try {
+			const epId = this.endpointId;
+
+			return this._on(FindOp)
+				.then( () => {
+						// ensure endpoint did not change
+						if (epId !== this.endpointId) { return null }
+
+						return this.endpoint.doFetch(filter);
+					})
+				.then( models => {
+						// ensure endpoint did not change
+						if (epId !== this.endpointId) { return null }
+
+						this.addModels(models, REPLACE_OPTION, false);
+
+						return this.store().wait()
+							.then( () => models );
+					})
+				.then( models => {
+						this.emit(FoundEvent, this._(), this);
+
+						return models.map( m => this.getModel(m.id) );
+					})
+				.catch( error => this.onError(error, `Search models error: ${filter.toString()}`) );
 		} catch(error) {
 			return this.onError(error, `Find model ${id}`);
 		}

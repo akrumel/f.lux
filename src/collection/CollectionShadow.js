@@ -382,6 +382,17 @@ export default class CollectionShadow extends Shadow {
 	}
 
 	/**
+		Fetches all the models from the endpoint and adds them to the collection.
+
+		@param [filter] - filter object created using the endpoint.
+
+		@return {Promise} resolves with the json models from the endpoint
+	*/
+	search(filter) {
+		return this.$$().search(filter);
+	}
+
+	/**
 		Gets the first model that satisfies the provided testing function.
 
 		@param iteratee - Function to execute on each value in the array, taking three arguments:

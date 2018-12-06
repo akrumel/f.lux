@@ -11,9 +11,6 @@ export default class RestQueryBuilder {
 			.reduce( (memo, n, v) => {
 					return `'${memo}${memo.length ?', ' :''}${n}=${v}`;
 				}, "");
-		// return reduce(this.filter, (memo, n, v) => {
-		// 		return `'${memo}${memo.length ?', ' :''}${n}=${v}`;
-		// 	}, "");
 	}
 
 	/**
