@@ -377,8 +377,8 @@ export default class CollectionShadow extends Shadow {
 
 		@return {Promise} reolves with the model or undefined if one is not found
 	*/
-	find(id) {
-		return this.$$().find(id);
+	find(id, force) {
+		return this.$$().find(id, force);
 	}
 
 	/**
