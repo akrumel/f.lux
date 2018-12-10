@@ -1254,6 +1254,8 @@ export default class CollectionProperty extends Property {
 		is not found then one is requested from the endpoint.
 
 		@param id - the model ID
+		@param force - determines if locally stored model is returned if found using get().
+			true=refetch model
 
 		@return {Promise} reolves with the model or undefined if one is not found
 	*/
