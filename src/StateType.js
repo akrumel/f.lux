@@ -138,6 +138,7 @@ export default class StateType {
 
 		this._PropertyClass = undefined
 		this._autoshadow = true;
+		this._context = null;
 		this._defaults = undefined;
 		this._elementType = null;
 		this._implementationClass = null;
@@ -381,6 +382,16 @@ export default class StateType {
 	*/
 	default(state) {
 		this._defaults = state;
+
+		return this;
+	}
+
+	/**
+		Sets the callback for generating the context for this property. Callback must be of the
+		form: fn(prop) { return { ...} }.
+	*/
+	context(callback) {
+		this._context = callback;
 
 		return this;
 	}

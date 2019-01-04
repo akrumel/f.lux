@@ -57,6 +57,28 @@ export default class Access {
 	}
 
 	/**
+		Gets the context from the parent properties. Context is setup for a property using the
+		{@link StateType#context} function.
+	*/
+	context() {
+		const ancestors = [];
+		var p = this.property();
+
+		while(p=p.parent()) {
+			ancestors.unshift(p);
+		}
+
+		return ancestors.reduce(
+				(ctxt, p) => {
+					return p.constructor.type._context
+						?{ ...ctxt, ...p.constructor.type._context(p) }
+						:ctxt;
+				},
+				{}
+			);
+	}
+
+	/**
 		Gets the path from root property using a dot (`.`) separator. Suitable for using with the lodash `result()`
 		function.
 
