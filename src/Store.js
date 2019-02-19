@@ -798,26 +798,47 @@ export default class Store {
 
 	/** @ignore */
 	_notifySubscribers(prevShadow) {
-		// Iterate each subscriber
-		for (let i=0, subscriber; subscriber = this._subscribers[i]; i++) {
-			try {
-				subscriber(this, this.shadow, prevShadow);
-			} catch(error) {
-				this._onError(`Store subscriber notification caused an exception: ${error}`, error);
+		if (this.subscriberTimerId) {
+			clearTimeout(this.subscriberTimerId);
+		}
+
+		const worker = () => {
+			const shadow = this.shadow;
+
+			delete this.subscriberTimerId;
+
+			// Iterate each subscriber
+			for (let i=0, subscriber; subscriber = this._subscribers[i]; i++) {
+				try {
+					subscriber(this, shadow, prevShadow);
+				} catch(error) {
+					this._onError(`Store subscriber notification caused an exception: ${error}`, error);
+				}
 			}
+		}
+
+		if (prevShadow) {
+			this.subscriberTimerId = setTimeout(worker)
+		} else {
+			worker();
 		}
 	}
 
+
 	/** @ignore */
 	_notifyWaitFors(waitFor) {
-		// Iterate each waitFor request
-		for (let i=0, waiting; waiting = waitFor[i]; i++) {
-			try {
-				waiting();
-			} catch(error) {
-				this._onError(`Store dispatch waitFor() request exception: ${error}`, error);
+		const worker = () => {
+			// Iterate each waitFor request
+			for (let i=0, waiting; waiting = waitFor[i]; i++) {
+				try {
+					waiting();
+				} catch(error) {
+					this._onError(`Store dispatch waitFor() request exception: ${error}`, error);
+				}
 			}
 		}
+
+		setTimeout(worker);
 	}
 
 	/** @ignore */
@@ -847,7 +868,7 @@ export default class Store {
 		const trans = this.shadow[_transients];
 
 		if (trans) {
-			trans.sweep();
+			setTimeout( () => trans.sweep() );
 		}
 	}
 }
