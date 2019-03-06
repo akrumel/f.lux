@@ -193,7 +193,7 @@ export default class ModelProperty extends ObjectProperty {
 
 	@shadowBound
 	setData(data) {
-		const id = this.collection.extractId(state);
+		const id = this.collection.extractId(data);
 		const state = this._();
 
 		// set state first since we trap the invalidate() call and set the dirty flag

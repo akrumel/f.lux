@@ -217,6 +217,15 @@ export default class Property {
 	}
 
 	/**
+		Gets the {@link Access} object for obtaining information about a property.
+
+		@return {Access}
+	*/
+	$() {
+		return this[_impl].access();
+	}
+
+	/**
 		Use this.$$() in shadow methods to get access to the property. Useful in `Property` subclass
 		`@shadow` methods since the method will be bound to the shadow. Exposing on the `Property`
 		allows for the same code to work when called as a member function using `this` or

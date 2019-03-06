@@ -1024,7 +1024,7 @@ export default class CollectionProperty extends Property {
 		var modelId;
 
 		// just add the model
-		if (!id || !this.hasModel(id) || mergeOp === REPLACE_OPTION) {
+		if (!id || !this.hasModel(id) /*|| mergeOp === REPLACE_OPTION*/) {
 			const modelDefn = ModelProperty.modelDefinitionFor(state, this);
 			const models = this._()[_models];
 
@@ -1206,7 +1206,8 @@ export default class CollectionProperty extends Property {
 							syncOp = syncOp || this.nextState()[_synced];
 
 							if (replaceAll) {
-								this.setModels(models, syncOp);
+								return this.setModels(models, syncOp)
+									.then( () => models );
 							} else {
 								this.addModels(models, mergeOp, syncOp);
 							}
@@ -1654,7 +1655,12 @@ export default class CollectionProperty extends Property {
 	*/
 	setModels(models, syncOp=true) {
 		this.removeAllModels();
-		this.addModels(models, REPLACE_OPTION, syncOp);
+
+		this.store().updateNow( () => {
+			this.addModels(models, REPLACE_OPTION, syncOp);
+		})
+
+		return this.$().wait()
 	}
 
 
