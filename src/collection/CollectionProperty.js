@@ -1042,13 +1042,13 @@ export default class CollectionProperty extends Property {
 				case NONE_OPTION:
 					break;
 				case MERGE_OPTION:
-					currModel.merge(state);
+					currModel.$().latest().merge(state);
 					break;
 				case REPLACE_OPTION:
-					currModel.setData(state);
+					currModel.$().latest().setData(state);
 					break;
 				case DEFAULTS_OPTION:
-					currModel.defaults(state);
+					currModel.$().latest().defaults(state);
 					break;
 				default:
 					throw new Error(`Invalid post-save option: ${mergeOp}`)
@@ -1195,10 +1195,6 @@ export default class CollectionProperty extends Property {
 								return models;
 							}
 
-							if (replaceAll) {
-								this.setFetching(false);
-							}
-
 							// invoke the callback before processing models
 							callback && callback(null, models);
 
@@ -1207,7 +1203,11 @@ export default class CollectionProperty extends Property {
 
 							if (replaceAll) {
 								return this.setModels(models, syncOp)
-									.then( () => models );
+									.then( () => {
+										this.setFetching(false);
+
+										return models
+									});
 							} else {
 								this.addModels(models, mergeOp, syncOp);
 							}

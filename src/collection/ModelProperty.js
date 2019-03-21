@@ -197,7 +197,7 @@ export default class ModelProperty extends ObjectProperty {
 		const state = this._();
 
 		// set state first since we trap the invalidate() call and set the dirty flag
-		state.data = data;
+		state.$$()._keyed.set("data", data);
 
 		// now we can explicitly set the dirty flag
 		this.clearDirty();
