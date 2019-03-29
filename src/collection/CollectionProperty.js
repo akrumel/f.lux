@@ -19,7 +19,11 @@ import PrimitiveProperty from "../PrimitiveProperty";
 import Property from "../Property";
 import Shadow from "../Shadow";
 import StateType from "../StateType";
-import Store from "../Store";
+import Store, {
+	CreateRemoteOp,
+	UpdateRemoteOp,
+	DeleteRemoteOp,
+} from "../Store";
 
 import CollectionShadow from "./CollectionShadow";
 import hashcode from "./hashcode";
@@ -509,6 +513,43 @@ export default class CollectionProperty extends Property {
 
 		if (!this._().restored) {
 			this.restore().catch( error => null );
+		}
+
+		const managedType = this.stateType().getManagedType();
+		const updateName = managedType && managedType.getUpdateName();
+
+		if (updateName) {
+			this.store().addRemoteListener(updateName, this);
+		}
+	}
+
+	/**
+		Override the base functionality method, and not designed life-cycle method propertyWillUnshadow(), so
+		subclasses can do the normal override without using super.propertyWillUnshadow() to preserve functionality.
+
+		@ignore
+	*/
+	onPropertyWillUnshadow() {
+		// need to call parent classes version
+		super.onPropertyWillUnshadow();
+
+		const managedType = this.stateType().getManagedType();
+		const updateName = managedType && managedType.getUpdateName();
+
+		if (updateName) {
+			this.store().removeRemoteListener(updateName, this);
+		}
+	}
+
+	onRemoteUpdate(type, op, key, values) {
+		switch(op) {
+			case CreateRemoteOp:
+			case UpdateRemoteOp:
+				this.addModel(values);
+				break;
+			case DeleteRemoteOp:
+				this.remove(+key);
+				break;
 		}
 	}
 

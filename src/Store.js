@@ -25,6 +25,10 @@ var _setTimeout = setTimeout;
 
 const _transients = "__trans__";
 
+export const CreateRemoteOp = "create";
+export const UpdateRemoteOp = "update";
+export const DeleteRemoteOp = "delete";
+
 /*
 	Futures/Experiments:
 		* Isolated objects - objects that can be referenced by properties within the shadow state without
@@ -209,6 +213,7 @@ export default class Store {
 
 		this._isolated = new IsolatedApi(this);
 		this._listeners = [];
+		this._remoteListeners = {};
 		this._subscribers = [];
 		this._useTransients = useTransients;
 		this._offlineStore = offline;
@@ -220,6 +225,43 @@ export default class Store {
 		if (root) {
 			this.setRootProperty(root, state);
 		}
+	}
+
+	addRemoteListener(type, listener) {
+		var list = this._remoteListeners[type];
+
+		if (!list) {
+			list = [];
+			this._remoteListeners[type] = list;
+		}
+
+		list.push(listener);
+	}
+
+	removeRemoteListener(type, listener) {
+		var list = this._remoteListeners[type];
+
+		if (list) {
+			list = list.filter( l => l !== listener );
+
+			if (list.length) {
+				this._remoteListeners[type] = list;
+			} else {
+				delete this._remoteListeners[type];
+			}
+		}
+	}
+
+	onRemoteUpdate(type, op, key, values) {
+		const list = this._remoteListeners[type];
+
+		list && list.forEach( l => {
+			try {
+				l.onRemoteUpdate(type, op, key, values);
+			} catch(ex) {
+				console.log("Remote update exception", ex);
+			}
+		})
 	}
 
 	/**

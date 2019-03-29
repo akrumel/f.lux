@@ -147,6 +147,7 @@ export default class StateType {
 		this._properties = {};
 		this._shadowClass = null;
 		this._typeName = null;
+		this._updateName = null;
 
 		// readonly is different than other instance variables as readonly state cascades down
 		// to properties where not explicitly set to true or false
@@ -511,6 +512,12 @@ export default class StateType {
 		return this;
 	}
 
+	updateName(name) {
+		this._updateName = name;
+
+		return this;
+	}
+
 	accessClass(Cls) {
 		this._AccessClass = Cls;
 
@@ -644,6 +651,10 @@ export default class StateType {
 	*/
 	getTypeName() {
 		return this._PropertyClass.__fluxTypeName__;
+	}
+
+	getUpdateName() {
+		return this._updateName;
 	}
 
 	/** @ignore */
