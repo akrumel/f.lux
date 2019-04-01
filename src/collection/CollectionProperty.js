@@ -542,6 +542,12 @@ export default class CollectionProperty extends Property {
 	}
 
 	onRemoteUpdate(type, op, key, values) {
+		const managedType = this.stateType().getManagedType();
+
+		if (managedType && !managedType.shouldUpdate(this._(), type, op, key, values)) {
+			return;
+		}
+
 		switch(op) {
 			case CreateRemoteOp:
 			case UpdateRemoteOp:

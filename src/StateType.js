@@ -148,6 +148,7 @@ export default class StateType {
 		this._shadowClass = null;
 		this._typeName = null;
 		this._updateName = null;
+		this._updateFilter = null;
 
 		// readonly is different than other instance variables as readonly state cascades down
 		// to properties where not explicitly set to true or false
@@ -512,8 +513,9 @@ export default class StateType {
 		return this;
 	}
 
-	updateName(name) {
+	updateName(name, filter) {
 		this._updateName = name;
+		this._updateFilter = filter;
 
 		return this;
 	}
@@ -655,6 +657,12 @@ export default class StateType {
 
 	getUpdateName() {
 		return this._updateName;
+	}
+
+	shouldUpdate(owner, type, op, key, values) {
+		return this._updateFilter
+			?this._updateFilter(owner, type, op, key, values)
+			:true;
 	}
 
 	/** @ignore */
