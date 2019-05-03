@@ -388,7 +388,7 @@ export default class CollectionProperty extends Property {
 
 		this._keyed.addPropertyType(_idName, PrimitiveProperty.type.initialState("id").autoshadow);
 		this._keyed.addProperty(_id2cid, new MapProperty());
-		this._keyed.addPropertyType(_saveShallow, PrimitiveProperty.type.initialState(true).autoshadowOff);
+		this._keyed.addPropertyType(_saveShallow, PrimitiveProperty.type.initialState(true).autoshadowOff.readonlyOff);
 		this._keyed.addPropertyType(_synced, PrimitiveProperty.type.initialState(false).autoshadowOff.readonly);
 
 		// pagingTime instance variable used for ensuring overlapping paging requests do not mess up offset
