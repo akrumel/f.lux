@@ -25,6 +25,7 @@ var _setTimeout = setTimeout;
 
 const _transients = "__trans__";
 
+export const CascadeRemoteOp = "cascade";
 export const CreateRemoteOp = "create";
 export const UpdateRemoteOp = "update";
 export const DeleteRemoteOp = "delete";

@@ -6,7 +6,9 @@ import {
 	iterateOver,
 } from "akutils";
 import Symbol from "es6-symbol";
+import isEqual from "lodash.isequal";
 import isPlainObject from "lodash.isplainobject";
+import pick from "lodash.pick";
 
 import Emitter from "component-emitter";
 
@@ -20,6 +22,7 @@ import Property from "../Property";
 import Shadow from "../Shadow";
 import StateType from "../StateType";
 import Store, {
+	CascadeRemoteOp,
 	CreateRemoteOp,
 	UpdateRemoteOp,
 	DeleteRemoteOp,
@@ -549,6 +552,15 @@ export default class CollectionProperty extends Property {
 		}
 
 		switch(op) {
+			case CascadeRemoteOp:
+				const keys = Object.keys(values);
+
+				this.modelsArray(this._()).forEach( m => {
+					if (isEqual(pick(m, keys), values)) {
+						this.remove(m.id);
+					}
+				})
+				break;
 			case CreateRemoteOp:
 			case UpdateRemoteOp:
 				this.addModel(values);
