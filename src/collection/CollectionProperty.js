@@ -63,48 +63,48 @@ export const SerializeVersion = 1;
 /**
 	Event emitted on collection changes.
 */
-export const ChangeEvent = "change";
+export const ChangeEvent = "collection.change";
 /**
 	Event emitted on collection destroy() success.
 */
-export const DeletedEvent = "deleted";
+export const DeletedEvent = "collection.deleted";
 /**
 	Event emitted on collection fetch() success.
 */
-export const FetchedEvent = "fetched";
+export const FetchedEvent = "collection.fetched";
 /**
 	Event emitted on collection find() success.
 */
-export const FoundEvent = "sound";
+export const FoundEvent = "collection.sound";
 /**
 	Event emitted on error during an operation.
 */
-export const ErrorEvent = "error";
+export const ErrorEvent = "collection.error";
 /**
 	Event emitted on collection save() success.
 */
-export const SavedEvent = "saved";
+export const SavedEvent = "collection.saved";
 
 /**
 	Middleware operation for create requests.
 */
-export const CreateOp = "create";
+export const CreateOp = "collection.create";
 /**
 	Middleware operation for destroy requests.
 */
-export const DestroyOp = "destroy";
+export const DestroyOp = "collection.destroy";
 /**
 	Middleware operation for fetch requests.
 */
-export const FetchOp = "fetch";
+export const FetchOp = "collection.fetch";
 /**
 	Middleware operation for find requests.
 */
-export const FindOp = "find";
+export const FindOp = "collection.find";
 /**
 	Middleware operation for update requests.
 */
-export const UpdateOp = "update";
+export const UpdateOp = "collection.update";
 /**
 	All middleware operations.
 */
@@ -582,9 +582,15 @@ export default class CollectionProperty extends Property {
 		super.onPropertyDidUpdate();
 
 		this.storeData().catch( error => null );
-		this.emit(ChangeEvent, this._(), this);
+		this.emitEvent(ChangeEvent);
 	}
 
+	emitEvent(event, data) {
+		const store = this.store();
+
+		this.emit(event, data, this._(), this);
+		store.emit(event, data, this._(), this);
+	}
 
 	//------------------------------------------------------------------------------------------------------
 	// Checkpoint support API
@@ -1197,7 +1203,7 @@ export default class CollectionProperty extends Property {
 						this._()[_models].delete(model.cid);
 						this._()[_id2cid].delete(model.id);
 
-						this.store().waitFor( () => this.emit(DeletedEvent, this._(), this) )
+						this.store().waitFor( () => this.emitEvent(DeletedEvent) )
 
 						return id;
 					})
@@ -1279,7 +1285,7 @@ export default class CollectionProperty extends Property {
 				.then( models => {
 						// fire event if endpoint same
 						if (epId === this.endpointId) {
-							this.store().waitFor( () => this.emit(FetchedEvent, this._(), this) );
+							this.store().waitFor( () => this.emitEvent(FetchedEvent) );
 						}
 
 						return models;
@@ -1349,7 +1355,7 @@ export default class CollectionProperty extends Property {
 							return this.store().wait();
 						})
 					.then( () => {
-							this.emit(FoundEvent, this._(), this);
+							this.emitEvent(FoundEvent);
 
 							return this.getModel(id);
 						})
@@ -1390,7 +1396,7 @@ export default class CollectionProperty extends Property {
 							.then( () => models );
 					})
 				.then( models => {
-						this.emit(FoundEvent, this._(), this);
+						this.emitEvent(FoundEvent);
 
 						return models.map( m => this.getModel(m.id) );
 					})
@@ -1662,7 +1668,7 @@ export default class CollectionProperty extends Property {
 				.then( model => {
 						// ensure endpoint did not change
 						if (epId === this.endpointId) {
-							Store.setTimeout( () => this.emit(SavedEvent, this._(), this) );
+							Store.setTimeout( () => this.emitEvent(SavedEvent) );
 						}
 
 						return model && model.data;
@@ -1781,7 +1787,7 @@ export default class CollectionProperty extends Property {
 		collectionError.status = error.status;
 		collectionError.endpointError = error;
 
-		this.emit(ErrorEvent, collectionError, this._(), this);
+		this.emitEvent(ErrorEvent, collectionError);
 
 		return Store.reject(collectionError);
 	}

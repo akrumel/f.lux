@@ -1,4 +1,5 @@
 import invariant from "invariant";
+import { EventEmitter2 as Emitter } from "eventemitter2";
 
 import { assert, isObject } from "akutils";
 
@@ -191,7 +192,7 @@ export const DeleteRemoteOp = "delete";
 	</div>
 */
 
-export default class Store {
+export default class Store extends Emitter {
 	/**
 		Creates a new f.lux store for managing the application state.
 
@@ -200,6 +201,10 @@ export default class Store {
 		@param {boolean} [useTransients=false] - `true` to enable transient state
 	*/
 	constructor(root, state, useTransients=false, offline=null) {
+		super({
+			wildcard: true
+		});
+
 		invariant(root instanceof Property || Array.isArray(root) || isObject(root),
 			"Store root must be one of: Property subclass, object, or array");
 
@@ -918,3 +923,6 @@ export default class Store {
 		}
 	}
 }
+
+// Mix in `Emitter`
+Emitter(Store.prototype);
