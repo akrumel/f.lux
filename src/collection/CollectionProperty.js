@@ -1620,6 +1620,11 @@ export default class CollectionProperty extends Property {
 						const currModel = model.$().latest();
 						const savedId = this.extractId(savedState);
 
+						// ensure remote update did not come in first
+						if (this.hasModel(savedId)) {
+							this.remove(savedId);
+						}
+
 						currModel.setWaiting(false);
 						currModel.clearValidationErrors();
 

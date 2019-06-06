@@ -254,15 +254,18 @@ export default class Store {
 	}
 
 	onRemoteUpdate(type, op, key, values) {
-		const list = this._remoteListeners[type];
+		this.wait()
+			.then( () => {
+				const list = this._remoteListeners[type];
 
-		list && list.forEach( l => {
-			try {
-				l.onRemoteUpdate(type, op, key, values);
-			} catch(ex) {
-				console.log("Remote update exception", ex);
-			}
-		})
+				list && list.forEach( l => {
+					try {
+						l.onRemoteUpdate(type, op, key, values);
+					} catch(ex) {
+						console.log("Remote update exception", ex);
+					}
+				})
+			})
 	}
 
 	/**
