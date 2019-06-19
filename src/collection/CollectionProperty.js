@@ -1161,7 +1161,7 @@ export default class CollectionProperty extends Property {
 
 		const cid = this.addModel(model);
 
-		return this.store().waitThen()
+		return this.store().wait()
 			.then( () => this.save(cid) );
 	}
 
@@ -1624,11 +1624,16 @@ export default class CollectionProperty extends Property {
 						if (epId !== this.endpointId) { return model }
 
 						const currModel = model.$().latest();
+						const currState = model.data.toJSON();
 						const savedId = this.extractId(savedState);
 
 						// ensure remote update did not come in first
-						if (this.hasModel(savedId)) {
+						if (this.hasModel(savedId) && !isEqual(shadow.toJSON(), currState)) {
 							this.remove(savedId);
+							const cid = this.addModel(savedState);
+
+							return this.store().wait()
+								.then( () => this.save(cid) );
 						}
 
 						currModel.setWaiting(false);
