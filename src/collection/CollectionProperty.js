@@ -1627,13 +1627,9 @@ export default class CollectionProperty extends Property {
 						const currState = model.data.toJSON();
 						const savedId = this.extractId(savedState);
 
-						// ensure remote update did not come in first
-						if (this.hasModel(savedId) && !isEqual(shadow.toJSON(), currState)) {
+						// ensure remote update did not come in first when model is new
+						if (this.isNewModel(shadow) && this.hasModel(savedId)) {
 							this.remove(savedId);
-							const cid = this.addModel(savedState);
-
-							return this.store().wait()
-								.then( () => this.save(cid) );
 						}
 
 						currModel.setWaiting(false);
