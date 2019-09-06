@@ -927,26 +927,34 @@ export default class ShadowImpl {
 
 		// names with a leading '_' are not enumerable (way of hiding them)
 		const enumerable = !(isString(this[_name]) && this[_name].startsWith('_'));
+		const parentGetCalled = this.parent().__getCalled__;
 		const parentShadow = this.parent().shadow();
 		const state = this.state();
 		const set = this[_getSetter]();
 
-
-		try {
-			Object.defineProperty(parentShadow, this[_name], {
-					enumerable: enumerable,
-					get: () => {
-							if (isSomething(state)) {
-								return this[_setupShadow]();
-							} else {
-								return state;
-							}
-						},
-					set
-				});
-		} catch(error) {
-			console.warn(`_defineProperty() Error: name=${this[_name]}, parent=${this.parent().dotPath()}`, error.stack);
-			debugger
+		/*
+			Handle rare case where a property is being set during the propertyWillShadow() property callback
+			In this case, calling this.parent().shadow() will result in the shadow being created and mapped
+			(and frozen during non-production builds) but the property for the existing shadow (but just
+			shadowed just-in-time) should not be altered.
+		*/
+		if (parentGetCalled) {
+			try {
+				Object.defineProperty(parentShadow, this[_name], {
+						enumerable: enumerable,
+						get: () => {
+								if (isSomething(state)) {
+									return this[_setupShadow]();
+								} else {
+									return state;
+								}
+							},
+						set
+					});
+			} catch(error) {
+				console.warn(`_defineProperty() Error: name=${this[_name]}, parent=${this.parent().dotPath()}`, error.stack);
+				debugger
+			}
 		}
 
 		this.automountChildren(prev);
