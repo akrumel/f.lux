@@ -4,7 +4,6 @@ import invariant from "invariant";
 
 import AutoShader from "./AutoShader";
 import noParentStateErrorMsg from "./noParentStateErrorMsg";
-import PropertyFactoryShader from "./PropertyFactoryShader";
 import shadowProperty from "./shadowProperty";
 
 

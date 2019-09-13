@@ -4,7 +4,6 @@ import invariant from "invariant";
 import result from "lodash.result";
 
 import Access from "./Access";
-import Shader from "./Shader";
 import Shadow from "./Shadow";
 import ShadowImpl from "./ShadowImpl";
 import StateType from "./StateType";

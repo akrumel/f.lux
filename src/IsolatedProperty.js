@@ -5,7 +5,6 @@ import IsolatedAccess from "./IsolatedAccess";
 import IsolatedShadow from "./IsolatedShadow";
 import IsolatedShadowImpl from "./IsolatedShadowImpl";
 import KeyedApi from "./KeyedApi";
-import MapProperty from "./MapProperty";
 import Property from "./Property";
 import StateType from "./StateType";
 
