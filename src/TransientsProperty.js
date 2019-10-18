@@ -53,7 +53,7 @@ export class TransientsShadow extends Shadow {
 	}
 
 	get(id) {
-		if (this.__().has(id)) {
+		if (this.__().has(id) && this[id]) {
 			return this[id].$$();
 		} else {
 			return this.$$().getFromCache(id);
