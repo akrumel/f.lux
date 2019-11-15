@@ -203,7 +203,7 @@ export default class Property {
 
 		if (!this[_store]) { return undefined }
 
-		return this.isActive() && impl.isMapped() ?impl.shadow() :result(this[_store].shadow, impl.dotPath());
+		return this.isActive() ?impl.shadow() :result(this[_store].shadow, impl.dotPath());
 	}
 
 	/**

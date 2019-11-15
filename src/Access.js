@@ -114,7 +114,7 @@ export default class Access {
 		@return {boolean} `true` if actively proxying the state.
 	*/
 	isActive() {
-		return this[_impl].isActive();
+		return this.property().isActive();
 	}
 
 	/**

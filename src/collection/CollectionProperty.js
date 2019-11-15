@@ -772,7 +772,7 @@ export default class CollectionProperty extends Property {
 	isPaging(state=this._()) {
 		// use pagingTime instance variable (instant) and _paging state variable (tied to state) to
 		// return the most conservative value
-		return !!this.pagingTime || state[_paging];
+		return !!this.pagingTime || (state && state[_paging]);
 	}
 
 	/**
